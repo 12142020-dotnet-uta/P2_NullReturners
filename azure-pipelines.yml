@@ -22,7 +22,7 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'p2nullreturners'
 
-- script: dotnet build ./P2_NullReturners/P2_NullReturners.sln --configuration $(buildConfiguration)
+- script: dotnet build './Visual Studio Projects/P2_NullReturners/P2_NullReturners.sln' --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
 - task: SonarCloudAnalyze@1
