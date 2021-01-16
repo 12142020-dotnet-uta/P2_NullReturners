@@ -1,12 +1,15 @@
+using Logic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +29,10 @@ namespace P2_Main
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<LogicClass>();
+            services.AddScoped<Mapper>();
+            services.AddScoped<ProgContext>();
+            services.AddScoped<Repo>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -1,4 +1,5 @@
 ﻿using Models;
+using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,25 +10,14 @@ namespace Logic
 {
     public class LogicClass
     {
-        
-        public User CreateUser()
+        public LogicClass() { }
+        private readonly Repo _repo;
+        private readonly Mapper _mapper;
+        public LogicClass(Repo repo, Mapper mapper)
         {
-            AppContext context = new AppContext();
-            User user = new User()
-            {
-                ID = Guid.NewGuid(),
-                FullName = "Jerry Rice",
-                PhoneNumber = "123-456-7890",
-                Email = "asdf@fdsa.com",
-                TeamID = Guid.NewGuid(),
-                RoleID = 2,
-                PlayerPositionID = Guid.NewGuid()
-            };
-            return user;
+            _repo = repo;
+            _mapper = mapper;
         }
-        public void SaveToDb()
-        {
 
-        }
     }
 }

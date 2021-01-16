@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class IRList
+    public class EquipmentRequest
     {
-        public Guid ID { get; set; }
-        public Guid TeamID { get; set; }
-        public Guid PlayerID { get; set; }
-        public string Status { get; set; }
+        public int ID { get; set; }
+        public int UserID { get; set; }
+        public int TeamID { get; set; }
+        public DateTime RequestDate { get; set; }
         public string Description { get; set; }
     }
 }
