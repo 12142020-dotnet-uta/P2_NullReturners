@@ -18,5 +18,20 @@ namespace Repository
         public DbSet<Team> Teams { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EquipmentRequest> EquipmentRequests { get; set; }
+
+        public ProgContext() { }
+
+
+        public ProgContext(DbContextOptions options) : base(options) { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            if (!options.IsConfigured)
+            {
+                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2newsetuptest;Trusted_Connection=True;");
+            }
+
+
+        }
     }
 }

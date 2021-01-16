@@ -34,9 +34,23 @@ namespace Repository
             this.roles = _progContext.Roles;
             this.teams = _progContext.Teams;
         }
+
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            return await users.ToListAsync();
+        }
+
+        public async Task<User> GetUserById(int id)
+        {
+            return await users.FindAsync(id);
+        }
+
+
         public void CommitSave()
         {
             _progContext.SaveChanges();
         }
+
+
     }
 }

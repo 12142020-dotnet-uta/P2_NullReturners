@@ -19,5 +19,16 @@ namespace Logic
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            return await _repo.GetUsers();
+        }
+
+
+        public async Task<User> GetUserById(int id)
+        {
+            return await _repo.GetUserById(id);
+        }
+
     }
 }
