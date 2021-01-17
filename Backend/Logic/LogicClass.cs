@@ -23,7 +23,7 @@ namespace Logic
         private readonly ILogger _logger;
 
         // Context accessors
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetUserById(Guid id)
         {
             return await _repo.GetUserById(id);
         }

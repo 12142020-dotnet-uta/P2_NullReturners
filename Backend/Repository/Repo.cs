@@ -48,7 +48,7 @@ namespace Repository
         {
             return await users.ToListAsync();
         }
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetUserById(Guid id)
         {
             return await users.FindAsync(id);
         }        
