@@ -16,7 +16,8 @@ namespace Repository.Migrations
                     UserID = table.Column<int>(type: "int", nullable: false),
                     TeamID = table.Column<int>(type: "int", nullable: false),
                     RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -77,7 +78,8 @@ namespace Repository.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PlaybookId = table.Column<int>(type: "int", nullable: false),
-                    PlayCategory = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     drawnPlay = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
@@ -105,7 +107,6 @@ namespace Repository.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NickName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Wins = table.Column<int>(type: "int", nullable: false),
                     Losses = table.Column<int>(type: "int", nullable: false)
                 },
@@ -124,8 +125,7 @@ namespace Repository.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TeamID = table.Column<int>(type: "int", nullable: false),
-                    RoleID = table.Column<int>(type: "int", nullable: false),
-                    PlayerPositionID = table.Column<int>(type: "int", nullable: false)
+                    RoleID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

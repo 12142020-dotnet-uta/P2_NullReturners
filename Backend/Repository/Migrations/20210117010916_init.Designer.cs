@@ -10,7 +10,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProgContext))]
-    [Migration("20210116224141_init")]
+    [Migration("20210117010916_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace Repository.Migrations
 
                     b.Property<DateTime>("RequestDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TeamID")
                         .HasColumnType("int");
@@ -106,8 +109,11 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("PlayCategory")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PlaybookId")
                         .HasColumnType("int");
@@ -163,9 +169,6 @@ namespace Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NickName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Wins")
                         .HasColumnType("int");
 
@@ -189,9 +192,6 @@ namespace Repository.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PlayerPositionID")
-                        .HasColumnType("int");
 
                     b.Property<int>("RoleID")
                         .HasColumnType("int");

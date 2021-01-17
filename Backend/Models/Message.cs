@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Team
+    public class Message
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [DisplayName("Team ID")]
+        [DisplayName("Message ID")]
         public int ID { get; set; }
-        [DisplayName("Team Name")]
-        public string Name { get; set; }
-        [DisplayName("Wins")]
-        public int Wins { get; set; }
-        [DisplayName("Losses")]
-        public int Losses { get; set; }
+        [DisplayName("Sender ID")]
+        public int SenderID { get; set; }
+        [DisplayName("Recipient ID")]
+        public int RecipientID { get; set; }
+        [DisplayName("Message Text")]
+        public string MessageText { get; set; }
     }
 }
