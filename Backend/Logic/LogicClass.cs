@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Microsoft.Extensions.Logging;
+using Models;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,15 @@ namespace Logic
     public class LogicClass
     {
         public LogicClass() { }
-        private readonly Repo _repo;
-        private readonly Mapper _mapper;
-        public LogicClass(Repo repo, Mapper mapper)
+        public LogicClass(Repo repo, Mapper mapper, ILogger<Repo> logger)
         {
             _repo = repo;
             _mapper = mapper;
+            _logger = logger;
         }
+        private readonly Repo _repo;
+        private readonly Mapper _mapper;
+        private readonly ILogger _logger;
 
         // Context accessors
         public async Task<User> GetUserById(int id)
