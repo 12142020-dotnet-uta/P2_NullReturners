@@ -15,12 +15,12 @@ variables:
 
 steps:
 - task: SonarCloudPrepare@1
-  displayName: 'Preparing SonarCloud'
   inputs:
-    SonarCloud: 'sonarcloud2'
+    SonarCloud: 'SonarCloud'
     organization: 'p2nullreturners'
     scannerMode: 'MSBuild'
-    projectKey: 'p2nullreturners'
+    projectKey: 'P2NullReturners_P2_NullReturners'
+    projectName: 'P2_NullReturners'
 
 - script: dotnet build ./Backend/P2_NullReturners.sln --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
