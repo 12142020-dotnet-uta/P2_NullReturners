@@ -21,6 +21,8 @@ namespace Repository
         public DbSet<EquipmentRequest> equipmentRequests;
         public DbSet<Role> roles;
         public DbSet<Team> teams;
+        public DbSet<Message> messages;
+
         public Repo(ProgContext progContext, ILogger<Repo> logger)
         {
             _progContext = progContext;
@@ -33,24 +35,86 @@ namespace Repository
             this.equipmentRequests = _progContext.EquipmentRequests;
             this.roles = _progContext.Roles;
             this.teams = _progContext.Teams;
+            this.messages = _progContext.Messages;
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
-        {
-            return await users.ToListAsync();
-        }
-
-        public async Task<User> GetUserById(int id)
-        {
-            return await users.FindAsync(id);
-        }
-
-
+        // Access SaveChanges from Logic class
         public void CommitSave()
         {
             _progContext.SaveChanges();
         }
-
-
+        // Context accessors
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            return await users.ToListAsync();
+        }
+        public async Task<User> GetUserById(int id)
+        {
+            return await users.FindAsync(id);
+        }        
+        public async Task<Team> GetTeamById(int id)
+        {
+            return await teams.FindAsync(id);
+        }
+        public async Task<IEnumerable<Team>> GetTeams()
+        {
+            return await teams.ToListAsync();
+        }
+        public async Task<Role> GetRoleById(int id)
+        {
+            return await roles.FindAsync(id);
+        }
+        public async Task<IEnumerable<Role>> GetRoles()
+        {
+            return await roles.ToListAsync();
+        }
+        public async Task<Playbook> GetPlaybookById(int id)
+        {
+            return await playbooks.FindAsync(id);
+        }
+        public async Task<IEnumerable<Playbook>> GetPlaybooks()
+        {
+            return await playbooks.ToListAsync();
+        }
+        public async Task<Play> GetPlayById(int id)
+        {
+            return await plays.FindAsync(id);
+        }
+        public async Task<IEnumerable<Play>> GetPlays()
+        {
+            return await plays.ToListAsync();
+        }
+        public async Task<Message> GetMessageById(int id)
+        {
+            return await messages.FindAsync(id);
+        }
+        public async Task<IEnumerable<Message>> GetMessages()
+        {
+            return await messages.ToListAsync();
+        }
+        public async Task<Game> GetGameById(int id)
+        {
+            return await games.FindAsync(id);
+        }
+        public async Task<IEnumerable<Game>> GetGames()
+        {
+            return await games.ToListAsync();
+        }
+        public async Task<Event> GetEventById(int id)
+        {
+            return await events.FindAsync(id);
+        }
+        public async Task<IEnumerable<Event>> GetEvents()
+        {
+            return await events.ToListAsync();
+        }
+        public async Task<EquipmentRequest> GetEquipmentRequestById(int id)
+        {
+            return await equipmentRequests.FindAsync(id);
+        }
+        public async Task<IEnumerable<EquipmentRequest>> GetEquipmentRequests()
+        {
+            return await equipmentRequests.ToListAsync();
+        }
     }
 }

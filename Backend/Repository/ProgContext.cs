@@ -18,6 +18,7 @@ namespace Repository
         public DbSet<Team> Teams { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EquipmentRequest> EquipmentRequests { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public ProgContext() { }
 
