@@ -15,6 +15,8 @@ namespace Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("User ID")]
         public Guid ID { get; set; }
+        [DisplayName("Username")]
+        public string UserName { get; set; }
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [DisplayName("Full Name")]
