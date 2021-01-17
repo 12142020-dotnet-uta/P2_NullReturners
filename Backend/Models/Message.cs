@@ -14,7 +14,7 @@ namespace Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("Message ID")]
-        public int ID { get; set; }
+        public Guid ID { get; set; }
         [DisplayName("Sender ID")]
         public int SenderID { get; set; }
         [DisplayName("Recipient ID")]

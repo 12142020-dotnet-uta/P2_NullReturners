@@ -20,6 +20,7 @@ namespace Models
         [DisplayName("Team ID")]
         public int TeamID { get; set; }
         [DisplayName("Request Date")]
+        [DataType(DataType.DateTime)]
         public DateTime RequestDate { get; set; }
         [DisplayName("Request Description")]
         public string Description { get; set; }

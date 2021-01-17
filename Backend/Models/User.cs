@@ -14,12 +14,16 @@ namespace Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("User ID")]
-        public int ID { get; set; }
+        public Guid ID { get; set; }
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
         [DisplayName("Full Name")]
         public string FullName { get; set; }
         [DisplayName("Phone Number")]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
         [DisplayName("Email Address")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [DisplayName("Team ID")]
         public int TeamID { get; set; }
