@@ -8,7 +8,7 @@ namespace Logic.Tests
         [Fact]
         public void Test1()
         {
-
+            
         }
     }
 }
