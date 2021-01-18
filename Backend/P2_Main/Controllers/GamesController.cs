@@ -36,17 +36,17 @@ namespace P2_Main.Controllers
             return await _logic.GetGameById(id);
         }
 
-        [HttpPost]
-        public async Task<Game> CreateGame()
-        {
-            return await _logic.CreateGame();
-        }
+        //[HttpPost]
+        //public async Task<Game> CreateGame()
+        //{
+        //    return await _logic.CreateGame();
+        //}
 
-        [HttpPut("edit/{id}")]
-        public async Task<Game> EditGame(int id)
-        {
-            return await _logic.EditGame(id);
-        }
+        //[HttpPut("edit/{id}")]
+        //public async Task<Game> EditGame(int id)
+        //{
+        //    return await _logic.EditGame(id);
+        //}
 
     }
 }
