@@ -30,7 +30,7 @@ namespace P2_Main.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<User> GetUser(int id)
+        public async Task<User> GetUser(Guid id)
         {
             return await _logic.GetUserById(id);
         }
