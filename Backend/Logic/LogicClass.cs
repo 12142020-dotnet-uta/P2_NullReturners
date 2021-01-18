@@ -23,13 +23,57 @@ namespace Logic
         private readonly ILogger _logger;
 
         // Context accessors
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetUserById(Guid id)
         {
             return await _repo.GetUserById(id);
         }
         public async Task<IEnumerable<User>> GetUsers()
         {
             return await _repo.GetUsers();
+        }
+        public async Task<User> AddUser(string userName, string password, string fullName, string phoneNumber, string email)
+        {
+            User user = _repo.users.FirstOrDefault(x => x.UserName == userName || x.Email == email);
+            if (user == null)
+            {
+                user = new User()
+                {
+                    UserName = userName,
+                    Password = password,
+                    FullName = fullName,
+                    PhoneNumber = phoneNumber,
+                    Email = email
+                };
+                await _repo.users.AddAsync(user);
+                await _repo.CommitSave();
+                _logger.LogInformation("User created");
+            }
+            else
+            {
+                _logger.LogInformation("User found in database");
+            }
+            return user;
+        }
+        public async Task RemoveUser(string username)
+        {
+            User user = _repo.users.FirstOrDefault(x => x.UserName == username);
+            if (user != null)
+            {
+                _repo.users.Remove(user);
+                await _repo.CommitSave();
+                _logger.LogInformation("User removed");
+            }
+            else
+            {
+                _logger.LogInformation("User not found");
+            }
+        }
+        public async Task<User> AddUserRole(User user, int roleId)
+        {
+            User tUser = await _repo.GetUserById(user.ID);
+            tUser.RoleID = roleId;
+            await _repo.CommitSave();
+            return tUser;
         }
         public async Task<Team> GetTeamById(int id)
         {

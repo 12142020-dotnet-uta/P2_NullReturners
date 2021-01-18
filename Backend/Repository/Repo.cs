@@ -39,16 +39,16 @@ namespace Repository
         }
 
         // Access SaveChanges from Logic class
-        public void CommitSave()
+        public async Task CommitSave()
         {
-            _progContext.SaveChanges();
+            await _progContext.SaveChangesAsync();
         }
         // Context accessors
         public async Task<IEnumerable<User>> GetUsers()
         {
             return await users.ToListAsync();
         }
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetUserById(Guid id)
         {
             return await users.FindAsync(id);
         }        
