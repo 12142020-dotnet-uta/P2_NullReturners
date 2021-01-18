@@ -15,10 +15,13 @@ namespace Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("Message ID")]
         public Guid ID { get; set; }
+
         [DisplayName("Sender ID")]
         public int SenderID { get; set; }
+
         [DisplayName("Recipient ID")]
         public int RecipientID { get; set; }
+
         [DisplayName("Message Text")]
         public string MessageText { get; set; }
     }

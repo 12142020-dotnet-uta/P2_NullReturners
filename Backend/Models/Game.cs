@@ -15,14 +15,19 @@ namespace Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("Game ID")]
         public int ID { get; set; }
+
         [DisplayName("Home Team ID")]
         public int HomeTeamID { get; set; }
+
         [DisplayName("Away Team ID")]
         public int AwayTeamID { get; set; }
+
         [DisplayName("Winning Team")]
         public int WinningTeam { get; set; }
+
         [DisplayName("Home Team Score")]
         public int HomeScore { get; set; }
+
         [DisplayName("Away Team Score")]
         public int AwayScore { get; set; }
     }
