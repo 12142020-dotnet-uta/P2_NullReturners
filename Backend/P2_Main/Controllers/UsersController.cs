@@ -29,11 +29,55 @@ namespace P2_Main.Controllers
             return await _logic.GetUsers();
         }
 
+        // what are we passing in here
+        //[HttpPost]
+        //public async Task<User> CreateUser()
+        //{
+        //    return await _logic.CreateUser();
+        //}
+
         [HttpGet("{id}")]
         public async Task<User> GetUser(Guid id)
         {
             return await _logic.GetUserById(id);
         }
+
+        [HttpPost("roles")]
+        public async Task<IEnumerable<Role>> GetRoles()
+        {
+            return await _logic.GetRoles();
+        }
+
+        //[HttpPost("roles/{id}")]
+        //public async Task<IEnumerable<Role>> GetRole(int id)
+        //{
+        //    return await _logic.GetRoleById(id);
+        //}
+
+        // Simple editing
+        //[HttpPut("edit/{id}")]
+        //public async Task<User> EditUser(Guid id)
+        //{
+        //    return await _logic.EditUser(id);
+        //}
+
+        
+
+        // Coach access required below
+        //[HttpPut("edit/{id}")]
+        //public async Task<User> CoachEditUser(Guid id)
+        //{
+        //    return await _logic.CoachEditUser(id);
+        //}
+
+        //[HttpDelete("delete/{id}")]
+        //public async Task<User> DeleteUser(Guid id)
+        //{
+        //    return await _logic.DeleteUser(id);
+        //}
+
+
+
 
     }
 }
