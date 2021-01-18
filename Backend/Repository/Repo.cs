@@ -48,6 +48,7 @@ namespace Repository
         {
             return await users.ToListAsync();
         }
+
         public async Task<User> GetUserById(Guid id)
         {
             return await users.FindAsync(id);
@@ -84,7 +85,7 @@ namespace Repository
         {
             return await plays.ToListAsync();
         }
-        public async Task<Message> GetMessageById(int id)
+        public async Task<Message> GetMessageById(Guid id)
         {
             return await messages.FindAsync(id);
         }

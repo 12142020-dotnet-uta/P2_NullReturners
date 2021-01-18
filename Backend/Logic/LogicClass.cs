@@ -107,7 +107,7 @@ namespace Logic
         {
             return await _repo.GetPlays();
         }
-        public async Task<Message> GetMessageById(int id)
+        public async Task<Message> GetMessageById(Guid id)
         {
             return await _repo.GetMessageById(id);
         }
