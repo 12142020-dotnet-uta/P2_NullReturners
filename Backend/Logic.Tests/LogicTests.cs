@@ -21,7 +21,7 @@ namespace Logic.Tests
         /// TODO: may add assert statement to test that a duplicate user is not added
         /// </summary>
         [Fact]
-        public async Task TestForCreateUser()
+        public void TestForCreateUser()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -34,7 +34,7 @@ namespace Logic.Tests
 
                 Repo r = new Repo(context, _logger);
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
-                var user = await logic.CreateUser("jerryrice", "jerry123", "Jerry Rice", "111-111-1111", "jerryrice@gmail.com");
+                var user = logic.CreateUser("jerryrice", "jerry123", "Jerry Rice", "111-111-1111", "jerryrice@gmail.com");
 
                 Assert.NotEmpty(context.Users);
             }
@@ -80,7 +80,7 @@ namespace Logic.Tests
         /// Tests the AddUserRole() method of LogicClass
         /// </summary>
         [Fact]
-        public async Task TestForAddUserRole()
+        public async void TestForAddUserRole()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -115,7 +115,7 @@ namespace Logic.Tests
         /// Tests the GetUsers() method of LogicClass
         /// </summary>
         [Fact]
-        public async Task TestForGetUsers()
+        public void TestForGetUsers()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -141,7 +141,7 @@ namespace Logic.Tests
                 };
 
                 r.users.Add(user);
-                var listOfUsers = await logic.GetUsers();
+                var listOfUsers = logic.GetUsers();
                 Assert.NotNull(listOfUsers);
             }
         }
@@ -150,7 +150,7 @@ namespace Logic.Tests
         /// Tests the GetUserById() method of LogicClass
         /// </summary>
         [Fact]
-        public async Task TestForGetUserById()
+        public void TestForGetUserById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -176,7 +176,7 @@ namespace Logic.Tests
                 };
 
                 r.users.Add(user);
-                var listOfUsers = await logic.GetUserById(user.ID);
+                var listOfUsers = logic.GetUserById(user.ID);
                 Assert.NotNull(listOfUsers);
             }
         }
@@ -185,7 +185,7 @@ namespace Logic.Tests
         /// Tests the GetTeams() method of LogicClass
         /// </summary>
         [Fact]
-        public async Task TestForGetTeams()
+        public void TestForGetTeams()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -207,7 +207,7 @@ namespace Logic.Tests
                 };
 
                 r.teams.Add(team);
-                var listOfTeams = await logic.GetTeams();
+                var listOfTeams = logic.GetTeams();
                 Assert.NotNull(listOfTeams);
             }
         }
