@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <DebugType>Full</DebugType>
+    <ProjectGuid>{1E7C0332-6716-4146-A695-4422879B9577}</ProjectGuid>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
