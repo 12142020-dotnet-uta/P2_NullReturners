@@ -105,7 +105,7 @@ namespace Logic.Tests
 
                 r.users.Add(user);
                 await r.CommitSave();
-                var userRole = logic.AddUserRole(user, 1);
+                await logic.AddUserRole(user, 1);
                 Assert.Equal(1, context.Users.Find(user.ID).RoleID);
             }
         }
