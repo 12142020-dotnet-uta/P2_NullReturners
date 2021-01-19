@@ -12,14 +12,12 @@ namespace Logic
     public class LogicClass
     {
         public LogicClass() { }
-        public LogicClass(Repo repo, Mapper mapper, ILogger<Repo> logger)
+        public LogicClass(Repo repo, ILogger<Repo> logger)
         {
             _repo = repo;
-            _mapper = mapper;
             _logger = logger;
         }
         private readonly Repo _repo;
-        private readonly Mapper _mapper;
         private readonly ILogger _logger;
 
         // Context accessors
