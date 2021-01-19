@@ -46,7 +46,7 @@ namespace Logic.Tests
         /// TODO: may add assert statement to test that a duplicate user is not added
         /// </summary>
         [Fact]
-        public async Task TestForDeleteUserAsync()
+        public void TestForDeleteUser()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -71,7 +71,7 @@ namespace Logic.Tests
                     RoleID = 1
                 };
                 r.users.Add(user);
-                await logic.DeleteUser(user.ID);
+                logic.DeleteUser(user.ID);
                 Assert.Empty(context.Users);
             }
         }
