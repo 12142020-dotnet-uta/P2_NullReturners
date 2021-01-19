@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <ProjectGuid>{A2A1235D-1C99-4C31-A07C-37C72C535358}</ProjectGuid>
     <UserSecretsId>e2634bb2-3002-4526-8db0-2c9a28cc6f11</UserSecretsId>
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
