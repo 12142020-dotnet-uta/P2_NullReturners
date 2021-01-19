@@ -17,7 +17,7 @@ namespace Repository.Tests
         /// Tests the CommitSave() method of Repo
         /// </summary>
         [Fact]
-        public void TestForCommitSave()
+        public async void TestForCommitSave()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -42,7 +42,7 @@ namespace Repository.Tests
                 };
 
                 r.users.Add(user);
-                r.CommitSave();
+                await r.CommitSave();
                 Assert.NotEmpty(context.Users);
             }
         }
