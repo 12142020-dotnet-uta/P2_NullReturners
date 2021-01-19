@@ -46,7 +46,8 @@ namespace Repository
         // Context accessors
         public async Task<IEnumerable<User>> GetUsers()
         {
-            return await users.ToListAsync();
+            List<User> uList =  await users.ToListAsync();
+            return uList;
         }
 
         public async Task<User> GetUserById(Guid id)

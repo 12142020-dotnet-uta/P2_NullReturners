@@ -29,12 +29,12 @@ namespace P2_Main.Controllers
             return await _logic.GetUsers();
         }
 
-        // what are we passing in here
-        //[HttpPost]
-        //public async Task<User> CreateUser()
-        //{
-        //    return await _logic.CreateUser();
-        //}
+        // what are we passing in here              returns newly created user or user found in db
+        [HttpPost]
+        public async Task<User> CreateUser(string userName, string password, string fullName, string phoneNumber, string email)
+        {
+            return await _logic.CreateUser(userName, password, fullName, phoneNumber, email);
+        }
 
         [HttpGet("{id}")]
         public async Task<User> GetUser(Guid id)
@@ -48,33 +48,32 @@ namespace P2_Main.Controllers
             return await _logic.GetRoles();
         }
 
-        //[HttpPost("roles/{id}")]
-        //public async Task<IEnumerable<Role>> GetRole(int id)
-        //{
-        //    return await _logic.GetRoleById(id);
-        //}
+        [HttpPost("roles/{id}")]
+        public async Task<Role> GetRole(int id)
+        {
+            return await _logic.GetRoleById(id);
+        }
 
-        // Simple editing
-        //[HttpPut("edit/{id}")]
-        //public async Task<User> EditUser(Guid id)
-        //{
-        //    return await _logic.EditUser(id);
-        //}
+        // Simple editing       --> probably want to pass in a User object with edited fields, then alter the one in the context -- always a valid user becuase they are logged in -- FullName, Email, Password, PhoneNumber can be changed
+        [HttpPut("edit/{id}")]
+        public async Task<User> EditUser(User editedUser)
+        {
+            return await _logic.EditUser(editedUser);
+        }
 
-        
+        // Coach access required below      --> same as above -- provide drop-down menu or other list to select users to edit -- can edit any field but ID
+        [HttpPut("edit/{id}")]
+        public async Task<User> CoachEditUser(Guid id)
+        {
+            return await _logic.CoachEditUser(await _logic.GetUserById(id));
+        }
 
-        // Coach access required below
-        //[HttpPut("edit/{id}")]
-        //public async Task<User> CoachEditUser(Guid id)
-        //{
-        //    return await _logic.CoachEditUser(id);
-        //}
-
-        //[HttpDelete("delete/{id}")]
-        //public async Task<User> DeleteUser(Guid id)
-        //{
-        //    return await _logic.DeleteUser(id);
-        //}
+        [HttpDelete("delete/{id}")]
+        public async Task DeleteUser(Guid id)
+        {
+            await _logic.DeleteUser(id);
+            _logger.LogInformation("User deleted.");
+        }
 
 
 

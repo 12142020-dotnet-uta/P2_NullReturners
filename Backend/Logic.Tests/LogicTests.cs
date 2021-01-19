@@ -20,7 +20,7 @@ namespace Logic.Tests
         /// TODO: may add assert statement to test that a duplicate user is not added
         /// </summary>
         [Fact]
-        public void TestForAddUser()
+        public void TestForCreateUser()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -33,7 +33,7 @@ namespace Logic.Tests
 
                 Repo r = new Repo(context, _logger);
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
-                var user = logic.AddUser("jerryrice", "jerry123", "Jerry Rice", "111-111-1111", "jerryrice@gmail.com");
+                var user = logic.CreateUser("jerryrice", "jerry123", "Jerry Rice", "111-111-1111", "jerryrice@gmail.com");
 
                 Assert.NotEmpty(context.Users);
             }
@@ -45,7 +45,7 @@ namespace Logic.Tests
         /// TODO: may add assert statement to test that a duplicate user is not added
         /// </summary>
         [Fact]
-        public void TestForRemoveUser()
+        public async System.Threading.Tasks.Task TestForDeleteUserAsync()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -70,7 +70,7 @@ namespace Logic.Tests
                     RoleID = 1
                 };
                 r.users.Add(user);
-                logic.RemoveUser(user.UserName);
+                await logic.DeleteUser(user.ID);
                 Assert.Empty(context.Users);
             }
         }
@@ -79,7 +79,7 @@ namespace Logic.Tests
         /// Tests the AddUserRole() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForAddUserRole()
+        public async void TestForAddUserRole()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -104,7 +104,7 @@ namespace Logic.Tests
                 };
 
                 r.users.Add(user);
-                r.CommitSave();
+                await r.CommitSave();
                 var userRole = logic.AddUserRole(user, 1);
                 Assert.Equal(1, context.Users.Find(user.ID).RoleID);
             }

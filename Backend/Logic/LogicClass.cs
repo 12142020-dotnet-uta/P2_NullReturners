@@ -31,7 +31,7 @@ namespace Logic
         {
             return await _repo.GetUsers();
         }
-        public async Task<User> AddUser(string userName, string password, string fullName, string phoneNumber, string email)
+        public async Task<User> CreateUser(string userName, string password, string fullName, string phoneNumber, string email)
         {
             User user = _repo.users.FirstOrDefault(x => x.UserName == userName || x.Email == email);
             if (user == null)
@@ -54,9 +54,9 @@ namespace Logic
             }
             return user;
         }
-        public async Task RemoveUser(string username)
+        public async Task DeleteUser(Guid id)
         {
-            User user = _repo.users.FirstOrDefault(x => x.UserName == username);
+            User user = await _repo.users.FindAsync(id);
             if (user != null)
             {
                 _repo.users.Remove(user);
@@ -72,6 +72,28 @@ namespace Logic
         {
             User tUser = await _repo.GetUserById(user.ID);
             tUser.RoleID = roleId;
+            await _repo.CommitSave();
+            return tUser;
+        }
+        public async Task<User> EditUser(User user)
+        {
+            User tUser = _repo.users.FirstOrDefault(x => x.ID == user.ID);
+            if (tUser.FullName != user.FullName) { tUser.FullName = user.FullName; }
+            if (tUser.Email != user.Email) { tUser.Email = user.Email; }
+            if (tUser.Password != user.Password) { tUser.Password = user.Password; }
+            if (tUser.PhoneNumber != user.PhoneNumber) { tUser.PhoneNumber = user.PhoneNumber; }
+            await _repo.CommitSave();
+            return tUser;
+        }
+        public async Task<User> CoachEditUser(User user)
+        {
+            User tUser = _repo.users.FirstOrDefault(x => x.ID == user.ID);
+            if (tUser.FullName != user.FullName) { tUser.FullName = user.FullName; }
+            if (tUser.Email != user.Email) { tUser.Email = user.Email; }
+            if (tUser.Password != user.Password) { tUser.Password = user.Password; }
+            if (tUser.PhoneNumber != user.PhoneNumber) { tUser.PhoneNumber = user.PhoneNumber; }
+            if (tUser.RoleID != user.RoleID) { tUser.RoleID = user.RoleID; }
+            if (tUser.UserName != user.UserName) { tUser.UserName = user.UserName; }
             await _repo.CommitSave();
             return tUser;
         }
