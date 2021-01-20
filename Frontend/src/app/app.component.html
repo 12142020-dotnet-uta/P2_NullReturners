@@ -1,4 +1,6 @@
-<ul>
-  <li *ngFor="let user of users">{{ user.userName }} | {{user.email}} | {{ user.id }}</li>
-</ul>
-
+<h1>{{title}}</h1>
+<h3>Welcome to the app!</h3>
+<nav>
+  <a class="button" routerLink="/players">Players</a>
+</nav>
+<router-outlet></router-outlet>
