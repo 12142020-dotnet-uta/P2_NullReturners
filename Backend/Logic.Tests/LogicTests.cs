@@ -39,7 +39,7 @@ namespace Logic.Tests
                 Assert.NotEmpty(context.Users);
 
                 var user2 = logic.CreateUser("jerryrice", "jerry123", "Jerry Rice", "111-111-1111", "jerryrice@gmail.com");
-                Assert.Equal(1, context.Users.CountAsync().Result);
+                Assert.Equal(16, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
             }
         }
 
@@ -78,7 +78,9 @@ namespace Logic.Tests
                 logic.DeleteUser(Guid.NewGuid()); // fails for some reason when I add await
                 Assert.NotEmpty(context.Users);
                 logic.DeleteUser(user.ID); // fails for some reason when I add await
-                Assert.Empty(context.Users);
+                //Assert.Empty(context.Users);
+                Assert.Equal(15, context.Users.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
+
             }
         }
 
@@ -304,7 +306,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var team = new Team
                 {
-                    ID = 1,
+                    ID = 4, // 4 for seeding
                     Name = "Broncos",
                     Wins = 2,
                     Losses = 1
@@ -335,7 +337,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var team = new Team
                 {
-                    ID = 1,
+                    ID = 5, // 5 for seeding
                     Name = "Broncos",
                     Wins = 2,
                     Losses = 1
@@ -366,7 +368,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var role = new Role
                 {
-                    ID = 1,
+                    ID = 4, // 4 because of seeding
                     RoleName = "Coach"
                 };
 
@@ -395,7 +397,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var role = new Role
                 {
-                    ID = 1,
+                    ID = 5, // 5 for seeding
                     RoleName = "Coach"
                 };
 
@@ -740,8 +742,8 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var equipment = new EquipmentRequest
                 {
-                    ID = 1,
-                    UserID = Guid.Parse("ac4acf50-ad36-4b87-931d-69fe4aafc0ba"),
+                    ID = 4, // 4 for seeding
+                    UserID = Guid.NewGuid(),
                     TeamID = 1,
                     RequestDate = DateTime.Now,
                     Message = "shoulder pads",
@@ -772,8 +774,8 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var equipment = new EquipmentRequest
                 {
-                    ID = 1,
-                    UserID = Guid.Parse("ac4acf50-ad36-4b87-931d-69fe4aafc0ba"),
+                    ID = 3, // 3 for seeding
+                    UserID = Guid.NewGuid(),
                     TeamID = 1,
                     RequestDate = DateTime.Now,
                     Message = "shoulder pads",

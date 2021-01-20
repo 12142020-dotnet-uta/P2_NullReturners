@@ -134,7 +134,7 @@ namespace Repository.Tests
                 Repo r = new Repo(context, _logger);
                 var team = new Team
                 {
-                    ID = 1,
+                    ID = 4, // 4 for seeding
                     Name = "Broncos",
                     Wins = 2,
                     Losses = 1
@@ -164,7 +164,7 @@ namespace Repository.Tests
                 Repo r = new Repo(context, _logger);
                 var team = new Team
                 {
-                    ID = 1,
+                    ID = 4, // 4 for seeding
                     Name = "Broncos",
                     Wins = 2,
                     Losses = 1
@@ -194,7 +194,7 @@ namespace Repository.Tests
                 Repo r = new Repo(context, _logger);
                 var role = new Role
                 {
-                    ID = 1,
+                    ID = 4, // 4 for seeding
                     RoleName = "Coach"
                 };
 
@@ -222,7 +222,7 @@ namespace Repository.Tests
                 Repo r = new Repo(context, _logger);
                 var role = new Role
                 {
-                    ID = 1,
+                    ID = 4, // 4 for seeding
                     RoleName = "Coach"
                 };
 
@@ -558,8 +558,8 @@ namespace Repository.Tests
                 Repo r = new Repo(context, _logger);
                 var equipment = new EquipmentRequest
                 {
-                    ID = 1,
-                    UserID = Guid.Parse("ac4acf50-ad36-4b87-931d-69fe4aafc0ba"),
+                    ID = 4, // 4 for seeding
+                    UserID = Guid.NewGuid(),
                     TeamID = 1,
                     RequestDate = DateTime.Now,
                     Message = "shoulder pads",
@@ -590,8 +590,8 @@ namespace Repository.Tests
                 Repo r = new Repo(context, _logger);
                 var equipment = new EquipmentRequest
                 {
-                    ID = 1,
-                    UserID = Guid.Parse("ac4acf50-ad36-4b87-931d-69fe4aafc0ba"),
+                    ID = 3, // 3 for seeding
+                    UserID = Guid.NewGuid(),
                     TeamID = 1,
                     RequestDate = DateTime.Now,
                     Message = "shoulder pads",
