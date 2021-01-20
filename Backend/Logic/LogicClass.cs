@@ -83,7 +83,7 @@ namespace Logic
             if (tUser.Password != user.Password) { tUser.Password = user.Password; }
             if (tUser.PhoneNumber != user.PhoneNumber) { tUser.PhoneNumber = user.PhoneNumber; }
             await _repo.CommitSave();
-            return tUser;
+            return tUser;  
         }
         public async Task<User> CoachEditUser(User user)
         {

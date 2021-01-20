@@ -5,6 +5,7 @@ using Repository;
 using Microsoft.Extensions.Logging;
 using Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Repository.Tests
 {
@@ -97,7 +98,7 @@ namespace Repository.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, _logger);
-                var user = new User
+                User user = new User
                 {
                     ID = Guid.NewGuid(),
                     UserName = "jerry",
@@ -111,7 +112,7 @@ namespace Repository.Tests
 
                 r.users.Add(user);
                 var searchForUser = r.GetUserById(user.ID);
-                Assert.NotNull(searchForUser);
+                Assert.True(searchForUser.Result.Equals(user));
             }
         }
 
@@ -171,7 +172,7 @@ namespace Repository.Tests
 
                 r.teams.Add(team);
                 var listOfTeams = r.GetTeamById(team.ID);
-                Assert.NotNull(listOfTeams);
+                Assert.True(listOfTeams.Result.Equals(team));
             }
         }
 
@@ -227,7 +228,7 @@ namespace Repository.Tests
 
                 r.roles.Add(role);
                 var listOfRoles = r.GetRoleById(role.ID);
-                Assert.NotNull(listOfRoles);
+                Assert.True(listOfRoles.Result.Equals(role));
             }
         }
 
@@ -283,7 +284,7 @@ namespace Repository.Tests
 
                 r.playbooks.Add(playbook);
                 var listOfPlaybooks = r.GetPlaybookById(playbook.ID);
-                Assert.NotNull(listOfPlaybooks);
+                Assert.True(listOfPlaybooks.Result.Equals(playbook));
             }
         }
 
@@ -346,7 +347,7 @@ namespace Repository.Tests
 
                 r.plays.Add(play);
                 var listOfPlays = r.GetPlayById(play.ID);
-                Assert.NotNull(listOfPlays);
+                Assert.True(listOfPlays.Result.Equals(play));
             }
         }
 
@@ -407,7 +408,7 @@ namespace Repository.Tests
 
                 r.messages.Add(message);
                 var listOfMessages = r.GetMessageById(message.ID);
-                Assert.NotNull(listOfMessages);
+                Assert.True(listOfMessages.Result.Equals(message));
             }
         }
 
@@ -471,7 +472,7 @@ namespace Repository.Tests
 
                 r.games.Add(game);
                 var listOfGames = r.GetGameById(game.ID);
-                Assert.NotNull(listOfGames);
+                Assert.True(listOfGames.Result.Equals(game));
             }
         }
 
@@ -535,7 +536,7 @@ namespace Repository.Tests
 
                 r.events.Add(eventSchedule);
                 var listOfEvents = r.GetEventById(eventSchedule.ID);
-                Assert.NotNull(listOfEvents);
+                Assert.True(listOfEvents.Result.Equals(eventSchedule));
             }
         }
 
@@ -599,7 +600,7 @@ namespace Repository.Tests
 
                 r.equipmentRequests.Add(equipment);
                 var listOfEquipment = r.GetEquipmentRequestById(equipment.ID);
-                Assert.NotNull(listOfEquipment);
+                Assert.True(listOfEquipment.Result.Equals(equipment));
             }
         }
 

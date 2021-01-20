@@ -37,6 +37,9 @@ namespace Logic.Tests
                 var user = logic.CreateUser("jerryrice", "jerry123", "Jerry Rice", "111-111-1111", "jerryrice@gmail.com");
 
                 Assert.NotEmpty(context.Users);
+
+                var user2 = logic.CreateUser("jerryrice", "jerry123", "Jerry Rice", "111-111-1111", "jerryrice@gmail.com");
+                Assert.Equal(1, context.Users.CountAsync().Result);
             }
         }
 
@@ -46,7 +49,7 @@ namespace Logic.Tests
         /// TODO: may add assert statement to test that a duplicate user is not added
         /// </summary>
         [Fact]
-        public void TestForDeleteUser()
+        public async void TestForDeleteUser()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -71,7 +74,10 @@ namespace Logic.Tests
                     RoleID = 1
                 };
                 r.users.Add(user);
-                logic.DeleteUser(user.ID);
+                await r.CommitSave();
+                logic.DeleteUser(Guid.NewGuid()); // fails for some reason when I add await
+                Assert.NotEmpty(context.Users);
+                logic.DeleteUser(user.ID); // fails for some reason when I add await
                 Assert.Empty(context.Users);
             }
         }
@@ -108,6 +114,104 @@ namespace Logic.Tests
                 await r.CommitSave();
                 await logic.AddUserRole(user, 1);
                 Assert.Equal(1, context.Users.Find(user.ID).RoleID);
+            }
+        }
+
+        /// <summary>
+        /// Tests the EditUser() method of LogicClass
+        /// </summary>
+        [Fact]
+        public async void TestForEditUser()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var user = new User
+                {
+                    ID = Guid.NewGuid(),
+                    UserName = "jerry",
+                    Password = "jerryrice",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com",
+                    TeamID = 1,
+                    RoleID = 1
+                };
+
+                r.users.Add(user);
+                await r.CommitSave();
+
+                var user2 = new User
+                {
+                    ID = user.ID,
+                    UserName = "jerry",
+                    Password = "jerryrice",
+                    FullName = "Tom Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com",
+                    TeamID = 1,
+                    RoleID = 1
+                };
+
+                var editedUser = logic.EditUser(user2);
+                Assert.Equal(editedUser.Result.FullName, context.Users.Find(user.ID).FullName);
+            }
+        }
+
+        /// <summary>
+        /// Tests the CoachEditUser() method of LogicClass
+        /// </summary>
+        [Fact]
+        public async void TestForCoachEditUser()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var user = new User
+                {
+                    ID = Guid.NewGuid(),
+                    UserName = "jerry",
+                    Password = "jerryrice",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com",
+                    TeamID = 1,
+                    RoleID = 1
+                };
+
+                r.users.Add(user);
+                await r.CommitSave();
+
+                var user2 = new User
+                {
+                    ID = user.ID,
+                    UserName = "jerry",
+                    Password = "jerryrice",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com",
+                    TeamID = 1,
+                    RoleID = 2
+                };
+
+                var editedUser = logic.CoachEditUser(user2);
+                Assert.Equal(editedUser.Result.RoleID, context.Users.Find(user.ID).RoleID);
             }
         }
 
@@ -177,7 +281,7 @@ namespace Logic.Tests
 
                 r.users.Add(user);
                 var listOfUsers = logic.GetUserById(user.ID);
-                Assert.NotNull(listOfUsers);
+                Assert.True(listOfUsers.Result.Equals(user));
             }
         }
 
@@ -239,7 +343,7 @@ namespace Logic.Tests
 
                 r.teams.Add(team);
                 var listOfTeams = logic.GetTeamById(team.ID);
-                Assert.NotNull(listOfTeams);
+                Assert.True(listOfTeams.Result.Equals(team));
             }
         }
 
@@ -297,7 +401,7 @@ namespace Logic.Tests
 
                 r.roles.Add(role);
                 var listOfRoles = logic.GetRoleById(role.ID);
-                Assert.NotNull(listOfRoles);
+                Assert.True(listOfRoles.Result.Equals(role));
             }
         }
 
@@ -355,7 +459,7 @@ namespace Logic.Tests
 
                 r.playbooks.Add(playbook);
                 var listOfPlaybooks = logic.GetPlaybookById(playbook.ID);
-                Assert.NotNull(listOfPlaybooks);
+                Assert.True(listOfPlaybooks.Result.Equals(playbook));
             }
         }
 
@@ -419,7 +523,7 @@ namespace Logic.Tests
 
                 r.plays.Add(play);
                 var listOfPlays = logic.GetPlayById(play.ID);
-                Assert.NotNull(listOfPlays);
+                Assert.True(listOfPlays.Result.Equals(play));
             }
         }
 
@@ -481,7 +585,7 @@ namespace Logic.Tests
 
                 r.messages.Add(message);
                 var listOfMessages = logic.GetMessageById(message.ID);
-                Assert.NotNull(listOfMessages);
+                Assert.True(listOfMessages.Result.Equals(message));
             }
         }
 
@@ -547,7 +651,7 @@ namespace Logic.Tests
 
                 r.games.Add(game);
                 var listOfGames = logic.GetGameById(game.ID);
-                Assert.NotNull(listOfGames);
+                Assert.True(listOfGames.Result.Equals(game));
             }
         }
 
@@ -613,7 +717,7 @@ namespace Logic.Tests
 
                 r.events.Add(eventSchedule);
                 var listOfEvents = logic.GetEventById(eventSchedule.ID);
-                Assert.NotNull(listOfEvents);
+                Assert.True(listOfEvents.Result.Equals(eventSchedule));
             }
         }
 
@@ -678,7 +782,7 @@ namespace Logic.Tests
 
                 r.equipmentRequests.Add(equipment);
                 var listOfEquipment = logic.GetEquipmentRequestById(equipment.ID);
-                Assert.NotNull(listOfEquipment);
+                Assert.True(listOfEquipment.Result.Equals(equipment));
             }
         }
 

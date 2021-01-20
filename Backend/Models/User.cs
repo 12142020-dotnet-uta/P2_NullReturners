@@ -30,7 +30,7 @@ namespace Models
         public string PhoneNumber { get; set; }
 
         [DisplayName("Email Address")]
-        //[DataType(DataType.EmailAddress)]
+        [DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessage = "Email must be a valid email address")]
         public string Email { get; set; }
 
