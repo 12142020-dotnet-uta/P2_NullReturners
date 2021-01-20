@@ -29,7 +29,7 @@ namespace Repository
         {
             if (!options.IsConfigured)
             {
-                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2newsetuptest;Trusted_Connection=True;");
+                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2newsetup;Trusted_Connection=True;");
             }
 
 

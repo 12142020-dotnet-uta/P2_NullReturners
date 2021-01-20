@@ -559,10 +559,10 @@ namespace Repository.Tests
                 var equipment = new EquipmentRequest
                 {
                     ID = 1,
-                    UserID = 1,
+                    UserID = Guid.Parse("ac4acf50-ad36-4b87-931d-69fe4aafc0ba"),
                     TeamID = 1,
                     RequestDate = DateTime.Now,
-                    Description = "shoulder pads",
+                    Message = "shoulder pads",
                     Status = "pending"
                 };
 
@@ -591,10 +591,10 @@ namespace Repository.Tests
                 var equipment = new EquipmentRequest
                 {
                     ID = 1,
-                    UserID = 1,
+                    UserID = Guid.Parse("ac4acf50-ad36-4b87-931d-69fe4aafc0ba"),
                     TeamID = 1,
                     RequestDate = DateTime.Now,
-                    Description = "shoulder pads",
+                    Message = "shoulder pads",
                     Status = "pending"
                 };
 

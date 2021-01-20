@@ -36,6 +36,10 @@ namespace Repository
             this.roles = _progContext.Roles;
             this.teams = _progContext.Teams;
             this.messages = _progContext.Messages;
+            ValidateRoleTable();
+            ValidateTeamTable();
+            ValidateUserTable();
+            ValidateEquipmentRequestTable();
         }
 
         // Access SaveChanges from Logic class
@@ -118,5 +122,126 @@ namespace Repository
         {
             return await equipmentRequests.ToListAsync();
         }
+
+
+        // seeding the db
+        private void ValidateRoleTable()
+        {
+            if (roles.Count() == 0)
+            {
+                List<Role> roleList = new List<Role>();
+                string[] roleNames = { "Coach", "Player", "Parent" };
+
+                for (int i = 0; i < roleNames.Length; i++)
+                {
+                    Role newRole = new Role();
+                    newRole.RoleName = $"{roleNames[i]}";
+                    roles.Add(newRole);
+                }
+                _progContext.SaveChanges();
+            }
+        }
+
+        private void ValidateTeamTable()
+        {
+            if (teams.Count() == 0)
+            {
+                List<Team> teamList = new List<Team>();
+                string[] teamNames = { "Lions", "Tigers", "Bears" };
+
+                for (int i = 0; i < teamNames.Length; i++)
+                {
+                    Team newTeam = new Team();
+                    newTeam.Name = $"{teamNames[i]}";
+                    teams.Add(newTeam);
+                }
+                _progContext.SaveChanges();
+            }
+        }
+
+        private void ValidateUserTable()
+        {
+            if (users.Count() == 0)
+            {
+                List<User> userList = new List<User>();
+
+                string[] userNames = { "jerryjones1", "jerryrice1", "terrybradshaw1",
+                "lionplayer1", "lionplayer2", "tigerplayer1", "tigerplayer2", "bearplayer1", "bearplayer2",
+                "lionparent1", "lionparent2", "tigerparent1", "tigerparent2", "bearparent1", "bearparent2"};
+
+                string[] passwords = { "jerry123", "jerryr123", "terry123",
+                "password1", "password2", "password3", "password4", "password5", "password6",
+                "parent1","parent2","parent3","parent4","parent5","parent6"};
+
+                string[] names = { "Jerry Jones", "Jerry Rice", "Terry Bradshaw",
+                "lionplayer1", "lionplayer2", "tigerplayer1", "tigerplayer2", "bearplayer1", "bearplayer2",
+                "lionparent1", "lionparent2", "tigerparent1", "tigerparent2", "bearparent1", "bearparent2"};
+
+                string[] phoneNumbers = { "123-456-7899", "222-454-7689", "213-796-5698",
+                "856-369-8888", "312-568-1234", "147-258-0369", "963-852-7410", "555-111-9999", "654-322-9870",
+                "856-369-8888", "312-568-1234", "147-258-0369", "963-852-7410", "555-111-9999", "654-322-9870"};
+
+                string[] emails = { "jerry@jones.com", "jerry@rice.com", "terry@bradshaw.com",
+                "lion1@player.com", "lion2@player.com", "tiger1@player.com", "tiger2@player.com", "bear1@player.com", "bear2@player.com",
+                "lion1@parent.com", "lion2@parent.com", "tiger1@parent.com", "tiger2@parent.com", "bear1@parent.com", "bear2@parent.com"};
+                int[] teamIds = { 1, 2, 3,
+                1, 1, 2, 2, 3, 3,
+                1, 1, 2, 2, 3, 3};
+                int[] roleIds = { 1, 1, 1,
+                2, 2, 2, 2, 2, 2,
+                3, 3, 3, 3, 3, 3};
+
+                for (int i = 0; i < userNames.Length; i++)
+                {
+                    User newUser = new User();
+                    newUser.UserName = $"{userNames[i]}";
+                    newUser.Password = $"{passwords[i]}";
+                    newUser.FullName = $"{names[i]}";
+                    newUser.PhoneNumber = $"{phoneNumbers[i]}";
+                    newUser.Email = $"{emails[i]}";
+                    newUser.TeamID = teamIds[i];
+                    newUser.RoleID = roleIds[i];
+                    users.Add(newUser);
+                }
+                _progContext.SaveChanges();
+            }
+        }
+
+        private void ValidateEquipmentRequestTable()
+        {
+            if (equipmentRequests.Count() == 0)
+            {
+                List<EquipmentRequest> equipmentRequestList = new List<EquipmentRequest>();
+
+                User user1 = users.FirstOrDefault(x => x.UserName == "lionparent1");
+                User user2 = users.FirstOrDefault(x => x.UserName == "bearparent2");
+
+                Guid[] userList = { user1.ID, user2.ID };
+                int[] teams = { 1, 3 };
+                DateTime[] requestTimes = { DateTime.Now, DateTime.Now };
+                string[] messages = { "This is a message for request 1", "This is a message for request 2" };
+                int[] items = { 1, 2 };
+                string[] status = { "Requested", "Fulfilled" };
+
+                for (int i = 0; i < userList.Length; i++)
+                {
+                    EquipmentRequest newRequest = new EquipmentRequest();
+                    newRequest.UserID = userList[i];
+                    newRequest.TeamID = teams[i];
+                    newRequest.RequestDate = requestTimes[i];
+                    newRequest.Message = $"{messages[i]}";
+                    newRequest.ItemId = items[i];
+                    newRequest.Status = status[i];
+                    equipmentRequests.Add(newRequest);
+                }
+                _progContext.SaveChanges();
+            }
+        }
+
+
+        // seeding end
+
     }
 }
+
+

@@ -17,7 +17,7 @@ namespace Models
         public int ID { get; set; }
 
         [DisplayName("User ID")]
-        public int UserID { get; set; }
+        public Guid UserID { get; set; }
 
         [DisplayName("Team ID")]
         public int TeamID { get; set; }
@@ -26,8 +26,12 @@ namespace Models
         [DataType(DataType.DateTime)]
         public DateTime RequestDate { get; set; }
 
-        [DisplayName("Request Description")]
-        public string Description { get; set; }
+        // optional
+        [DisplayName("Request Message")]
+        public string Message { get; set; }
+
+        [DisplayName("Item ID")]
+        public int ItemId { get; set; }
 
         [DisplayName("Request Status")]
         public string Status { get; set; }

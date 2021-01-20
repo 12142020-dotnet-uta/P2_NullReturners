@@ -23,24 +23,27 @@ namespace P2_Main.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Playbook>> GetPlaybooks()
-        {
-            return await _logic.GetPlaybooks();
-        }
+        // FIX THIS DANIEL
+        // YES ALL OF THIS
 
-        [HttpGet("{id}")]
-        public async Task<Playbook> GetPlaybook(int id)
-        {
-            return await _logic.GetPlaybookById(id);
-        }
+        //[HttpGet]
+        //public async Task<IEnumerable<Playbook>> GetPlaybooks()
+        //{
+        //    return await _logic.GetPlaybooks();
+        //}
+
+        //[HttpGet("{id}")]
+        //public async Task<Playbook> GetPlaybook(int id)
+        //{
+        //    return await _logic.GetPlaybookById(id);
+        //}
 
 
-        [HttpGet]
-        public async Task<IEnumerable<Play>> GetPlays()
-        {
-            return await _logic.GetPlays();
-        }
+        //[HttpGet]
+        //public async Task<IEnumerable<Play>> GetPlays()
+        //{
+        //    return await _logic.GetPlays();
+        //}
 
         //[HttpGet("{id}")]
         //public async Task<Play> GetPlay(int id)

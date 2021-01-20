@@ -170,10 +170,10 @@ namespace Models.Tests
             var equipmentRequest = new EquipmentRequest()
             {
                 ID = 1,
-                UserID = 1,
+                UserID = Guid.Parse("ac4acf50-ad36-4b87-931d-69fe4aafc0ba"),
                 TeamID = 1,
                 RequestDate = DateTime.Now,
-                Description = "Shoulder pads",
+                Message = "Shoulder pads",
                 Status = "Pending"
             };
 

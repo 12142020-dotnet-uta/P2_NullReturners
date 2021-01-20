@@ -54,6 +54,8 @@ namespace P2_Main.Controllers
             return await _logic.GetRoleById(id);
         }
 
+        // FIX THIS DANIEL
+
         // Simple editing       --> probably want to pass in a User object with edited fields, then alter the one in the context -- always a valid user becuase they are logged in -- FullName, Email, Password, PhoneNumber can be changed
         [HttpPut("edit/{id}")]
         public async Task<User> EditUser(User editedUser)
@@ -61,12 +63,14 @@ namespace P2_Main.Controllers
             return await _logic.EditUser(editedUser);
         }
 
+        // FIX THIS DANIEL
+
         // Coach access required below      --> same as above -- provide drop-down menu or other list to select users to edit -- can edit any field but ID
-        [HttpPut("edit/{id}")]
-        public async Task<User> CoachEditUser(Guid id)
-        {
-            return await _logic.CoachEditUser(await _logic.GetUserById(id));
-        }
+        //[HttpPut("edit/{id}")]
+        //public async Task<User> CoachEditUser(Guid id)
+        //{
+        //    return await _logic.CoachEditUser(await _logic.GetUserById(id));
+        //}
 
         [HttpDelete("delete/{id}")]
         public async Task DeleteUser(Guid id)
