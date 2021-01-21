@@ -30,8 +30,10 @@ namespace Models
         [EmailAddress(ErrorMessage = "Email must be a valid email address")]
         public string Email { get; set; }
         [DisplayName("Team ID")]
+        [ForeignKey("TeamID")]
         public int TeamID { get; set; }
         [DisplayName("Role ID")]
+        [ForeignKey("RoleID")]
         public int RoleID { get; set; }
     }
 }

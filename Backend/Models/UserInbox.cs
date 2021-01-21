@@ -13,8 +13,9 @@ namespace Models
         [DisplayName("User ID")]
         [ForeignKey("UserID")]
         public Guid UserID { get; set; }
-        [DisplayName("User ID")]
-        [ForeignKey("UserID")]
+        [DisplayName("Message ID")]
+        [ForeignKey("MessageID")]
         public Guid MessageID { get; set; }
+        public bool IsRead { get; set; }
     }
 }

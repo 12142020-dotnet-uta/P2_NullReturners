@@ -147,7 +147,8 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MessageID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    MessageID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

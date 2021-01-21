@@ -252,6 +252,9 @@ namespace Repository.Migrations
                     b.Property<Guid>("MessageID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
                     b.HasKey("UserID", "MessageID");
 
                     b.ToTable("UserInboxes");

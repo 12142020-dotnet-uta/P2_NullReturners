@@ -20,7 +20,7 @@ namespace Repository
         public DbSet<EquipmentRequest> EquipmentRequests { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<RecipientList> RecipientLists { get; set; }
-        public DbSet<UserInbox> UserInboxes{ get; set; }
+        public DbSet<UserInbox> UserInboxes { get; set; }
 
         public ProgContext() { }
 

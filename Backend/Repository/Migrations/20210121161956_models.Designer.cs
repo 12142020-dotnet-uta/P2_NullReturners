@@ -10,7 +10,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProgContext))]
-    [Migration("20210121155023_models")]
+    [Migration("20210121161956_models")]
     partial class models
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -253,6 +253,9 @@ namespace Repository.Migrations
 
                     b.Property<Guid>("MessageID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
 
                     b.HasKey("UserID", "MessageID");
 
