@@ -14,14 +14,11 @@ namespace Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("Team ID")]
-        public int ID { get; set; }
-
+        public int TeamID { get; set; }
         [DisplayName("Team Name")]
         public string Name { get; set; }
-
         [DisplayName("Wins")]
         public int Wins { get; set; }
-
         [DisplayName("Losses")]
         public int Losses { get; set; }
     }

@@ -14,14 +14,13 @@ namespace Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("Message ID")]
-        public Guid ID { get; set; }
-
+        public Guid MessageID { get; set; }
         [DisplayName("Sender ID")]
+        [ForeignKey("UserID")]
         public Guid SenderID { get; set; }
-
         [DisplayName("Recipient List ID")]
+        [ForeignKey("UserID")]
         public Guid RecipientListID { get; set; }
-
         [DisplayName("Message Text")]
         public string MessageText { get; set; }
     }

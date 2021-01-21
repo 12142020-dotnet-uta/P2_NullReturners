@@ -14,8 +14,7 @@ namespace Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("Role ID")]
-        public int ID { get; set; }
-
+        public int RoleID { get; set; }
         [DisplayName("Role")]
         public string RoleName { get; set; }
     }

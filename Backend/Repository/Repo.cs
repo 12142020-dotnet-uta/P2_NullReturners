@@ -226,7 +226,7 @@ namespace Repository
                 User user1 = users.FirstOrDefault(x => x.UserName == "lionparent1");
                 User user2 = users.FirstOrDefault(x => x.UserName == "bearparent2");
 
-                Guid[] userList = { user1.ID, user2.ID };
+                Guid[] userList = { user1.UserID, user2.UserID };
                 int[] teams = { 1, 3 };
                 DateTime[] requestTimes = { DateTime.Now, DateTime.Now };
                 string[] messages = { "This is a message for request 1", "This is a message for request 2" };

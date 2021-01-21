@@ -72,14 +72,14 @@ namespace Logic
         }
         public async Task<User> AddUserRole(User user, int roleId)
         {
-            User tUser = await _repo.GetUserById(user.ID);
+            User tUser = await _repo.GetUserById(user.UserID);
             tUser.RoleID = roleId;
             await _repo.CommitSave();
             return tUser;
         }
         public async Task<User> EditUser(User user)
         {
-            User tUser = _repo.users.FirstOrDefault(x => x.ID == user.ID);
+            User tUser = _repo.users.FirstOrDefault(x => x.UserID == user.UserID);
             if (tUser.FullName != user.FullName) { tUser.FullName = user.FullName; }
             if (tUser.Email != user.Email) { tUser.Email = user.Email; }
             if (tUser.Password != user.Password) { tUser.Password = user.Password; }
@@ -89,7 +89,7 @@ namespace Logic
         }
         public async Task<User> CoachEditUser(User user)
         {
-            User tUser = _repo.users.FirstOrDefault(x => x.ID == user.ID);
+            User tUser = _repo.users.FirstOrDefault(x => x.UserID == user.UserID);
             if (tUser.FullName != user.FullName) { tUser.FullName = user.FullName; }
             if (tUser.Email != user.Email) { tUser.Email = user.Email; }
             if (tUser.Password != user.Password) { tUser.Password = user.Password; }
@@ -129,7 +129,7 @@ namespace Logic
         public async Task<Play> CreateNewPlay(Guid userId, string playName, string description, byte[] drawnPlay)
         {
             User user = await GetUserById(userId);
-            var playbookId = _repo.playbooks.FirstOrDefault(x => x.TeamID == user.TeamID).ID;
+            var playbookId = _repo.playbooks.FirstOrDefault(x => x.TeamID == user.TeamID).PlaybookID;
             Play newPlay = new Play()
             {
                 PlaybookId = playbookId,
@@ -199,8 +199,9 @@ namespace Logic
             }
             //foreach(Guid r in recipientList)
             //{
-            //    //Notify await GetUserById(r) of message
+            //    add userid, messageid, read = false to inboxes, change user inbox status to notify
             //}
+            
             await _repo.CommitSave();
         }
         //Games

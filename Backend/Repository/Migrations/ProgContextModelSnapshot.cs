@@ -21,7 +21,7 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Models.EquipmentRequest", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("RequestID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -44,14 +44,14 @@ namespace Repository.Migrations
                     b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ID");
+                    b.HasKey("RequestID");
 
                     b.ToTable("EquipmentRequests");
                 });
 
             modelBuilder.Entity("Models.Event", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("EventID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -71,14 +71,14 @@ namespace Repository.Migrations
                     b.Property<int>("TeamID")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("EventID");
 
                     b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Models.Game", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("GameID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -98,14 +98,14 @@ namespace Repository.Migrations
                     b.Property<int>("WinningTeam")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("GameID");
 
                     b.ToTable("Games");
                 });
 
             modelBuilder.Entity("Models.Message", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("MessageID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -118,14 +118,14 @@ namespace Repository.Migrations
                     b.Property<Guid>("SenderID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ID");
+                    b.HasKey("MessageID");
 
                     b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Models.Play", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("PlayID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -142,14 +142,14 @@ namespace Repository.Migrations
                     b.Property<int>("PlaybookId")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("PlayID");
 
                     b.ToTable("Plays");
                 });
 
             modelBuilder.Entity("Models.Playbook", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("PlaybookID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -157,7 +157,7 @@ namespace Repository.Migrations
                     b.Property<int>("TeamID")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("PlaybookID");
 
                     b.ToTable("Playbooks");
                 });
@@ -178,7 +178,7 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Models.Role", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("RoleID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -186,14 +186,14 @@ namespace Repository.Migrations
                     b.Property<string>("RoleName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("RoleID");
 
                     b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Models.Team", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("TeamID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -207,14 +207,14 @@ namespace Repository.Migrations
                     b.Property<int>("Wins")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("TeamID");
 
                     b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("Models.User", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -239,7 +239,7 @@ namespace Repository.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("UserID");
 
                     b.ToTable("Users");
                 });

@@ -14,25 +14,22 @@ namespace Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("Request ID")]
-        public int ID { get; set; }
-
+        public int RequestID { get; set; }
         [DisplayName("User ID")]
+        [ForeignKey("UserID")]
         public Guid UserID { get; set; }
-
         [DisplayName("Team ID")]
+        [ForeignKey("TeamID")]
         public int TeamID { get; set; }
-
         [DisplayName("Request Date")]
         [DataType(DataType.DateTime)]
         public DateTime RequestDate { get; set; }
-
         // optional
         [DisplayName("Request Message")]
         public string Message { get; set; }
-
         [DisplayName("Item ID")]
+        [ForeignKey("EquipmentID")]
         public int ItemId { get; set; }
-
         [DisplayName("Request Status")]
         public string Status { get; set; }
     }

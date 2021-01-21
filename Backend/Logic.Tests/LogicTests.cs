@@ -64,7 +64,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var user = new User
                 {
-                    ID = Guid.NewGuid(),
+                    UserID = Guid.NewGuid(),
                     UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Jerry Rice",
@@ -77,7 +77,7 @@ namespace Logic.Tests
                 await r.CommitSave();
                 logic.DeleteUser(Guid.NewGuid()); // fails for some reason when I add await
                 Assert.NotEmpty(context.Users);
-                logic.DeleteUser(user.ID); // fails for some reason when I add await
+                logic.DeleteUser(user.UserID); // fails for some reason when I add await
                 //Assert.Empty(context.Users);
                 Assert.Equal(15, context.Users.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
 
@@ -103,7 +103,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var user = new User
                 {
-                    ID = Guid.NewGuid(),
+                    UserID = Guid.NewGuid(),
                     UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Jerry Rice",
@@ -115,7 +115,7 @@ namespace Logic.Tests
                 r.users.Add(user);
                 await r.CommitSave();
                 await logic.AddUserRole(user, 1);
-                Assert.Equal(1, context.Users.Find(user.ID).RoleID);
+                Assert.Equal(1, context.Users.Find(user.UserID).RoleID);
             }
         }
 
@@ -138,7 +138,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var user = new User
                 {
-                    ID = Guid.NewGuid(),
+                    UserID = Guid.NewGuid(),
                     UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Jerry Rice",
@@ -153,7 +153,7 @@ namespace Logic.Tests
 
                 var user2 = new User
                 {
-                    ID = user.ID,
+                    UserID = user.UserID,
                     UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Tom Rice",
@@ -164,7 +164,7 @@ namespace Logic.Tests
                 };
 
                 var editedUser = logic.EditUser(user2);
-                Assert.Equal(editedUser.Result.FullName, context.Users.Find(user.ID).FullName);
+                Assert.Equal(editedUser.Result.FullName, context.Users.Find(user.UserID).FullName);
             }
         }
 
@@ -187,7 +187,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var user = new User
                 {
-                    ID = Guid.NewGuid(),
+                    UserID = Guid.NewGuid(),
                     UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Jerry Rice",
@@ -202,7 +202,7 @@ namespace Logic.Tests
 
                 var user2 = new User
                 {
-                    ID = user.ID,
+                    UserID = user.UserID,
                     UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Jerry Rice",
@@ -213,7 +213,7 @@ namespace Logic.Tests
                 };
 
                 var editedUser = logic.CoachEditUser(user2);
-                Assert.Equal(editedUser.Result.RoleID, context.Users.Find(user.ID).RoleID);
+                Assert.Equal(editedUser.Result.RoleID, context.Users.Find(user.UserID).RoleID);
             }
         }
 
@@ -236,7 +236,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var user = new User
                 {
-                    ID = Guid.NewGuid(),
+                    UserID = Guid.NewGuid(),
                     UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Jerry Rice",
@@ -271,7 +271,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var user = new User
                 {
-                    ID = Guid.NewGuid(),
+                    UserID = Guid.NewGuid(),
                     UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Jerry Rice",
@@ -282,7 +282,7 @@ namespace Logic.Tests
                 };
 
                 r.users.Add(user);
-                var listOfUsers = logic.GetUserById(user.ID);
+                var listOfUsers = logic.GetUserById(user.UserID);
                 Assert.True(listOfUsers.Result.Equals(user));
             }
         }
@@ -306,7 +306,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var team = new Team
                 {
-                    ID = 4, // 4 for seeding
+                    TeamID = 4, // 4 for seeding
                     Name = "Broncos",
                     Wins = 2,
                     Losses = 1
@@ -337,14 +337,14 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var team = new Team
                 {
-                    ID = 5, // 5 for seeding
+                    TeamID = 5, // 5 for seeding
                     Name = "Broncos",
                     Wins = 2,
                     Losses = 1
                 };
 
                 r.teams.Add(team);
-                var listOfTeams = logic.GetTeamById(team.ID);
+                var listOfTeams = logic.GetTeamById(team.TeamID);
                 Assert.True(listOfTeams.Result.Equals(team));
             }
         }
@@ -368,7 +368,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var role = new Role
                 {
-                    ID = 4, // 4 because of seeding
+                    RoleID = 4, // 4 because of seeding
                     RoleName = "Coach"
                 };
 
@@ -397,12 +397,12 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var role = new Role
                 {
-                    ID = 5, // 5 for seeding
+                    RoleID = 5, // 5 for seeding
                     RoleName = "Coach"
                 };
 
                 r.roles.Add(role);
-                var listOfRoles = logic.GetRoleById(role.ID);
+                var listOfRoles = logic.GetRoleById(role.RoleID);
                 Assert.True(listOfRoles.Result.Equals(role));
             }
         }
@@ -426,7 +426,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var playbook = new Playbook
                 {
-                    ID = 1,
+                    PlaybookID = 1,
                     TeamID = 1
                 };
 
@@ -455,12 +455,12 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var playbook = new Playbook
                 {
-                    ID = 1,
+                    PlaybookID = 1,
                     TeamID = 1
                 };
 
                 r.playbooks.Add(playbook);
-                var listOfPlaybooks = logic.GetPlaybookById(playbook.ID);
+                var listOfPlaybooks = logic.GetPlaybookById(playbook.PlaybookID);
                 Assert.True(listOfPlaybooks.Result.Equals(playbook));
             }
         }
@@ -484,7 +484,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var play = new Play
                 {
-                    ID = 1,
+                    PlayID = 1,
                     PlaybookId = 1,
                     Name = "Tackle",
                     Description = "Tackle other players",
@@ -516,7 +516,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var play = new Play
                 {
-                    ID = 1,
+                    PlayID = 1,
                     PlaybookId = 1,
                     Name = "Tackle",
                     Description = "Tackle other players",
@@ -524,7 +524,7 @@ namespace Logic.Tests
                 };
 
                 r.plays.Add(play);
-                var listOfPlays = logic.GetPlayById(play.ID);
+                var listOfPlays = logic.GetPlayById(play.PlayID);
                 Assert.True(listOfPlays.Result.Equals(play));
             }
         }
@@ -548,7 +548,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var message = new Message
                 {
-                    ID = Guid.NewGuid(),
+                    MessageID = Guid.NewGuid(),
                     SenderID = Guid.NewGuid(),
                     RecipientListID = Guid.NewGuid(),
                     MessageText = "Hello there"
@@ -579,14 +579,14 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var message = new Message
                 {
-                    ID = Guid.NewGuid(),
+                    MessageID = Guid.NewGuid(),
                     SenderID = Guid.NewGuid(),
                     RecipientListID = Guid.NewGuid(),
                     MessageText = "Hello there"
                 };
 
                 r.messages.Add(message);
-                var listOfMessages = logic.GetMessageById(message.ID);
+                var listOfMessages = logic.GetMessageById(message.MessageID);
                 Assert.True(listOfMessages.Result.Equals(message));
             }
         }
@@ -610,7 +610,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var game = new Game
                 {
-                    ID = 1,
+                    GameID = 1,
                     HomeTeamID = 1,
                     AwayTeamID = 2,
                     WinningTeam = 1,
@@ -643,7 +643,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var game = new Game
                 {
-                    ID = 1,
+                    GameID = 1,
                     HomeTeamID = 1,
                     AwayTeamID = 2,
                     WinningTeam = 1,
@@ -652,7 +652,7 @@ namespace Logic.Tests
                 };
 
                 r.games.Add(game);
-                var listOfGames = logic.GetGameById(game.ID);
+                var listOfGames = logic.GetGameById(game.GameID);
                 Assert.True(listOfGames.Result.Equals(game));
             }
         }
@@ -676,7 +676,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var eventSchedule = new Event
                 {
-                    ID = 1,
+                    EventID = 1,
                     TeamID = 1,
                     Description = "Practice",
                     EventDate = DateTime.Now,
@@ -709,7 +709,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var eventSchedule = new Event
                 {
-                    ID = 1,
+                    EventID = 1,
                     TeamID = 1,
                     Description = "Practice",
                     EventDate = DateTime.Now,
@@ -718,7 +718,7 @@ namespace Logic.Tests
                 };
 
                 r.events.Add(eventSchedule);
-                var listOfEvents = logic.GetEventById(eventSchedule.ID);
+                var listOfEvents = logic.GetEventById(eventSchedule.EventID);
                 Assert.True(listOfEvents.Result.Equals(eventSchedule));
             }
         }
@@ -742,7 +742,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var equipment = new EquipmentRequest
                 {
-                    ID = 4, // 4 for seeding
+                    RequestID = 4, // 4 for seeding
                     UserID = Guid.NewGuid(),
                     TeamID = 1,
                     RequestDate = DateTime.Now,
@@ -775,7 +775,7 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
                 var equipment = new EquipmentRequest
                 {
-                    ID = 3, // 3 for seeding
+                    RequestID = 3, // 3 for seeding
                     UserID = Guid.NewGuid(),
                     TeamID = 1,
                     RequestDate = DateTime.Now,
@@ -785,7 +785,7 @@ namespace Logic.Tests
                 };
 
                 r.equipmentRequests.Add(equipment);
-                var listOfEquipment = logic.GetEquipmentRequestById(equipment.ID);
+                var listOfEquipment = logic.GetEquipmentRequestById(equipment.RequestID);
                 Assert.True(listOfEquipment.Result.Equals(equipment));
             }
         }

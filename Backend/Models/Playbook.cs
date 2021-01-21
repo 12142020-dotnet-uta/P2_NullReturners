@@ -14,9 +14,9 @@ namespace Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("Playbook ID")]
-        public int ID { get; set; }
-
+        public int PlaybookID { get; set; }
         [DisplayName("Team ID")]
+        [ForeignKey("TeamID")]
         public int TeamID { get; set; }
     }
 }

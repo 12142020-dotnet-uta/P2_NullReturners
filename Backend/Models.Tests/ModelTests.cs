@@ -32,7 +32,7 @@ namespace Models.Tests
         {
             var user = new User
             {
-                ID = Guid.NewGuid(),
+                UserID = Guid.NewGuid(),
                 UserName = "jerry",
                 Password = "jerryrice",
                 FullName = "Jerry Rice",
@@ -54,7 +54,7 @@ namespace Models.Tests
         {
             var user = new User
             {
-                ID = Guid.NewGuid(),
+                UserID = Guid.NewGuid(),
                 UserName = "jerry",
                 Password = "jerryrice",
                 FullName = "Jerry Rice",
@@ -77,7 +77,7 @@ namespace Models.Tests
         {
             var team = new Team()
             {
-                ID = 1,
+                TeamID = 1,
                 Name = "Broncos",
                 Wins = 3,
                 Losses = 1
@@ -95,7 +95,7 @@ namespace Models.Tests
         {
             var role = new Role()
             {
-                ID = 1,
+                RoleID = 1,
                 RoleName = "Coach"
             };
 
@@ -111,7 +111,7 @@ namespace Models.Tests
         {
             var playbook = new Playbook()
             {
-                ID = 1,
+                PlaybookID = 1,
                 TeamID = 2
             };
 
@@ -127,7 +127,7 @@ namespace Models.Tests
         {
             var play = new Play()
             {
-                ID = 1,
+                PlayID = 1,
                 PlaybookId = 1,
                 Name = "Tackle",
                 Description = "Tackles other players",
@@ -146,7 +146,7 @@ namespace Models.Tests
         {
             var message = new Message()
             {
-                ID = Guid.NewGuid(),
+                MessageID = Guid.NewGuid(),
                 SenderID = Guid.NewGuid(),
                 RecipientListID = Guid.NewGuid(),
                 MessageText = "Yall ready for this?"
@@ -164,7 +164,7 @@ namespace Models.Tests
         {
             var game = new Game()
             {
-                ID = 1,
+                GameID = 1,
                 HomeTeamID = 1,
                 AwayTeamID = 2,
                 WinningTeam = 1,
@@ -184,7 +184,7 @@ namespace Models.Tests
         {
             var eventSchedule = new Event()
             {
-                ID = 1,
+                EventID = 1,
                 TeamID = 1,
                 Description = "Training",
                 EventDate = DateTime.Now,
@@ -204,7 +204,7 @@ namespace Models.Tests
         {
             var equipmentRequest = new EquipmentRequest()
             {
-                ID = 1,
+                RequestID = 1,
                 UserID = Guid.Parse("ac4acf50-ad36-4b87-931d-69fe4aafc0ba"),
                 TeamID = 1,
                 RequestDate = DateTime.Now,
