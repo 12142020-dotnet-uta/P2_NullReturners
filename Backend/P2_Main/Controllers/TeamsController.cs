@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models;
+using Models.DataTransfer;
 
 namespace P2_Main.Controllers
 {
@@ -35,16 +36,10 @@ namespace P2_Main.Controllers
             return await _logic.GetTeamById(id);
         }
 
-        // JOSH: create EditTeamDto DTO:
-        // Name, Wins, Losses
-        //[HttpPut("edit/{id}")]
-        //public async Task<ActionResult<Team>> EditTeam(int id, EditTeamDto editTeam)
-        //{
-        //    return await _logic.EditTeam(id, editTeam);
-        //}
-
-
-
-
+        [HttpPut("edit/{id}")]
+        public async Task<ActionResult<Team>> EditTeam(int id, EditTeamDto editTeam)
+        {
+            return await _logic.EditTeam(id, editTeam);
+        }
     }
 }
