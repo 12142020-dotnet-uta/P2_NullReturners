@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProgContext))]
-    [Migration("20210120224632_adding properties to equip request")]
-    partial class addingpropertiestoequiprequest
+    [Migration("20210121143140_newmodels")]
+    partial class newmodels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,11 +114,11 @@ namespace Repository.Migrations
                     b.Property<string>("MessageText")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RecipientID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RecipientListID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SenderID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SenderID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
 
@@ -135,14 +135,14 @@ namespace Repository.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("DrawnPlay")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PlaybookId")
                         .HasColumnType("int");
-
-                    b.Property<byte[]>("drawnPlay")
-                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("ID");
 
@@ -162,6 +162,20 @@ namespace Repository.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Playbooks");
+                });
+
+            modelBuilder.Entity("Models.RecipientList", b =>
+                {
+                    b.Property<Guid>("RecipientListID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RecipientID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("RecipientListID");
+
+                    b.ToTable("RecipientLists");
                 });
 
             modelBuilder.Entity("Models.Role", b =>

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class addingpropertiestoequiprequest : Migration
+    public partial class newmodels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,8 +64,8 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SenderID = table.Column<int>(type: "int", nullable: false),
-                    RecipientID = table.Column<int>(type: "int", nullable: false),
+                    SenderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RecipientListID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MessageText = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -95,11 +95,23 @@ namespace Repository.Migrations
                     PlaybookId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    drawnPlay = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    DrawnPlay = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Plays", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RecipientLists",
+                columns: table => new
+                {
+                    RecipientListID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RecipientID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecipientLists", x => x.RecipientListID);
                 });
 
             migrationBuilder.CreateTable(
@@ -168,6 +180,9 @@ namespace Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "Plays");
+
+            migrationBuilder.DropTable(
+                name: "RecipientLists");
 
             migrationBuilder.DropTable(
                 name: "Roles");
