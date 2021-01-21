@@ -27,6 +27,7 @@ namespace Models
 
         [DisplayName("Phone Number")]
         [DataType(DataType.PhoneNumber)]
+        [Phone(ErrorMessage = "Phone number must be valid phone number")]
         public string PhoneNumber { get; set; }
 
         [DisplayName("Email Address")]

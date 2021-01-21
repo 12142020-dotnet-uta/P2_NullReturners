@@ -747,6 +747,7 @@ namespace Logic.Tests
                     TeamID = 1,
                     RequestDate = DateTime.Now,
                     Message = "shoulder pads",
+                    ItemId = 1,
                     Status = "pending"
                 };
 
@@ -779,6 +780,7 @@ namespace Logic.Tests
                     TeamID = 1,
                     RequestDate = DateTime.Now,
                     Message = "shoulder pads",
+                    ItemId = 1,
                     Status = "pending"
                 };
 

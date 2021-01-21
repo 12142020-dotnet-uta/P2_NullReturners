@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P2_Main", "P2_Main\P2_Main.csproj", "{A2A1235D-1C99-4C31-A07C-37C72C535358}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P2_Main", "P2_Main\P2_Main.csproj", "{A2A1235D-1C99-4C31-A07C-37C72C535358}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{E91CBBC0-25D6-4305-90F2-C43338E31E03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{E91CBBC0-25D6-4305-90F2-C43338E31E03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{BB22B27B-8C04-4DA0-B371-3E7A6674878D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{BB22B27B-8C04-4DA0-B371-3E7A6674878D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{25A896BD-32DA-4E66-8147-93D56A962B95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj", "{25A896BD-32DA-4E66-8147-93D56A962B95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models.Tests", "Models.Tests\Models.Tests.csproj", "{315AF72D-BB35-4C6B-AF0D-AA409A5FA001}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models.Tests", "Models.Tests\Models.Tests.csproj", "{315AF72D-BB35-4C6B-AF0D-AA409A5FA001}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Tests", "Logic.Tests\Logic.Tests.csproj", "{82223B67-BAE4-4B25-BDFE-8C4814EED1BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic.Tests", "Logic.Tests\Logic.Tests.csproj", "{82223B67-BAE4-4B25-BDFE-8C4814EED1BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Tests", "Repository.Tests\Repository.Tests.csproj", "{A334F64C-9460-4AC7-9252-A68A9BBE2AF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Tests", "Repository.Tests\Repository.Tests.csproj", "{A334F64C-9460-4AC7-9252-A68A9BBE2AF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P2_Main.Tests", "P2_Main.Tests\P2_Main.Tests.csproj", "{006BE63F-3224-4C77-9E43-765C97891D7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{A334F64C-9460-4AC7-9252-A68A9BBE2AF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A334F64C-9460-4AC7-9252-A68A9BBE2AF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A334F64C-9460-4AC7-9252-A68A9BBE2AF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{006BE63F-3224-4C77-9E43-765C97891D7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{006BE63F-3224-4C77-9E43-765C97891D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{006BE63F-3224-4C77-9E43-765C97891D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{006BE63F-3224-4C77-9E43-765C97891D7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
