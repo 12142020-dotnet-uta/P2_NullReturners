@@ -15,7 +15,7 @@ export class PlayersComponent implements OnInit {
   }
 
   getPlayers() {
-    this.http.get('https://localhost:5001/api/users').subscribe(response => {
+    this.http.get('https://localhost:44342/api/users').subscribe(response => {
       this.players = response;
     }), err => {
       console.log(err)
