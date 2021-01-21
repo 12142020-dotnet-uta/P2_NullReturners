@@ -20,6 +20,7 @@ namespace Repository
         public DbSet<EquipmentRequest> EquipmentRequests { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<RecipientList> RecipientLists { get; set; }
+        public DbSet<UserInbox> UserInboxes{ get; set; }
 
         public ProgContext() { }
 
@@ -32,8 +33,11 @@ namespace Repository
             {
                 options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2newsetup;Trusted_Connection=True;");
             }
-
-
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserInbox>()
+                .HasKey(c => new { c.UserID, c.MessageID });
         }
     }
 }

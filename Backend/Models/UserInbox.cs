@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    class UserInbox
+    public class UserInbox
     {
         [DisplayName("User ID")]
         [ForeignKey("UserID")]

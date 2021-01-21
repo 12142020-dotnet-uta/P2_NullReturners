@@ -23,6 +23,7 @@ namespace Repository
         public DbSet<Team> teams;
         public DbSet<Message> messages;
         public DbSet<RecipientList> recipientLists;
+        public DbSet<UserInbox> userInboxes;
 
         public Repo(ProgContext progContext, ILogger<Repo> logger)
         {
@@ -38,6 +39,7 @@ namespace Repository
             this.teams = _progContext.Teams;
             this.messages = _progContext.Messages;
             this.recipientLists = _progContext.RecipientLists;
+            this.userInboxes = _progContext.UserInboxes;
             ValidateRoleTable();
             ValidateTeamTable();
             ValidateUserTable();

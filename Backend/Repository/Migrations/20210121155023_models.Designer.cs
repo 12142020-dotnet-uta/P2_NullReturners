@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProgContext))]
-    [Migration("20210121153702_newmodels")]
-    partial class newmodels
+    [Migration("20210121155023_models")]
+    partial class models
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -244,6 +244,19 @@ namespace Repository.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Models.UserInbox", b =>
+                {
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MessageID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserID", "MessageID");
+
+                    b.ToTable("UserInboxes");
                 });
 #pragma warning restore 612, 618
         }
