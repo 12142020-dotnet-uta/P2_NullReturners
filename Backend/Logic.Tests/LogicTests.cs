@@ -84,9 +84,9 @@ namespace Logic.Tests
                 };
                 r.users.Add(user);
                 await r.CommitSave();
-                logic.DeleteUser(Guid.NewGuid()); // fails for some reason when I add await
+                _ = logic.DeleteUser(Guid.NewGuid()); // fails for some reason when I add await
                 Assert.NotEmpty(context.Users);
-                logic.DeleteUser(user.UserID); // fails for some reason when I add await
+                _ = logic.DeleteUser(user.UserID); // fails for some reason when I add await
                 //Assert.Empty(context.Users);
                 Assert.Equal(15, context.Users.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
 
