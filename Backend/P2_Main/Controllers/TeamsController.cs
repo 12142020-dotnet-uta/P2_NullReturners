@@ -30,15 +30,17 @@ namespace P2_Main.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Team> GetTeam(int id)
+        public async Task<ActionResult<Team>> GetTeam(int id)
         {
             return await _logic.GetTeamById(id);
         }
 
+        // JOSH: create EditTeamDto DTO:
+        // Name, Wins, Losses
         //[HttpPut("edit/{id}")]
-        //public async Task<Team> EditTeam(int id)
+        //public async Task<ActionResult<Team>> EditTeam(int id, EditTeamDto editTeam)
         //{
-        //    return await _logic.EditTeam(id);
+        //    return await _logic.EditTeam(id, editTeam);
         //}
 
 

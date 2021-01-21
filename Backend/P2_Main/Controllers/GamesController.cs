@@ -31,21 +31,26 @@ namespace P2_Main.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Game> GetGame(int id)
+        public async Task<ActionResult<Game>> GetGame(int id)
         {
             return await _logic.GetGameById(id);
         }
 
+        // JOSH: Create CreateGameDto DTO
+        // HomeTeamID, AwayTemID
         //[HttpPost]
-        //public async Task<Game> CreateGame()
+        //public async Task<ActionResult<Game>> CreateGame(GameDto game)
         //{
-        //    return await _logic.CreateGame();
+        //    return await _logic.CreateGame(game);
         //}
 
+
+        // JOSH: Create EditGameDto DTO
+        // WinningTeam, HomeScore, AwayScore 
         //[HttpPut("edit/{id}")]
-        //public async Task<Game> EditGame(int id)
+        //public async Task<ActionResult<Game>> EditGame(int id, EditGameDto)
         //{
-        //    return await _logic.EditGame(id);
+        //    return await _logic.EditGame(id, EditGameDto);
         //}
 
     }

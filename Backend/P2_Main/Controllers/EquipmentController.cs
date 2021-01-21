@@ -30,21 +30,25 @@ namespace P2_Main.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<EquipmentRequest> GetEquipmentRequest(int id)
+        public async Task<ActionResult<EquipmentRequest>> GetEquipmentRequest(int id)
         {
             return await _logic.GetEquipmentRequestById(id);
         }
 
+        // JOSH: Create CreateEquipmentRequestDto DTO
+        // UserID, TeamID, RequestDate, Message, ItemID, Status
         //[HttpPost]
-        //public async Task<EquipmentRequest> CreateEquipmentRequest()
+        //public async Task<ActionResult<EquipmentRequest>> CreateEquipmentRequest(CreateEquipmentRequestDto equipmentRequest)
         //{
-        //    return await _logic.CreateEquipmentRequest();
+        //    return await _logic.CreateEquipmentRequest(equipmentRequest);
         //}
 
+        // JOSH: Create EditEquipmentRequestDto DTO
+        // Status
         //[HttpPut("/edit/{id}")]
-        //public async Task<EquipmentRequest> EditEquipmentRequest(int id)
+        //public async Task<EquipmentRequest> EditEquipmentRequest(int id, EditEquipmentRequestDto equipmentRequest)
         //{
-        //    return await _logic.EditEquipmentRequest(id);
+        //    return await _logic.EditEquipmentRequest(id, equipmentRequest);
         //}
 
     }

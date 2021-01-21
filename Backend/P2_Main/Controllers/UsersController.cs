@@ -29,47 +29,73 @@ namespace P2_Main.Controllers
             return await _logic.GetUsers();
         }
 
-        // what are we passing in here              returns newly created user or user found in db
-        [HttpPost]
-        public async Task<User> CreateUser(string userName, string password, string fullName, string phoneNumber, string email)
-        {
-            return await _logic.CreateUser(userName, password, fullName, phoneNumber, email);
-        }
+
+        // JOSH: create CreateUserDto DTO:
+        // UserName, Password, FullName, Phone, Email, TeamID, RoleID
+        //[HttpPost]
+        //public async Task<ActionResult<User>> CreateUser(CreateUserDto createUser)
+        //{
+        //    return await _logic.CreateUser(createUser.UserName, createUser.Password, createUser.FullName, createUser.PhoneNumber, CreateUser.email, createUser.TeamID, createUser.RoleID);
+        //}
 
         [HttpGet("{id}")]
-        public async Task<User> GetUser(Guid id)
+        public async Task<ActionResult<User>> GetUser(Guid id)
         {
             return await _logic.GetUserById(id);
         }
 
-        [HttpPost("roles")]
+        [HttpGet("roles")]
         public async Task<IEnumerable<Role>> GetRoles()
         {
             return await _logic.GetRoles();
         }
 
-        [HttpPost("roles/{id}")]
-        public async Task<Role> GetRole(int id)
+        [HttpGet("roles/{id}")]
+        public async Task<ActionResult<Role>> GetRole(int id)
         {
             return await _logic.GetRoleById(id);
         }
 
-        // FIX THIS DANIEL
 
         // Simple editing       --> probably want to pass in a User object with edited fields, then alter the one in the context -- always a valid user becuase they are logged in -- FullName, Email, Password, PhoneNumber can be changed
-        [HttpPut("edit/{id}")]
-        public async Task<User> EditUser(User editedUser)
-        {
-            return await _logic.EditUser(editedUser);
-        }
+        // JOSH: create EditUserDto DTO:
+        // FullName, Email, Password, Phone
+        // May have to pass this in differently
+        //[HttpPut("edit/{id}")]
+        //public async Task<ActionResult<User>> EditUser(Guid id, UserEditDto editedUser)
+        //{
+        //    User editUser = new User()
+        //    {
+        //      UserID = id,
+        //      FullName = editedUser.FullName,
+        //      Email = editedUser.Email,
+        //      Password = editedUser.Password,
+        //      PhoneNumber = editedUser.Phone
+        //     };
+        //    return await _logic.EditUser(editUser);
+        //}
 
-        // FIX THIS DANIEL
+
 
         // Coach access required below      --> same as above -- provide drop-down menu or other list to select users to edit -- can edit any field but ID
-        //[HttpPut("edit/{id}")]
-        //public async Task<User> CoachEditUser(Guid id)
+        // JOSH: create CoachEditUserDto DTO:
+        // UserName, FullName, Email, Password, Phone, TeamID, RoleID
+        // May have to pass this in differently
+        //[HttpPut("coach/edit/{id}")]
+        //public async Task<ActionResult<User>> CoachEditUser(Guid id, CoachEditUserDto editedUser)
         //{
-        //    return await _logic.CoachEditUser(await _logic.GetUserById(id));
+        //    User editUser = new User()
+        //    {
+        //        UserID = id,
+        //        UserName = editedUser.UserName,
+        //        FullName = editedUser.FullName,
+        //        Email = editedUser.Email,
+        //        Password = editedUser.Password,
+        //        PhoneNumber = editedUser.Phone,
+        //        TeamID = editedUser.TeamID,
+        //        RoleID = editedUser.RoleID
+        //    };
+        //    return await _logic.CoachEditUser(editUser);
         //}
 
         [HttpDelete("delete/{id}")]
@@ -78,9 +104,5 @@ namespace P2_Main.Controllers
             await _logic.DeleteUser(id);
             _logger.LogInformation("User deleted.");
         }
-
-
-
-
-    }
+     }
 }
