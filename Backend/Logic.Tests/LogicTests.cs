@@ -6,6 +6,7 @@ using Logic;
 using System;
 using Xunit;
 using System.Threading.Tasks;
+using Models.DataTransfer;
 
 namespace Logic.Tests
 {
@@ -34,11 +35,19 @@ namespace Logic.Tests
 
                 Repo r = new Repo(context, _logger);
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
-                var user = logic.CreateUser("jerryrice", "jerry123", "Jerry Rice", "111-111-1111", "jerryrice@gmail.com");
+                CreateUserDto cUD = new CreateUserDto()
+                {
+                    UserName = "jerryrice",
+                    Password = "jerry123",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com"
+                };
+                var user = logic.CreateUser(cUD);
 
                 Assert.NotEmpty(context.Users);
 
-                var user2 = logic.CreateUser("jerryrice", "jerry123", "Jerry Rice", "111-111-1111", "jerryrice@gmail.com");
+                var user2 = logic.CreateUser(cUD);
                 Assert.Equal(16, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
             }
         }
@@ -114,7 +123,7 @@ namespace Logic.Tests
 
                 r.users.Add(user);
                 await r.CommitSave();
-                await logic.AddUserRole(user, 1);
+                await logic.AddUserRole(user.UserID, 1);
                 Assert.Equal(1, context.Users.Find(user.UserID).RoleID);
             }
         }
@@ -151,19 +160,15 @@ namespace Logic.Tests
                 r.users.Add(user);
                 await r.CommitSave();
 
-                var user2 = new User
+                var user2 = new EditUserDto()
                 {
-                    UserID = user.UserID,
-                    UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Tom Rice",
                     PhoneNumber = "111-111-1111",
-                    Email = "jerryrice@gmail.com",
-                    TeamID = 1,
-                    RoleID = 1
+                    Email = "jerryrice@gmail.com"
                 };
 
-                var editedUser = logic.EditUser(user2);
+                var editedUser = logic.EditUser(user.UserID, user2);
                 Assert.Equal(editedUser.Result.FullName, context.Users.Find(user.UserID).FullName);
             }
         }
@@ -200,9 +205,8 @@ namespace Logic.Tests
                 r.users.Add(user);
                 await r.CommitSave();
 
-                var user2 = new User
+                var user2 = new CoachEditUserDto
                 {
-                    UserID = user.UserID,
                     UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Jerry Rice",
@@ -212,7 +216,7 @@ namespace Logic.Tests
                     RoleID = 2
                 };
 
-                var editedUser = logic.CoachEditUser(user2);
+                var editedUser = logic.CoachEditUser(user.UserID, user2);
                 Assert.Equal(editedUser.Result.RoleID, context.Users.Find(user.UserID).RoleID);
             }
         }
