@@ -563,6 +563,7 @@ namespace Repository.Tests
                     TeamID = 1,
                     RequestDate = DateTime.Now,
                     Message = "shoulder pads",
+                    ItemId = 1,
                     Status = "pending"
                 };
 
@@ -595,6 +596,7 @@ namespace Repository.Tests
                     TeamID = 1,
                     RequestDate = DateTime.Now,
                     Message = "shoulder pads",
+                    ItemId = 1,
                     Status = "pending"
                 };
 
@@ -603,6 +605,7 @@ namespace Repository.Tests
                 Assert.True(listOfEquipment.Result.Equals(equipment));
             }
         }
+
 
     } // end of class
 } // end of namespace
