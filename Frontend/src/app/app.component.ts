@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,23 +9,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'FrontEnd';
-  users: any;
-  // user: any
 
-  constructor(private http: HttpClient) {}
+
+  constructor(public auth: AuthService, private http: HttpClient) {}
 
   ngOnInit() {
 
   }
-
-
-
-  // getUser() {
-  //   this.http.get('https://localhost:5001/api/users/76026bc7-63e9-4695-8985-0144f059e813').subscribe(response => {
-  //     this.user = response;
-  //   }), err => {
-  //     console.log(err)
-  //   }
-  // }
 
 }
