@@ -57,7 +57,6 @@ namespace Repository
             List<User> uList =  await users.ToListAsync();
             return uList;
         }
-
         public async Task<User> GetUserById(Guid id)
         {
             return await users.FindAsync(id);
@@ -135,11 +134,9 @@ namespace Repository
             return await equipmentRequests.ToListAsync();
         }
 
-
-        // seeding the db
         private void ValidateRoleTable()
         {
-            if (roles.Count() == 0)
+            if (roles.Any())
             {
                 List<Role> roleList = new List<Role>();
                 string[] roleNames = { "Coach", "Player", "Parent" };
@@ -153,10 +150,9 @@ namespace Repository
                 _progContext.SaveChanges();
             }
         }
-
         private void ValidateTeamTable()
         {
-            if (teams.Count() == 0)
+            if (teams.Any())
             {
                 List<Team> teamList = new List<Team>();
                 string[] teamNames = { "Lions", "Tigers", "Bears" };
@@ -170,10 +166,9 @@ namespace Repository
                 _progContext.SaveChanges();
             }
         }
-
         private void ValidateUserTable()
         {
-            if (users.Count() == 0)
+            if (users.Any())
             {
                 List<User> userList = new List<User>();
 
@@ -218,10 +213,9 @@ namespace Repository
                 _progContext.SaveChanges();
             }
         }
-
         private void ValidateEquipmentRequestTable()
         {
-            if (equipmentRequests.Count() == 0)
+            if (equipmentRequests.Any())
             {
                 List<EquipmentRequest> equipmentRequestList = new List<EquipmentRequest>();
 
@@ -249,10 +243,6 @@ namespace Repository
                 _progContext.SaveChanges();
             }
         }
-
-
-        // seeding end
-
     }
 }
 

@@ -47,6 +47,5 @@ namespace P2_Main.Controllers
         {
             return await _logic.EditEquipmentRequest(id, equipmentRequest);
         }
-
     }
 }
