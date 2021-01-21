@@ -15,7 +15,7 @@ export class AuthService {
       domain: 'dev-wkdsis1z.us.auth0.com',
       client_id: '7jEmJE25orZH5Ejn5FzXhQ7WbTMLQPob',
       redirect_uri: `${window.location.origin}`,
-      audience: 'http://localhost:44342'
+      audience: 'https://localhost:44342/api'
     })
   ) as Observable<Auth0Client>).pipe(
     shareReplay(1), // Every subscription receives the same shared value
@@ -124,7 +124,7 @@ export class AuthService {
     this.auth0Client$.subscribe((client: Auth0Client) => {
       // Call method to log out
       client.logout({
-        client_id: '{your-client-id}',
+        client_id: '7jEmJE25orZH5Ejn5FzXhQ7WbTMLQPob',
         returnTo: `${window.location.origin}`
       });
     });

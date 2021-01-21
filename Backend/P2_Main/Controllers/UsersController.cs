@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Logic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,6 +24,7 @@ namespace P2_Main.Controllers
             _logger = logger;
         }
 
+        
         [HttpGet]
         public async Task<IEnumerable<User>> GetUsers()
         {

@@ -10,6 +10,7 @@ import { PlayersComponent } from './players/players.component';
 import { TeamsComponent } from './teams/teams.component';
 import { EquipmentComponent } from './equipment/equipment.component';
 import { RolesComponent } from './roles/roles.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -23,13 +24,8 @@ import { RolesComponent } from './roles/roles.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      {path: 'players', component: PlayersComponent},
-      {path: 'teams', component: TeamsComponent},
-      {path: 'equipment', component: EquipmentComponent},
-      {path: 'roles', component: RolesComponent},
-    ]),
     BrowserAnimationsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
