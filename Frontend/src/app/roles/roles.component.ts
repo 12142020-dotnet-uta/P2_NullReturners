@@ -16,7 +16,7 @@ export class RolesComponent implements OnInit {
   }
 
   getRoles() { 
-    this.http.get('https://localhost:5001/api/users/roles').subscribe(response => {
+    this.http.get('https://localhost:44342/api/users/roles').subscribe(response => {
       this.roles = response;
     }), err => {
       console.log(err)

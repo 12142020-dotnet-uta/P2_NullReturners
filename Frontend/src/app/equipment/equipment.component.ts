@@ -16,7 +16,7 @@ export class EquipmentComponent implements OnInit {
   }
 
   getEquipment() {
-    this.http.get('https://localhost:5001/api/equipment').subscribe(response => {
+    this.http.get('https://localhost:44342/api/equipment').subscribe(response => {
       this.equipmentList = response;
     }), err => {
       console.log(err)

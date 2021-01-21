@@ -31,7 +31,7 @@ namespace Repository
         {
             if (!options.IsConfigured)
             {
-                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2newsetup;Trusted_Connection=True;");
+                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2test;Trusted_Connection=True;");
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

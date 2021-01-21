@@ -17,7 +17,7 @@ export class TeamsComponent implements OnInit {
   }
 
   getTeams(){
-    this.http.get('https://localhost:5001/api/teams').subscribe(response => {
+    this.http.get('https://localhost:44342/api/teams').subscribe(response => {
       this.teams = response;
     }), err => {
       console.log(err)
