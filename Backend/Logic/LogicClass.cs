@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Models;
+using Models.DataTransfer;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace Logic
         {
             return await _repo.GetUsers();
         }
+        //Users
         public async Task<User> CreateUser(string userName, string password, string fullName, string phoneNumber, string email)
         {
             User user = _repo.users.FirstOrDefault(x => x.UserName == userName || x.Email == email);
@@ -97,6 +99,7 @@ namespace Logic
             await _repo.CommitSave();
             return tUser;
         }
+        //Teams
         public async Task<Team> GetTeamById(int id)
         {
             return await _repo.GetTeamById(id);
@@ -105,6 +108,7 @@ namespace Logic
         {
             return await _repo.GetTeams();
         }
+        //Roles
         public async Task<Role> GetRoleById(int id)
         {
             return await _repo.GetRoleById(id);
@@ -113,6 +117,7 @@ namespace Logic
         {
             return await _repo.GetRoles();
         }
+        //Playbooks
         public async Task<Playbook> GetPlaybookById(int id)
         {
             return await _repo.GetPlaybookById(id);
@@ -120,6 +125,30 @@ namespace Logic
         public async Task<IEnumerable<Playbook>> GetPlaybooks()
         {
             return await _repo.GetPlaybooks();
+        }
+        public async Task<Play> CreateNewPlay(Guid userId, string playName, string description, byte[] drawnPlay)
+        {
+            User user = await GetUserById(userId);
+            var playbookId = _repo.playbooks.FirstOrDefault(x => x.TeamID == user.TeamID).ID;
+            Play newPlay = new Play()
+            {
+                PlaybookId = playbookId,
+                Name = playName,
+                Description = description,
+                DrawnPlay = drawnPlay
+            };
+            await _repo.plays.AddAsync(newPlay);
+            await _repo.CommitSave();
+            return newPlay;
+        }
+        public async Task<Play> EditPlay(Play play, PlayDto playDto) 
+        {
+            Play editedPlay = await _repo.plays.FindAsync(play);
+            editedPlay.Name = playDto.Name;
+            editedPlay.Description = playDto.Description;
+            editedPlay.DrawnPlay = playDto.DrawnPlay;
+            await _repo.CommitSave();
+            return editedPlay;
         }
         public async Task<Play> GetPlayById(int id)
         {
@@ -129,6 +158,7 @@ namespace Logic
         {
             return await _repo.GetPlays();
         }
+        //Messaging
         public async Task<Message> GetMessageById(Guid id)
         {
             return await _repo.GetMessageById(id);
@@ -137,6 +167,43 @@ namespace Logic
         {
             return await _repo.GetMessages();
         }
+        public async Task<RecipientList> GetRecipientListById(Guid id)
+        {
+            return await _repo.GetRecipientListById(id);
+        }
+        public async Task<IEnumerable<RecipientList>> GetRecipientLists()
+        {
+            return await _repo.GetRecipientLists();
+        }
+        public async Task<Message> CreateNewMessage(Guid senderId, Guid recipientListId, string message)
+        {
+            Message newMessage = new Message()
+            {
+                SenderID = senderId,
+                RecipientListID = recipientListId,
+                MessageText = message
+            };
+            await _repo.messages.AddAsync(newMessage);
+            await _repo.CommitSave();
+            return newMessage;
+        }
+        public async Task SendMessage(Message message)
+        {            
+            List<Guid> recipientList = new List<Guid>();
+            foreach (RecipientList r in _repo.recipientLists)
+            {
+                if (r.RecipientListID == message.RecipientListID)
+                {
+                    recipientList.Add(r.RecipientID);
+                }
+            }
+            //foreach(Guid r in recipientList)
+            //{
+            //    //Notify await GetUserById(r) of message
+            //}
+            await _repo.CommitSave();
+        }
+        //Games
         public async Task<Game> GetGameById(int id)
         {
             return await _repo.GetGameById(id);
@@ -145,6 +212,7 @@ namespace Logic
         {
             return await _repo.GetGames();
         }
+        //Events
         public async Task<Event> GetEventById(int id)
         {
             return await _repo.GetEventById(id);
@@ -153,6 +221,7 @@ namespace Logic
         {
             return await _repo.GetEvents();
         }
+        //Equipment
         public async Task<EquipmentRequest> GetEquipmentRequestById(int id)
         {
             return await _repo.GetEquipmentRequestById(id);

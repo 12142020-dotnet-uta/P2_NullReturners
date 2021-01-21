@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    class RecipientList
+    public class RecipientList
     {
-        public Guid ListID { get; set; }
+        public Guid RecipientListID { get; set; }
         public Guid RecipientID { get; set; }
     }
 }

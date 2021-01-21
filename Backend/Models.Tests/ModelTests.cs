@@ -131,7 +131,7 @@ namespace Models.Tests
                 PlaybookId = 1,
                 Name = "Tackle",
                 Description = "Tackles other players",
-                drawnPlay = new byte[1]
+                DrawnPlay = new byte[1]
             };
 
             var results = ValidateModel(play);
@@ -147,8 +147,8 @@ namespace Models.Tests
             var message = new Message()
             {
                 ID = Guid.NewGuid(),
-                SenderID = 1,
-                RecipientID = 1,
+                SenderID = Guid.NewGuid(),
+                RecipientListID = Guid.NewGuid(),
                 MessageText = "Yall ready for this?"
             };
 

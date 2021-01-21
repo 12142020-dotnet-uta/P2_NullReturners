@@ -488,7 +488,7 @@ namespace Logic.Tests
                     PlaybookId = 1,
                     Name = "Tackle",
                     Description = "Tackle other players",
-                    drawnPlay = new byte[1]
+                    DrawnPlay = new byte[1]
                 };
 
                 r.plays.Add(play);
@@ -520,7 +520,7 @@ namespace Logic.Tests
                     PlaybookId = 1,
                     Name = "Tackle",
                     Description = "Tackle other players",
-                    drawnPlay = new byte[1]
+                    DrawnPlay = new byte[1]
                 };
 
                 r.plays.Add(play);
@@ -549,8 +549,8 @@ namespace Logic.Tests
                 var message = new Message
                 {
                     ID = Guid.NewGuid(),
-                    SenderID = 1,
-                    RecipientID = 1,
+                    SenderID = Guid.NewGuid(),
+                    RecipientListID = Guid.NewGuid(),
                     MessageText = "Hello there"
                 };
 
@@ -580,8 +580,8 @@ namespace Logic.Tests
                 var message = new Message
                 {
                     ID = Guid.NewGuid(),
-                    SenderID = 1,
-                    RecipientID = 1,
+                    SenderID = Guid.NewGuid(),
+                    RecipientListID = Guid.NewGuid(),
                     MessageText = "Hello there"
                 };
 

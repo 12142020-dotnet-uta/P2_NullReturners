@@ -17,10 +17,10 @@ namespace Models
         public Guid ID { get; set; }
 
         [DisplayName("Sender ID")]
-        public int SenderID { get; set; }
+        public Guid SenderID { get; set; }
 
-        [DisplayName("Recipient ID")]
-        public int RecipientID { get; set; }
+        [DisplayName("Recipient List ID")]
+        public Guid RecipientListID { get; set; }
 
         [DisplayName("Message Text")]
         public string MessageText { get; set; }

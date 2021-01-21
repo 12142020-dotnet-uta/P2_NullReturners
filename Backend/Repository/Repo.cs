@@ -22,6 +22,7 @@ namespace Repository
         public DbSet<Role> roles;
         public DbSet<Team> teams;
         public DbSet<Message> messages;
+        public DbSet<RecipientList> recipientLists;
 
         public Repo(ProgContext progContext, ILogger<Repo> logger)
         {
@@ -36,6 +37,7 @@ namespace Repository
             this.roles = _progContext.Roles;
             this.teams = _progContext.Teams;
             this.messages = _progContext.Messages;
+            this.recipientLists = _progContext.RecipientLists;
             ValidateRoleTable();
             ValidateTeamTable();
             ValidateUserTable();
@@ -97,6 +99,14 @@ namespace Repository
         public async Task<IEnumerable<Message>> GetMessages()
         {
             return await messages.ToListAsync();
+        }
+        public async Task<RecipientList> GetRecipientListById(Guid id)
+        {
+            return await recipientLists.FindAsync(id);
+        }
+        public async Task<IEnumerable<RecipientList>> GetRecipientLists()
+        {
+            return await recipientLists.ToListAsync();
         }
         public async Task<Game> GetGameById(int id)
         {

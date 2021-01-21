@@ -25,6 +25,6 @@ namespace Models
         [DisplayName("Description")]
         public string Description { get; set; }
 
-        public byte[] drawnPlay { get; set; } //might change, goal is to have coaches able to draw a play and save it to the playbook
+        public byte[] DrawnPlay { get; set; } //might change, goal is to have coaches able to draw a play and save it to the playbook
     }
 }
