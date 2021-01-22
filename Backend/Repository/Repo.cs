@@ -136,7 +136,7 @@ namespace Repository
 
         private void ValidateRoleTable()
         {
-            if (roles.Any())
+            if (roles.Count() == 0)
             {
                 string[] roleNames = { "Coach", "Player", "Parent" };
 
@@ -154,7 +154,7 @@ namespace Repository
         private void ValidateTeamTable()
         {
             
-            if (teams.Any())
+            if (teams.Count() == 0)
             {
                 string[] teamNames = { "Lions", "Tigers", "Bears" };
 
@@ -171,7 +171,7 @@ namespace Repository
         }
         private void ValidateUserTable()
         {
-            if (users.Any())
+            if (users.Count() == 0)
             {
                 string[] userNames = { "jerryjones1", "jerryrice1", "terrybradshaw1",
                 "lionplayer1", "lionplayer2", "tigerplayer1", "tigerplayer2", "bearplayer1", "bearplayer2",
@@ -218,7 +218,7 @@ namespace Repository
         }
         private void ValidateEquipmentRequestTable()
         {
-            if (equipmentRequests.Any())
+            if (equipmentRequests.Count() == 0)
             {
                 User user1 = users.FirstOrDefault(x => x.UserName == "lionparent1");
                 User user2 = users.FirstOrDefault(x => x.UserName == "bearparent2");
