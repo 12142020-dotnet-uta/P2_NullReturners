@@ -14,7 +14,7 @@ namespace Logic.Tests
     {
 
         private readonly Mapper _mapper;
-        private readonly ILogger<Repo> _logger;
+        private readonly ILogger<Repo> _logger; 
 
         /// <summary>
         /// Tests the AddUser() method of LogicClass
