@@ -24,7 +24,6 @@ namespace Repository
 
         public ProgContext() { }
 
-
         public ProgContext(DbContextOptions<ProgContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
