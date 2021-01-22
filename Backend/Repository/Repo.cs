@@ -42,20 +42,15 @@ namespace Repository
             this.userInboxes = _progContext.UserInboxes;
             _logger.LogInformation("Context created.");
             ValidateRoleTable();
-            _logger.LogInformation("Role table validated.");
             ValidateTeamTable();
-            _logger.LogInformation("Team table validated.");
             ValidateUserTable();
-            _logger.LogInformation("User table validated.");
             ValidateEquipmentRequestTable();
-            _logger.LogInformation("Request table validated.");
         }
 
         // Access SaveChanges from Logic class
         public async Task CommitSave()
         {
             await _progContext.SaveChangesAsync();
-            _logger.LogInformation("Context saved.");
         }
         // Context accessors
         public async Task<IEnumerable<User>> GetUsers()
@@ -156,7 +151,6 @@ namespace Repository
                 }
                 _progContext.SaveChanges();
             }
-            _logger.LogInformation("Table populated.");
         }
         private void ValidateTeamTable()
         {
@@ -175,7 +169,6 @@ namespace Repository
                 }
                 _progContext.SaveChanges();
             }
-            _logger.LogInformation("Table populated.");
         }
         private void ValidateUserTable()
         {
@@ -223,7 +216,6 @@ namespace Repository
                 }
                 _progContext.SaveChanges();
             }
-            _logger.LogInformation("Table populated.");
         }
         private void ValidateEquipmentRequestTable()
         {
@@ -254,7 +246,6 @@ namespace Repository
                 }
                 _progContext.SaveChanges();
             }
-            _logger.LogInformation("Table populated.");
         }
     }
 }
