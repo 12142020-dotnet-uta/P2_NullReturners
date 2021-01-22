@@ -14,7 +14,7 @@ namespace Logic.Tests
     {
 
         private readonly Mapper _mapper;
-        private readonly ILogger<Repo> _logger; 
+        private readonly ILogger<Repo> _logger;
 
         /// <summary>
         /// Tests the AddUser() method of LogicClass
@@ -48,7 +48,7 @@ namespace Logic.Tests
                 Assert.NotEmpty(context.Users);
 
                 var user2 = logic.CreateUser(cUD);
-                Assert.Equal(16, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
+                Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
             }
         }
 
@@ -88,7 +88,7 @@ namespace Logic.Tests
                 Assert.NotEmpty(context.Users);
                 logic.DeleteUser(user.UserID); // fails for some reason when I add await
                 //Assert.Empty(context.Users);
-                Assert.Equal(15, context.Users.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
+                Assert.Equal(0, context.Users.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
 
             }
         }
