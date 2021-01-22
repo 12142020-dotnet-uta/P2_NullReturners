@@ -1003,7 +1003,7 @@ namespace Logic.Tests
             }
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Tests the CreateGame() method of LogicClass
         /// Tests that a user is added to the database
         /// </summary>
@@ -1027,9 +1027,51 @@ namespace Logic.Tests
                     AwayTeamID = 2
                 };
                 var createGame = logic.CreateGame(game);
-                Assert.Equal(1, context.Games.CountAsync().Result); 
+                Assert.Equal(1, context.Games.CountAsync().Result);
             }
-        }*/
+        }
+
+        /// <summary>
+        /// Tests the EditGame method of LogicClass
+        /// </summary>
+        [Fact]
+        public async void TestForEditGame()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var game = new Game()
+                {
+                    GameID = 1,
+                    HomeTeamID = 1,
+                    AwayTeamID = 1,
+                    WinningTeam = 1,
+                    HomeScore = 20,
+                    AwayScore = 8
+                };
+
+                r.games.Add(game);
+                await r.CommitSave();
+
+                var game2 = new EditGameDto()
+                {
+                    WinningTeamID = 2,
+                    HomeScore = 12,
+                    AwayScore = 24
+                };
+
+                var editedGame= logic.EditGame(game.GameID, game2);
+                Assert.Equal(editedGame.Result.HomeScore, context.Games.Find(game.GameID).HomeScore);
+            }
+        }
 
         /// <summary>
         /// Tests the GetEvents() method of LogicClass
@@ -1161,6 +1203,79 @@ namespace Logic.Tests
                 r.equipmentRequests.Add(equipment);
                 var listOfEquipment = logic.GetEquipmentRequestById(equipment.RequestID);
                 Assert.True(listOfEquipment.Result.Equals(equipment));
+            }
+        }
+
+        /// <summary>
+        /// Tests the CreateEquipmentRequest() method of LogicClass
+        /// Tests that a user is added to the database
+        /// </summary>
+        [Fact]
+        public void TestForCreateEquipmentRequest()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                CreateEquipmentRequestDto equipmentRequest = new CreateEquipmentRequestDto()
+                {
+                    TeamID = 1,
+                    UserID = Guid.NewGuid(),
+                    ItemID = 2,
+                    RequestDate = DateTime.Now,
+                    Message = "Need this equipment",
+                    Status = "Pending"
+                };
+                var createEquipmentRequest = logic.CreateEquipmentRequest(equipmentRequest);
+                Assert.Equal(1, context.EquipmentRequests.CountAsync().Result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the EditEquipmentRequest method of LogicClass
+        /// </summary>
+        [Fact]
+        public async void TestForEditEquipmentRequest()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var equipmentRequest = new EquipmentRequest()
+                {
+                    TeamID = 1,
+                    UserID = Guid.NewGuid(),
+                    ItemId = 1,
+                    RequestID = 1,
+                    RequestDate = DateTime.Now,
+                    Message = "Need this equipment",
+                    Status = "Pending"
+                };
+
+                r.equipmentRequests.Add(equipmentRequest);
+                await r.CommitSave();
+
+                var equipmentRequest2 = new EditEquipmentRequestDto()
+                {
+                    Status = "Accepted"
+                };
+
+                var editedEquipmentRequest = logic.EditEquipmentRequest(equipmentRequest.RequestID, equipmentRequest2);
+                Assert.Equal(editedEquipmentRequest.Result.Status, context.EquipmentRequests.Find(equipmentRequest.RequestID).Status);
             }
         }
 

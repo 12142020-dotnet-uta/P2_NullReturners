@@ -272,6 +272,7 @@ namespace Logic
                 AwayTeamID = createGameDto.AwayTeamID
             };
             await _repo.games.AddAsync(newGame);
+            await _repo.CommitSave();
             return newGame;
         }
         public async Task<Game> EditGame(int id, EditGameDto editGameDto)
@@ -316,6 +317,7 @@ namespace Logic
                 Status = createEquipmentRequestDto.Status
             };
             await _repo.equipmentRequests.AddAsync(newEquipmentRequest);
+            await _repo.CommitSave();
             return newEquipmentRequest;
         }
         public async Task<EquipmentRequest> EditEquipmentRequest(int id, EditEquipmentRequestDto editEquipmentRequestDto)
