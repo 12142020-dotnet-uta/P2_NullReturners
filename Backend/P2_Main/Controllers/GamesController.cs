@@ -27,28 +27,24 @@ namespace P2_Main.Controllers
         [HttpGet]
         public async Task<IEnumerable<Game>> GetGames()
         {
-            _logger.LogTrace("GetGames");
             return await _logic.GetGames();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGame(int id)
         {
-            _logger.LogTrace("GetGame/id");
             return await _logic.GetGameById(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<Game>> CreateGame(CreateGameDto game)
         {
-            _logger.LogTrace("CreateGame");
             return await _logic.CreateGame(game);
         }
 
         [HttpPut("edit/{id}")]
         public async Task<ActionResult<Game>> EditGame(int id, EditGameDto editGameDto)
         {
-            _logger.LogTrace("EditGame/id");
             return await _logic.EditGame(id, editGameDto);
         }
     }

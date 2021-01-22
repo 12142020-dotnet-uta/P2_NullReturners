@@ -15,7 +15,7 @@ namespace Logic.Tests
 
         private readonly Mapper _mapper;
         private readonly ILogger<Repo> _logger;
-
+        
         /// <summary>
         /// Tests the CreateUser() method of LogicClass
         /// Tests that a user is added to the database
@@ -1014,21 +1014,19 @@ namespace Logic.Tests
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
             .Options;
 
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+            using var context = new ProgContext(options);
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
-                CreateGameDto game = new CreateGameDto()
-                {
-                    HomeTeamID = 1,
-                    AwayTeamID = 2
-                };
-                var createGame = logic.CreateGame(game);
-                Assert.Equal(1, context.Games.CountAsync().Result);
-            }
+            Repo r = new Repo(context, _logger);
+            LogicClass logic = new LogicClass(r, _mapper, _logger);
+            CreateGameDto game = new CreateGameDto()
+            {
+                HomeTeamID = 1,
+                AwayTeamID = 2
+            };
+            var createGame = logic.CreateGame(game);
+            Assert.Equal(1, context.Games.CountAsync().Result);
         }
 
         /// <summary>

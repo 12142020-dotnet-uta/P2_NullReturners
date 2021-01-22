@@ -29,56 +29,48 @@ namespace P2_Main.Controllers
         [HttpGet]
         public async Task<IEnumerable<User>> GetUsers()
         {
-            _logger.LogTrace("GetUsers");
             return await _logic.GetUsers();
         }
 
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(CreateUserDto createUser)
         {
-            _logger.LogTrace("CreateUser");
             return await _logic.CreateUser(createUser);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(Guid id)
         {
-            _logger.LogTrace("GetUser/id");
             return await _logic.GetUserById(id);
         }
 
         [HttpGet("roles")]
         public async Task<IEnumerable<Role>> GetRoles()
         {
-            _logger.LogTrace("GetRoles");
             return await _logic.GetRoles();
         }
 
         [HttpGet("roles/{id}")]
         public async Task<ActionResult<Role>> GetRole(int id)
         {
-            _logger.LogTrace("GetRole/id");
             return await _logic.GetRoleById(id);
         }
 
         [HttpPut("edit/{id}")]
         public async Task<ActionResult<User>> EditUser(Guid id, EditUserDto editedUser)
         {
-            _logger.LogTrace("EditUser/id");
             return await _logic.EditUser(id, editedUser);
         }
 
         [HttpPut("coach/edit/{id}")]
         public async Task<ActionResult<User>> CoachEditUser(Guid id, CoachEditUserDto editedUser)
         {
-            _logger.LogTrace("CoachEditUser/id");
             return await _logic.CoachEditUser(id, editedUser);
         }
 
         [HttpDelete("delete/{id}")]
         public async Task<User> DeleteUser(Guid id)
         {
-            _logger.LogInformation("User deleted.");
             return await _logic.DeleteUser(id);
         }
      }

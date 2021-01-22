@@ -12,7 +12,6 @@ namespace Logic
 {
     public class LogicClass
     {
-
         public LogicClass() { }
         public LogicClass(Repo repo, Mapper mapper, ILogger<Repo> logger)
         {
@@ -22,7 +21,7 @@ namespace Logic
         }
         private readonly Repo _repo;
         private readonly Mapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<Repo> _logger;
 
         // Context accessors
         public async Task<User> GetUserById(Guid id)
@@ -79,7 +78,6 @@ namespace Logic
 
             User tUser = await GetUserById(userId);
             tUser.RoleID = roleId;
-            _logger.LogInformation("Role added.");
             await _repo.CommitSave();
             return tUser;
         }
@@ -91,7 +89,6 @@ namespace Logic
             if (tUser.Password != editUserDto.Password) { tUser.Password = editUserDto.Password; }
             if (tUser.PhoneNumber != editUserDto.PhoneNumber) { tUser.PhoneNumber = editUserDto.PhoneNumber; }
             await _repo.CommitSave();
-            _logger.LogInformation("User edited.");
             return tUser;  
         }
         public async Task<User> CoachEditUser(Guid userId, CoachEditUserDto coachEditUserDto)
@@ -104,7 +101,6 @@ namespace Logic
             if (tUser.RoleID != coachEditUserDto.RoleID) { tUser.RoleID = coachEditUserDto.RoleID; }
             if (tUser.UserName != coachEditUserDto.UserName) { tUser.UserName = coachEditUserDto.UserName; }
             await _repo.CommitSave();
-            _logger.LogInformation("User edited.");
             return tUser;
         }
         //Teams
@@ -158,7 +154,6 @@ namespace Logic
             };
             await _repo.playbooks.AddAsync(newPlayBook);
             await _repo.CommitSave();
-            _logger.LogInformation("Playbook created.");
             return newPlayBook;
         }
         public async Task<Play> CreatePlay(PlayDto playDto)
@@ -172,7 +167,6 @@ namespace Logic
             };
             await _repo.plays.AddAsync(newPlay);
             await _repo.CommitSave();
-            _logger.LogInformation("Play created.");
             return newPlay;
         }
         public async Task<Play> EditPlay(int playId, PlayDto playDto) 
@@ -184,9 +178,7 @@ namespace Logic
                 if (editedPlay.Description != playDto.Description) { editedPlay.Description = playDto.Description; }
                 if (editedPlay.DrawnPlay != playDto.DrawnPlay) { editedPlay.DrawnPlay = playDto.DrawnPlay; }
                 await _repo.CommitSave();
-                _logger.LogInformation("Play edited.");
             }
-            else { _logger.LogInformation("Play not found."); }
             return editedPlay;
         }
         public async Task<Play> GetPlayById(int id)
@@ -204,9 +196,7 @@ namespace Logic
             {
                 _repo.playbooks.Remove(playbook);
                 await _repo.CommitSave();
-                _logger.LogInformation("Playbook deleted.");
             }
-            else { _logger.LogInformation("Playbook not found."); }
             return playbook;
         }
         public async Task<Play> DeletePlay(int id)
@@ -216,9 +206,7 @@ namespace Logic
             {
                 _repo.plays.Remove(play);
                 await _repo.CommitSave();
-                _logger.LogInformation("Play deleted.");
             }
-            else { _logger.LogInformation("Play not found."); }
             return play;
         }
         //Messaging
@@ -248,7 +236,6 @@ namespace Logic
             };
             await _repo.messages.AddAsync(newMessage);
             await _repo.CommitSave();
-            _logger.LogInformation("Message created.");
             return newMessage;
         }
         public async Task SendMessage(Message message)
@@ -286,7 +273,6 @@ namespace Logic
             };
             await _repo.games.AddAsync(newGame);
             await _repo.CommitSave();
-            _logger.LogInformation("Game created.");
             return newGame;
         }
         public async Task<Game> EditGame(int id, EditGameDto editGameDto)
@@ -298,9 +284,7 @@ namespace Logic
                 if (editedGame.HomeScore != editGameDto.HomeScore) { editedGame.HomeScore = editGameDto.HomeScore; }
                 if (editedGame.AwayScore != editGameDto.AwayScore) { editedGame.AwayScore = editGameDto.AwayScore; }
                 await _repo.CommitSave();
-                _logger.LogInformation("Game edited.");
             }
-            else { _logger.LogInformation("Game not found."); }
             return editedGame;
         }
         //Events
@@ -334,14 +318,12 @@ namespace Logic
             };
             await _repo.equipmentRequests.AddAsync(newEquipmentRequest);
             await _repo.CommitSave();
-            _logger.LogInformation("Request created.");
             return newEquipmentRequest;
         }
         public async Task<EquipmentRequest> EditEquipmentRequest(int id, EditEquipmentRequestDto editEquipmentRequestDto)
         {
             EquipmentRequest editedEquipmentRequest = await GetEquipmentRequestById(id);
-            if (editedEquipmentRequest != null && editedEquipmentRequest.Status != editEquipmentRequestDto.Status) { editedEquipmentRequest.Status = editEquipmentRequestDto.Status; _logger.LogInformation("Reuest edited."); }
-            else { _logger.LogInformation("Request not found."); }
+            if (editedEquipmentRequest != null && editedEquipmentRequest.Status != editEquipmentRequestDto.Status) { editedEquipmentRequest.Status = editEquipmentRequestDto.Status; }
             await _repo.CommitSave();
             return editedEquipmentRequest;
         }

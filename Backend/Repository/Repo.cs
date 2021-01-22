@@ -40,7 +40,6 @@ namespace Repository
             this.messages = _progContext.Messages;
             this.recipientLists = _progContext.RecipientLists;
             this.userInboxes = _progContext.UserInboxes;
-            _logger.LogInformation("Context created.");
             ValidateRoleTable();
             ValidateTeamTable();
             ValidateUserTable();
