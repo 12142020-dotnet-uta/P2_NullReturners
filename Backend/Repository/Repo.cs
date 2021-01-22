@@ -153,7 +153,7 @@ namespace Repository
         }
         private void ValidateTeamTable()
         {
-
+            
             if (teams.Any())
             {
                 string[] teamNames = { "Lions", "Tigers", "Bears" };
@@ -248,5 +248,3 @@ namespace Repository
         }
     }
 }
-
-

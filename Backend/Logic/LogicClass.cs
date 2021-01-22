@@ -321,10 +321,7 @@ namespace Logic
         public async Task<EquipmentRequest> EditEquipmentRequest(int id, EditEquipmentRequestDto editEquipmentRequestDto)
         {
             EquipmentRequest editedEquipmentRequest = await GetEquipmentRequestById(id);
-            if (editedEquipmentRequest != null)
-            {
-                if (editedEquipmentRequest.Status != editEquipmentRequestDto.Status) { editedEquipmentRequest.Status = editEquipmentRequestDto.Status; }
-            }
+            if (editedEquipmentRequest != null && editedEquipmentRequest.Status != editEquipmentRequestDto.Status) { editedEquipmentRequest.Status = editEquipmentRequestDto.Status; }
             await _repo.CommitSave();
             return editedEquipmentRequest;
         }
