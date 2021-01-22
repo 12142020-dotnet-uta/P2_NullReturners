@@ -71,6 +71,7 @@ namespace P2_Main.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<User> DeleteUser(Guid id)
         {
+            _logger.LogInformation("User deleted.");
             return await _logic.DeleteUser(id);
         }
      }
