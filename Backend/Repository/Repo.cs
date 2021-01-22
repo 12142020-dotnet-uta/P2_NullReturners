@@ -220,8 +220,6 @@ namespace Repository
         {
             if (equipmentRequests.Any())
             {
-                List<EquipmentRequest> equipmentRequestList = new List<EquipmentRequest>();
-
                 User user1 = users.FirstOrDefault(x => x.UserName == "lionparent1");
                 User user2 = users.FirstOrDefault(x => x.UserName == "bearparent2");
 
@@ -250,5 +248,3 @@ namespace Repository
         }
     }
 }
-
-
