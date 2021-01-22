@@ -413,6 +413,62 @@ namespace Repository.Tests
         }
 
         /// <summary>
+        /// Tests the GetRecipientLists() method of Repo
+        /// </summary>
+        [Fact]
+        public void TestForGetRecipientLists()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                var recipientList = new RecipientList()
+                {
+                    RecipientListID = Guid.NewGuid(),
+                    RecipientID = Guid.NewGuid()
+                };
+
+                r.recipientLists.Add(recipientList);
+                var listOfRecipientLists = r.GetRecipientLists();
+                Assert.NotNull(listOfRecipientLists);
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetRecipientListById() method of Repo
+        /// </summary>
+        [Fact]
+        public void TestForGetRecipientListById()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                var recipientList = new RecipientList()
+                {
+                    RecipientListID = Guid.NewGuid(),
+                    RecipientID = Guid.NewGuid(),
+                };
+
+                r.recipientLists.Add(recipientList);
+                var listOfRecipientList = r.GetRecipientListById(recipientList.RecipientListID);
+                Assert.True(listOfRecipientList.Result.Equals(recipientList));
+            }
+        }
+
+        /// <summary>
         /// Tests the GetGames() method of Repo
         /// </summary>
         [Fact]
@@ -606,6 +662,63 @@ namespace Repository.Tests
             }
         }
 
+        /*/// <summary>
+        /// Tests the GetUserInbox() method of Repo
+        /// </summary>
+        [Fact]
+        public void TestForGetUserInbox()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                var userInbox = new UserInbox()
+                {
+                    UserID = Guid.NewGuid(),
+                    MessageID = Guid.NewGuid(),
+                    IsRead = true
+                };
+
+                r.userInboxes.Add(userInbox);
+                var listOfUserInboxes = r.GetUserInbox();
+                Assert.NotNull(listOfUserInboxes);
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetUserInboxById() method of Repo
+        /// </summary>
+        [Fact]
+        public void TestForGetUserInboxById()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                var userInbox = new UserInbox()
+                {
+                    UserID = Guid.NewGuid(),
+                    MessageID = Guid.NewGuid(),
+                    IsRead = true
+                };
+
+                r.userInboxes.Add(userInbox);
+                var listOfUserInboxes = r.GetUserInboxById(userInbox.UserID, userInbox.MessageID);
+                Assert.True(listOfUserInboxes.Result.Equals(userInbox));
+            }
+        }*/
 
     } // end of class
 } // end of namespace

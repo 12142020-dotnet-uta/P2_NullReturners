@@ -54,13 +54,13 @@ namespace Repository
         // Context accessors
         public async Task<IEnumerable<User>> GetUsers()
         {
-            List<User> uList =  await users.ToListAsync();
+            List<User> uList = await users.ToListAsync();
             return uList;
         }
         public async Task<User> GetUserById(Guid id)
         {
             return await users.FindAsync(id);
-        }        
+        }
         public async Task<Team> GetTeamById(int id)
         {
             return await teams.FindAsync(id);
@@ -138,13 +138,14 @@ namespace Repository
         {
             if (roles.Any())
             {
-                List<Role> roleList = new List<Role>();
                 string[] roleNames = { "Coach", "Player", "Parent" };
 
                 for (int i = 0; i < roleNames.Length; i++)
                 {
-                    Role newRole = new Role();
-                    newRole.RoleName = $"{roleNames[i]}";
+                    Role newRole = new Role
+                    {
+                        RoleName = $"{roleNames[i]}"
+                    };
                     roles.Add(newRole);
                 }
                 _progContext.SaveChanges();
@@ -152,15 +153,17 @@ namespace Repository
         }
         private void ValidateTeamTable()
         {
+
             if (teams.Any())
             {
-                List<Team> teamList = new List<Team>();
                 string[] teamNames = { "Lions", "Tigers", "Bears" };
 
                 for (int i = 0; i < teamNames.Length; i++)
                 {
-                    Team newTeam = new Team();
-                    newTeam.Name = $"{teamNames[i]}";
+                    Team newTeam = new Team
+                    {
+                        Name = $"{teamNames[i]}"
+                    };
                     teams.Add(newTeam);
                 }
                 _progContext.SaveChanges();
@@ -170,8 +173,6 @@ namespace Repository
         {
             if (users.Any())
             {
-                List<User> userList = new List<User>();
-
                 string[] userNames = { "jerryjones1", "jerryrice1", "terrybradshaw1",
                 "lionplayer1", "lionplayer2", "tigerplayer1", "tigerplayer2", "bearplayer1", "bearplayer2",
                 "lionparent1", "lionparent2", "tigerparent1", "tigerparent2", "bearparent1", "bearparent2"};
@@ -200,14 +201,16 @@ namespace Repository
 
                 for (int i = 0; i < userNames.Length; i++)
                 {
-                    User newUser = new User();
-                    newUser.UserName = $"{userNames[i]}";
-                    newUser.Password = $"{passwords[i]}";
-                    newUser.FullName = $"{names[i]}";
-                    newUser.PhoneNumber = $"{phoneNumbers[i]}";
-                    newUser.Email = $"{emails[i]}";
-                    newUser.TeamID = teamIds[i];
-                    newUser.RoleID = roleIds[i];
+                    User newUser = new User
+                    {
+                        UserName = $"{userNames[i]}",
+                        Password = $"{passwords[i]}",
+                        FullName = $"{names[i]}",
+                        PhoneNumber = $"{phoneNumbers[i]}",
+                        Email = $"{emails[i]}",
+                        TeamID = teamIds[i],
+                        RoleID = roleIds[i]
+                    };
                     users.Add(newUser);
                 }
                 _progContext.SaveChanges();
@@ -217,27 +220,27 @@ namespace Repository
         {
             if (equipmentRequests.Any())
             {
-                List<EquipmentRequest> equipmentRequestList = new List<EquipmentRequest>();
-
                 User user1 = users.FirstOrDefault(x => x.UserName == "lionparent1");
                 User user2 = users.FirstOrDefault(x => x.UserName == "bearparent2");
 
                 Guid[] userList = { user1.UserID, user2.UserID };
-                int[] teams = { 1, 3 };
+                int[] teamsList = { 1, 3 };
                 DateTime[] requestTimes = { DateTime.Now, DateTime.Now };
-                string[] messages = { "This is a message for request 1", "This is a message for request 2" };
+                string[] messagesList = { "This is a message for request 1", "This is a message for request 2" };
                 int[] items = { 1, 2 };
                 string[] status = { "Requested", "Fulfilled" };
 
                 for (int i = 0; i < userList.Length; i++)
                 {
-                    EquipmentRequest newRequest = new EquipmentRequest();
-                    newRequest.UserID = userList[i];
-                    newRequest.TeamID = teams[i];
-                    newRequest.RequestDate = requestTimes[i];
-                    newRequest.Message = $"{messages[i]}";
-                    newRequest.ItemId = items[i];
-                    newRequest.Status = status[i];
+                    EquipmentRequest newRequest = new EquipmentRequest
+                    {
+                        UserID = userList[i],
+                        TeamID = teamsList[i],
+                        RequestDate = requestTimes[i],
+                        Message = $"{messagesList[i]}",
+                        ItemId = items[i],
+                        Status = status[i]
+                    };
                     equipmentRequests.Add(newRequest);
                 }
                 _progContext.SaveChanges();

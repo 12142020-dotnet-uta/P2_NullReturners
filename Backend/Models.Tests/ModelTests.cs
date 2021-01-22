@@ -217,6 +217,59 @@ namespace Models.Tests
             Assert.True(results.Count == 0);
         }
 
+
+        /// <summary>
+        /// Validates the RecipientList Model works with proper data
+        /// </summary>
+        [Fact]
+        public void ValidateRecipientList()
+        {
+            var recipientList = new RecipientList()
+            {
+                RecipientID = Guid.NewGuid(),
+                RecipientListID = Guid.NewGuid()
+            };
+
+            var errorcount = ValidateModel(recipientList).Count;
+            Assert.Equal(0, errorcount);
+        }
+
+        /// <summary>
+        /// Validates the UserInbox Model works with proper data
+        /// </summary>
+        [Fact]
+        public void ValidateUserInbox()
+        {
+            var userInbox = new UserInbox()
+            {
+                UserID = Guid.NewGuid(),
+                MessageID = Guid.NewGuid(),
+                IsRead = true
+            };
+
+            var errorcount = ValidateModel(userInbox).Count;
+            Assert.Equal(0, errorcount);
+        }
+
+        /// <summary>
+        /// Validates the EquipmentItem Model works with proper data
+        /// </summary>
+        [Fact]
+        public void ValidateEquipmentItem()
+        {
+            var equipmentItem = new EquipmentItem()
+            {
+                EquipmentID = 1,
+                Description = "Shoulder pads"
+            };
+
+            var errorcount = ValidateModel(equipmentItem).Count;
+            Assert.Equal(0, errorcount);
+        }
+
+
+        //----------------------DTO tests start here-------------------------------------
+
         /// <summary>
         /// Validates the CoachEditUserDto Model works with proper data
         /// </summary>

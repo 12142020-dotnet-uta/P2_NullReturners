@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    class EquipmentItem
+    public class EquipmentItem
     {
         [Key]
         [DisplayName("Equipment ID")]

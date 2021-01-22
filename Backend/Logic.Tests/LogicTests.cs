@@ -17,9 +17,8 @@ namespace Logic.Tests
         private readonly ILogger<Repo> _logger;
 
         /// <summary>
-        /// Tests the AddUser() method of LogicClass
+        /// Tests the CreateUser() method of LogicClass
         /// Tests that a user is added to the database
-        /// TODO: may add assert statement to test that a duplicate user is not added
         /// </summary>
         [Fact]
         public void TestForCreateUser()
@@ -53,9 +52,8 @@ namespace Logic.Tests
         }
 
         /// <summary>
-        /// Tests the RemoveUser() method of the LogicClass
+        /// Tests the DeleteUser() method of the LogicClass
         /// Tests that a user is removed from the database
-        /// TODO: may add assert statement to test that a duplicate user is not added
         /// </summary>
         [Fact]
         public async void TestForDeleteUser()
@@ -354,6 +352,46 @@ namespace Logic.Tests
         }
 
         /// <summary>
+        /// Tests the EditTeam method of LogicClass
+        /// </summary>
+        [Fact]
+        public async void TestForEditTeam()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var team = new Team()
+                {
+                    TeamID = 1,
+                    Name = "Dirty Donkies",
+                    Wins = 0,
+                    Losses = 5
+                };
+
+                r.teams.Add(team);
+                await r.CommitSave();
+
+                var team2 = new EditTeamDto()
+                {
+                    Name = "Bad Broncoes",
+                    Wins = 0,
+                    Losses = 5
+                };
+
+                var editedTeam = logic.EditTeam(team.TeamID, team2);
+                Assert.Equal(editedTeam.Result.Name, context.Teams.Find(team.TeamID).Name);
+            }
+        }
+
+        /// <summary>
         /// Tests the GetRoles() method of LogicClass
         /// </summary>
         [Fact]
@@ -408,6 +446,48 @@ namespace Logic.Tests
                 r.roles.Add(role);
                 var listOfRoles = logic.GetRoleById(role.RoleID);
                 Assert.True(listOfRoles.Result.Equals(role));
+            }
+        }
+
+        /// <summary>
+        /// Tests the EditUserRole method of LogicClass
+        /// </summary>
+        [Fact]
+        public async void TestForEditUserRole()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var role = new Role()
+                {
+                    RoleID = 1,
+                    RoleName = "Player"
+                };
+                var user = new User()
+                {
+                    UserID = Guid.NewGuid(),
+                    FullName = "Tom Brady",
+                    Email = "tombrady@gmail.com",
+                    Password = "brady123",
+                    PhoneNumber = "333-333-3333",
+                    UserName = "tombrady",
+                    TeamID = 1
+                };
+
+                r.roles.Add(role);
+                r.users.Add(user);
+                await r.CommitSave();
+
+                var editedRole = logic.EditUserRole(user.UserID, role.RoleID);
+                Assert.Equal(editedRole.Result.RoleID, context.Users.Find(user.UserID).RoleID);
             }
         }
 
@@ -469,6 +549,108 @@ namespace Logic.Tests
             }
         }
 
+        /// <summary>
+        /// Tests the CreatePlaybook() method of LogicClass
+        /// Tests that a user is added to the database
+        /// TODO: may add assert statement to test that a duplicate user is not added
+        /// </summary>
+        [Fact]
+        public void TestForCreatePlaybook()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Team team = new Team()
+                {
+                    TeamID = 1,
+                    Name = "Broncoes",
+                    Wins = 2,
+                    Losses = 0
+                };
+                var createPlaybook = logic.CreatePlaybook(team.TeamID);
+
+                Assert.Equal(1, context.Playbooks.CountAsync().Result); 
+            }
+        }
+
+        /// <summary>
+        /// Tests the CreatePlay() method of LogicClass
+        /// Tests that a user is added to the database
+        /// </summary>
+        [Fact]
+        public void TestForCreatePlay()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                PlayDto play = new PlayDto()
+                {
+                    PlaybookID = 1,
+                    Name = "Tackle",
+                    Description = "Tackle other players"
+                };
+                var createPlay = logic.CreatePlay(play);
+                Assert.Equal(1, context.Plays.CountAsync().Result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the EditPlays method of LogicClass
+        /// </summary>
+        [Fact]
+        public async void TestForEditPlays()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var play = new Play()
+                {
+                    PlayID = 1,
+                    PlaybookId = 1,
+                    Name = "Tackle",
+                    Description = "Tackle the player",
+                    DrawnPlay = new byte[1]
+                };
+
+                r.plays.Add(play);
+                await r.CommitSave();
+
+                var play2 = new PlayDto()
+                {
+                    PlaybookID = 1,
+                    Name = "Tackle",
+                    Description = "Tackle the quarterback",
+                    DrawnPlay = new byte[1]
+                };
+
+                var editedPlay = logic.EditPlay(play.PlayID, play2);
+                Assert.Equal(editedPlay.Result.Description, context.Plays.Find(play.PlayID).Description);
+            }
+        }
         /// <summary>
         /// Tests the GetPlays() method of LogicClass
         /// </summary>
@@ -534,6 +716,135 @@ namespace Logic.Tests
         }
 
         /// <summary>
+        /// Tests the DeletePlay() method of the LogicClass
+        /// Tests that a user is removed from the database
+        /// </summary>
+        [Fact]
+        public async void TestForDeletePlay()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var play = new Play()
+                {
+                    PlayID = 1,
+                    PlaybookId = 1,
+                    Name = "Run",
+                    Description = "Run to endzone",
+                    DrawnPlay = new byte[1]
+                };
+                r.plays.Add(play);
+                await r.CommitSave();
+                logic.DeletePlay(3); // fails for some reason when I add await
+                Assert.NotEmpty(context.Plays);
+                logic.DeletePlay(play.PlayID); // fails for some reason when I add await
+                //Assert.Empty(context.Users);
+                Assert.Equal(0, context.Plays.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
+
+            }
+        }
+
+        /// <summary>
+        /// Tests the DeletePlaybook() method of the LogicClass
+        /// Tests that a user is removed from the database
+        /// </summary>
+        [Fact]
+        public async void TestForDeletePlaybook()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var playbook = new Playbook()
+                {
+                    PlaybookID = 1,
+                    TeamID = 1
+                };
+                r.playbooks.Add(playbook);
+                await r.CommitSave();
+                logic.DeletePlaybook(3); // fails for some reason when I add await
+                Assert.NotEmpty(context.Playbooks);
+                logic.DeletePlaybook(playbook.PlaybookID); // fails for some reason when I add await
+                //Assert.Empty(context.Users);
+                Assert.Equal(0, context.Playbooks.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
+
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetRecipientLists() method of LogicClass
+        /// </summary>
+        [Fact]
+        public void TestForGetRecipientLists()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var recipientList = new RecipientList()
+                {
+                    RecipientListID = Guid.NewGuid(),
+                    RecipientID = Guid.NewGuid()
+                };
+
+                r.recipientLists.Add(recipientList);
+                var listOfRecipientLists = logic.GetRecipientLists();
+                Assert.NotNull(listOfRecipientLists);
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetRecipientListById() method of LogicClass
+        /// </summary>
+        [Fact]
+        public void TestForGetRecipientListById()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var recipientList = new RecipientList()
+                {
+                    RecipientListID = Guid.NewGuid(),
+                    RecipientID = Guid.NewGuid(),
+                };
+
+                r.recipientLists.Add(recipientList);
+                var listOfRecipientList = logic.GetRecipientListById(recipientList.RecipientListID);
+                Assert.True(listOfRecipientList.Result.Equals(recipientList));
+            }
+        }
+
+        /// <summary>
         /// Tests the GetMessages() method of LogicClass
         /// </summary>
         [Fact]
@@ -592,6 +903,37 @@ namespace Logic.Tests
                 r.messages.Add(message);
                 var listOfMessages = logic.GetMessageById(message.MessageID);
                 Assert.True(listOfMessages.Result.Equals(message));
+            }
+        }
+
+        /// <summary>
+        /// Tests the CreateNewMessage() method of LogicClass
+        /// Tests that a user is added to the database
+        /// </summary>
+        [Fact]
+        public void TestForCreateNewMessage()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                var message = new Message()
+                {
+                    MessageID = Guid.NewGuid(),
+                    SenderID = Guid.NewGuid(),
+                    RecipientListID = Guid.NewGuid(),
+                    MessageText = "How you doin'?"
+                };
+                var createMessage = logic.CreateNewMessage(message.SenderID, message.RecipientListID, message.MessageText);
+
+                Assert.Equal(1, context.Messages.CountAsync().Result);
             }
         }
 
@@ -660,6 +1002,34 @@ namespace Logic.Tests
                 Assert.True(listOfGames.Result.Equals(game));
             }
         }
+
+        /*/// <summary>
+        /// Tests the CreateGame() method of LogicClass
+        /// Tests that a user is added to the database
+        /// </summary>
+        [Fact]
+        public void TestForCreateGame()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, _logger);
+                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                CreateGameDto game = new CreateGameDto()
+                {
+                    HomeTeamID = 1,
+                    AwayTeamID = 2
+                };
+                var createGame = logic.CreateGame(game);
+                Assert.Equal(1, context.Games.CountAsync().Result); 
+            }
+        }*/
 
         /// <summary>
         /// Tests the GetEvents() method of LogicClass
