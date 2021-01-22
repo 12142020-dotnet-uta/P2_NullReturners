@@ -55,7 +55,7 @@ namespace P2_Main.Controllers
         }
 
         [HttpPost("plays")]
-        public async Task<ActionResult<Play>> CreatePlay(Guid userId, PlayDto createPlay)
+        public async Task<ActionResult<Play>> CreatePlay(/*Guid userId, */PlayDto createPlay)
         {
             return await _logic.CreatePlay(createPlay);
         }

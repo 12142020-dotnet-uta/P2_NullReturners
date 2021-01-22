@@ -271,7 +271,7 @@ namespace Logic.Tests
 
                 Repo r = new Repo(context, _logger);
                 LogicClass logic = new LogicClass(r, _mapper, _logger);
-                var user = new User
+                var user = new User()
                 {
                     UserID = Guid.NewGuid(),
                     UserName = "jerry",
@@ -551,8 +551,7 @@ namespace Logic.Tests
 
         /// <summary>
         /// Tests the CreatePlaybook() method of LogicClass
-        /// Tests that a user is added to the database
-        /// TODO: may add assert statement to test that a duplicate user is not added
+        /// Tests that a playbook is added to the database
         /// </summary>
         [Fact]
         public void TestForCreatePlaybook()
@@ -583,7 +582,7 @@ namespace Logic.Tests
 
         /// <summary>
         /// Tests the CreatePlay() method of LogicClass
-        /// Tests that a user is added to the database
+        /// Tests that a play is added to the database
         /// </summary>
         [Fact]
         public void TestForCreatePlay()
@@ -651,6 +650,7 @@ namespace Logic.Tests
                 Assert.Equal(editedPlay.Result.Description, context.Plays.Find(play.PlayID).Description);
             }
         }
+        
         /// <summary>
         /// Tests the GetPlays() method of LogicClass
         /// </summary>
@@ -717,7 +717,7 @@ namespace Logic.Tests
 
         /// <summary>
         /// Tests the DeletePlay() method of the LogicClass
-        /// Tests that a user is removed from the database
+        /// Tests that a play is removed from the database
         /// </summary>
         [Fact]
         public async void TestForDeletePlay()
@@ -754,7 +754,7 @@ namespace Logic.Tests
 
         /// <summary>
         /// Tests the DeletePlaybook() method of the LogicClass
-        /// Tests that a user is removed from the database
+        /// Tests that a playbook is removed from the database
         /// </summary>
         [Fact]
         public async void TestForDeletePlaybook()
@@ -1172,6 +1172,7 @@ namespace Logic.Tests
                 Assert.NotNull(listOfEquipment);
             }
         }
+        
         /// <summary>
         /// Tests the GetEquipmentRequestById() method of LogicClass
         /// </summary>
@@ -1208,7 +1209,7 @@ namespace Logic.Tests
 
         /// <summary>
         /// Tests the CreateEquipmentRequest() method of LogicClass
-        /// Tests that a user is added to the database
+        /// Tests that an equipment request is added to the database
         /// </summary>
         [Fact]
         public void TestForCreateEquipmentRequest()
