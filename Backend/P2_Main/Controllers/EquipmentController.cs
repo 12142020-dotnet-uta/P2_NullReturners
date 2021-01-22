@@ -27,24 +27,28 @@ namespace P2_Main.Controllers
         [HttpGet]
         public async Task<IEnumerable<EquipmentRequest>> GetEquipmentRequests()
         {
+            _logger.LogTrace("GetEquipmentRequests");
             return await _logic.GetEquipmentRequests();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<EquipmentRequest>> GetEquipmentRequest(int id)
         {
+            _logger.LogTrace("GetEquipmentRequest/id");
             return await _logic.GetEquipmentRequestById(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<EquipmentRequest>> CreateEquipmentRequest(CreateEquipmentRequestDto equipmentRequest)
         {
+            _logger.LogTrace("CreateEquipmentRequest");
             return await _logic.CreateEquipmentRequest(equipmentRequest);
         }
 
         [HttpPut("/edit/{id}")]
         public async Task<ActionResult<EquipmentRequest>> EditEquipmentRequest(int id, EditEquipmentRequestDto equipmentRequest)
         {
+            _logger.LogTrace("EditEquipmentRequest/id");
             return await _logic.EditEquipmentRequest(id, equipmentRequest);
         }
     }

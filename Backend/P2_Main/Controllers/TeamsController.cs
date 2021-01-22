@@ -27,18 +27,21 @@ namespace P2_Main.Controllers
         [HttpGet]
         public async Task<IEnumerable<Team>> GetTeams()
         {
+            _logger.LogTrace("GetTeams");
             return await _logic.GetTeams();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
+            _logger.LogTrace("GetTeam/id");
             return await _logic.GetTeamById(id);
         }
 
         [HttpPut("edit/{id}")]
         public async Task<ActionResult<Team>> EditTeam(int id, EditTeamDto editTeam)
         {
+            _logger.LogTrace("EditTeam/id");
             return await _logic.EditTeam(id, editTeam);
         }
     }
