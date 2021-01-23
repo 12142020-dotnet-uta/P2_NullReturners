@@ -11,7 +11,7 @@ export class PlayersComponent implements OnInit {
   users: any;
   model: any = {}
 
-  constructor(private http: HttpClient, private userService: UserService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -33,14 +33,5 @@ export class PlayersComponent implements OnInit {
     }
     console.log(this.model);
   }
-
-
-  // getPlayers() {
-  //   this.http.get('https://localhost:44342/api/users').subscribe(response => {
-  //     this.players = response;
-  //   }), err => {
-  //     console.log(err)
-  //   }
-  // }
 
 }
