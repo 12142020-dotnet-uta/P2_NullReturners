@@ -7,13 +7,15 @@ import { PlayersComponent } from './players/players.component';
 import { TeamsComponent } from './teams/teams.component';
 import { EquipmentComponent } from './equipment/equipment.component';
 import { RolesComponent } from './roles/roles.component';
+import { DrawComponent } from './draw/draw.component';
 
 
 const routes: Routes = [
   {path: 'players', component: PlayersComponent},
   {path: 'teams', component: TeamsComponent},
   {path: 'equipment', component: EquipmentComponent},
-  {path: 'roles', component: RolesComponent}
+  {path: 'roles', component: RolesComponent},
+  {path: 'draw', component: DrawComponent},
 ];
 
 @NgModule({

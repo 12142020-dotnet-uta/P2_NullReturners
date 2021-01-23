@@ -12,6 +12,7 @@ import { EquipmentComponent } from './equipment/equipment.component';
 import { RolesComponent } from './roles/roles.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavComponent } from './nav/nav.component';
+import { DrawComponent } from './draw/draw.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NavComponent } from './nav/nav.component';
     EquipmentComponent,
     RolesComponent,
     NavComponent,
+    DrawComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
