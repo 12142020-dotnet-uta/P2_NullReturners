@@ -6,13 +6,14 @@ using Microsoft.Extensions.Logging;
 using Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Repository.Tests
 {
     public class RepoTests
     {
 
-        private readonly ILogger<Repo> _logger;
+        //private readonly ILogger<Repo> _logger;
 
         /// <summary>
         /// Tests the CommitSave() method of Repo
@@ -29,7 +30,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -63,7 +64,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -97,7 +98,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 User user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -131,7 +132,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var team = new Team
                 {
                     TeamID = 4, // 4 for seeding
@@ -161,7 +162,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var team = new Team
                 {
                     TeamID = 4, // 4 for seeding
@@ -191,7 +192,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var role = new Role
                 {
                     RoleID = 4, // 4 for seeding
@@ -219,7 +220,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var role = new Role
                 {
                     RoleID = 4, // 4 for seeding
@@ -247,7 +248,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var playbook = new Playbook
                 {
                     PlaybookID = 1,
@@ -275,7 +276,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var playbook = new Playbook
                 {
                     PlaybookID = 1,
@@ -303,7 +304,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var play = new Play
                 {
                     PlayID = 1,
@@ -335,7 +336,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var play = new Play
                 {
                     PlayID = 1,
@@ -366,7 +367,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var message = new Message
                 {
                     MessageID = Guid.NewGuid(),
@@ -397,7 +398,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var message = new Message
                 {
                     MessageID = Guid.NewGuid(),
@@ -427,7 +428,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var recipientList = new RecipientList()
                 {
                     RecipientListID = Guid.NewGuid(),
@@ -455,7 +456,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var recipientList = new RecipientList()
                 {
                     RecipientListID = Guid.NewGuid(),
@@ -483,7 +484,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var game = new Game
                 {
                     GameID = 1,
@@ -515,7 +516,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var game = new Game
                 {
                     GameID = 1,
@@ -547,7 +548,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var eventSchedule = new Event
                 {
                     EventID = 1,
@@ -579,7 +580,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var eventSchedule = new Event
                 {
                     EventID = 1,
@@ -611,7 +612,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var equipment = new EquipmentRequest
                 {
                     RequestID = 4, // 4 for seeding
@@ -644,7 +645,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var equipment = new EquipmentRequest
                 {
                     RequestID = 3, // 3 for seeding
@@ -677,7 +678,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var userInbox = new UserInbox()
                 {
                     UserID = Guid.NewGuid(),
@@ -706,7 +707,7 @@ namespace Repository.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
                 var userInbox = new UserInbox()
                 {
                     UserID = Guid.NewGuid(),

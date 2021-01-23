@@ -7,6 +7,8 @@ using System;
 using Xunit;
 using System.Threading.Tasks;
 using Models.DataTransfer;
+using Microsoft.Extensions.Logging.Abstractions;
+using System.Linq;
 
 namespace Logic.Tests
 {
@@ -14,7 +16,7 @@ namespace Logic.Tests
     {
 
         private readonly Mapper _mapper;
-        private readonly ILogger<Repo> _logger;
+        //private readonly ILogger<Repo> _logger;
         
         /// <summary>
         /// Tests the CreateUser() method of LogicClass
@@ -32,8 +34,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 CreateUserDto cUD = new CreateUserDto()
                 {
                     UserName = "jerryrice",
@@ -43,11 +45,20 @@ namespace Logic.Tests
                     Email = "jerryrice@gmail.com"
                 };
                 var user = logic.CreateUser(cUD);
-
-                Assert.NotEmpty(context.Users);
+                //Assert.NotEmpty(context.Users);
+                Assert.Contains<User>(user.Result, context.Users);
 
                 var user2 = logic.CreateUser(cUD);
-                Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
+                //Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
+                var countUsers = from u in context.Users
+                                 where u.Email == user.Result.Email
+                                 select u;
+                int count = 0;
+                foreach (User userMail in countUsers)
+                {
+                    count++;
+                }
+                Assert.Equal(1, count);
             }
         }
 
@@ -67,8 +78,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -83,11 +94,19 @@ namespace Logic.Tests
                 r.users.Add(user);
                 await r.CommitSave();
                 logic.DeleteUser(Guid.NewGuid()); // fails for some reason when I add await
-                Assert.NotEmpty(context.Users);
+                //Assert.NotEmpty(context.Users);
+                Assert.Contains<User>(user, context.Users);
                 logic.DeleteUser(user.UserID); // fails for some reason when I add await
-                //Assert.Empty(context.Users);
-                Assert.Equal(0, context.Users.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
-
+                //Assert.Equal(0, context.Users.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
+                var countUsers = from u in context.Users
+                                 where u.Email == user.Email
+                                 select u;
+                int count = 0;
+                foreach (User userMail in countUsers)
+                {
+                    count++;
+                }
+                Assert.Equal(0, count);
             }
         }
 
@@ -106,8 +125,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -141,8 +160,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -186,8 +205,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -234,8 +253,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -269,8 +288,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var user = new User()
                 {
                     UserID = Guid.NewGuid(),
@@ -304,8 +323,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var team = new Team
                 {
                     TeamID = 4, // 4 for seeding
@@ -335,8 +354,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var team = new Team
                 {
                     TeamID = 5, // 5 for seeding
@@ -366,8 +385,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var team = new Team()
                 {
                     TeamID = 1,
@@ -406,8 +425,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var role = new Role
                 {
                     RoleID = 4, // 4 because of seeding
@@ -435,8 +454,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var role = new Role
                 {
                     RoleID = 5, // 5 for seeding
@@ -464,8 +483,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var role = new Role()
                 {
                     RoleID = 1,
@@ -506,8 +525,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var playbook = new Playbook
                 {
                     PlaybookID = 1,
@@ -535,8 +554,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var playbook = new Playbook
                 {
                     PlaybookID = 1,
@@ -565,8 +584,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 Team team = new Team()
                 {
                     TeamID = 1,
@@ -576,7 +595,10 @@ namespace Logic.Tests
                 };
                 var createPlaybook = logic.CreatePlaybook(team.TeamID);
 
-                Assert.Equal(1, context.Playbooks.CountAsync().Result); 
+                //Assert.Equal(1, context.Playbooks.CountAsync().Result);
+
+                Assert.Contains<Playbook>(createPlaybook.Result, context.Playbooks);
+
             }
         }
 
@@ -596,8 +618,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 PlayDto play = new PlayDto()
                 {
                     PlaybookID = 1,
@@ -605,7 +627,8 @@ namespace Logic.Tests
                     Description = "Tackle other players"
                 };
                 var createPlay = logic.CreatePlay(play);
-                Assert.Equal(1, context.Plays.CountAsync().Result);
+                //Assert.Equal(1, context.Plays.CountAsync().Result);
+                Assert.Contains<Play>(createPlay.Result, context.Plays);
             }
         }
 
@@ -624,8 +647,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var play = new Play()
                 {
                     PlayID = 1,
@@ -666,8 +689,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var play = new Play
                 {
                     PlayID = 1,
@@ -698,8 +721,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var play = new Play
                 {
                     PlayID = 1,
@@ -731,8 +754,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var play = new Play()
                 {
                     PlayID = 1,
@@ -744,11 +767,20 @@ namespace Logic.Tests
                 r.plays.Add(play);
                 await r.CommitSave();
                 logic.DeletePlay(3); // fails for some reason when I add await
-                Assert.NotEmpty(context.Plays);
+                //Assert.NotEmpty(context.Plays);
+                Assert.Contains<Play>(play, context.Plays);
                 logic.DeletePlay(play.PlayID); // fails for some reason when I add await
                 //Assert.Empty(context.Users);
-                Assert.Equal(0, context.Plays.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
-
+                //Assert.Equal(0, context.Plays.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
+                var countPlays = from p in context.Plays
+                                 where p.Name == play.Name
+                                 select p;
+                int count = 0;
+                foreach (Play plays in countPlays)
+                {
+                    count++;
+                }
+                Assert.Equal(0, count);
             }
         }
 
@@ -768,21 +800,30 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var playbook = new Playbook()
                 {
-                    PlaybookID = 1,
-                    TeamID = 1
+                    PlaybookID = 25,
+                    TeamID = 13
                 };
                 r.playbooks.Add(playbook);
                 await r.CommitSave();
                 logic.DeletePlaybook(3); // fails for some reason when I add await
-                Assert.NotEmpty(context.Playbooks);
+                //Assert.NotEmpty(context.Playbooks);
+                Assert.Contains<Playbook>(playbook, context.Playbooks);
                 logic.DeletePlaybook(playbook.PlaybookID); // fails for some reason when I add await
                 //Assert.Empty(context.Users);
-                Assert.Equal(0, context.Playbooks.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
-
+                //Assert.Equal(0, context.Playbooks.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
+                var countPlaybooks = from p in context.Playbooks
+                                     where p.PlaybookID == playbook.PlaybookID
+                                     select p;
+                int count = 0;
+                foreach (Playbook playbooks in countPlaybooks)
+                {
+                    count++;
+                }
+                Assert.Equal(0, count);
             }
         }
 
@@ -801,8 +842,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var recipientList = new RecipientList()
                 {
                     RecipientListID = Guid.NewGuid(),
@@ -830,8 +871,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var recipientList = new RecipientList()
                 {
                     RecipientListID = Guid.NewGuid(),
@@ -859,8 +900,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var message = new Message
                 {
                     MessageID = Guid.NewGuid(),
@@ -890,8 +931,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var message = new Message
                 {
                     MessageID = Guid.NewGuid(),
@@ -922,8 +963,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var message = new Message()
                 {
                     MessageID = Guid.NewGuid(),
@@ -933,7 +974,8 @@ namespace Logic.Tests
                 };
                 var createMessage = logic.CreateNewMessage(message.SenderID, message.RecipientListID, message.MessageText);
 
-                Assert.Equal(1, context.Messages.CountAsync().Result);
+                //Assert.Equal(1, context.Messages.CountAsync().Result);
+                Assert.Contains<Message>(createMessage.Result, context.Messages);
             }
         }
 
@@ -952,8 +994,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var game = new Game
                 {
                     GameID = 1,
@@ -985,8 +1027,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var game = new Game
                 {
                     GameID = 1,
@@ -1018,15 +1060,16 @@ namespace Logic.Tests
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            Repo r = new Repo(context, _logger);
-            LogicClass logic = new LogicClass(r, _mapper, _logger);
+            Repo r = new Repo(context, new NullLogger<Repo>());
+            LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
             CreateGameDto game = new CreateGameDto()
             {
                 HomeTeamID = 1,
                 AwayTeamID = 2
             };
             var createGame = logic.CreateGame(game);
-            Assert.Equal(1, context.Games.CountAsync().Result);
+            //Assert.Equal(1, context.Games.CountAsync().Result);
+            Assert.Contains<Game>(createGame.Result, context.Games);
         }
 
         /// <summary>
@@ -1044,8 +1087,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var game = new Game()
                 {
                     GameID = 1,
@@ -1086,8 +1129,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var eventSchedule = new Event
                 {
                     EventID = 1,
@@ -1119,8 +1162,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var eventSchedule = new Event
                 {
                     EventID = 1,
@@ -1152,8 +1195,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var equipment = new EquipmentRequest
                 {
                     RequestID = 4, // 4 for seeding
@@ -1186,8 +1229,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var equipment = new EquipmentRequest
                 {
                     RequestID = 3, // 3 for seeding
@@ -1221,8 +1264,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 CreateEquipmentRequestDto equipmentRequest = new CreateEquipmentRequestDto()
                 {
                     TeamID = 1,
@@ -1233,7 +1276,8 @@ namespace Logic.Tests
                     Status = "Pending"
                 };
                 var createEquipmentRequest = logic.CreateEquipmentRequest(equipmentRequest);
-                Assert.Equal(1, context.EquipmentRequests.CountAsync().Result);
+                //Assert.Equal(1, context.EquipmentRequests.CountAsync().Result);
+                Assert.Contains<EquipmentRequest>(createEquipmentRequest.Result, context.EquipmentRequests);
             }
         }
 
@@ -1252,8 +1296,8 @@ namespace Logic.Tests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, _logger);
-                LogicClass logic = new LogicClass(r, _mapper, _logger);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
                 var equipmentRequest = new EquipmentRequest()
                 {
                     TeamID = 1,

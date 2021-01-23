@@ -134,46 +134,46 @@ namespace Repository
             return await equipmentRequests.ToListAsync();
         }
 
-        //private void ValidateRoleTable()
+        //private void validateroletable()
         //{
-        //    if (roles.Count() == 0)
+        //    if (roles.count() == 0)
         //    {
-        //        string[] roleNames = { "Coach", "Player", "Parent" };
+        //        string[] rolenames = { "coach", "player", "parent" };
 
-        //        for (int i = 0; i < roleNames.Length; i++)
+        //        for (int i = 0; i < rolenames.length; i++)
         //        {
-        //            Role newRole = new Role
+        //            role newrole = new role
         //            {
-        //                RoleName = $"{roleNames[i]}"
+        //                rolename = $"{rolenames[i]}"
         //            };
-        //            roles.Add(newRole);
+        //            roles.add(newrole);
         //        }
-        //        _progContext.SaveChanges();
+        //        _progcontext.savechanges();
         //    }
         //}
-        //private void ValidateTeamTable()
+        //private void validateteamtable()
         //{
-            
-        //    if (teams.Count() == 0)
-        //    {
-        //        string[] teamNames = { "Lions", "Tigers", "Bears" };
 
-        //        for (int i = 0; i < teamNames.Length; i++)
+        //    if (teams.count() == 0)
+        //    {
+        //        string[] teamnames = { "lions", "tigers", "bears" };
+
+        //        for (int i = 0; i < teamnames.length; i++)
         //        {
-        //            Team newTeam = new Team
+        //            team newteam = new team
         //            {
-        //                Name = $"{teamNames[i]}"
+        //                name = $"{teamnames[i]}"
         //            };
-        //            teams.Add(newTeam);
+        //            teams.add(newteam);
         //        }
-        //        _progContext.SaveChanges();
+        //        _progcontext.savechanges();
         //    }
         //}
-        //private void ValidateUserTable()
+        //private void validateusertable()
         //{
-        //    if (users.Count() == 0)
+        //    if (users.count() == 0)
         //    {
-        //        string[] userNames = { "jerryjones1", "jerryrice1", "terrybradshaw1",
+        //        string[] usernames = { "jerryjones1", "jerryrice1", "terrybradshaw1",
         //        "lionplayer1", "lionplayer2", "tigerplayer1", "tigerplayer2", "bearplayer1", "bearplayer2",
         //        "lionparent1", "lionparent2", "tigerparent1", "tigerparent2", "bearparent1", "bearparent2"};
 
@@ -181,69 +181,69 @@ namespace Repository
         //        "password1", "password2", "password3", "password4", "password5", "password6",
         //        "parent1","parent2","parent3","parent4","parent5","parent6"};
 
-        //        string[] names = { "Jerry Jones", "Jerry Rice", "Terry Bradshaw",
+        //        string[] names = { "jerry jones", "jerry rice", "terry bradshaw",
         //        "lionplayer1", "lionplayer2", "tigerplayer1", "tigerplayer2", "bearplayer1", "bearplayer2",
         //        "lionparent1", "lionparent2", "tigerparent1", "tigerparent2", "bearparent1", "bearparent2"};
 
-        //        string[] phoneNumbers = { "123-456-7899", "222-454-7689", "213-796-5698",
+        //        string[] phonenumbers = { "123-456-7899", "222-454-7689", "213-796-5698",
         //        "856-369-8888", "312-568-1234", "147-258-0369", "963-852-7410", "555-111-9999", "654-322-9870",
         //        "856-369-8888", "312-568-1234", "147-258-0369", "963-852-7410", "555-111-9999", "654-322-9870"};
 
         //        string[] emails = { "jerry@jones.com", "jerry@rice.com", "terry@bradshaw.com",
         //        "lion1@player.com", "lion2@player.com", "tiger1@player.com", "tiger2@player.com", "bear1@player.com", "bear2@player.com",
         //        "lion1@parent.com", "lion2@parent.com", "tiger1@parent.com", "tiger2@parent.com", "bear1@parent.com", "bear2@parent.com"};
-        //        int[] teamIds = { 1, 2, 3,
+        //        int[] teamids = { 1, 2, 3,
         //        1, 1, 2, 2, 3, 3,
         //        1, 1, 2, 2, 3, 3};
-        //        int[] roleIds = { 1, 1, 1,
+        //        int[] roleids = { 1, 1, 1,
         //        2, 2, 2, 2, 2, 2,
         //        3, 3, 3, 3, 3, 3};
 
-        //        for (int i = 0; i < userNames.Length; i++)
+        //        for (int i = 0; i < usernames.length; i++)
         //        {
-        //            User newUser = new User
+        //            user newuser = new user
         //            {
-        //                UserName = $"{userNames[i]}",
-        //                Password = $"{passwords[i]}",
-        //                FullName = $"{names[i]}",
-        //                PhoneNumber = $"{phoneNumbers[i]}",
-        //                Email = $"{emails[i]}",
-        //                TeamID = teamIds[i],
-        //                RoleID = roleIds[i]
+        //                username = $"{usernames[i]}",
+        //                password = $"{passwords[i]}",
+        //                fullname = $"{names[i]}",
+        //                phonenumber = $"{phonenumbers[i]}",
+        //                email = $"{emails[i]}",
+        //                teamid = teamids[i],
+        //                roleid = roleids[i]
         //            };
-        //            users.Add(newUser);
+        //            users.add(newuser);
         //        }
-        //        _progContext.SaveChanges();
+        //        _progcontext.savechanges();
         //    }
         //}
-        //private void ValidateEquipmentRequestTable()
+        //private void validateequipmentrequesttable()
         //{
-        //    if (equipmentRequests.Count() == 0)
+        //    if (equipmentrequests.count() == 0)
         //    {
-        //        User user1 = users.FirstOrDefault(x => x.UserName == "lionparent1");
-        //        User user2 = users.FirstOrDefault(x => x.UserName == "bearparent2");
+        //        user user1 = users.firstordefault(x => x.username == "lionparent1");
+        //        user user2 = users.firstordefault(x => x.username == "bearparent2");
 
-        //        Guid[] userList = { user1.UserID, user2.UserID };
-        //        int[] teamsList = { 1, 3 };
-        //        DateTime[] requestTimes = { DateTime.Now, DateTime.Now };
-        //        string[] messagesList = { "This is a message for request 1", "This is a message for request 2" };
+        //        guid[] userlist = { user1.userid, user2.userid };
+        //        int[] teamslist = { 1, 3 };
+        //        datetime[] requesttimes = { datetime.now, datetime.now };
+        //        string[] messageslist = { "this is a message for request 1", "this is a message for request 2" };
         //        int[] items = { 1, 2 };
-        //        string[] status = { "Requested", "Fulfilled" };
+        //        string[] status = { "requested", "fulfilled" };
 
-        //        for (int i = 0; i < userList.Length; i++)
+        //        for (int i = 0; i < userlist.length; i++)
         //        {
-        //            EquipmentRequest newRequest = new EquipmentRequest
+        //            equipmentrequest newrequest = new equipmentrequest
         //            {
-        //                UserID = userList[i],
-        //                TeamID = teamsList[i],
-        //                RequestDate = requestTimes[i],
-        //                Message = $"{messagesList[i]}",
-        //                ItemId = items[i],
-        //                Status = status[i]
+        //                userid = userlist[i],
+        //                teamid = teamslist[i],
+        //                requestdate = requesttimes[i],
+        //                message = $"{messageslist[i]}",
+        //                itemid = items[i],
+        //                status = status[i]
         //            };
-        //            equipmentRequests.Add(newRequest);
+        //            equipmentrequests.add(newrequest);
         //        }
-        //        _progContext.SaveChanges();
+        //        _progcontext.savechanges();
         //    }
         //}
     }
