@@ -103,9 +103,9 @@ namespace Repository
         {
             return await userInboxes.Where(x => x.UserID == id).ToListAsync();
         }
-        public async Task<RecipientList> GetRecipientListById(Guid id)
+        public async Task<RecipientList> GetRecipientListById(Guid listId, Guid recId)
         {
-            return await recipientLists.FindAsync(id);
+            return await recipientLists.FindAsync(listId, recId);
         }
         public async Task<IEnumerable<RecipientList>> GetRecipientLists()
         {

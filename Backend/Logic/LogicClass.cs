@@ -223,9 +223,9 @@ namespace Logic
         {
             return await _repo.GetMessages();
         }
-        public async Task<RecipientList> GetRecipientListById(Guid id)
+        public async Task<RecipientList> GetRecipientListById(Guid listId, Guid recId)
         {
-            return await _repo.GetRecipientListById(id);
+            return await _repo.GetRecipientListById(listId, recId);
         }
         public async Task<IEnumerable<RecipientList>> GetRecipientLists()
         {
