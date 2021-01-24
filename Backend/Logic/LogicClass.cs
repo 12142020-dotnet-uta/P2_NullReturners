@@ -1,9 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Calendar.v3;
+using Google.Apis.Calendar.v3.Data;
+using Google.Apis.Services;
+using Microsoft.Extensions.Logging;
 using Models;
 using Models.DataTransfer;
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -329,13 +334,94 @@ namespace Logic
             return editedGame;
         }
         //Events
-        public async Task<Event> GetEventById(int id)
+        //public async Task<Event> GetEventById(int id)
+        //{
+        //    return await _repo.GetEventById(id);
+        //}
+        //public async Task<IEnumerable<Event>> GetEvents()
+        //{
+        //    return await _repo.GetEvents();
+        //}
+        public static async Task<CalendarService> InitializeCalendar()
         {
-            return await _repo.GetEventById(id);
+            string jsonFile = "p2nullreturners-997092916366.json";
+            string[] Scopes = { CalendarService.Scope.Calendar };
+
+            ServiceAccountCredential credential;
+
+            await using (var stream =
+                new FileStream(jsonFile, FileMode.Open, FileAccess.Read))
+            {
+                var confg = Google.Apis.Json.NewtonsoftJsonSerializer.Instance.Deserialize<JsonCredentialParameters>(stream);
+                credential = new ServiceAccountCredential(
+                   new ServiceAccountCredential.Initializer(confg.ClientEmail)
+                   {
+                       Scopes = Scopes
+                   }.FromPrivateKey(confg.PrivateKey));
+            }
+
+            var service = new CalendarService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "P2NullReturners",
+            });
+            
+            return service;
         }
-        public async Task<IEnumerable<Event>> GetEvents()
+        public static async Task<Calendar> GetCalendar(CalendarService service)
         {
-            return await _repo.GetEvents();
+            string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
+            var calendar = await service.Calendars.Get(calendarId).ExecuteAsync();
+            return calendar;
+        }
+        public static async Task<IEnumerable<Google.Apis.Calendar.v3.Data.Event>> GetMyEvents(CalendarService service)
+        {
+            string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
+            EventsResource.ListRequest listRequest = service.Events.List(calendarId);
+            listRequest.TimeMin = DateTime.Now;
+            listRequest.ShowDeleted = false;
+            listRequest.SingleEvents = true;
+            listRequest.MaxResults = 10;
+            listRequest.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+            Events events = await listRequest.ExecuteAsync();
+            List<Google.Apis.Calendar.v3.Data.Event> eventList = new List<Google.Apis.Calendar.v3.Data.Event>();
+            if (events.Items != null && events.Items.Count > 0)
+            {
+                foreach (var eventItem in events.Items)
+                {
+                    eventList.Add(eventItem);
+                }
+            }
+            return eventList;
+        }
+        public static async Task<Google.Apis.Calendar.v3.Data.Event> CreateEvent(CalendarService service, EventDto eventDto)
+        {
+            string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
+            var myevent = new Google.Apis.Calendar.v3.Data.Event()
+            {
+                Id = eventDto.EventID.ToString(),
+                Start = eventDto.StartTime,
+                End = eventDto.EndTime,
+                Summary = eventDto.Description,
+                Description = eventDto.Message
+            };
+            var InsertRequest = service.Events.Insert(myevent, calendarId);
+            try
+            {
+                await InsertRequest.ExecuteAsync();
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    await service.Events.Update(myevent, calendarId, myevent.Id).ExecuteAsync();
+                }
+                catch (Exception)
+                {
+                    //do something
+                }
+            }
+            return myevent;
         }
         //Equipment
         public async Task<EquipmentRequest> GetEquipmentRequestById(int id)

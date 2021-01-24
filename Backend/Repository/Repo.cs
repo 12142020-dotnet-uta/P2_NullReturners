@@ -17,7 +17,6 @@ namespace Repository
         public DbSet<Game> games;
         public DbSet<Play> plays;
         public DbSet<Playbook> playbooks;
-        public DbSet<Event> events;
         public DbSet<EquipmentRequest> equipmentRequests;
         public DbSet<Role> roles;
         public DbSet<Team> teams;
@@ -33,7 +32,6 @@ namespace Repository
             this.games = _progContext.Games;
             this.plays = _progContext.Plays;
             this.playbooks = _progContext.Playbooks;
-            this.events = _progContext.Events;
             this.equipmentRequests = _progContext.EquipmentRequests;
             this.roles = _progContext.Roles;
             this.teams = _progContext.Teams;
@@ -120,14 +118,6 @@ namespace Repository
         public async Task<IEnumerable<Game>> GetGames()
         {
             return await games.ToListAsync();
-        }
-        public async Task<Event> GetEventById(int id)
-        {
-            return await events.FindAsync(id);
-        }
-        public async Task<IEnumerable<Event>> GetEvents()
-        {
-            return await events.ToListAsync();
         }
         public async Task<EquipmentRequest> GetEquipmentRequestById(int id)
         {

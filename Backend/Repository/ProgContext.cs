@@ -16,7 +16,6 @@ namespace Repository
         public DbSet<Playbook> Playbooks { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<Event> Events { get; set; }
         public DbSet<EquipmentRequest> EquipmentRequests { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<RecipientList> RecipientLists { get; set; }
@@ -38,6 +37,8 @@ namespace Repository
         {
             modelBuilder.Entity<UserInbox>()
                 .HasKey(c => new { c.UserID, c.MessageID });
+            modelBuilder.Entity<RecipientList>()
+                .HasKey(c => new { c.RecipientListID, c.RecipientID });
         }
     }
 }
