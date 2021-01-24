@@ -13,5 +13,11 @@ namespace Models.DataTransfer
         public int HomeTeamID { get; set; }
         [DisplayName("Away Team ID")]
         public int AwayTeamID { get; set; }
+        [DisplayName("Statistic 1")]
+        public string Statistic1 { get; set; }
+        [DisplayName("Statistic 2")]
+        public string Statistic2 { get; set; }
+        [DisplayName("Statistic 3")]
+        public string Statistic3 { get; set; }
     }
 }

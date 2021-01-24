@@ -15,5 +15,11 @@ namespace Models.DataTransfer
         public int HomeScore { get; set; }
         [DisplayName("Away Score")]
         public int AwayScore { get; set; }
+        [DisplayName("Statistic 1")]
+        public string Statistic1 { get; set; }
+        [DisplayName("Statistic 2")]
+        public string Statistic2 { get; set; }
+        [DisplayName("Statistic 3")]
+        public string Statistic3 { get; set; }
     }
 }
