@@ -2,5 +2,15 @@
 
 
 <ul>
-    <li *ngFor="let equipment of equipmentList">Team ID[{{equipment.teamID}}]  Message[{{equipment.message}}] status[{{equipment.status}}]</li>
+    <li *ngFor="let equipment of equipmentList">{{equipment?.user?.userName}} Message[{{equipment.message}}] status[{{equipment.status}}]  - {{equipment?.team?.name}}</li>
 </ul>
+
+<form #createEquipmentRequestForm="ngForm" class="d-flex" (ngSubmit)="createEquipmentRequest()" autocomplete="off">
+    <input name="UserID" [(ngModel)]="model.userid" class="form-control me-2" type="text" placeholder="User">
+    <input name="TeamID" [(ngModel)]="model.teamid" class="form-control me-2" type="number" placeholder="Team">
+    <input name="DateRequested" [(ngModel)]="model.dateRequested" class="form-control me-2" type="date" placeholder="Date">
+    <input name="Message" [(ngModel)]="model.message" class="form-control me-2" type="text" placeholder="Message">
+    <input name="ItemId" [(ngModel)]="model.itemid" class="form-control me-2" type="number" placeholder="Item Id">
+    <input name="Status" [(ngModel)]="model.status" class="form-control me-2" type="text" placeholder="Status">
+    <button class="btn btn-outline-success" type="submit">Create</button>
+</form>
