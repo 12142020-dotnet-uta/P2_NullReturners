@@ -238,7 +238,7 @@ namespace Logic
                 RecipientListID = listId,
                 RecipientID = recId
             };
-            await _repo.recipientLists.AddAsync(rL);
+            await _repo.recipientLists.AddAsync(rL); 
             await _repo.CommitSave();
             return rL;
         }
