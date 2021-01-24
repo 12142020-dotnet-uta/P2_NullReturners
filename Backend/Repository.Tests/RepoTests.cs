@@ -663,7 +663,7 @@ namespace Repository.Tests
             }
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Tests the GetUserInbox() method of Repo
         /// </summary>
         [Fact]
@@ -687,39 +687,10 @@ namespace Repository.Tests
                 };
 
                 r.userInboxes.Add(userInbox);
-                var listOfUserInboxes = r.GetUserInbox();
+                var listOfUserInboxes = r.GetUserInbox(userInbox.UserID);
                 Assert.NotNull(listOfUserInboxes);
             }
         }
-
-        /// <summary>
-        /// Tests the GetUserInboxById() method of Repo
-        /// </summary>
-        [Fact]
-        public void TestForGetUserInboxById()
-        {
-            var options = new DbContextOptionsBuilder<ProgContext>()
-            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-            .Options;
-
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-
-                Repo r = new Repo(context, new NullLogger<Repo>());
-                var userInbox = new UserInbox()
-                {
-                    UserID = Guid.NewGuid(),
-                    MessageID = Guid.NewGuid(),
-                    IsRead = true
-                };
-
-                r.userInboxes.Add(userInbox);
-                var listOfUserInboxes = r.GetUserInboxById(userInbox.UserID, userInbox.MessageID);
-                Assert.True(listOfUserInboxes.Result.Equals(userInbox));
-            }
-        }*/
 
     } // end of class
 } // end of namespace

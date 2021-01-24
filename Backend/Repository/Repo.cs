@@ -136,7 +136,7 @@ namespace Repository
 
         //        for (int i = 0; i < rolenames.Length; i++)
         //        {
-        //            Role newrole = new Role
+        //            Role newrole = new Role()
         //            {
         //                RoleName = $"{rolenames[i]}"
         //            };
@@ -154,7 +154,7 @@ namespace Repository
 
         //        for (int i = 0; i < teamnames.Length; i++)
         //        {
-        //            Team newteam = new Team
+        //            Team newteam = new Team()
         //            {
         //                Name = $"{teamnames[i]}"
         //            };
@@ -195,7 +195,7 @@ namespace Repository
 
         //        for (int i = 0; i < usernames.Length; i++)
         //        {
-        //            User newuser = new User
+        //            User newuser = new User()
         //            {
         //                UserName = $"{usernames[i]}",
         //                Password = $"{passwords[i]}",
@@ -226,7 +226,7 @@ namespace Repository
 
         //        for (int i = 0; i < userlist.Length; i++)
         //        {
-        //            EquipmentRequest newrequest = new EquipmentRequest
+        //            EquipmentRequest newrequest = new EquipmentRequest()
         //            {
         //                UserID = userlist[i],
         //                TeamID = teamslist[i],

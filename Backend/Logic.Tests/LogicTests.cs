@@ -887,6 +887,36 @@ namespace Logic.Tests
         }
 
         /// <summary>
+        /// Tests the BuildRecipientList() method of LogicClass
+        /// Tests that a recipient list is added to the database
+        /// </summary>
+        [Fact]
+        public void TestForBuildRecipientList()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                RecipientList recipient = new RecipientList()
+                {
+                    RecipientListID = Guid.NewGuid(),
+                    RecipientID = Guid.NewGuid()
+                };
+
+                var createList = logic.BuildRecipientList(recipient.RecipientListID, recipient.RecipientID);
+                //Assert.Equal(1, context.Plays.CountAsync().Result);
+                Assert.Contains<RecipientList>(createList.Result, context.RecipientLists);
+            }
+        }
+
+        /// <summary>
         /// Tests the GetMessages() method of LogicClass
         /// </summary>
         [Fact]
@@ -950,7 +980,7 @@ namespace Logic.Tests
 
         /// <summary>
         /// Tests the CreateNewMessage() method of LogicClass
-        /// Tests that a user is added to the database
+        /// Tests that a message is added to the database
         /// </summary>
         [Fact]
         public void TestForCreateNewMessage()
@@ -974,7 +1004,7 @@ namespace Logic.Tests
                     MessageText = "How you doin'?"
                 };
                 var rL = new List<Guid>();
-                rL.Add(Guid.NewGuid());
+                rL.Add(message.RecipientListID);
                 var messageDto = new NewMessageDto()
                 {
                     SenderID = message.SenderID,
@@ -982,9 +1012,148 @@ namespace Logic.Tests
                     MessageText = message.MessageText
                 };
                 var createMessage = logic.CreateNewMessage(messageDto);
-
+                
                 //Assert.Equal(1, context.Messages.CountAsync().Result);
                 Assert.Contains<Message>(createMessage.Result, context.Messages);
+            }
+        }
+
+        /// <summary>
+        /// Tests the SendMessage() method of LogicClass
+        /// Tests that a message is sent is added to the database
+        /// TODO: add assert statement
+        /// </summary>
+        [Fact]
+        public void TestForSendMessage()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                var message = new Message()
+                {
+                    MessageID = Guid.NewGuid(),
+                    SenderID = Guid.NewGuid(),
+                    RecipientListID = Guid.NewGuid(),
+                    MessageText = "How you doin'?"
+                };
+                var rL = new List<Guid>();
+                rL.Add(message.RecipientListID);
+                var messageDto = new NewMessageDto()
+                {
+                    SenderID = message.SenderID,
+                    RecipientList = rL,
+                    MessageText = message.MessageText
+                };
+
+                var createMessage = logic.CreateNewMessage(messageDto);
+                var sendMessage = logic.SendMessage(createMessage.Result);
+
+                //Assert.Equal(1, context.Messages.CountAsync().Result);
+                //Assert.True(context.UserInboxes.Find(message.RecipientListID, message.MessageID).MessageID.Equals(message.MessageID));
+            }
+        }
+
+        /// <summary>
+        /// Tests the DeleteMessageFromInbox() method of LogicClass
+        /// Tests that a message is sent is added to the database
+        /// TODO: add assert statement
+        /// </summary>
+        [Fact]
+        public void TestForDeleteMessageFromInbox()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                var messageInbox = logic.CreateUserInbox(Guid.NewGuid(), Guid.NewGuid());
+
+                Assert.Contains<UserInbox>(messageInbox.Result, context.UserInboxes);
+                logic.DeleteMessageFromInbox(messageInbox.Result.UserID, messageInbox.Result.MessageID);
+
+                var countMessages =  from p in context.UserInboxes
+                                    where p.UserID == messageInbox.Result.UserID && p.MessageID == messageInbox.Result.MessageID
+                                    select p;
+                int count = 0;
+                foreach (UserInbox inbox in countMessages)
+                {
+                    count++;
+                }
+                Assert.Equal(0, count);
+
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetUserInbox() method of LogicClass
+        /// </summary>
+        [Fact]
+        public void TestForGetUserInbox()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                var userInbox = new UserInbox()
+                {
+                    UserID = Guid.NewGuid(),
+                    MessageID = Guid.NewGuid(),
+                    IsRead = true
+                };
+
+                r.userInboxes.Add(userInbox);
+                var listOfUserInboxes = logic.GetUserInbox(userInbox.UserID);
+                Assert.NotNull(listOfUserInboxes);
+            }
+        }
+
+        /// <summary>
+        /// Tests the CreateUserInbox() method of LogicClass
+        /// </summary>
+        [Fact]
+        public void TestForCreateUserInbox()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                var userInbox = new UserInbox()
+                {
+                    UserID = Guid.NewGuid(),
+                    MessageID = Guid.NewGuid(),
+                    IsRead = false
+                };
+
+                var createInbox = logic.CreateUserInbox(userInbox.UserID, userInbox.MessageID);
+                Assert.Contains<UserInbox>(createInbox.Result, context.UserInboxes);
             }
         }
 
@@ -1331,5 +1500,40 @@ namespace Logic.Tests
             }
         }
 
+        /// <summary>
+        /// Tests the InitializeCalendar() method in LogicClass
+        /// TODO: write actual test for InitializeCalendar
+        /// </summary>
+        [Fact]
+        public void TestForInitializeCalendar()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+
+                EventDto eventDto = new EventDto()
+                {
+                    EventID = Guid.NewGuid(),
+                    Description = "Practice",
+                    Location = "Football field",
+                    Message = "Don't miss it!",
+                    StartTime = null,
+                    EndTime = null
+                };
+
+                var calendarService = LogicClass.InitializeCalendar();
+                var calendar = LogicClass.GetCalendar(calendarService.Result);
+                var getEvents = LogicClass.GetMyEvents(calendarService.Result);
+                var createEvent = LogicClass.CreateEvent(calendarService.Result, eventDto);
+            }
+        }
     } // end of class
 } // end of namespace
