@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Models.DataTransfer;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Logic.Tests
 {
@@ -972,7 +973,15 @@ namespace Logic.Tests
                     RecipientListID = Guid.NewGuid(),
                     MessageText = "How you doin'?"
                 };
-                var createMessage = logic.CreateNewMessage(message.SenderID, message.RecipientListID, message.MessageText);
+                var rL = new List<Guid>();
+                rL.Add(Guid.NewGuid());
+                var messageDto = new NewMessageDto()
+                {
+                    SenderID = message.SenderID,
+                    RecipientList = rL,
+                    MessageText = message.MessageText
+                };
+                var createMessage = logic.CreateNewMessage(messageDto);
 
                 //Assert.Equal(1, context.Messages.CountAsync().Result);
                 Assert.Contains<Message>(createMessage.Result, context.Messages);

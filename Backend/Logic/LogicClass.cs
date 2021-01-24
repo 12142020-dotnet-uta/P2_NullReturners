@@ -226,14 +226,29 @@ namespace Logic
         {
             return await _repo.GetRecipientLists();
         }
-        public async Task<Message> CreateNewMessage(Guid senderId, Guid recipientListId, string message)
+        public async Task<RecipientList> BuildRecipientList(Guid listId, Guid recId)
+        {
+            RecipientList rL = new RecipientList()
+            {
+                RecipientListID = listId,
+                RecipientID = recId
+            };
+            await _repo.recipientLists.AddAsync(rL);
+            await _repo.CommitSave();
+            return rL;
+        }
+        public async Task<Message> CreateNewMessage(NewMessageDto newMessageDto)
         {
             Message newMessage = new Message()
             {
-                SenderID = senderId,
-                RecipientListID = recipientListId,
-                MessageText = message
+                SenderID = newMessageDto.SenderID,
+                RecipientListID = Guid.NewGuid(),
+                MessageText = newMessageDto.MessageText
             };
+            foreach (Guid id in newMessageDto.RecipientList)
+            {
+                await BuildRecipientList(newMessage.RecipientListID, id);
+            }
             await _repo.messages.AddAsync(newMessage);
             await _repo.CommitSave();
             return newMessage;
@@ -248,11 +263,37 @@ namespace Logic
                     recipientList.Add(r.RecipientID);
                 }
             }
-            //foreach(Guid r in recipientList)
-            //{
-            //    add userid, messageid, read = false to inboxes, change user inbox status to notify
-            //}
-            
+            foreach (Guid r in recipientList)
+            {
+                await CreateUserInbox(r, message.MessageID);
+            }
+            await _repo.CommitSave();
+        }
+        public async Task<IEnumerable<UserInbox>> GetUserInbox(Guid userId)
+        {
+            return await _repo.GetUserInbox(userId);
+        }
+        public async Task<UserInbox> CreateUserInbox(Guid userId, Guid messageId)
+        {
+            UserInbox uI = new UserInbox()
+            {
+                UserID = userId,
+                MessageID = messageId,
+                IsRead = false
+            };
+            await _repo.userInboxes.AddAsync(uI);
+            await _repo.CommitSave();
+            return uI;
+        }
+        public async void DeleteMessageFromInbox(Guid userId, Guid messageId)
+        {
+            foreach (UserInbox u in _repo.userInboxes)
+            {
+                if (u.UserID == userId && u.MessageID == messageId)
+                {
+                    _repo.userInboxes.Remove(u);
+                }
+            }
             await _repo.CommitSave();
         }
         //Games
