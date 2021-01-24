@@ -333,15 +333,7 @@ namespace Logic
             }
             return editedGame;
         }
-        //Events
-        //public async Task<Event> GetEventById(int id)
-        //{
-        //    return await _repo.GetEventById(id);
-        //}
-        //public async Task<IEnumerable<Event>> GetEvents()
-        //{
-        //    return await _repo.GetEvents();
-        //}
+        //Calendar
         public static async Task<CalendarService> InitializeCalendar()
         {
             string jsonFile = "p2nullreturners-997092916366.json";
