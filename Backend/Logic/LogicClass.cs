@@ -223,9 +223,9 @@ namespace Logic
         {
             return await _repo.GetMessages();
         }
-        public async Task<RecipientList> GetRecipientListById(Guid id)
+        public async Task<RecipientList> GetRecipientListById(Guid listId, Guid recId)
         {
-            return await _repo.GetRecipientListById(id);
+            return await _repo.GetRecipientListById(listId, recId);
         }
         public async Task<IEnumerable<RecipientList>> GetRecipientLists()
         {
@@ -238,7 +238,7 @@ namespace Logic
                 RecipientListID = listId,
                 RecipientID = recId
             };
-            await _repo.recipientLists.AddAsync(rL);
+            await _repo.recipientLists.AddAsync(rL); 
             await _repo.CommitSave();
             return rL;
         }
@@ -333,15 +333,7 @@ namespace Logic
             }
             return editedGame;
         }
-        //Events
-        //public async Task<Event> GetEventById(int id)
-        //{
-        //    return await _repo.GetEventById(id);
-        //}
-        //public async Task<IEnumerable<Event>> GetEvents()
-        //{
-        //    return await _repo.GetEvents();
-        //}
+        //Calendar
         public static async Task<CalendarService> InitializeCalendar()
         {
             string jsonFile = "p2nullreturners-997092916366.json";

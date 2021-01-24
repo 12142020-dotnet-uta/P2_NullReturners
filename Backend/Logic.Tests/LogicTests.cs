@@ -881,7 +881,7 @@ namespace Logic.Tests
                 };
 
                 r.recipientLists.Add(recipientList);
-                var listOfRecipientList = logic.GetRecipientListById(recipientList.RecipientListID);
+                var listOfRecipientList = logic.GetRecipientListById(recipientList.RecipientListID, recipientList.RecipientID);
                 Assert.True(listOfRecipientList.Result.Equals(recipientList));
             }
         }
