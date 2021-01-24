@@ -179,22 +179,22 @@ namespace Models.Tests
         /// <summary>
         /// Makes sure Event Model works with valid data
         /// </summary>
-        [Fact]
-        public void ValidateEventSchedule()
-        {
-            var eventSchedule = new Event()
-            {
-                EventID = 1,
-                TeamID = 1,
-                Description = "Training",
-                EventDate = DateTime.Now,
-                Location = "Local park",
-                Message = "Show up to training!"
-            };
+        //[Fact]
+        //public void ValidateEventSchedule()
+        //{
+        //    var eventSchedule = new Event()
+        //    {
+        //        EventID = 1,
+        //        TeamID = 1,
+        //        Description = "Training",
+        //        EventDate = DateTime.Now,
+        //        Location = "Local park",
+        //        Message = "Show up to training!"
+        //    };
 
-            var results = ValidateModel(eventSchedule);
-            Assert.True(results.Count == 0);
-        }
+        //    var results = ValidateModel(eventSchedule);
+        //    Assert.True(results.Count == 0);
+        //}
 
         /// <summary>
         /// Makes sure EquipmentRequest Model works with valid data

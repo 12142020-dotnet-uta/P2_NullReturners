@@ -536,66 +536,66 @@ namespace Repository.Tests
         /// <summary>
         /// Tests the GetEvents() method of Repo
         /// </summary>
-        [Fact]
-        public void TestForGetEvents()
-        {
-            var options = new DbContextOptionsBuilder<ProgContext>()
-            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-            .Options;
+        //[Fact]
+        //public void TestForGetEvents()
+        //{
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
 
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, new NullLogger<Repo>());
-                var eventSchedule = new Event
-                {
-                    EventID = 1,
-                    TeamID = 1,
-                    Description = "Practice",
-                    EventDate = DateTime.Now,
-                    Location = "soccer field",
-                    Message = "make it to practice!"
-                };
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        var eventSchedule = new Event
+        //        {
+        //            EventID = 1,
+        //            TeamID = 1,
+        //            Description = "Practice",
+        //            EventDate = DateTime.Now,
+        //            Location = "soccer field",
+        //            Message = "make it to practice!"
+        //        };
 
-                r.events.Add(eventSchedule);
-                var listOfEvents = r.GetEvents();
-                Assert.NotNull(listOfEvents);
-            }
-        }
+        //        r.events.Add(eventSchedule);
+        //        var listOfEvents = r.GetEvents();
+        //        Assert.NotNull(listOfEvents);
+        //    }
+        //}
 
         /// <summary>
         /// Tests the GetEventById() method of Repo
         /// </summary>
-        [Fact]
-        public void TestForGetEventById()
-        {
-            var options = new DbContextOptionsBuilder<ProgContext>()
-            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-            .Options;
+        //[Fact]
+        //public void TestForGetEventById()
+        //{
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
 
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, new NullLogger<Repo>());
-                var eventSchedule = new Event
-                {
-                    EventID = 1,
-                    TeamID = 1,
-                    Description = "Practice",
-                    EventDate = DateTime.Now,
-                    Location = "soccer field",
-                    Message = "make it to practice!"
-                };
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        var eventSchedule = new Event
+        //        {
+        //            EventID = 1,
+        //            TeamID = 1,
+        //            Description = "Practice",
+        //            EventDate = DateTime.Now,
+        //            Location = "soccer field",
+        //            Message = "make it to practice!"
+        //        };
 
-                r.events.Add(eventSchedule);
-                var listOfEvents = r.GetEventById(eventSchedule.EventID);
-                Assert.True(listOfEvents.Result.Equals(eventSchedule));
-            }
-        }
+        //        r.events.Add(eventSchedule);
+        //        var listOfEvents = r.GetEventById(eventSchedule.EventID);
+        //        Assert.True(listOfEvents.Result.Equals(eventSchedule));
+        //    }
+        //}
 
         /// <summary>
         /// Tests the GetEquipmentRequests() method of Repo
