@@ -285,7 +285,7 @@ namespace Logic
             await _repo.CommitSave();
             return uI;
         }
-        public async void DeleteMessageFromInbox(Guid userId, Guid messageId)
+        public async Task DeleteMessageFromInbox(Guid userId, Guid messageId)
         {
             foreach (UserInbox u in _repo.userInboxes)
             {
