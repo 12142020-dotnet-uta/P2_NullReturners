@@ -374,7 +374,7 @@ namespace Logic
             var calendar = await service.Calendars.Get(calendarId).ExecuteAsync();
             return calendar;
         }
-        public static async Task<IEnumerable<Google.Apis.Calendar.v3.Data.Event>> GetMyEvents(CalendarService service)
+        public static async Task<IEnumerable<Event>> GetMyEvents(CalendarService service)
         {
             string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
             EventsResource.ListRequest listRequest = service.Events.List(calendarId);
@@ -384,7 +384,7 @@ namespace Logic
             listRequest.MaxResults = 10;
             listRequest.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
             Events events = await listRequest.ExecuteAsync();
-            List<Google.Apis.Calendar.v3.Data.Event> eventList = new List<Google.Apis.Calendar.v3.Data.Event>();
+            List<Event> eventList = new List<Event>();
             if (events.Items != null && events.Items.Count > 0)
             {
                 foreach (var eventItem in events.Items)
@@ -394,10 +394,10 @@ namespace Logic
             }
             return eventList;
         }
-        public static async Task<Google.Apis.Calendar.v3.Data.Event> CreateEvent(CalendarService service, EventDto eventDto)
+        public static async Task<Event> CreateEvent(CalendarService service, EventDto eventDto)
         {
             string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
-            var myevent = new Google.Apis.Calendar.v3.Data.Event()
+            var myevent = new Event()
             {
                 Id = eventDto.EventID.ToString(),
                 Start = eventDto.StartTime,
@@ -418,7 +418,7 @@ namespace Logic
                 }
                 catch (Exception)
                 {
-                    //do something
+                    myevent = new Event();
                 }
             }
             return myevent;
