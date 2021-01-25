@@ -23,13 +23,13 @@ namespace Repository
 
         public ProgContext() { }
 
-        public ProgContext(DbContextOptions<ProgContext> options) : base("Local Connection") { }
+        public ProgContext(DbContextOptions<ProgContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             if (!options.IsConfigured)
             {
-                options.UseSqlServer();
+                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2test;Trusted_Connection=True;" providerName = "System.Data.SqlClient");
                 //options.UseSqlServer("Azure Connection");
             }
         }
