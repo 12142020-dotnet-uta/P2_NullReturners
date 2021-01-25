@@ -26,6 +26,14 @@ namespace Logic.Tests
         [Fact]
         public void TestForCreateUser()
         {
+
+            // this block is only for code coverage
+            var onlyForCoverage = new ProgContext(); 
+            var empty = new DbContextOptionsBuilder<ProgContext>().Options;
+            var onlyForCoverage2 = new ProgContext(empty);
+            LogicClass logicClass = new LogicClass();
+
+
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
             .Options;
@@ -1020,7 +1028,7 @@ namespace Logic.Tests
 
         /// <summary>
         /// Tests the SendMessage() method of LogicClass
-        /// Tests that a message is sent is added to the database
+        /// Tests that a sent message is added to the database
         /// TODO: add assert statement
         /// </summary>
         [Fact]
@@ -1063,8 +1071,7 @@ namespace Logic.Tests
 
         /// <summary>
         /// Tests the DeleteMessageFromInbox() method of LogicClass
-        /// Tests that a message is sent is added to the database
-        /// TODO: add assert statement
+        /// Tests that a message is deleted from the database
         /// </summary>
         [Fact]
         public void TestForDeleteMessageFromInbox()

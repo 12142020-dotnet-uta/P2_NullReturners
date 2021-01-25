@@ -320,7 +320,10 @@ namespace Models.Tests
             var game = new CreateGameDto()
             {
                 HomeTeamID = 1,
-                AwayTeamID = 2
+                AwayTeamID = 2,
+                Statistic1 = "statistic 1",
+                Statistic2 = "statistic 2",
+                Statistic3 = "statistic 3"
             };
 
             var errorcount = ValidateModel(game).Count;
@@ -373,7 +376,10 @@ namespace Models.Tests
             {
                 WinningTeamID = 1,
                 HomeScore = 24,
-                AwayScore = 12
+                AwayScore = 12,
+                Statistic1 = "statistic 1",
+                Statistic2 = "statistic 2",
+                Statistic3 = "statistic 3"
             };
 
             var errorcount = ValidateModel(gameEdit).Count;
