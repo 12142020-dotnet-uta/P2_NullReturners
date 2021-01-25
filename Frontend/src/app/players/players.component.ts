@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
-import { concatMap, mergeAll, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-players',

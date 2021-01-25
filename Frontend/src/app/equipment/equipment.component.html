@@ -2,7 +2,7 @@
 
 
 <ul>
-    <li *ngFor="let equipment of equipmentList">{{equipment?.user?.userName}} Message[{{equipment.message}}] status[{{equipment.status}}]  - {{equipment?.team?.name}}</li>
+    <li *ngFor="let equipment of equipmentList">{{equipment?.user?.userName}} Message[{{equipment.message}}] status[{{equipment.status}}] - {{equipment?.user?.fullName}}  - {{equipment?.team?.name}}</li>
 </ul>
 
 <form #createEquipmentRequestForm="ngForm" class="d-flex" (ngSubmit)="createEquipmentRequest()" autocomplete="off">
