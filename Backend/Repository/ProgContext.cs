@@ -23,14 +23,14 @@ namespace Repository
 
         public ProgContext() { }
 
-        public ProgContext(DbContextOptions<ProgContext> options) : base(options) { }
+        public ProgContext(DbContextOptions<ProgContext> options) : base("Local Connection") { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             if (!options.IsConfigured)
             {
-                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2test;Trusted_Connection=True;");
-                //options.UseSqlServer("Data Source=nullteammanager.database.windows.net;Initial Catalog=P2TeamManagerDB;User ID=nullreturnadmin;Password=ReturningNull0;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                options.UseSqlServer();
+                //options.UseSqlServer("Azure Connection");
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

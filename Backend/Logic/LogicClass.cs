@@ -258,21 +258,25 @@ namespace Logic
             await _repo.CommitSave();
             return newMessage;
         }
-        public async Task SendMessage(Message message)
+        public async Task<bool> SendMessage(Message message)
         {            
             List<Guid> recipientList = new List<Guid>();
+            bool success;
             foreach (RecipientList r in _repo.recipientLists)
             {
                 if (r.RecipientListID == message.RecipientListID)
                 {
                     recipientList.Add(r.RecipientID);
+                    
                 }
             }
             foreach (Guid r in recipientList)
             {
                 await CreateUserInbox(r, message.MessageID);
             }
+            success = true;
             await _repo.CommitSave();
+            return success;
         }
         public async Task<IEnumerable<UserInbox>> GetUserInbox(Guid userId)
         {
