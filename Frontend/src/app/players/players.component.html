@@ -3,8 +3,8 @@
 
 <ul>
     <ul> <li *ngFor="let user of users">{{user.fullName}} - {{user.userName}} - {{user.teamID}} - {{user?.team?.name}} -
-        <a routerLink="/players/details" [state]="{example: 'data'}">Details</a> - 
-        <a routerLink="/players/edit" [state]="{example: 'data'}">Edit</a></li> </ul>
+        <a [routerLink]="['/players/details', user.userID]">Details</a> - 
+        <a [routerLink]="['/players/edit', user.userID]">Edit</a></li> </ul>
 </ul>
 
 

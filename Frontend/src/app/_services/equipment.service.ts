@@ -13,6 +13,10 @@ export class EquipmentService {
     return this.http.get(this.baseUrl + 'equipment');
   }
 
+  getRequest(id) {
+    return this.http.get(this.baseUrl + `equipment/${id}`)
+  }
+
   getTeam(teamId) {
     return this.http.get(this.baseUrl + `teams/${teamId}`);
   }

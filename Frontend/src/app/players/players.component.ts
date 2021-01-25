@@ -27,8 +27,8 @@ export class PlayersComponent implements OnInit {
         }), err => {
           console.log(err);
         }
+        
   }
-
 
   getTeams() {
     this.users.forEach(element => {
@@ -43,6 +43,7 @@ export class PlayersComponent implements OnInit {
   createUser() {
     this.userService.createUser(this.model).subscribe(response => {
       console.log(response);
+      this.getUsers();
     }), err => {
       console.log(err)
     }

@@ -13,6 +13,9 @@ import { RolesComponent } from './roles/roles.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavComponent } from './nav/nav.component';
 import { DrawComponent } from './draw/draw.component';
+import { PlayerdetailsComponent } from './players/playerdetails/playerdetails.component';
+import { EditplayerComponent } from './players/editplayer/editplayer.component';
+import { EquipmentRequestDetailsComponent } from './equipment/equipment-request-details/equipment-request-details.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { DrawComponent } from './draw/draw.component';
     RolesComponent,
     NavComponent,
     DrawComponent,
+    PlayerdetailsComponent,
+    EditplayerComponent,
+    EquipmentRequestDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
