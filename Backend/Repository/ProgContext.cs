@@ -29,7 +29,7 @@ namespace Repository
         {
             if (!options.IsConfigured)
             {
-                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2test;Trusted_Connection=True;" providerName = "System.Data.SqlClient");
+                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2test;Trusted_Connection=True;");
                 //options.UseSqlServer("Azure Connection");
             }
         }
