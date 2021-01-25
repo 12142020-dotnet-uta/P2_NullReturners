@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { EquipmentService } from '../_services/equipment.service';
+
 
 @Component({
   selector: 'app-equipment',
@@ -9,18 +10,51 @@ import { HttpClient } from '@angular/common/http';
 export class EquipmentComponent implements OnInit {
 
   equipmentList: any;
-  constructor(private http: HttpClient) { }
+  model: any = {};
+
+  constructor(private equipmentService: EquipmentService) { }
 
   ngOnInit(): void {
     this.getEquipment();
   }
 
   getEquipment() {
-    this.http.get('https://localhost:44342/api/equipment').subscribe(response => {
+    this.equipmentService.getRequests().subscribe(response => {
       this.equipmentList = response;
+      this.getTeam();
+      this.getUser();
     }), err => {
       console.log(err)
     }
+  }
+
+  getTeam() {
+    this.equipmentList.forEach(element => {
+      this.equipmentService.getTeam(element.teamID).subscribe( response => {
+        element.team = response;
+      }), err => {
+        console.log(err);
+      };
+    });
+  }
+
+  getUser() {
+    this.equipmentList.forEach(element => {
+      this.equipmentService.getUser(element.userID).subscribe( response => {
+        element.user = response;
+      }), err => {
+        console.log(err);
+      };
+    });
+  }
+
+  createEquipmentRequest() {
+    this.equipmentService.createRequest(this.model).subscribe(response => {
+      console.log(response);
+    }, err => {
+      console.log(err);
+    })
+    this.getEquipment();
   }
 
 }

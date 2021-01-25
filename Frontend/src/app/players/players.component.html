@@ -2,7 +2,7 @@
 <p>players works!</p>
 
 <ul>
-    <li *ngFor="let user of users">{{user.userName}} - {{user.userID}}</li>
+    <ul> <li *ngFor="let user of users">{{user.fullName}} - {{user.userName}} - {{user.teamID}} - {{user?.team?.name}}</li> </ul>
 </ul>
 
 
@@ -10,8 +10,8 @@
     <input name="Username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username" aria-label="Username">
     <input name="Password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password" aria-label="Password">
     <input name="FullName" [(ngModel)]="model.fullname" class="form-control me-2" type="text" placeholder="Full Name" aria-label="FullName">
-    <input name="PhoneNumber" [(ngModel)]="model.phonenumber" class="form-control me-2" type="text" placeholder="Phone Number" aria-label="PhoneNumber">
-    <input name="Email" [(ngModel)]="model.email" class="form-control me-2" type="text" placeholder="Email" aria-label="Email">
+    <input name="PhoneNumber" [(ngModel)]="model.phonenumber" class="form-control me-2" type="tel" placeholder="Phone Number" aria-label="PhoneNumber">
+    <input name="Email" [(ngModel)]="model.email" class="form-control me-2" type="email" placeholder="Email" aria-label="Email">
     <input name="TeamId" [(ngModel)]="model.teamId" class="form-control me-2" type="text" placeholder="Team" aria-label="TeamId">
     <input name="RoleId" [(ngModel)]="model.roleId" class="form-control me-2" type="text" placeholder="Role" aria-label="RoleId">
     <button class="btn btn-outline-success" type="submit">Create</button>

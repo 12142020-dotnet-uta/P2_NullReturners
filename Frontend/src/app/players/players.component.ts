@@ -1,17 +1,21 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
+import { concatMap, mergeAll, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-players',
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.css']
 })
+
+
+
 export class PlayersComponent implements OnInit {
   users: any;
   model: any = {}
 
-  constructor(private http: HttpClient, private userService: UserService) { }
+
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -20,9 +24,21 @@ export class PlayersComponent implements OnInit {
   getUsers() {
     this.userService.getUsers().subscribe(response => {
           this.users = response;
+          this.getTeams();
         }), err => {
-          console.log(err)
+          console.log(err);
         }
+  }
+
+
+  getTeams() {
+    this.users.forEach(element => {
+      this.userService.getTeam(element.teamID).subscribe( response => {
+        element.team = response;
+      }), err => {
+        console.log(err);
+      };
+    });
   }
 
   createUser() {
@@ -31,16 +47,7 @@ export class PlayersComponent implements OnInit {
     }), err => {
       console.log(err)
     }
-    console.log(this.model);
+    this.getUsers();
   }
-
-
-  // getPlayers() {
-  //   this.http.get('https://localhost:44342/api/users').subscribe(response => {
-  //     this.players = response;
-  //   }), err => {
-  //     console.log(err)
-  //   }
-  // }
 
 }
