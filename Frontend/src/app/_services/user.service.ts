@@ -15,6 +15,10 @@ export class UserService {
     return this.http.get(this.baseUrl + 'users');
   }
 
+  getUser(userId) {
+    return this.http.get(this.baseUrl + `users/${userId}`)
+  }
+
   getTeam(teamId) {
     return this.http.get(this.baseUrl + `teams/${teamId}`)
   }
