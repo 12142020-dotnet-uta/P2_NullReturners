@@ -1,2 +1,25 @@
 <p>draw works!</p>
-<app-canvas></app-canvas>
+<button  (click)="restetTemplate()">Reset</button><br>
+<canvas #canvas (mousedown)="captureEvents()"></canvas> 
+
+    <div>
+    <button  (click)="getEraser()">Erase</button>
+    <button (click)="lineIncrease()">Brush +</button>
+    <button (click)="lineDecrease()">Brush -</button>
+    </div>
+
+    <div>
+    <p>Brush Color</p>
+    <button style="color:black;" style="background-color: red;" (click)="getRed()">Red</button>
+    <button style="background-color: black;" (click)="getBlack()">Black</button>
+    <button style="color:white;" style="background-color: White;" (click)="getWhite()">Green</button>
+    <button style="color:white;" style="background-color: Blue;" (click)="getBlue()">Blue</button>
+    <!--(mousedown)= "handleStart($event)" (mousemove)="handleMove($event)" (mouseup)="handleEnd($event)">-->
+    </div>
+
+    <div>
+        <p>background-color</p>
+    <button style="background-color:bisque;" (click)="SetBackGroundTan()">TanB</button>
+    <button style="background-color: Green;" (click)="SetBackGroundGreen()">GreenB</button>
+    <button  (click)="SetBackGroundWhite()">WhiteB</button>
+    </div>
