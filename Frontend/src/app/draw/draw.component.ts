@@ -1,77 +1,56 @@
-/*import { Component, OnInit } from '@angular/core';
 
-@Component({
-  selector: 'app-draw',
-  templateUrl: './draw.component.html',
-  styleUrls: ['./draw.component.css']
-})
-export class DrawComponent implements OnInit {
-
-  
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}*/
 import {
-  Component, Input, ElementRef, AfterViewInit, ViewChild
+  Component, Input, ElementRef, AfterViewInit,OnInit, ViewChild
 } from '@angular/core';
-
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 
 @Component({
   selector: 'app-draw',
-  template: '<canvas #canvas></canvas>',
-  styles: ['canvas { border: 1px solid #000; }']
+  templateUrl: './draw.component.html',
+  styles: ['canvas { border: 1px solid; }']
 })
 export class DrawComponent implements AfterViewInit {
   // a reference to the canvas element from our template
-  @ViewChild('canvas') public canvas: ElementRef;
-  // setting a width and height for the canvas
-  @Input() public width = 400;
-  @Input() public height = 400;
-
-  private cx: CanvasRenderingContext2D;  
+  @ViewChild('canvas') canvas: any;
   
+  // setting a width and height for the canvas
+  @Input() public width = 600;
+  @Input() public height = 600;
+  canvasEl: HTMLCanvasElement;
+  cx: CanvasRenderingContext2D;
+   
   public ngAfterViewInit() {
     // get the context
-    const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
-    this.cx = canvasEl.getContext('2d');
+    this.canvasEl  = this.canvas.nativeElement;
+    this.cx = this.canvasEl.getContext('2d');
     // set the width and height
-    canvasEl.width = this.width;
-    canvasEl.height = this.height;
-    // set some default properties about the line
-    this.cx.lineWidth = 2;
-    this.cx.lineCap = 'square';
-    this.cx.strokeStyle = '#000';    
-    // we'll implement this method to start capturing mouse events
-    this.captureEvents(canvasEl);
+    this.canvasEl.width = this.width;
+    this.canvasEl.height = this.height;
+    this.cx.lineCap = 'round';
   }
 
   
-private captureEvents(canvasEl: HTMLCanvasElement) {
+public captureEvents() {
   // this will capture all mousedown events from the canvas element
-  fromEvent(canvasEl, 'mousedown')
+  fromEvent(this.canvasEl, 'mousedown')
     .pipe(
-       switchMap((e) => {
+       switchMap((e) =>  {
         // after a mouse down, we'll record all mouse moves
-        return fromEvent(canvasEl, 'mousemove')
+        return fromEvent(this.canvasEl, 'mousemove')
           .pipe(
-            // we'll stop (and unsubscribe) once the user releases the mouse
-            // this will trigger a 'mouseup' event    
-            takeUntil(fromEvent(canvasEl, 'mouseup')),
-            // we'll also stop (and unsubscribe) once the mouse leaves the canvas (mouseleave event)
-            takeUntil(fromEvent(canvasEl, 'mouseleave')),
-            // pairwise lets us get the previous value to draw a line from
-            // the previous point to the current point    
+            // we'll stop once the user releases the mouse
+            // triggers a mouseup event    
+            takeUntil(fromEvent(this.canvasEl, 'mouseup')),
+            //stop and unsubscribe once the (mouseleave event)
+            takeUntil(fromEvent(this.canvasEl, 'mouseleave')),
+            // pairwise lets us get the previous value to draw a line from the previous point to the current point    
             pairwise()
           )
       })
     )
-    .subscribe((res: [MouseEvent, MouseEvent]) => {
-      const rect = canvasEl.getBoundingClientRect();
+    .subscribe((res: [MouseEvent, MouseEvent])  => {
+      const rect = this.canvasEl.getBoundingClientRect();
 
       // previous and current position with the offset
       const prevPos = {
@@ -90,20 +69,72 @@ private captureEvents(canvasEl: HTMLCanvasElement) {
 }
 
 
-private drawOnCanvas(
-  lastPosition: { x: number, y: number }, 
-  positionNow: { x: number, y: number }
-) {
+private drawOnCanvas( lastPosition:{ x: number, y: number }, positionNow: { x: number, y: number }) {
   // incase the context is not set
   if (!this.cx) { return; }
+
   // start our drawing path
   this.cx.beginPath();
+
   // we're drawing lines so we need a previous position
   if (lastPosition) { // sets the start point
-    this.cx.moveTo(lastPosition.x, lastPosition.y); // from 
+    this.cx.moveTo(lastPosition.x, lastPosition.y); // from
     this.cx.lineTo(positionNow.x, positionNow.y);// draws a line from the start pos until the current position
     this.cx.stroke(); // strokes the current path with the styles we set earlier
   }
 }
 
+public getRed(){
+  this.cx.strokeStyle = 'Red';
+}
+
+public getBlack(){
+  this.cx.strokeStyle = 'Black';
+}
+
+public getWhite(){
+  this.cx.strokeStyle = 'White';
+}
+
+public getBlue(){
+  this.cx.strokeStyle = 'Blue';
+}
+
+public getEraser(){
+  this.cx.strokeStyle = this.canvasEl.style.backgroundColor;
+}
+
+public lineIncrease(){
+  if(this.cx.lineWidth < 40){
+  this.cx.lineWidth = this.cx.lineWidth + 2;
+  }
+  else{
+    alert('Max limit reached');
+  }
+}
+
+public lineDecrease(){
+  if(this.cx.lineWidth > 2){
+  this.cx.lineWidth = this.cx.lineWidth - 2;
+  }
+  else{
+    alert('Min limit reached');
+  }
+}
+
+public restetTemplate(){
+  this.cx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+}
+
+SetBackGroundTan(){
+  this.canvasEl.style.backgroundColor = "Bisque";
+}
+
+SetBackGroundGreen(){
+  this.canvasEl.style.backgroundColor = "Green";
+}
+
+SetBackGroundWhite(){
+  this.canvasEl.style.backgroundColor = "White";
+}
 }

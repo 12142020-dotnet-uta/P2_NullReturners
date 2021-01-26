@@ -42,6 +42,7 @@ namespace Repository
             //ValidateTeamTable();
             //ValidateUserTable();
             //ValidateEquipmentRequestTable();
+            // ValidateItemTable();
         }
 
         // Access SaveChanges from Logic class
@@ -167,7 +168,7 @@ namespace Repository
         //{
         //    if (users.Count() == 0)
         //    {
-        //        string[] usernames = { "jerryjones1", "jerryrice1", "terrybradshaw1",
+        //        string[] userNames = { "jerryjones1", "jerryrice1", "terrybradshaw1",
         //        "lionplayer1", "lionplayer2", "tigerplayer1", "tigerplayer2", "bearplayer1", "bearplayer2",
         //        "lionparent1", "lionparent2", "tigerparent1", "tigerparent2", "bearparent1", "bearparent2"};
 

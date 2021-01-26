@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
-import { concatMap, mergeAll, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-players',
@@ -28,8 +27,8 @@ export class PlayersComponent implements OnInit {
         }), err => {
           console.log(err);
         }
+        
   }
-
 
   getTeams() {
     this.users.forEach(element => {
@@ -44,6 +43,7 @@ export class PlayersComponent implements OnInit {
   createUser() {
     this.userService.createUser(this.model).subscribe(response => {
       console.log(response);
+      this.getUsers();
     }), err => {
       console.log(err)
     }

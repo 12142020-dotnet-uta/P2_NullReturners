@@ -15,11 +15,19 @@ export class UserService {
     return this.http.get(this.baseUrl + 'users');
   }
 
+  getUser(userId) {
+    return this.http.get(this.baseUrl + `users/${userId}`)
+  }
+
   getTeam(teamId) {
     return this.http.get(this.baseUrl + `teams/${teamId}`)
   }
 
-  createUser(model: any){
+  createUser(model: any) {
     return this.http.post(this.baseUrl + 'users', model);
+  }
+
+  editUser(id:string, model:any) {
+    return this.http.put(this.baseUrl + `users/edit/${id}`, model );
   }
 }
