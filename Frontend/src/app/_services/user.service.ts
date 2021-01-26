@@ -32,7 +32,7 @@ export class UserService {
   }
 
   getRole(roleId) {
-    return this.http.get(this.baseUrl + `/role/${roleId}`);
+    return this.http.get(this.baseUrl + `users/roles/${roleId}`);
   }
 
 }

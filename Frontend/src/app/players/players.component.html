@@ -7,6 +7,7 @@
             <th scope="col">Full Name</th>
             <th scope="col">Username</th>
             <th scope="col">Team</th>
+            <th scope="col">Role</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -15,6 +16,7 @@
             <td>{{user.fullName}}</td>
             <td>{{user.userName}}</td>
             <td>{{user?.team?.name}}</td>
+            <td>{{user?.role?.roleName}}</td>
             <td>
                 <a [routerLink]="['/players/details', user.userID]">Details</a> - 
                 <a [routerLink]="['/players/edit', user.userID]">Edit</a>
