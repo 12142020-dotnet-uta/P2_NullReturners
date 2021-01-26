@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
+import { DrawService } from '../_services/draw.service';
 
 @Component({
   selector: 'app-draw',
@@ -67,7 +68,6 @@ public captureEvents() {
       this.drawOnCanvas(prevPos, currentPos);
     });
 }
-
 
 private drawOnCanvas( lastPosition:{ x: number, y: number }, positionNow: { x: number, y: number }) {
   // incase the context is not set
@@ -136,5 +136,15 @@ SetBackGroundGreen(){
 
 SetBackGroundWhite(){
   this.canvasEl.style.backgroundColor = "White";
+
 }
+
+saveCanvas() {
+
+  var imageData = this.canvasEl.toDataURL('image/jpeg', 1); //1 indicates full quality
+  console.log(imageData);
+  
+}
+
+
 }
