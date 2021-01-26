@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'FrontEnd';
+  title = 'Sports Management';
 
 
   constructor(public auth: AuthService, private http: HttpClient) {}
