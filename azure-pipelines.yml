@@ -64,9 +64,9 @@ steps:
   displayName: 'dotnet publish and zip'
   inputs:
     command: 'publish'
+    arguments: '-r <RID>'
     publishWebProjects: true
     zipAfterPublish: true
-
 
 - task: AzureRmWebAppDeployment@4
   inputs:
