@@ -11,7 +11,6 @@ namespace Models
 {
     public class RecipientList
     {
-        [Key]
         [DisplayName("Recipient List ID")]
         public Guid RecipientListID { get; set; }
         [DisplayName("Recipient ID")]

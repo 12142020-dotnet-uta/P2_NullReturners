@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProgContext))]
-    [Migration("20210121161956_models")]
-    partial class models
+    [Migration("20210124162922_modelupdate")]
+    partial class modelupdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,33 +49,6 @@ namespace Repository.Migrations
                     b.HasKey("RequestID");
 
                     b.ToTable("EquipmentRequests");
-                });
-
-            modelBuilder.Entity("Models.Event", b =>
-                {
-                    b.Property<int>("EventID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EventDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TeamID")
-                        .HasColumnType("int");
-
-                    b.HasKey("EventID");
-
-                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Models.Game", b =>
@@ -167,13 +140,12 @@ namespace Repository.Migrations
             modelBuilder.Entity("Models.RecipientList", b =>
                 {
                     b.Property<Guid>("RecipientListID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RecipientID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("RecipientListID");
+                    b.HasKey("RecipientListID", "RecipientID");
 
                     b.ToTable("RecipientLists");
                 });

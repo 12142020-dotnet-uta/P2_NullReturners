@@ -1,9 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Calendar.v3;
+using Google.Apis.Calendar.v3.Data;
+using Google.Apis.Services;
+using Microsoft.Extensions.Logging;
 using Models;
 using Models.DataTransfer;
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -218,41 +223,86 @@ namespace Logic
         {
             return await _repo.GetMessages();
         }
-        public async Task<RecipientList> GetRecipientListById(Guid id)
+        public async Task<RecipientList> GetRecipientListById(Guid listId, Guid recId)
         {
-            return await _repo.GetRecipientListById(id);
+            return await _repo.GetRecipientListById(listId, recId);
         }
         public async Task<IEnumerable<RecipientList>> GetRecipientLists()
         {
             return await _repo.GetRecipientLists();
         }
-        public async Task<Message> CreateNewMessage(Guid senderId, Guid recipientListId, string message)
+        public async Task<RecipientList> BuildRecipientList(Guid listId, Guid recId)
+        {
+            RecipientList rL = new RecipientList()
+            {
+                RecipientListID = listId,
+                RecipientID = recId
+            };
+            await _repo.recipientLists.AddAsync(rL); 
+            await _repo.CommitSave();
+            return rL;
+        }
+        public async Task<Message> CreateNewMessage(NewMessageDto newMessageDto)
         {
             Message newMessage = new Message()
             {
-                SenderID = senderId,
-                RecipientListID = recipientListId,
-                MessageText = message
+                SenderID = newMessageDto.SenderID,
+                RecipientListID = Guid.NewGuid(),
+                MessageText = newMessageDto.MessageText
             };
+            foreach (Guid id in newMessageDto.RecipientList)
+            {
+                await BuildRecipientList(newMessage.RecipientListID, id);
+            }
             await _repo.messages.AddAsync(newMessage);
             await _repo.CommitSave();
             return newMessage;
         }
-        public async Task SendMessage(Message message)
+        public async Task<bool> SendMessage(Message message)
         {            
             List<Guid> recipientList = new List<Guid>();
+            bool success;
             foreach (RecipientList r in _repo.recipientLists)
             {
                 if (r.RecipientListID == message.RecipientListID)
                 {
                     recipientList.Add(r.RecipientID);
+                    
                 }
             }
-            //foreach(Guid r in recipientList)
-            //{
-            //    add userid, messageid, read = false to inboxes, change user inbox status to notify
-            //}
-            
+            foreach (Guid r in recipientList)
+            {
+                await CreateUserInbox(r, message.MessageID);
+            }
+            success = true;
+            await _repo.CommitSave();
+            return success;
+        }
+        public async Task<IEnumerable<UserInbox>> GetUserInbox(Guid userId)
+        {
+            return await _repo.GetUserInbox(userId);
+        }
+        public async Task<UserInbox> CreateUserInbox(Guid userId, Guid messageId)
+        {
+            UserInbox uI = new UserInbox()
+            {
+                UserID = userId,
+                MessageID = messageId,
+                IsRead = false
+            };
+            await _repo.userInboxes.AddAsync(uI);
+            await _repo.CommitSave();
+            return uI;
+        }
+        public async Task DeleteMessageFromInbox(Guid userId, Guid messageId)
+        {
+            foreach (UserInbox u in _repo.userInboxes)
+            {
+                if (u.UserID == userId && u.MessageID == messageId)
+                {
+                    _repo.userInboxes.Remove(u);
+                }
+            }
             await _repo.CommitSave();
         }
         //Games
@@ -283,18 +333,94 @@ namespace Logic
                 if (editedGame.WinningTeam != editGameDto.WinningTeamID) { editedGame.WinningTeam = editGameDto.WinningTeamID; }
                 if (editedGame.HomeScore != editGameDto.HomeScore) { editedGame.HomeScore = editGameDto.HomeScore; }
                 if (editedGame.AwayScore != editGameDto.AwayScore) { editedGame.AwayScore = editGameDto.AwayScore; }
+                if (editedGame.Statistic1 != editGameDto.Statistic1) { editedGame.Statistic1 = editGameDto.Statistic1; }
+                if (editedGame.Statistic2 != editGameDto.Statistic2) { editedGame.Statistic2 = editGameDto.Statistic2; }
+                if (editedGame.Statistic3 != editGameDto.Statistic3) { editedGame.Statistic3 = editGameDto.Statistic3; }
                 await _repo.CommitSave();
             }
             return editedGame;
         }
-        //Events
-        public async Task<Event> GetEventById(int id)
+        //Calendar
+        public static async Task<CalendarService> InitializeCalendar()
         {
-            return await _repo.GetEventById(id);
+            string jsonFile = "p2nullreturners-997092916366.json";
+            string[] Scopes = { CalendarService.Scope.Calendar };
+
+            ServiceAccountCredential credential;
+
+            await using (var stream =
+                new FileStream(jsonFile, FileMode.Open, FileAccess.Read))
+            {
+                var confg = Google.Apis.Json.NewtonsoftJsonSerializer.Instance.Deserialize<JsonCredentialParameters>(stream);
+                credential = new ServiceAccountCredential(
+                   new ServiceAccountCredential.Initializer(confg.ClientEmail)
+                   {
+                       Scopes = Scopes
+                   }.FromPrivateKey(confg.PrivateKey));
+            }
+
+            var service = new CalendarService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "P2NullReturners",
+            });
+            
+            return service;
         }
-        public async Task<IEnumerable<Event>> GetEvents()
+        public static async Task<Calendar> GetCalendar(CalendarService service)
         {
-            return await _repo.GetEvents();
+            string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
+            var calendar = await service.Calendars.Get(calendarId).ExecuteAsync();
+            return calendar;
+        }
+        public static async Task<IEnumerable<Event>> GetMyEvents(CalendarService service)
+        {
+            string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
+            EventsResource.ListRequest listRequest = service.Events.List(calendarId);
+            listRequest.TimeMin = DateTime.Now;
+            listRequest.ShowDeleted = false;
+            listRequest.SingleEvents = true;
+            listRequest.MaxResults = 10;
+            listRequest.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+            Events events = await listRequest.ExecuteAsync();
+            List<Event> eventList = new List<Event>();
+            if (events.Items != null && events.Items.Count > 0)
+            {
+                foreach (var eventItem in events.Items)
+                {
+                    eventList.Add(eventItem);
+                }
+            }
+            return eventList;
+        }
+        public static async Task<Event> CreateEvent(CalendarService service, EventDto eventDto)
+        {
+            string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
+            var myevent = new Event()
+            {
+                Id = eventDto.EventID.ToString(),
+                Start = eventDto.StartTime,
+                End = eventDto.EndTime,
+                Summary = eventDto.Description,
+                Description = eventDto.Message
+            };
+            var InsertRequest = service.Events.Insert(myevent, calendarId);
+            try
+            {
+                await InsertRequest.ExecuteAsync();
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    await service.Events.Update(myevent, calendarId, myevent.Id).ExecuteAsync();
+                }
+                catch (Exception)
+                {
+                    myevent = new Event();
+                }
+            }
+            return myevent;
         }
         //Equipment
         public async Task<EquipmentRequest> GetEquipmentRequestById(int id)

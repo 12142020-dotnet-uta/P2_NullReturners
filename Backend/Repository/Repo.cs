@@ -17,7 +17,6 @@ namespace Repository
         public DbSet<Game> games;
         public DbSet<Play> plays;
         public DbSet<Playbook> playbooks;
-        public DbSet<Event> events;
         public DbSet<EquipmentRequest> equipmentRequests;
         public DbSet<Role> roles;
         public DbSet<Team> teams;
@@ -33,7 +32,6 @@ namespace Repository
             this.games = _progContext.Games;
             this.plays = _progContext.Plays;
             this.playbooks = _progContext.Playbooks;
-            this.events = _progContext.Events;
             this.equipmentRequests = _progContext.EquipmentRequests;
             this.roles = _progContext.Roles;
             this.teams = _progContext.Teams;
@@ -102,9 +100,13 @@ namespace Repository
         {
             return await messages.ToListAsync();
         }
-        public async Task<RecipientList> GetRecipientListById(Guid id)
+        public async Task<IEnumerable<UserInbox>> GetUserInbox(Guid id)
         {
-            return await recipientLists.FindAsync(id);
+            return await userInboxes.Where(x => x.UserID == id).ToListAsync();
+        }
+        public async Task<RecipientList> GetRecipientListById(Guid listId, Guid recId)
+        {
+            return await recipientLists.FindAsync(listId, recId);
         }
         public async Task<IEnumerable<RecipientList>> GetRecipientLists()
         {
@@ -117,14 +119,6 @@ namespace Repository
         public async Task<IEnumerable<Game>> GetGames()
         {
             return await games.ToListAsync();
-        }
-        public async Task<Event> GetEventById(int id)
-        {
-            return await events.FindAsync(id);
-        }
-        public async Task<IEnumerable<Event>> GetEvents()
-        {
-            return await events.ToListAsync();
         }
         public async Task<EquipmentRequest> GetEquipmentRequestById(int id)
         {
@@ -143,7 +137,7 @@ namespace Repository
 
         //        for (int i = 0; i < rolenames.Length; i++)
         //        {
-        //            Role newrole = new Role
+        //            Role newrole = new Role()
         //            {
         //                RoleName = $"{rolenames[i]}"
         //            };
@@ -161,7 +155,7 @@ namespace Repository
 
         //        for (int i = 0; i < teamnames.Length; i++)
         //        {
-        //            Team newteam = new Team
+        //            Team newteam = new Team()
         //            {
         //                Name = $"{teamnames[i]}"
         //            };
@@ -200,11 +194,11 @@ namespace Repository
         //        2, 2, 2, 2, 2, 2,
         //        3, 3, 3, 3, 3, 3};
 
-        //        for (int i = 0; i < userNames.Length; i++)
+        //        for (int i = 0; i < usernames.Length; i++)
         //        {
-        //            User newuser = new User
+        //            User newuser = new User()
         //            {
-        //                UserName = $"{userNames[i]}",
+        //                UserName = $"{usernames[i]}",
         //                Password = $"{passwords[i]}",
         //                FullName = $"{names[i]}",
         //                PhoneNumber = $"{phonenumbers[i]}",
@@ -233,7 +227,7 @@ namespace Repository
 
         //        for (int i = 0; i < userlist.Length; i++)
         //        {
-        //            EquipmentRequest newrequest = new EquipmentRequest
+        //            EquipmentRequest newrequest = new EquipmentRequest()
         //            {
         //                UserID = userlist[i],
         //                TeamID = teamslist[i],
@@ -243,24 +237,6 @@ namespace Repository
         //                Status = status[i]
         //            };
         //            equipmentRequests.Add(newrequest);
-        //        }
-        //        _progContext.SaveChanges();
-        //    }
-        //}
-
-        //private void ValidateItemTable()
-        //{
-        //    if (roles.Count() == 0)
-        //    {
-        //        string[] rolenames = { "coach", "player", "parent" };
-
-        //        for (int i = 0; i < rolenames.Length; i++)
-        //        {
-        //            Role newrole = new Role
-        //            {
-        //                RoleName = $"{rolenames[i]}"
-        //            };
-        //            roles.Add(newrole);
         //        }
         //        _progContext.SaveChanges();
         //    }

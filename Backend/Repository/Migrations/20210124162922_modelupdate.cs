@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class models : Migration
+    public partial class modelupdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,23 +23,6 @@ namespace Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EquipmentRequests", x => x.RequestID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Events",
-                columns: table => new
-                {
-                    EventID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TeamID = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EventDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events", x => x.EventID);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,7 +94,7 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RecipientLists", x => x.RecipientListID);
+                    table.PrimaryKey("PK_RecipientLists", x => new { x.RecipientListID, x.RecipientID });
                 });
 
             migrationBuilder.CreateTable(
@@ -178,9 +161,6 @@ namespace Repository.Migrations
         {
             migrationBuilder.DropTable(
                 name: "EquipmentRequests");
-
-            migrationBuilder.DropTable(
-                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "Games");

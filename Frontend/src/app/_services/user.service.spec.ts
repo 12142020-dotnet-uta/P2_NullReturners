@@ -5,12 +5,13 @@ import { UserService } from './user.service';
 describe('UserServiceService', () => {
   let service: UserService;
 
+
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(UserService);
   });
 
-  it('should be created', () => {
+  it('should get list of users', () => {
     expect(service).toBeTruthy();
   });
 });

@@ -16,7 +16,6 @@ namespace Repository
         public DbSet<Playbook> Playbooks { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<Event> Events { get; set; }
         public DbSet<EquipmentRequest> EquipmentRequests { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<RecipientList> RecipientLists { get; set; }
@@ -24,20 +23,22 @@ namespace Repository
 
         public ProgContext() { }
 
-        public ProgContext(DbContextOptions<ProgContext> options) : base(options) { }
+        public ProgContext(DbContextOptions<ProgContext> options) : base(options) { } 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             if (!options.IsConfigured)
             {
                 options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2test;Trusted_Connection=True;");
-                //options.UseSqlServer("Data Source=nullteammanager.database.windows.net;Initial Catalog=P2TeamManagerDB;User ID=nullreturnadmin;Password=ReturningNull0;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                //options.UseSqlServer("Azure Connection");
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserInbox>()
                 .HasKey(c => new { c.UserID, c.MessageID });
+            modelBuilder.Entity<RecipientList>()
+                .HasKey(c => new { c.RecipientListID, c.RecipientID });
         }
     }
 }
