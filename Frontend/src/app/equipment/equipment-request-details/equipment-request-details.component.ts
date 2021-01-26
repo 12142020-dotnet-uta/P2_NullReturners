@@ -9,13 +9,12 @@ import { EquipmentService } from 'src/app/_services/equipment.service';
 })
 export class EquipmentRequestDetailsComponent implements OnInit {
 
-  constructor(private equipmentService: EquipmentService, private route: ActivatedRoute ) { }
+  constructor(private equipmentService: EquipmentService, private route: ActivatedRoute) { }
   equipmentRequestId: string;
   equipmentRequest: any = {};
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      console.log(params)
       this.equipmentRequestId = params.id;
     });
 
@@ -25,9 +24,28 @@ export class EquipmentRequestDetailsComponent implements OnInit {
   getRequest(id) {
     this.equipmentService.getRequest(id).subscribe(res => {
       this.equipmentRequest = res;
+      this.getTeam();
+      this.getUser();
     }), err => {
       console.log(err);
     }
   }
+
+  getTeam() {
+      this.equipmentService.getTeam(this.equipmentRequest.teamID).subscribe( response => {
+        this.equipmentRequest.team = response;
+      }), err => {
+        console.log(err);
+      };
+  }
+
+  getUser() {
+    this.equipmentService.getUser(this.equipmentRequest.userID).subscribe( res => {
+      this.equipmentRequest.user = res;
+    }), err => {
+      console.log(err);
+    }
+  }
+
 
 }

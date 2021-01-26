@@ -42,7 +42,7 @@ namespace P2_Main.Controllers
             return await _logic.CreateEquipmentRequest(equipmentRequest);
         }
 
-        [HttpPut("/edit/{id}")]
+        [HttpPut("edit/{id}")]
         public async Task<ActionResult<EquipmentRequest>> EditEquipmentRequest(int id, EditEquipmentRequestDto equipmentRequest)
         {
             return await _logic.EditEquipmentRequest(id, equipmentRequest);
