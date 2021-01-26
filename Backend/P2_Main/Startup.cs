@@ -54,28 +54,8 @@ namespace P2_Main
                                 });
             });
 
-            string domain = $"https://{Configuration["Auth0:Domain"]}/";
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = domain;
-                options.Audience = Configuration["Auth0:Audience"];
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    NameClaimType = ClaimTypes.NameIdentifier
-                };
-            });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("read:users", policy => policy.Requirements.Add(new HasScopeRequirement("read:users", $"https://{Configuration["Auth0:Domain"]}/")));
-            });
-
-            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
-
+            // dont thing i need this
             services.AddControllers()
                  .AddNewtonsoftJson(options =>
                  {

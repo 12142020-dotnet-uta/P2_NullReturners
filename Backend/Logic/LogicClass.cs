@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -63,6 +64,41 @@ namespace Logic
             }
             return user;
         }
+
+
+
+        // DANIEL TESTING
+        public async Task<User> RegisterUser(CreateUserDto createUser)
+        {
+            User user = _repo.users.FirstOrDefault(x => x.UserName == createUser.UserName || x.Email == createUser.Email);
+            using var hmac = new HMACSHA512();
+            if (user == null)
+            {
+                user = new User()
+                {
+                    UserName = createUser.UserName,
+                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(createUser.Password)),
+                    PasswordSalt = hmac.Key,
+                    FullName = createUser.FullName,
+                    PhoneNumber = createUser.PhoneNumber,
+                    Email = createUser.Email,
+                    TeamID = createUser.TeamID,
+                    RoleID = createUser.RoleID
+                };
+                await _repo.users.AddAsync(user);
+                await _repo.CommitSave();
+                _logger.LogInformation("User created");
+            }
+            else
+            {
+                _logger.LogInformation("User found in database");
+            }
+
+            return user;
+        }
+
+        // END TESTING
+
         public async Task<User> DeleteUser(Guid id)
         {
             User user = await GetUserById(id);
