@@ -13,6 +13,15 @@ export class EquipmentService {
     return this.http.get(this.baseUrl + 'equipment');
   }
 
+  editRequest(id:string, model:any) {
+    return this.http.put(this.baseUrl + `equipment/edit/${id}`, model);
+  }
+
+
+  getRequest(id) {
+    return this.http.get(this.baseUrl + `equipment/${id}`)
+  }
+
   getTeam(teamId) {
     return this.http.get(this.baseUrl + `teams/${teamId}`);
   }

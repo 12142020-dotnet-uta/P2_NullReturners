@@ -1,0 +1,18 @@
+<div class="container">
+
+    <h2>Welcome {{user.fullName}}</h2>
+    <p>Please edit your information below:</p>
+    
+    <form #editUserForm="ngForm" (ngSubmit)="editUser()">
+        <label for="FullName">Full Name</label>
+        <input name="FullName" [(ngModel)]="editedUser.fullname" class="form-control me-2" type="text" value="{{user.fullName}}" aria-label="FullName">
+        <label for="Password">Password</label>
+        <input name="Password" [(ngModel)]="editedUser.password" class="form-control me-2" type="password" value="{{user.password}}}" aria-label="Password">
+        <label for="PhoneNumber">Phone Number</label>
+        <input name="PhoneNumber" [(ngModel)]="editedUser.phonenumber" class="form-control me-2" type="tel" pattern="[0-9]{10}" value="{{user.phoneNumber}}" aria-label="PhoneNumber">
+        <label for="Email">Email</label>
+        <input name="Email" [(ngModel)]="editedUser.email" class="form-control me-2" type="email" value="{{user.email}}" aria-label="Email">
+        <br>
+        <button type="submit" class="btn btn-primary">Edit</button>
+    </form>
+</div>

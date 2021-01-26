@@ -23,9 +23,11 @@ export class EquipmentComponent implements OnInit {
       this.equipmentList = response;
       this.getTeam();
       this.getUser();
+      console.log(this.equipmentList);
     }), err => {
       console.log(err)
     }
+    
   }
 
   getTeam() {
