@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/_services/user.service';
 
@@ -9,17 +10,19 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class EditplayerComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private userService: UserService) { }
+  constructor(private route: ActivatedRoute,
+              private userService: UserService,
+              private titleService: Title) { }
 
-  user: any = {};
   userId: string;
+  user: any = {};
+  editedUser: any = {};
+
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      console.log(params)
       this.userId = params.id;
     });
-    console.log(this.userId);
 
     this.getUser(this.userId);
   }
@@ -27,6 +30,27 @@ export class EditplayerComponent implements OnInit {
   getUser(userId) {
     this.userService.getUser(userId).subscribe(response => {
       this.user = response;
+      this.titleService.setTitle(`Edit - ${this.user.userName}`);
+
+      this.editedUser = {
+        fullname: this.user.fullName,
+        password: this.user.password,
+        phonenumber: this.user.phoneNumber,
+        email: this.user.email
+      };
+    }), err => {
+      console.log(err);
+    }
+  }
+
+  editUser() {
+    console.log(this.editedUser);
+    this.userService.editUser(this.userId, this.editedUser).subscribe(res => {
+      console.log(res);
+      this.editedUser = {};
+
+      // make this a redirect later
+      this.getUser(this.userId);
     }), err => {
       console.log(err);
     }
