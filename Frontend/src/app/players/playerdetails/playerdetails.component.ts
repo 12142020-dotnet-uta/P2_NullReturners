@@ -17,17 +17,32 @@ export class PlayerdetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      console.log(params)
       this.userId = params.id;
     });
-    console.log(this.userId);
-
     this.getUser(this.userId);
   }
 
   getUser(userId) {
     this.userService.getUser(userId).subscribe(response => {
       this.user = response;
+      this.getTeam();
+      this.getRole();
+    }), err => {
+      console.log(err);
+    }
+  }
+
+  getTeam() {
+      this.userService.getTeam(this.user.teamID).subscribe(response => {
+        this.user.team = response;
+      }), err => {
+        console.log(err);
+      };
+  }
+
+  getRole() {
+    this.userService.getRole(this.user.roleID).subscribe(res => {
+      this.user.role = res;
     }), err => {
       console.log(err);
     }

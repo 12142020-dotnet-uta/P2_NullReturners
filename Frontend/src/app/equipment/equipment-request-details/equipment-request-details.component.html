@@ -1,2 +1,37 @@
-<p>equipment-request-details works!</p>
-{{equipmentRequest.requestID}} | {{equipmentRequest.message}} | {{equipmentRequest?.user?.userName}} | {{equipmentRequest?.user?.fullName}} | {{equipmentRequest?.team?.name}}
+<div class="container">
+    <h2>Equipment Request #{{equipmentRequest.requestID}}</h2>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Detail</th>
+            <th scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>{{equipmentRequest.requestID}}</td>
+          </tr>
+          <tr>
+            <td>Item</td>
+            <td>DO THIS LATER</td>
+          </tr>
+          <tr>
+            <td>User</td>
+            <td>{{equipmentRequest?.user?.fullName}}</td>
+          </tr>
+          <tr>
+            <td>Team</td>
+            <td>{{equipmentRequest?.team?.name}}</td>
+          </tr>
+          <tr>
+            <td>Message</td>
+            <td>{{equipmentRequest.message}}</td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>{{equipmentRequest.status}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>

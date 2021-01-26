@@ -67,7 +67,6 @@ steps:
     publishWebProjects: true
     zipAfterPublish: true
 
-
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
@@ -75,3 +74,11 @@ steps:
     appType: 'webApp'
     WebAppName: 'nrteammanager'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+    appType: 'webApp'
+    appName: 'nrteammanager'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
