@@ -32,19 +32,19 @@ steps:
     projects: '**/*Tests/*.csproj'
     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
 
-- task: Npm@1
-  displayName: 'Restore Angular Dependencies'
-  inputs:
-    workingDir: ./Frontend/
-    verbose: false
+#- task: Npm@1
+#  displayName: 'Restore Angular Dependencies'
+#  inputs:
+#    workingDir: ./Frontend/
+#    verbose: false
 
-- task: Npm@1
-  displayName: 'Build Angular'
-  inputs:
-    command: custom
-    workingDir: ./Frontend/
-    verbose: false
-    customCommand: 'run build'
+#- task: Npm@1
+#  displayName: 'Build Angular'
+#  inputs:
+#    command: custom
+#    workingDir: ./Frontend/
+#    verbose: false
+#    customCommand: 'run build'
 
 - task: PublishCodeCoverageResults@1
   displayName: publish code coverage
@@ -73,4 +73,6 @@ steps:
     azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
     appType: 'webApp'
     WebAppName: 'nrteammanager'
+    ResourceGroupName: 'P2Pipeline'
+    SlotName: 'production'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'

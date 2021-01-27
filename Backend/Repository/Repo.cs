@@ -18,6 +18,7 @@ namespace Repository
         public DbSet<Play> plays;
         public DbSet<Playbook> playbooks;
         public DbSet<EquipmentRequest> equipmentRequests;
+        public DbSet<EquipmentItem> equipmentItems;
         public DbSet<Role> roles;
         public DbSet<Team> teams;
         public DbSet<Message> messages;
@@ -33,6 +34,7 @@ namespace Repository
             this.plays = _progContext.Plays;
             this.playbooks = _progContext.Playbooks;
             this.equipmentRequests = _progContext.EquipmentRequests;
+            this.equipmentItems = _progContext.EquipmentItems;
             this.roles = _progContext.Roles;
             this.teams = _progContext.Teams;
             this.messages = _progContext.Messages;

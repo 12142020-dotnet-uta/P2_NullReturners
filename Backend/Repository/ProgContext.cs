@@ -17,6 +17,7 @@ namespace Repository
         public DbSet<Role> Roles { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<EquipmentRequest> EquipmentRequests { get; set; }
+        public DbSet<EquipmentItem> EquipmentItems { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<RecipientList> RecipientLists { get; set; }
         public DbSet<UserInbox> UserInboxes { get; set; }
@@ -25,14 +26,14 @@ namespace Repository
 
         public ProgContext(DbContextOptions<ProgContext> options) : base(options) { } 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            if (!options.IsConfigured)
-            {
-                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2test;Trusted_Connection=True;");
-                //options.UseSqlServer("Azure Connection");
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder options)
+        //{
+        //    if (!options.IsConfigured)
+        //    {
+        //        options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2usertest;Trusted_Connection=True;");
+        //        //options.UseSqlServer("Azure Connection");
+        //    }
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserInbox>()
