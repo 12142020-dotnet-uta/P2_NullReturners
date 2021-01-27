@@ -36,15 +36,22 @@ steps:
   inputs:
     command: 'custom'
     workingDir: './Frontend/'
-    customCommand: 'run ng build --prod -- -op ..\..\dist'
+    customCommand: 'run ng build --prod'
 
 #- task: CopyFiles@2
 #  inputs:
 #    contents: '_buildOutput/**'
 #    targetFolder: $(Build.ArtifactStagingDirectory)
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'Frontend/dist'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true    
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)\dist\'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
