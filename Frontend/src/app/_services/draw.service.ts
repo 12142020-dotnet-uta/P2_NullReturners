@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +6,11 @@ import { Injectable } from '@angular/core';
 })
 export class DrawService {
 
-  constructor() { }
+  baseUrl = 'https://localhost:44342/api/Playbooks/'
+  constructor(private http: HttpClient) { }
+
+  createDrawing(model: any) {
+    return this.http.post(this.baseUrl + 'plays', model);
+  }
+ 
 }
