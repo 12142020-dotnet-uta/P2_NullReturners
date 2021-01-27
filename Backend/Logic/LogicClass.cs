@@ -35,9 +35,17 @@ namespace Logic
         {
             return await _repo.GetUserById(id);
         }
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<UserDto>> GetUsers()
         {
-            return await _repo.GetUsers();
+            IEnumerable<User> users = await _repo.GetUsers();
+            List<UserDto> userDtos = new List<UserDto>();
+            foreach (var user in users)
+            {
+                UserDto userDto = _mapper.ConvertUserToUserDto(user);
+                userDtos.Add(userDto);
+            }
+
+            return userDtos;
         }
         //Users 
 

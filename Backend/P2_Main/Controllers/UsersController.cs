@@ -17,21 +17,24 @@ namespace P2_Main.Controllers
     public class UsersController : ControllerBase
     {
         private readonly LogicClass _logic;
+        private readonly Mapper _mapper;
         private readonly ILogger<UsersController> _logger;
 
-        public UsersController(LogicClass logic, ILogger<UsersController> logger)
+        public UsersController(LogicClass logic, Mapper mapper, ILogger<UsersController> logger)
         {
             _logic = logic;
+            _mapper = mapper;
             _logger = logger;
         }
 
         
         [HttpGet]
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<UserDto>> GetUsers()
         {
             return await _logic.GetUsers();
         }
 
+        // likely not needed
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(CreateUserDto createUser)
         {
@@ -39,9 +42,10 @@ namespace P2_Main.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(Guid id)
+        public async Task<ActionResult<UserDto>> GetUser(Guid id)
         {
-            return await _logic.GetUserById(id);
+            User user = await _logic.GetUserById(id);
+            return _mapper.ConvertUserToUserDto(user);
         }
 
         [HttpGet("roles")]
