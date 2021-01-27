@@ -30,7 +30,7 @@ namespace Logic.Tests
             // this block is only for code coverage
             var onlyForCoverage = new ProgContext(); 
             var empty = new DbContextOptionsBuilder<ProgContext>().Options;
-            var onlyForCoverage2 = new ProgContext(empty);
+            var onlyForCoverage2 = new ProgContext(empty); // didn't work
             LogicClass logicClass = new LogicClass();
 
 
