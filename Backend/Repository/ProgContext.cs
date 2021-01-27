@@ -26,14 +26,14 @@ namespace Repository
 
         public ProgContext(DbContextOptions<ProgContext> options) : base(options) { } 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            if (!options.IsConfigured)
-            {
-                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2usertest;Trusted_Connection=True;");
-                //options.UseSqlServer("Azure Connection");
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder options)
+        //{
+        //    if (!options.IsConfigured)
+        //    {
+        //        options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=p2usertest;Trusted_Connection=True;");
+        //        //options.UseSqlServer("Azure Connection");
+        //    }
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserInbox>()
