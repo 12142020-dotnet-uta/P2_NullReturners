@@ -79,8 +79,6 @@ steps:
   inputs:
     command: 'publish'
     workingDir: './Frontend/'
-    publishRegistry: 'useFeed'
-    publishFeed: '3e277571-0b24-4cb3-8abd-2185455da962'
 
 - task: AzureRmWebAppDeployment@4
   displayName: 'Deploy to App Service'
