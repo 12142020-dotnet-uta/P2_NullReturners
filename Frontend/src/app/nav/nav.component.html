@@ -29,8 +29,11 @@
               <a class="nav-link">Chat</a>
             </li>
           </ul>
-          <button (click)="auth.login()" *ngIf="!auth.loggedIn" class="btn btn-primary">Log In</button>
-          <button (click)="auth.logout()" *ngIf="auth.loggedIn" class="btn btn-primary">Log Out</button>
+          <form class="d-flex">
+            <input class="form-control me-2" type="text" placeholder="Username">
+            <input class="form-control me-2" type="password" placeholder="Password">
+            <button class="btn btn-outline-success" type="submit">Login</button>
+          </form>
         </div>
       </div>
     </nav>
