@@ -2,6 +2,7 @@
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Models;
 using Models.DataTransfer;
@@ -39,6 +40,9 @@ namespace Logic
             return await _repo.GetUsers();
         }
         //Users 
+
+
+        // can likely be deleted
         public async Task<User> CreateUser(CreateUserDto createUser)
         {
             User user = _repo.users.FirstOrDefault(x => x.UserName == createUser.UserName || x.Email == createUser.Email);
@@ -68,14 +72,12 @@ namespace Logic
 
 
         // DANIEL TESTING
-        public async Task<User> RegisterUser(CreateUserDto createUser)
+        public async Task<UserDto> RegisterUser(CreateUserDto createUser)
         {
-            User user = _repo.users.FirstOrDefault(x => x.UserName == createUser.UserName || x.Email == createUser.Email);
             using var hmac = new HMACSHA512();
-            if (user == null)
+
+            User user = new User()
             {
-                user = new User()
-                {
                     UserName = createUser.UserName,
                     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(createUser.Password)),
                     PasswordSalt = hmac.Key,
@@ -84,18 +86,48 @@ namespace Logic
                     Email = createUser.Email,
                     TeamID = createUser.TeamID,
                     RoleID = createUser.RoleID
-                };
-                await _repo.users.AddAsync(user);
-                await _repo.CommitSave();
-                _logger.LogInformation("User created");
-            }
-            else
+            };
+            await _repo.users.AddAsync(user);
+            await _repo.CommitSave();
+            _logger.LogInformation("User created");
+            
+
+            UserDto newUser = _mapper.ConvertUserToUserDto(user); 
+            return newUser;
+        }
+
+        // testing if user by username or email exists
+        public async Task<bool> UserExists(string username, string email)
+        {
+            bool userExists = await _repo.users.AnyAsync(x => x.UserName == username || x.Email == email);
+            if (userExists)
             {
                 _logger.LogInformation("User found in database");
+                return userExists;
             }
-
-            return user;
+            return userExists;
         }
+
+        public async Task<User> LoginUser(LoginDto loginDto)
+        {
+            return await _repo.users.SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
+        }
+
+        public async Task<User> CheckPassword(Task<User> user, LoginDto loginDto)
+        {
+            using var hmac = new HMACSHA512(user.Result.PasswordSalt);
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != user.Result.PasswordHash[i])
+                {
+                    return null;
+                }
+            }
+            return await user;
+        }
+
 
         // END TESTING
 

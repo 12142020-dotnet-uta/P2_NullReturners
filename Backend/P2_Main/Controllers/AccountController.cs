@@ -16,18 +16,46 @@ namespace P2_Main.Controllers
     public class AccountController : ControllerBase
     {
         private readonly LogicClass _logic;
+        private readonly Mapper _mapper;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(LogicClass logic, ILogger<AccountController> logger)
+        public AccountController(LogicClass logic, Mapper mapper, ILogger<AccountController> logger)
         {
             _logic = logic;
+            _mapper = mapper;
             _logger = logger;
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<User>> Register(CreateUserDto createUser)
+        public async Task<ActionResult<UserDto>> Register(CreateUserDto createUser)
         {
+            if (await _logic.UserExists(createUser.UserName, createUser.Email))
+            {
+                return BadRequest("Username is taken");
+            }
+
             return await _logic.RegisterUser(createUser);
+        }
+
+        [HttpPost("Login")]
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        {
+            Task<User> loginUser = _logic.LoginUser(loginDto);
+
+            if (loginUser.Result == null)
+            {
+                return Unauthorized("Invalid username");
+            }
+
+            User user = await _logic.CheckPassword(loginUser, loginDto);
+
+            if (user == null)
+            {
+                return Unauthorized("Invalid password");
+            }
+
+            return _mapper.ConvertUserToUserDto(user);
+
         }
 
     }
