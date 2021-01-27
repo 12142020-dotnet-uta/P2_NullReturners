@@ -13,6 +13,10 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: NodeTool@0
+  displayName: 'Setup Environment'
+  inputs:
+    versionSpec: '10.x'
 
 - task: Npm@1
   displayName: 'NPM Install'
@@ -36,6 +40,6 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: './Frontend/'
     ArtifactName: 'drop'
     publishLocation: 'Container'
