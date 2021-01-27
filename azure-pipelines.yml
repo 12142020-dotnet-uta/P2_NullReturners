@@ -38,10 +38,10 @@ steps:
     workingDir: './Frontend/'
     customCommand: 'run ng build --prod -- -op ..\..\dist'
 
-- task: CopyFiles@2
-  inputs:
-    contents: '_buildOutput/**'
-    targetFolder: $(Build.ArtifactStagingDirectory)
+#- task: CopyFiles@2
+#  inputs:
+#    contents: '_buildOutput/**'
+#    targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
   inputs:
