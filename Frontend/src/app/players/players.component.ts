@@ -24,6 +24,7 @@ export class PlayersComponent implements OnInit {
     this.userService.getUsers().subscribe(response => {
           this.users = response;
           this.getTeams();
+          this.getRoles();
         }), err => {
           console.log(err);
         }
@@ -34,6 +35,16 @@ export class PlayersComponent implements OnInit {
     this.users.forEach(element => {
       this.userService.getTeam(element.teamID).subscribe( response => {
         element.team = response;
+      }), err => {
+        console.log(err);
+      };
+    });
+  }
+
+  getRoles() {
+    this.users.forEach(element => {
+      this.userService.getRole(element.roleID).subscribe( response => {
+        element.role = response;
       }), err => {
         console.log(err);
       };

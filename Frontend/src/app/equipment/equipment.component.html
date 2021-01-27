@@ -1,18 +1,48 @@
-<h1>equipment works!</h1>
+<div class="container">
+<h2>Equipment Requests</h2>
 
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Item</th>
+        <th scope="col">Requested By</th>
+        <th scope="col">Team</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let equipment of equipmentList">
+        <td>{{equipment.requestID}}</td>
+        <td>Item</td>
+        <td>{{equipment?.user?.fullName}}</td>
+        <td>{{equipment?.team?.name}}</td>
+        <td>{{equipment.status}}</td>
+        <td>
+            <a [routerLink]="['/equipment/details', equipment.requestID]">Details</a> - 
+            <a [routerLink]="['/equipment/edit', equipment.requestID]">Edit</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<ul>
-    <li *ngFor="let equipment of equipmentList">{{equipment.requestID}}{{equipment?.user?.userName}} Message[{{equipment.message}}] status[{{equipment.status}}] - {{equipment?.user?.fullName}}  - {{equipment?.team?.name}}
-    <a [routerLink]="['/equipment/details', equipment.requestID]">Details</a> - 
-    <a [routerLink]="['/equipment/edit', equipment.requestID]">Edit</a></li>
-</ul>
-
-<form #createEquipmentRequestForm="ngForm" class="d-flex" (ngSubmit)="createEquipmentRequest()" autocomplete="off">
+<h3>Request Equipment</h3>
+<form #createEquipmentRequestForm="ngForm"  (ngSubmit)="createEquipmentRequest()" autocomplete="off">
+    <label for="UserID">UserID (remove)</label>
     <input name="UserID" [(ngModel)]="model.userid" class="form-control me-2" type="text" placeholder="User">
+    <label for="TeamID">TeamID (remove)</label>
     <input name="TeamID" [(ngModel)]="model.teamid" class="form-control me-2" type="number" placeholder="Team">
+    <label for="DateRequested">Date Requested (remove)</label>
     <input name="DateRequested" [(ngModel)]="model.dateRequested" class="form-control me-2" type="date" placeholder="Date">
+    <label for="Message">Message</label>
     <input name="Message" [(ngModel)]="model.message" class="form-control me-2" type="text" placeholder="Message">
+    <label for="ItemId">ItemId (will change)</label>
     <input name="ItemId" [(ngModel)]="model.itemid" class="form-control me-2" type="number" placeholder="Item Id">
+    <label for="Status">Status (likely remove)</label>
     <input name="Status" [(ngModel)]="model.status" class="form-control me-2" type="text" placeholder="Status">
+    <br>
     <button class="btn btn-outline-success" type="submit">Create</button>
 </form>
+
+</div>

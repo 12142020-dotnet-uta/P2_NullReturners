@@ -2,8 +2,11 @@
 import {
   Component, Input, ElementRef, AfterViewInit,OnInit, ViewChild
 } from '@angular/core';
+import { NgModel } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
+import { DrawService } from '../_services/draw.service';
+import { play } from './play';
 
 @Component({
   selector: 'app-draw',
@@ -17,9 +20,14 @@ export class DrawComponent implements AfterViewInit {
   // setting a width and height for the canvas
   @Input() public width = 600;
   @Input() public height = 600;
+  constructor(private drawService: DrawService){}
+  model = new play;
+  ImageString;
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
-   
+
+  
+
   public ngAfterViewInit() {
     // get the context
     this.canvasEl  = this.canvas.nativeElement;
@@ -67,7 +75,6 @@ public captureEvents() {
       this.drawOnCanvas(prevPos, currentPos);
     });
 }
-
 
 private drawOnCanvas( lastPosition:{ x: number, y: number }, positionNow: { x: number, y: number }) {
   // incase the context is not set
@@ -136,5 +143,26 @@ SetBackGroundGreen(){
 
 SetBackGroundWhite(){
   this.canvasEl.style.backgroundColor = "White";
+
 }
+
+saveCanvas() {
+
+  this.ImageString = this.canvasEl.toDataURL(); //1 indicates full quality
+ // console.log(this.imageData);
+  this.model.ImageString  = this.ImageString;
+  console.log(this.model.ImageString);
+  this.drawService.createDrawing(this.model).subscribe(response => {
+    console.log(response);
+  }), err => {
+    console.log(err)
+  }
 }
+  
+  //descrition
+  //name
+  //playbook Id
+}
+
+
+

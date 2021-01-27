@@ -7,21 +7,36 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link">View Schedule</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Disabled</a>
+              <a class="nav-link" routerLink="/draw">View Playbook</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/equipment">Equipment Requests</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/teams">League Standings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/players">Manage Users</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">Chat</a>
             </li>
           </ul>
-          <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
-            <input name="Username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username" aria-label="Username">
-            <input name="Password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password" aria-label="Password">
+          <form *ngIf="!loggedIn" #loginForm=""ngForm class="d-flex" (ngSubmit)="login()" autocomplete="off">
+            <input name="username" [(ngModel)]="model.userName" class="form-control me-2" type="text" placeholder="Username">
+            <input name = "password" [(ngModel)]="model.passWord" class="form-control me-2" type="password" placeholder="Password">
             <button class="btn btn-outline-success" type="submit">Login</button>
           </form>
+
+          <a *ngIf="loggedIn" (click)="logout()" class="btn btn-primary">Logout</a>
+
         </div>
       </div>
     </nav>

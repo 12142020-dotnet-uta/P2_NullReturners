@@ -1,5 +1,22 @@
-<h1>List of Teams</h1>
+<div class="container">
+    <h2>League Standings</h2>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Team Name</th>
+            <th scope="col">Wins</th>
+            <th scope="col">Losses</th>
+            <th scope="col">PCT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let team of teams">
+            <td>{{team.name}}</td>
+            <td>{{team.wins}}</td>
+            <td>{{team.losses}}</td>
+            <td>1.000</td>
+          </tr>
+        </tbody>
+      </table>
 
-<ul>
-    <li *ngFor="let team of teams">Team Name[{{team.name}}]  ID[{{team.teamID}}]</li>
-</ul>
+</div>

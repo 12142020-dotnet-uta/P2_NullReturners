@@ -30,4 +30,9 @@ export class UserService {
   editUser(id:string, model:any) {
     return this.http.put(this.baseUrl + `users/edit/${id}`, model );
   }
+
+  getRole(roleId) {
+    return this.http.get(this.baseUrl + `users/roles/${roleId}`);
+  }
+
 }

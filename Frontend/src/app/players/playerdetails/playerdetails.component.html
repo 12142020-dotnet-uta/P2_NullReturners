@@ -1,2 +1,41 @@
-<p>playerdetails works!</p>
-{{user.fullName}} - {{user.userName}} - {{ user.userID }}
+<div class="container">
+    <h2>User: #{{user.userID}}</h2>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Detail</th>
+            <th scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>{{user.userID}}</td>
+          </tr>
+          <tr>
+            <td>Username</td>
+            <td>{{user.userName}}</td>
+          </tr>
+          <tr>
+            <td>Full Name</td>
+            <td>{{user.fullName}}</td>
+          </tr>
+          <tr>
+            <td>Team</td>
+            <td>{{user?.team?.name}}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{{user.email}}</td>
+          </tr>
+          <tr>
+            <td>Phone Number</td>
+            <td>{{user.phoneNumber}}</td>
+          </tr>
+          <tr>
+            <td>Role</td>
+            <td>{{user?.role?.roleName}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
