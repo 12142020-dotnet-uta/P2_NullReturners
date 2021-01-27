@@ -625,7 +625,7 @@ namespace Logic.Tests
         /// Tests that a play is added to the database
         /// </summary>
         [Fact]
-        public void TestForCreatePlay()
+        public async void TestForCreatePlay()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -642,11 +642,12 @@ namespace Logic.Tests
                 {
                     PlaybookID = 1,
                     Name = "Tackle",
-                    Description = "Tackle other players"
+                    Description = "Tackle other players",
+                    ImageString = "Football,football,football"
                 };
-                var createPlay = logic.CreatePlay(play);
+                var createPlay = await logic.CreatePlay(play);
                 //Assert.Equal(1, context.Plays.CountAsync().Result);
-                Assert.Contains<Play>(createPlay.Result, context.Plays);
+                Assert.Contains<Play>(createPlay, context.Plays);
             }
         }
 
@@ -1555,6 +1556,21 @@ namespace Logic.Tests
         //--------------------------End of LogicClass Tests-----------------------
 
         //---------------------------Start of Mapper Tests------------------------
+
+        /// <summary>
+        /// Tests the convertImage() method of Mapper
+        /// </summary>
+        [Fact]
+        public void TestForconvertImage()
+        {
+
+            Mapper mapper = new Mapper();
+            string textSting = "text,text";
+            var convert = mapper.convertImage(textSting);
+
+            Assert.IsType<byte[]>(convert);
+            Assert.NotNull(convert);
+        }
 
         /// <summary>
         /// Tests the ConvertUserToUserDto() method of Mapper

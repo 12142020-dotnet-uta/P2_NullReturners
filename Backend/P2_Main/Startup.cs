@@ -105,6 +105,7 @@ namespace P2_Main
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
