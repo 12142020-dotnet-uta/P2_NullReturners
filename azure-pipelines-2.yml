@@ -27,7 +27,7 @@ steps:
   inputs:
     azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
     Action: 'Stop Azure App Service'
-    WebAppName: 'nrteammanager'
+    WebAppName: 'nrtmportal'
 
 - task: Npm@1
   displayName: 'NPM Install'
@@ -63,3 +63,10 @@ steps:
     appType: 'webApp'
     WebAppName: 'nrtmportal'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
+- task: AzureAppServiceManage@0
+  displayName: 'Start Azure App Service'
+  inputs:
+    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+    Action: 'Start Azure App Service'
+    WebAppName: 'nrtmportal'
