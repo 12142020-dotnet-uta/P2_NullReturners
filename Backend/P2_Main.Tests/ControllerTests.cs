@@ -9,6 +9,7 @@ using Xunit;
 using P2_Main.Controllers;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Linq;
+using Logic.Interfaces;
 
 namespace P2_Main.Tests
 {
@@ -16,6 +17,7 @@ namespace P2_Main.Tests
     {
 
         private readonly Mapper _mapper;
+        private readonly ITokenService _token;
         /*private readonly ILogger<Repo> _repoLogger;
         private readonly ILogger<UsersController> _userLogger;
         private readonly ILogger<GamesController> _gamesLogger;
@@ -41,8 +43,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, new NullLogger<UsersController>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
                 var user = new User()
                 {
                     UserName = "jerry",
@@ -76,8 +78,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, new NullLogger<UsersController>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
                 var user = new CreateUserDto()
                 {
                     UserName = "jerry",
@@ -110,39 +112,41 @@ namespace P2_Main.Tests
         /// <summary>
         /// Tests the GetUser() method of UserController
         /// </summary>
-        [Fact]
-        public void TestForGetUser()
-        {
-            var options = new DbContextOptionsBuilder<ProgContext>()
-            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-            .Options;
+        /// 
+        // THIS NOW RETURNS A UserDto not a User - Daniel
+        //[Fact]
+        //public void TestForGetUser()
+        //{
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
 
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, new NullLogger<UsersController>());
-                var user = new User()
-                {
-                    UserID = Guid.NewGuid(),
-                    UserName = "jerry",
-                    Password = "jerryrice",
-                    FullName = "Jerry Rice",
-                    PhoneNumber = "111-111-1111",
-                    Email = "jerryrice@gmail.com",
-                    TeamID = 1,
-                    RoleID = 1
-                };
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+        //        UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
+        //        var user = new User()
+        //        {
+        //            UserID = Guid.NewGuid(),
+        //            UserName = "jerry",
+        //            Password = "jerryrice",
+        //            FullName = "Jerry Rice",
+        //            PhoneNumber = "111-111-1111",
+        //            Email = "jerryrice@gmail.com",
+        //            TeamID = 1,
+        //            RoleID = 1
+        //        };
 
-                r.users.Add(user);
-                //context.SaveChanges();
-                var listOfUsers = userController.GetUser(user.UserID);
-                Assert.True(listOfUsers.Result.Value.Equals(user));
-            }
-        }
+        //        r.users.Add(user);
+        //        //context.SaveChanges();
+        //        var listOfUsers = userController.GetUser(user.UserID);
+        //        Assert.True(listOfUsers.Result.Value.Equals(user));
+        //    }
+        //}
 
         /// <summary>
         /// Tests the GetRoles() method of UserController
@@ -160,8 +164,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, new NullLogger<UsersController>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
                 var role = new Role
                 {
                     RoleID = 4, // 4 because of seeding
@@ -190,8 +194,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, new NullLogger<UsersController>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
                 var role = new Role
                 {
                     RoleID = 5, // 5 for seeding
@@ -221,8 +225,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, new NullLogger<UsersController>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -267,8 +271,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, new NullLogger<UsersController>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -317,8 +321,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, new NullLogger<UsersController>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -369,7 +373,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 GamesController gamesController = new GamesController(logic, new NullLogger<GamesController>());
                 var game = new Game
                 {
@@ -403,7 +407,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 GamesController gamesController = new GamesController(logic, new NullLogger<GamesController>());
                 var game = new Game
                 {
@@ -438,7 +442,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 GamesController gamesController = new GamesController(logic, new NullLogger<GamesController>());
                 CreateGameDto game = new CreateGameDto()
                 {
@@ -467,7 +471,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 GamesController gamesController = new GamesController(logic, new NullLogger<GamesController>());
                 var game = new Game()
                 {
@@ -513,7 +517,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var playbook = new Playbook
                 {
@@ -543,7 +547,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var playbook = new Playbook
                 {
@@ -574,7 +578,7 @@ namespace P2_Main.Tests
 
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var play = new Play
                 {
@@ -607,7 +611,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var play = new Play
                 {
@@ -641,7 +645,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 Team team = new Team()
                 {
@@ -674,7 +678,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 PlayDto play = new PlayDto()
                 {
@@ -704,7 +708,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var play = new Play()
                 {
@@ -748,7 +752,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var play = new Play()
                 {
@@ -794,7 +798,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var playbook = new Playbook()
                 {
@@ -839,7 +843,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 EquipmentController equipmentController = new EquipmentController(logic, new NullLogger<EquipmentController>());
                 var equipment = new EquipmentRequest
                 {
@@ -875,7 +879,7 @@ namespace P2_Main.Tests
 
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 EquipmentController equipmentController = new EquipmentController(logic, new NullLogger<EquipmentController>());
                 var equipment = new EquipmentRequest
                 {
@@ -911,7 +915,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 EquipmentController equipmentController = new EquipmentController(logic, new NullLogger<EquipmentController>());
                 CreateEquipmentRequestDto equipmentRequest = new CreateEquipmentRequestDto()
                 {
@@ -944,7 +948,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 EquipmentController equipmentController = new EquipmentController(logic, new NullLogger<EquipmentController>());
                 var equipmentRequest = new EquipmentRequest()
                 {
@@ -989,7 +993,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 TeamsController teamsController = new TeamsController(logic, new NullLogger<TeamsController>());
                 var team = new Team
                 {
@@ -1021,7 +1025,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 TeamsController teamsController = new TeamsController(logic, new NullLogger<TeamsController>());
                 var team = new Team
                 {
@@ -1053,7 +1057,7 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
                 TeamsController teamsController = new TeamsController(logic, new NullLogger<TeamsController>());
                 var team = new Team()
                 {
