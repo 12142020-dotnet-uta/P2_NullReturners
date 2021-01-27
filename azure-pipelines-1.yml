@@ -60,13 +60,14 @@ steps:
     publishWebProjects: true
     zipAfterPublish: true
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Dotnet Build And Test'
-    publishLocation: 'Container'
+#- task: PublishBuildArtifacts@1
+#  inputs:
+#    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#    ArtifactName: 'Dotnet Build And Test'
+#    publishLocation: 'Container'
 
 - task: AzureRmWebAppDeployment@4
+  displayName: 'Deploy ASP.NET Api'
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
@@ -75,6 +76,7 @@ steps:
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
 - task: AzureAppServiceManage@0
+  displayName: 'Start App Service'
   inputs:
     azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
     Action: 'Start Azure App Service'
