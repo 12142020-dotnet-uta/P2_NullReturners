@@ -9,13 +9,28 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
+variables:
+  buildConfiguration: 'Release'
+
 steps:
-- task: NodeTool@0
+- task: SonarCloudPrepare@1
+  displayName: 'SonarCloud Prepare'
   inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+    SonarCloud: 'SonarCloud'
+    organization: 'p2nullreturners'
+    scannerMode: 'MSBuild'
+    projectKey: 'P2NullReturners_P2_NullReturners'
+    projectName: 'P2_NullReturners'
+
+- task: AzureAppServiceManage@0
+  displayName: 'Stop Azure App Service'
+  inputs:
+    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+    Action: 'Stop Azure App Service'
+    WebAppName: 'nrteammanager'
 
 - task: Npm@1
+  displayName: 'NPM Install'
   inputs:
     command: 'install'
     workingDir: './Frontend/'
@@ -35,15 +50,16 @@ steps:
     customCommand: 'run build'
 
 - task: Npm@1
+  displayName: 'Publish Angular'
   inputs:
     command: 'publish'
     workingDir: './Frontend/'
-    publishRegistry: 'useFeed'
-    publishFeed: '3e277571-0b24-4cb3-8abd-2185455da962'
 
-- task: PublishBuildArtifacts@1
+- task: AzureRmWebAppDeployment@4
+  displayName: 'Deploy Angular'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Angular'
-    publishLocation: 'Container'
-
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+    appType: 'webApp'
+    WebAppName: 'nrtmportal'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
