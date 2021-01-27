@@ -254,7 +254,7 @@ namespace Logic
                 PlaybookId = playDto.PlaybookID,
                 Name = playDto.Name,
                 Description = playDto.Description,
-                DrawnPlay = mapper.convertImage(playDto.ImageString)
+                DrawnPlay = mapper.ConvertImage(playDto.ImageString)
             };
             await _repo.plays.AddAsync(newPlay);
             await _repo.CommitSave();
