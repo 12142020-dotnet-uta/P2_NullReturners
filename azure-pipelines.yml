@@ -47,7 +47,14 @@ steps:
     workingDir: './Frontend/'
 
 - task: Npm@1
-  displayName: 'NPM Run Build'
+  displayName: 'NPM Install Angular CLI'
+  inputs:
+    command: 'custom'
+    workingDir: './Frontend/'
+    customCommand: 'install -g @angular/cli@latest'
+
+- task: Npm@1
+  displayName: 'NPM Build Angular'
   inputs:
     command: 'custom'
     workingDir: './Frontend/'
@@ -73,12 +80,6 @@ steps:
     command: 'publish'
     publishWebProjects: true
     zipAfterPublish: true
-
-#- task: Npm@1
-#  displayName: 'Angular Publish'
-#  inputs:
-#    command: 'publish'
-#    workingDir: './Frontend/'
 
 - task: AzureRmWebAppDeployment@4
   displayName: 'Deploy to App Service'
