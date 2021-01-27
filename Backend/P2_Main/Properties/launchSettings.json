@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "P2_Dev": {
+    "P2_Main": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "swagger",
@@ -25,16 +25,6 @@
       "dotnetRunMessages": "true",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "P2_Prod": {
-      "commandName": "Project",
-      "launchBrowser": false,
-      "launchUrl": "swagger",
-      "applicationUrl": "http://nrteammanager.azurewebsites.net",
-      "dotnetRunMessages": "true",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     }
   }
