@@ -29,13 +29,16 @@
               <a class="nav-link">Chat</a>
             </li>
           </ul>
-          <form *ngIf="!loggedIn" #loginForm=""ngForm class="d-flex" (ngSubmit)="login()" autocomplete="off">
-            <input name="username" [(ngModel)]="model.userName" class="form-control me-2" type="text" placeholder="Username">
-            <input name = "password" [(ngModel)]="model.passWord" class="form-control me-2" type="password" placeholder="Password">
+          <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm=""ngForm class="d-flex" (ngSubmit)="login()" autocomplete="off">
+            <input name="username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username">
+            <input name = "password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password">
             <button class="btn btn-outline-success" type="submit">Login</button>
           </form>
-
-          <a *ngIf="loggedIn" (click)="logout()" class="btn btn-primary">Logout</a>
+          <div *ngIf="(accountService.currentUser$ | async) as user">
+            <span class="text-light m-3">Welcome {{user.fullName}}</span>
+            <a (click)="logout()" class="btn btn-primary">Logout</a>
+          </div>
+          
 
         </div>
       </div>
