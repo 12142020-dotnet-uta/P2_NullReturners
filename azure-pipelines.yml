@@ -15,6 +15,7 @@ variables:
 
 steps:
 - task: SonarCloudPrepare@1
+  displayName: 'SonarCloud Prepare'
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'p2nullreturners'
@@ -22,32 +23,45 @@ steps:
     projectKey: 'P2NullReturners_P2_NullReturners'
     projectName: 'P2_NullReturners'
 
+- task: AzureAppServiceManage@0
+  displayName: 'Stop Azure App Service'
+  inputs:
+    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+    Action: 'Stop Azure App Service'
+    WebAppName: 'nrteammanager'
+
 - script: dotnet build ./Backend/P2_NullReturners.sln --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+  displayName: 'Dotnet Build'
 
 - task: DotNetCoreCLI@2
-  displayName: dotnet test
+  displayName: 'Dotnet Test'
   inputs:
     command: 'test'
     projects: '**/*Tests/*.csproj'
     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
 
 - task: Npm@1
-  displayName: 'Restore Angular Dependencies'
+  displayName: 'NPM Install'
   inputs:
-    workingDir: ./Frontend/
-    verbose: false
+    command: 'install'
+    workingDir: './Frontend/'
 
 - task: Npm@1
-  displayName: 'Build Angular'
+  displayName: 'NPM Install Angular CLI'
   inputs:
-    command: custom
-    workingDir: ./Frontend/
-    verbose: false
+    command: 'custom'
+    workingDir: './Frontend/'
+    customCommand: 'install -g @angular/cli@latest'
+
+- task: Npm@1
+  displayName: 'NPM Build Angular'
+  inputs:
+    command: 'custom'
+    workingDir: './Frontend/'
     customCommand: 'run build'
 
 - task: PublishCodeCoverageResults@1
-  displayName: publish code coverage
+  displayName: 'Publish Cobertura Code Coverage'
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
@@ -56,18 +70,26 @@ steps:
   displayName: 'SonarCloud Analyze'
 
 - task: SonarCloudPublish@1
+  displayName: 'Publishing SonarCloud'
   inputs:
     pollingTimeoutSec: '300'
-  displayName: 'Publishing'
 
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet publish and zip'
+  displayName: 'Dotnet Publish and Zip'
   inputs:
     command: 'publish'
     publishWebProjects: true
     zipAfterPublish: true
 
+- task: Npm@1
+  displayName: 'Publish Angular'
+  inputs:
+    command: 'publish'
+    workingDir: './Frontend/'
+#    publishEndpoint: 
+
 - task: AzureRmWebAppDeployment@4
+  displayName: 'Deploy to App Service'
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
@@ -77,9 +99,10 @@ steps:
     SlotName: 'production'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
-- task: Npm@1
+- task: AzureAppServiceManage@0
+  displayName: 'Start Azure App Service'
   inputs:
-    command: 'publish'
-    workingDir: './Frontend/'
-    publishRegistry: 'useFeed'
-    publishFeed: '3e277571-0b24-4cb3-8abd-2185455da962'
+    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+    Action: 'Start Azure App Service'
+    WebAppName: 'nrteammanager'
+
