@@ -29,6 +29,7 @@ namespace P2_Main.Controllers
 
         
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<UserDto>> GetUsers()
         {
             return await _logic.GetUsers();
