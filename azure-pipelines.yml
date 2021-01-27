@@ -74,11 +74,11 @@ steps:
     publishWebProjects: true
     zipAfterPublish: true
 
-- task: Npm@1
-  displayName: 'Angular Publish'
-  inputs:
-    command: 'publish'
-    workingDir: './Frontend/'
+#- task: Npm@1
+#  displayName: 'Angular Publish'
+#  inputs:
+#    command: 'publish'
+#    workingDir: './Frontend/'
 
 - task: AzureRmWebAppDeployment@4
   displayName: 'Deploy to App Service'
