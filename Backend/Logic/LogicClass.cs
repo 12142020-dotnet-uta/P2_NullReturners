@@ -248,12 +248,13 @@ namespace Logic
         }
         public async Task<Play> CreatePlay(PlayDto playDto)
         {
+            Mapper mapper = new Mapper(); // needed to use this because _mapper was null
             Play newPlay = new Play()
             {
                 PlaybookId = playDto.PlaybookID,
                 Name = playDto.Name,
                 Description = playDto.Description,
-                // DrawnPlay = _mapper.convertImage(playDto.ImageString)
+                DrawnPlay = mapper.convertImage(playDto.ImageString)
             };
             await _repo.plays.AddAsync(newPlay);
             await _repo.CommitSave();

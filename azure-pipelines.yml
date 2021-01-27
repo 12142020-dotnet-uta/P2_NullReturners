@@ -45,17 +45,20 @@ steps:
   inputs:
     command: 'install'
     workingDir: './Frontend/'
-    customRegistry: 'useFeed'
-    customFeed: '3e277571-0b24-4cb3-8abd-2185455da962'
 
 - task: Npm@1
-  displayName: 'NPM Run Build'
+  displayName: 'NPM Install Angular CLI'
+  inputs:
+    command: 'custom'
+    workingDir: './Frontend/'
+    customCommand: 'install -g @angular/cli@latest'
+
+- task: Npm@1
+  displayName: 'NPM Build Angular'
   inputs:
     command: 'custom'
     workingDir: './Frontend/'
     customCommand: 'run build'
-    customRegistry: 'useFeed'
-    customFeed: '3e277571-0b24-4cb3-8abd-2185455da962'
 
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish Cobertura Code Coverage'
@@ -67,9 +70,9 @@ steps:
   displayName: 'SonarCloud Analyze'
 
 - task: SonarCloudPublish@1
+  displayName: 'Publishing SonarCloud'
   inputs:
     pollingTimeoutSec: '300'
-  displayName: 'Publishing'
 
 - task: DotNetCoreCLI@2
   displayName: 'Dotnet Publish and Zip'
@@ -79,12 +82,11 @@ steps:
     zipAfterPublish: true
 
 - task: Npm@1
-  displayName: 'Angular Publish'
+  displayName: 'Publish Angular'
   inputs:
     command: 'publish'
     workingDir: './Frontend/'
-    publishRegistry: 'useFeed'
-    publishFeed: '3e277571-0b24-4cb3-8abd-2185455da962'
+#    publishEndpoint: 
 
 - task: AzureRmWebAppDeployment@4
   displayName: 'Deploy to App Service'
@@ -103,3 +105,4 @@ steps:
     azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
     Action: 'Start Azure App Service'
     WebAppName: 'nrteammanager'
+

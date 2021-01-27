@@ -668,7 +668,7 @@ namespace P2_Main.Tests
         /// Tests that a play is added to the database
         /// </summary>
         [Fact]
-        public void TestForCreatePlay()
+        public async void TestForCreatePlay()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -686,11 +686,12 @@ namespace P2_Main.Tests
                 {
                     PlaybookID = 1,
                     Name = "Tackle",
-                    Description = "Tackle other players"
+                    Description = "Tackle other players",
+                    ImageString = "football, football, football"
                 };
-                var createPlay = playbooksController.CreatePlay(play);
+                var createPlay = await playbooksController.CreatePlay(play);
                 //Assert.Equal(1, context.Plays.CountAsync().Result);
-                Assert.Contains<Play>(createPlay.Result.Value, context.Plays);
+                Assert.Contains<Play>(createPlay.Value, context.Plays);
             }
         }
 
@@ -1085,5 +1086,9 @@ namespace P2_Main.Tests
         }
         //-------------------End of TeamsController Tests---------------------------
 
+        //-----------------Start of AccountController Tests-------------------------
+
+
+        //------------------End of AccountController Tests--------------------------
     }
 }
