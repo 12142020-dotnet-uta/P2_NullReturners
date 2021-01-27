@@ -1,4 +1,6 @@
 using Logic;
+using Logic.Interfaces;
+using Logic.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -42,6 +44,8 @@ namespace P2_Main
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "P2_Main", Version = "v1" });
             });
+
+            services.AddScoped<ITokenService, TokenService>();
 
             services.AddCors(options =>
             {

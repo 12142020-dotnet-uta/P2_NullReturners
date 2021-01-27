@@ -41,6 +41,7 @@ namespace P2_Main.Controllers
             return await _logic.CreateUser(createUser);
         }
 
+        // fix this grosness later
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(Guid id)
         {

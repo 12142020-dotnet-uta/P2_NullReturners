@@ -24,5 +24,20 @@ namespace Logic
             };
             return convertedUser;
         }
+
+        public UserLoggedInDto ConvertUserToUserLoggedInDto(User user)
+        {
+            UserLoggedInDto convertedUser = new UserLoggedInDto()
+            {
+                UserID = user.UserID,
+                FullName = user.FullName,
+                UserName = user.UserName,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+                TeamID = user.TeamID,
+                RoleID = user.RoleID
+            };
+            return convertedUser;
+        }
     }
 }

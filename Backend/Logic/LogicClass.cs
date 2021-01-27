@@ -2,6 +2,7 @@
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
+using Logic.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Models;
@@ -20,14 +21,16 @@ namespace Logic
     public class LogicClass
     {
         public LogicClass() { }
-        public LogicClass(Repo repo, Mapper mapper, ILogger<Repo> logger)
+        public LogicClass(Repo repo, Mapper mapper, ITokenService token, ILogger<Repo> logger)
         {
             _repo = repo;
             _mapper = mapper;
+            _token = token;
             _logger = logger;
         }
         private readonly Repo _repo;
         private readonly Mapper _mapper;
+        private readonly ITokenService _token;
         private readonly ILogger<Repo> _logger;
 
         // Context accessors
@@ -80,7 +83,7 @@ namespace Logic
 
 
         // DANIEL TESTING
-        public async Task<UserDto> RegisterUser(CreateUserDto createUser)
+        public async Task<UserLoggedInDto> RegisterUser(CreateUserDto createUser)
         {
             using var hmac = new HMACSHA512();
 
@@ -98,9 +101,10 @@ namespace Logic
             await _repo.users.AddAsync(user);
             await _repo.CommitSave();
             _logger.LogInformation("User created");
-            
 
-            UserDto newUser = _mapper.ConvertUserToUserDto(user); 
+
+            UserLoggedInDto newUser = _mapper.ConvertUserToUserLoggedInDto(user);
+            newUser.Token = _token.CreateToken(user);
             return newUser;
         }
 
@@ -121,7 +125,7 @@ namespace Logic
             return await _repo.users.SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
         }
 
-        public async Task<User> CheckPassword(Task<User> user, LoginDto loginDto)
+        public async Task<UserLoggedInDto> CheckPassword(Task<User> user, LoginDto loginDto)
         {
             using var hmac = new HMACSHA512(user.Result.PasswordSalt);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
@@ -133,7 +137,12 @@ namespace Logic
                     return null;
                 }
             }
-            return await user;
+
+            User loggedIn = await user;
+
+            UserLoggedInDto loggedInUser = _mapper.ConvertUserToUserLoggedInDto(loggedIn);
+            loggedInUser.Token = _token.CreateToken(loggedIn);
+            return loggedInUser;
         }
 
 

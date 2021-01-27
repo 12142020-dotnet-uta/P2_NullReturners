@@ -19,6 +19,7 @@ namespace P2_Main.Controllers
         private readonly Mapper _mapper;
         private readonly ILogger<AccountController> _logger;
 
+
         public AccountController(LogicClass logic, Mapper mapper, ILogger<AccountController> logger)
         {
             _logic = logic;
@@ -27,7 +28,7 @@ namespace P2_Main.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<UserDto>> Register(CreateUserDto createUser)
+        public async Task<ActionResult<UserLoggedInDto>> Register(CreateUserDto createUser)
         {
             if (await _logic.UserExists(createUser.UserName, createUser.Email))
             {
@@ -38,7 +39,7 @@ namespace P2_Main.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserLoggedInDto>> Login(LoginDto loginDto)
         {
             Task<User> loginUser = _logic.LoginUser(loginDto);
 
@@ -47,14 +48,14 @@ namespace P2_Main.Controllers
                 return Unauthorized("Invalid username");
             }
 
-            User user = await _logic.CheckPassword(loginUser, loginDto);
+            UserLoggedInDto user = await _logic.CheckPassword(loginUser, loginDto);
 
             if (user == null)
             {
                 return Unauthorized("Invalid password");
             }
 
-            return _mapper.ConvertUserToUserDto(user);
+            return user;
 
         }
 
