@@ -12,7 +12,7 @@ namespace Models.DataTransfer
     {
         [DisplayName("User ID")]
         public Guid UserID { get; set; }
-        public String Token { get; set; }
+        public string Token { get; set; }
         public string UserName { get; set; }
         [DisplayName("Full Name")]
         public string FullName { get; set; }
