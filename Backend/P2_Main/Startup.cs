@@ -1,4 +1,6 @@
 using Logic;
+using Logic.Interfaces;
+using Logic.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -17,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace P2_Main
@@ -25,10 +28,10 @@ namespace P2_Main
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _config = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration _config { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -43,6 +46,8 @@ namespace P2_Main
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "P2_Main", Version = "v1" });
             });
 
+            services.AddScoped<ITokenService, TokenService>();
+
             services.AddCors(options =>
             {
                 options.AddPolicy(name: "CorsPolicy",
@@ -54,28 +59,19 @@ namespace P2_Main
                                 });
             });
 
-            string domain = $"https://{Configuration["Auth0:Domain"]}/";
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = domain;
-                options.Audience = Configuration["Auth0:Audience"];
-                options.TokenValidationParameters = new TokenValidationParameters
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    NameClaimType = ClaimTypes.NameIdentifier
-                };
-            });
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("read:users", policy => policy.Requirements.Add(new HasScopeRequirement("read:users", $"https://{Configuration["Auth0:Domain"]}/")));
-            });
-
-            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
-
+            // dont thing i need this
             services.AddControllers()
                  .AddNewtonsoftJson(options =>
                  {
@@ -99,6 +95,7 @@ namespace P2_Main
 
             app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

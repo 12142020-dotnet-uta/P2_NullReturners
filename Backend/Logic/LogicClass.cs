@@ -2,6 +2,8 @@
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
+using Logic.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Models;
 using Models.DataTransfer;
@@ -10,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,14 +21,16 @@ namespace Logic
     public class LogicClass
     {
         public LogicClass() { }
-        public LogicClass(Repo repo, Mapper mapper, ILogger<Repo> logger)
+        public LogicClass(Repo repo, Mapper mapper, ITokenService token, ILogger<Repo> logger)
         {
             _repo = repo;
             _mapper = mapper;
+            _token = token;
             _logger = logger;
         }
         private readonly Repo _repo;
         private readonly Mapper _mapper;
+        private readonly ITokenService _token;
         private readonly ILogger<Repo> _logger;
 
         // Context accessors
@@ -33,11 +38,22 @@ namespace Logic
         {
             return await _repo.GetUserById(id);
         }
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<UserDto>> GetUsers()
         {
-            return await _repo.GetUsers();
+            IEnumerable<User> users = await _repo.GetUsers();
+            List<UserDto> userDtos = new List<UserDto>();
+            foreach (var user in users)
+            {
+                UserDto userDto = _mapper.ConvertUserToUserDto(user);
+                userDtos.Add(userDto);
+            }
+
+            return userDtos;
         }
         //Users 
+
+
+        // can likely be deleted
         public async Task<User> CreateUser(CreateUserDto createUser)
         {
             User user = _repo.users.FirstOrDefault(x => x.UserName == createUser.UserName || x.Email == createUser.Email);
@@ -63,6 +79,75 @@ namespace Logic
             }
             return user;
         }
+
+
+
+        // DANIEL TESTING
+        public async Task<UserLoggedInDto> RegisterUser(CreateUserDto createUser)
+        {
+            using var hmac = new HMACSHA512();
+
+            User user = new User()
+            {
+                    UserName = createUser.UserName,
+                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(createUser.Password)),
+                    PasswordSalt = hmac.Key,
+                    FullName = createUser.FullName,
+                    PhoneNumber = createUser.PhoneNumber,
+                    Email = createUser.Email,
+                    TeamID = createUser.TeamID,
+                    RoleID = createUser.RoleID
+            };
+            await _repo.users.AddAsync(user);
+            await _repo.CommitSave();
+            _logger.LogInformation("User created");
+
+
+            UserLoggedInDto newUser = _mapper.ConvertUserToUserLoggedInDto(user);
+            newUser.Token = _token.CreateToken(user);
+            return newUser;
+        }
+
+        // testing if user by username or email exists
+        public async Task<bool> UserExists(string username, string email)
+        {
+            bool userExists = await _repo.users.AnyAsync(x => x.UserName == username || x.Email == email);
+            if (userExists)
+            {
+                _logger.LogInformation("User found in database");
+                return userExists;
+            }
+            return userExists;
+        }
+
+        public async Task<User> LoginUser(LoginDto loginDto)
+        {
+            return await _repo.users.SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
+        }
+
+        public async Task<UserLoggedInDto> CheckPassword(Task<User> user, LoginDto loginDto)
+        {
+            using var hmac = new HMACSHA512(user.Result.PasswordSalt);
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != user.Result.PasswordHash[i])
+                {
+                    return null;
+                }
+            }
+
+            User loggedIn = await user;
+
+            UserLoggedInDto loggedInUser = _mapper.ConvertUserToUserLoggedInDto(loggedIn);
+            loggedInUser.Token = _token.CreateToken(loggedIn);
+            return loggedInUser;
+        }
+
+
+        // END TESTING
+
         public async Task<User> DeleteUser(Guid id)
         {
             User user = await GetUserById(id);
