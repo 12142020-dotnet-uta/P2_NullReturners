@@ -49,11 +49,11 @@ steps:
     workingDir: './Frontend/'
     customCommand: 'run build'
 
-- task: Npm@1
-  displayName: 'Publish Angular'
-  inputs:
-    command: 'publish'
-    workingDir: './Frontend/'
+#- task: Npm@1
+#  displayName: 'Publish Angular'
+#  inputs:
+#    command: 'publish'
+#    workingDir: './Frontend/'
 
 - task: AzureRmWebAppDeployment@4
   displayName: 'Deploy Angular'
