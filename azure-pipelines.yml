@@ -18,45 +18,33 @@ steps:
   inputs:
     versionSpec: '10.x'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
-  workingDirectory: '$(Build.SourcesDirectory)'
+- task: Npm@1
+  displayName: 'NPM Install'
+  inputs:
+    command: 'install'
+    workingDir: './Frontend/'
+
+- task: Npm@1
+  displayName: 'NPM Install Angular CLI'
+  inputs:
+    command: 'custom'
+    workingDir: './Frontend/'
+    customCommand: 'install -g @angular/cli@latest'
+
+- task: Npm@1
+  displayName: 'NPM Build Angular'
+  inputs:
+    command: 'custom'
+    workingDir: './Frontend/'
+    customCommand: 'run ng build --prod -- -op ..\..\dist'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '_buildOutput/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/dist'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\dist\'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
-#- task: Npm@1
-#  displayName: 'NPM Install'
-#  inputs:
-#    command: 'install'
-#    workingDir: './Frontend/'
-
-#- task: Npm@1
-#  displayName: 'NPM Install Angular CLI'
-#  inputs:
-#    command: 'custom'
-#    workingDir: './Frontend/'
-#    customCommand: 'install -g @angular/cli@latest'
-
-#- task: Npm@1
-#  displayName: 'NPM Build Angular'
-#  inputs:
-#    command: 'custom'
-#    workingDir: './Frontend/'
-#    customCommand: 'run ng build --prod'
-
-#- task: CopyFiles@2
-#  inputs:
-#    contents: '_buildOutput/**'
-#    targetFolder: $(Build.ArtifactStagingDirectory)
-
-#- task: PublishBuildArtifacts@1
-#  inputs:
-#    PathtoPublish: '$(Build.ArtifactStagingDirectory)\dist\'
-#    ArtifactName: 'drop'
-#    publishLocation: 'Container'
