@@ -31,3 +31,4 @@ namespace P2_Main
                     webBuilder.UseStartup<Startup>();
                 });
     }
+}
