@@ -11,6 +11,9 @@ using Microsoft.Extensions.Logging.Abstractions;
 using System.Linq;
 using System.Collections.Generic;
 using Logic.Interfaces;
+using Logic.Services;
+using Microsoft.Extensions.Configuration;
+using Moq;
 
 namespace Logic.Tests
 {
@@ -20,6 +23,9 @@ namespace Logic.Tests
         private readonly Mapper _mapper;
         private readonly ITokenService _token;
         //private readonly ILogger<Repo> _logger;
+
+        //--------------------------Start of LogicClass Tests-----------------------
+
 
         /// <summary>
         /// Tests the CreateUser() method of LogicClass
@@ -32,7 +38,7 @@ namespace Logic.Tests
             // this block is only for code coverage
             var onlyForCoverage = new ProgContext(); 
             var empty = new DbContextOptionsBuilder<ProgContext>().Options;
-            var onlyForCoverage2 = new ProgContext(empty);
+            var onlyForCoverage2 = new ProgContext(empty); // didn't work
             LogicClass logicClass = new LogicClass();
 
 
@@ -251,6 +257,7 @@ namespace Logic.Tests
 
         /// <summary>
         /// Tests the GetUsers() method of LogicClass
+        /// TODO: don't know how to test the UserDto lines
         /// </summary>
         [Fact]
         public void TestForGetUsers()
@@ -266,7 +273,7 @@ namespace Logic.Tests
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
                 LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                var user = new User
+                var user = new User()
                 {
                     UserID = Guid.NewGuid(),
                     UserName = "jerry",
@@ -1544,5 +1551,127 @@ namespace Logic.Tests
                 var createEvent = LogicClass.CreateEvent(calendarService.Result, eventDto);
             }
         }
+
+        //--------------------------End of LogicClass Tests-----------------------
+
+        //---------------------------Start of Mapper Tests------------------------
+
+        /// <summary>
+        /// Tests the ConvertUserToUserDto() method of Mapper
+        /// </summary>
+        [Fact]
+        public void TestForConvertUserToUserDto()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                var user = new User()
+                {
+                    UserID = Guid.NewGuid(),
+                    UserName = "jerry",
+                    Password = "jerryrice",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com",
+                    TeamID = 1,
+                    RoleID = 1
+                };
+
+                var convert = mapper.ConvertUserToUserDto(user);
+
+                Assert.True(convert.UserName.Equals(user.UserName));
+            }
+        }
+
+
+        /// <summary>
+        /// Tests the ConvertUserToUserLoggedInDto() method of Mapper
+        /// </summary>
+        [Fact]
+        public void TestForConvertUserToUserLoggedInDto()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                var user = new User()
+                {
+                    UserID = Guid.NewGuid(),
+                    UserName = "jerry",
+                    Password = "jerryrice",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com",
+                    TeamID = 1,
+                    RoleID = 1
+                };
+
+                var convert = mapper.ConvertUserToUserLoggedInDto(user);
+
+                Assert.True(convert.UserName.Equals(user.UserName));
+            }
+        }
+
+        //----------------------------End of Mapper tests-------------------------
+
+        //-------------------------Start of TokenService Tests--------------------
+
+        /// <summary>
+        /// Tests the CreateToken() method in TokenService
+        /// TODO: write actual test for CreateToken()
+        /// </summary>
+        [Fact]
+        public void TestForCreateToken()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                var mockConfSection = new Mock<IConfigurationSection>();
+                mockConfSection.SetupGet(m => m[It.Is<string>(s => s == "default")]).Returns("mock value");
+                var mockConfiguration = new Mock<IConfiguration>();
+                mockConfiguration.Setup(a => a.GetSection(It.Is<string>(s => s == "ConnectionStrings"))).Returns(mockConfSection.Object);
+                //TokenService token = new TokenService(mockConfiguration.Object);
+                //User user = new User()
+                //{
+                //    UserID = Guid.NewGuid(),
+                //    UserName = "jerryrice",
+                //    Password = "jerry123",
+                //    PasswordHash = new byte[1],
+                //    PasswordSalt = new byte[1],
+                //    FullName = "Jerry Rice",
+                //    Email = "jerryrice@gmail.com",
+                //    PhoneNumber = "222-222-2222",
+                //    TeamID = 1,
+                //    RoleID = 1
+                //};
+
+                //var createToken = token.CreateToken(user);
+            }
+        }
+
+        //--------------------------End of TokenService Tests---------------------
     } // end of class
 } // end of namespace

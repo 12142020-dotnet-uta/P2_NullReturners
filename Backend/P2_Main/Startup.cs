@@ -48,6 +48,9 @@ namespace P2_Main
 
             services.AddScoped<ITokenService, TokenService>();
 
+            services.AddDbContext<ProgContext>(options =>
+                options.UseSqlServer(_config.GetConnectionString("AzureDB")));
+
             services.AddCors(options =>
             {
                 options.AddPolicy(name: "CorsPolicy",

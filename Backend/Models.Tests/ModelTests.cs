@@ -35,6 +35,8 @@ namespace Models.Tests
                 UserID = Guid.NewGuid(),
                 UserName = "jerry",
                 Password = "jerryrice",
+                PasswordHash = new byte[1],
+                PasswordSalt = new byte[1],
                 FullName = "Jerry Rice",
                 PhoneNumber = "111-111-1111",
                 Email = "jerryrice@gmail.com",
@@ -57,6 +59,8 @@ namespace Models.Tests
                 UserID = Guid.NewGuid(),
                 UserName = "jerry",
                 Password = "jerryrice",
+                PasswordHash = new byte[1],
+                PasswordSalt = new byte[1],
                 FullName = "Jerry Rice",
                 PhoneNumber = "111-111-1111",
                 Email = "1234",
@@ -270,6 +274,45 @@ namespace Models.Tests
 
         //----------------------DTO tests start here-------------------------------------
 
+
+        /// <summary>
+        /// Validates the LoginDto Model works with proper data
+        /// </summary>
+        [Fact]
+        public void ValidateLoginDto()
+        {
+            var login = new LoginDto()
+            {
+                UserName = "brettfavre",
+                Password = "brett123"
+            };
+
+            var errorcount = ValidateModel(login).Count;
+            Assert.Equal(0, errorcount);
+        }
+
+        /// <summary>
+        /// Validates the UserLoggedInDto Model works with proper data
+        /// </summary>
+        [Fact]
+        public void ValidateUserLoggedInDto()
+        {
+            var user = new UserLoggedInDto()
+            {
+                UserID = Guid.NewGuid(),
+                Token = "requestgranted",
+                UserName = "brettfavre",
+                FullName = "Brett Favre",
+                PhoneNumber = "2222222",
+                Email = "brettfavregmail.com",
+                TeamID = 1,
+                RoleID = 1
+            };
+
+            var errorcount = ValidateModel(user).Count;
+            Assert.Equal(2, errorcount);
+        }
+
         /// <summary>
         /// Validates the CoachEditUserDto Model works with proper data
         /// </summary>
@@ -340,6 +383,27 @@ namespace Models.Tests
             {
                 UserName = "brettfavre",
                 Password = "brett123",
+                FullName = "Brett Favre",
+                PhoneNumber = "2222222",
+                Email = "brettfavregmail.com",
+                TeamID = 1,
+                RoleID = 1
+            };
+
+            var errorcount = ValidateModel(user).Count;
+            Assert.Equal(2, errorcount);
+        }
+
+        /// <summary>
+        /// Validates the UserDto Model works with proper data
+        /// </summary>
+        [Fact]
+        public void ValidateUserDto()
+        {
+            var user = new UserDto()
+            {
+                UserID = Guid.NewGuid(),
+                UserName = "brettfavre",
                 FullName = "Brett Favre",
                 PhoneNumber = "2222222",
                 Email = "brettfavregmail.com",
