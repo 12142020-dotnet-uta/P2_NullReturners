@@ -6,6 +6,7 @@ import { NgModel } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { DrawService } from '../_services/draw.service';
+import { play } from './play';
 
 @Component({
   selector: 'app-draw',
@@ -19,12 +20,13 @@ export class DrawComponent implements AfterViewInit {
   // setting a width and height for the canvas
   @Input() public width = 600;
   @Input() public height = 600;
-  model: any = {}
-  imageData;
+  constructor(private drawService: DrawService){}
+  model = new play;
+  ImageString;
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
 
-  constructor(private drawService: DrawService){}
+  
 
   public ngAfterViewInit() {
     // get the context
@@ -146,9 +148,10 @@ SetBackGroundWhite(){
 
 saveCanvas() {
 
-  this.imageData = this.canvasEl.toDataURL(); //1 indicates full quality
-  console.log(this.imageData);
-  //this.model.
+  this.ImageString = this.canvasEl.toDataURL(); //1 indicates full quality
+ // console.log(this.imageData);
+  this.model.ImageString  = this.ImageString;
+  console.log(this.model.ImageString);
   this.drawService.createDrawing(this.model).subscribe(response => {
     console.log(response);
   }), err => {
