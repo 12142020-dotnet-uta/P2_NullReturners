@@ -6,7 +6,7 @@ Upon successful login, users will be able to view scheduled meetings and practic
 view team announcements, view the playbook, view/add statistics, and request new gear. 
 
 ## Technologies Used
-* .NET Core 5
+* .NET Core 5 ![.NetCore5 image](https://www.google.com/url?sa=i&url=https%3A%2F%2Fgunnarpeipman.com%2Fphp-applications-on-net-core%2F&psig=AOvVaw3ax_nX3hmRSyUgFyNeNDhz&ust=1611822469456000&source=images&cd=vfe&ved=0CAMQjB1qFwoTCOjGkebYu-4CFQAAAAAdAAAAABAY)
 * Microsoft Entity Framework 6.4
 * SQL Server 2019
 * Angular 11
