@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from './auth.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -11,7 +10,7 @@ export class AppComponent {
   title = 'FrontEnd';
 
 
-  constructor(public auth: AuthService, private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
 
