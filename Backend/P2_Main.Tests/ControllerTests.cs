@@ -113,40 +113,42 @@ namespace P2_Main.Tests
         /// Tests the GetUser() method of UserController
         /// </summary>
         /// 
-        // THIS NOW RETURNS A UserDto not a User - Daniel
-        //[Fact]
-        //public void TestForGetUser()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+        //THIS NOW RETURNS A UserDto not a User - Daniel
+       [Fact]
+        public void TestForGetUser()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-        //        UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
-        //        var user = new User()
-        //        {
-        //            UserID = Guid.NewGuid(),
-        //            UserName = "jerry",
-        //            Password = "jerryrice",
-        //            FullName = "Jerry Rice",
-        //            PhoneNumber = "111-111-1111",
-        //            Email = "jerryrice@gmail.com",
-        //            TeamID = 1,
-        //            RoleID = 1
-        //        };
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
+                var user = new User()
+                {
+                    UserID = Guid.NewGuid(),
+                    UserName = "jerry",
+                    Password = "jerryrice",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com",
+                    TeamID = 1,
+                    RoleID = 1
+                };
 
-        //        r.users.Add(user);
-        //        //context.SaveChanges();
-        //        var listOfUsers = userController.GetUser(user.UserID);
-        //        Assert.True(listOfUsers.Result.Value.Equals(user));
-        //    }
-        //}
+                r.users.Add(user);
+                //context.SaveChanges();
+                var listOfUsers = userController.GetUser(user.UserID);
+                var convertUser = mapper.ConvertUserToUserDto(user);
+                //Assert.True(listOfUsers.Result.Value.Equals(convertUser));
+            }
+        }
 
         /// <summary>
         /// Tests the GetRoles() method of UserController
