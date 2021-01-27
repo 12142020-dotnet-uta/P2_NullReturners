@@ -29,11 +29,14 @@
               <a class="nav-link">Chat</a>
             </li>
           </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="text" placeholder="Username">
-            <input class="form-control me-2" type="password" placeholder="Password">
+          <form *ngIf="!loggedIn" #loginForm=""ngForm class="d-flex" (ngSubmit)="login()" autocomplete="off">
+            <input name="username" [(ngModel)]="model.userName" class="form-control me-2" type="text" placeholder="Username">
+            <input name = "password" [(ngModel)]="model.passWord" class="form-control me-2" type="password" placeholder="Password">
             <button class="btn btn-outline-success" type="submit">Login</button>
           </form>
+
+          <a *ngIf="loggedIn" (click)="logout()" class="btn btn-primary">Logout</a>
+
         </div>
       </div>
     </nav>
