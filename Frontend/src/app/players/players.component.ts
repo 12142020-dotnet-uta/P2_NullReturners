@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../_services/account.service';
 import { UserService } from '../_services/user.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class PlayersComponent implements OnInit {
   model: any = {}
 
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, public accountService: AccountService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -52,7 +53,7 @@ export class PlayersComponent implements OnInit {
   }
 
   createUser() {
-    this.userService.createUser(this.model).subscribe(response => {
+    this.accountService.registerUser(this.model).subscribe(response => {
       console.log(response);
       this.getUsers();
     }), err => {

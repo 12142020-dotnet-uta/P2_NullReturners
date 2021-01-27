@@ -37,4 +37,8 @@ export class AccountService {
     this.currentUserSource.next(null);
   }
 
+  registerUser(model: any) {
+    return this.http.post(this.baseUrl + 'account/register', model)
+  }
+
 }
