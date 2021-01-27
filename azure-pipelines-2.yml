@@ -13,21 +13,6 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: SonarCloudPrepare@1
-  displayName: 'SonarCloud Prepare'
-  inputs:
-    SonarCloud: 'SonarCloud'
-    organization: 'p2nullreturners'
-    scannerMode: 'MSBuild'
-    projectKey: 'P2NullReturners_P2_NullReturners'
-    projectName: 'P2_NullReturners'
-
-- task: AzureAppServiceManage@0
-  displayName: 'Stop Azure App Service'
-  inputs:
-    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
-    Action: 'Stop Azure App Service'
-    WebAppName: 'nrtmportal'
 
 - task: Npm@1
   displayName: 'NPM Install'
@@ -47,26 +32,10 @@ steps:
   inputs:
     command: 'custom'
     workingDir: './Frontend/'
-    customCommand: 'run build'
+    customCommand: 'run ng build --prod'
 
-#- task: Npm@1
-#  displayName: 'Publish Angular'
-#  inputs:
-#    command: 'publish'
-#    workingDir: './Frontend/'
-
-- task: AzureRmWebAppDeployment@4
-  displayName: 'Deploy Angular'
+- task: PublishBuildArtifacts@1
   inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
-    appType: 'webApp'
-    WebAppName: 'nrtmportal'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-
-- task: AzureAppServiceManage@0
-  displayName: 'Start Azure App Service'
-  inputs:
-    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
-    Action: 'Start Azure App Service'
-    WebAppName: 'nrtmportal'
+    PathtoPublish: 'dist'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
