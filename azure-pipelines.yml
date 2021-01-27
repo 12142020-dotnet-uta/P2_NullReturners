@@ -76,3 +76,10 @@ steps:
     ResourceGroupName: 'P2Pipeline'
     SlotName: 'production'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
+- task: Npm@1
+  inputs:
+    command: 'publish'
+    workingDir: './Frontend/'
+    publishRegistry: 'useFeed'
+    publishFeed: '3e277571-0b24-4cb3-8abd-2185455da962'
