@@ -19,6 +19,8 @@ steps:
   inputs:
     command: 'install'
     workingDir: './Frontend/'
+    customRegistry: 'useFeed'
+    customFeed: '3e277571-0b24-4cb3-8abd-2185455da962'
 
 - task: Npm@1
   displayName: 'NPM Install Angular CLI'
@@ -26,13 +28,16 @@ steps:
     command: 'custom'
     workingDir: './Frontend/'
     customCommand: 'install -g @angular/cli@latest'
-
+    customRegistry: 'useFeed'
+    customFeed: '3e277571-0b24-4cb3-8abd-2185455da962'
 - task: Npm@1
   displayName: 'NPM Build Angular'
   inputs:
     command: 'custom'
     workingDir: './Frontend/'
     customCommand: 'run build'
+    customRegistry: 'useFeed'
+    customFeed: '3e277571-0b24-4cb3-8abd-2185455da962'
 
 - task: Npm@1
   inputs:
