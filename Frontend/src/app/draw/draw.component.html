@@ -27,6 +27,5 @@
     <form #createDrawingForm="ngForm" class="d-flex" (ngSubmit)="saveCanvas()" autocomplete="off">
         <input name="Name" [(ngModel)]="model.Name" class="form-control me-2" type="text" placeholder="Name" aria-label="Name">
         <input name="Description" [(ngModel)]="model.Description" class="form-control me-2" type="text" placeholder="Description" aria-label="Description">
-        <!--<input name="DrawnPlay" type="hidden" [(ng-model)]="imageData">-->
         <button class="btn btn-outline-success" type="submit">Create</button>
     </form>
