@@ -517,6 +517,14 @@ namespace Logic
         {
             return await _repo.GetEquipmentRequests();
         }
+        public async Task<EquipmentRequest> GetEquipmentItemtById(int id)
+        {
+            return await _repo.GetEquipmentItemById(id);
+        }
+        public async Task<IEnumerable<EquipmentRequest>> GetEquipmentItems()
+        {
+            return await _repo.GetEquipmentItems();
+        }
         public async Task<EquipmentRequest> CreateEquipmentRequest(CreateEquipmentRequestDto createEquipmentRequestDto)
         {
             EquipmentRequest newEquipmentRequest = new EquipmentRequest()
@@ -538,6 +546,11 @@ namespace Logic
             if (editedEquipmentRequest != null && editedEquipmentRequest.Status != editEquipmentRequestDto.Status) { editedEquipmentRequest.Status = editEquipmentRequestDto.Status; }
             await _repo.CommitSave();
             return editedEquipmentRequest;
+        }
+        public async Task<EquipmentItem> GetEquipmentItemByName(string eqName)
+        {
+            EquipmentItem eqItem = await _repo.equipmentItems.FirstOrDefaultAsync(x => x.Description == eqName);
+            return eqItem;
         }
     }
 }
