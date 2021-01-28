@@ -1,4 +1,5 @@
 
+import { CONTEXT_NAME } from '@angular/compiler/src/render3/view/util';
 import {
   Component, Input, ElementRef, AfterViewInit,OnInit, ViewChild
 } from '@angular/core';
@@ -137,15 +138,21 @@ public restetTemplate(){
 }
 
 SetBackGroundTan(){
-  this.canvasEl.style.backgroundColor = "Bisque";
+  this.cx.fillStyle = "bisque";
+  this.cx.fillRect(0,0,600,600);
+  //this.canvasEl.style.backgroundColor = "Bisque";
 }
 
 SetBackGroundGreen(){
-  this.canvasEl.style.backgroundColor = "Green";
+  this.cx.fillStyle = "Green";
+  this.cx.fillRect(0,0,600,600);
+  //this.canvasEl.style.backgroundColor = "Green";
 }
 
 SetBackGroundWhite(){
-  this.canvasEl.style.backgroundColor = "White";
+  this.cx.fillStyle = "White";
+  this.cx.fillRect(0,0,600,600);
+  //sthis.canvasEl.style.backgroundColor = "White";
 
 }
 
