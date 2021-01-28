@@ -29,54 +29,54 @@ namespace Logic.Tests
         /// Tests the CreateUser() method of LogicClass
         /// Tests that a user is added to the database
         /// </summary>
-        [Fact]
-        public async void TestForCreateUser()
-        {
+        //[Fact]
+        //public async void TestForCreateUser()
+        //{
 
-            // this block is only for code coverage
-            var onlyForCoverage = new ProgContext(); 
-            var empty = new DbContextOptionsBuilder<ProgContext>().Options;
-            var onlyForCoverage2 = new ProgContext(empty); // didn't work
-            LogicClass logicClass = new LogicClass();
+        //    // this block is only for code coverage
+        //    var onlyForCoverage = new ProgContext(); 
+        //    var empty = new DbContextOptionsBuilder<ProgContext>().Options;
+        //    var onlyForCoverage2 = new ProgContext(empty); // didn't work
+        //    LogicClass logicClass = new LogicClass();
 
 
-            var options = new DbContextOptionsBuilder<ProgContext>()
-            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-            .Options;
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
 
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, new NullLogger<Repo>());
-                Mapper mapper = new Mapper();
-                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
-                CreateUserDto cUD = new CreateUserDto()
-                {
-                    UserName = "jerryrice",
-                    Password = "jerry123",
-                    FullName = "Jerry Rice",
-                    PhoneNumber = "111-111-1111",
-                    Email = "jerryrice@gmail.com"
-                };
-                var user = await logic.CreateUser(cUD);
-                //Assert.NotEmpty(context.Users);
-                Assert.Contains<User>(user, context.Users);
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        Mapper mapper = new Mapper();
+        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+        //        CreateUserDto cUD = new CreateUserDto()
+        //        {
+        //            UserName = "jerryrice",
+        //            Password = "jerry123",
+        //            FullName = "Jerry Rice",
+        //            PhoneNumber = "111-111-1111",
+        //            Email = "jerryrice@gmail.com"
+        //        };
+        //        var user = await logic.CreateUser(cUD);
+        //        //Assert.NotEmpty(context.Users);
+        //        Assert.Contains<User>(user, context.Users);
 
-                var user2 = await logic.CreateUser(cUD);
-                //Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
-                var countUsers = from u in context.Users
-                                 where u.Email == user.Email
-                                 select u;
-                int count = 0;
-                foreach (User userMail in countUsers)
-                {
-                    count++;
-                }
-                Assert.Equal(1, count);
-            }
-        }
+        //        var user2 = await logic.CreateUser(cUD);
+        //        //Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
+        //        var countUsers = from u in context.Users
+        //                         where u.Email == user.Email
+        //                         select u;
+        //        int count = 0;
+        //        foreach (User userMail in countUsers)
+        //        {
+        //            count++;
+        //        }
+        //        Assert.Equal(1, count);
+        //    }
+        //}
 
 
         /// <summary>
@@ -136,73 +136,73 @@ namespace Logic.Tests
         /// Tests the UserExists() method of LogicClass
         /// Tests if user is already in the database
         /// </summary>
-        [Fact]
-        public async void TestForUserExists()
-        {
-            var options = new DbContextOptionsBuilder<ProgContext>()
-            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-            .Options;
+        //[Fact]
+        //public async void TestForUserExists()
+        //{
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
 
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, new NullLogger<Repo>());
-                Mapper mapper = new Mapper();
-                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
-                CreateUserDto cUD = new CreateUserDto()
-                {
-                    UserName = "jerryrice",
-                    Password = "jerry123",
-                    FullName = "Jerry Rice",
-                    PhoneNumber = "111-111-1111",
-                    Email = "jerryrice@gmail.com"
-                };
-                var user = await logic.CreateUser(cUD);
-                Assert.Contains<User>(user, context.Users);
-                var userExists = await logic.UserExists(cUD.UserName, cUD.Email);
-                Assert.True(userExists);
-            }
-        }
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        Mapper mapper = new Mapper();
+        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+        //        CreateUserDto cUD = new CreateUserDto()
+        //        {
+        //            UserName = "jerryrice",
+        //            Password = "jerry123",
+        //            FullName = "Jerry Rice",
+        //            PhoneNumber = "111-111-1111",
+        //            Email = "jerryrice@gmail.com"
+        //        };
+        //        var user = await logic.CreateUser(cUD);
+        //        Assert.Contains<User>(user, context.Users);
+        //        var userExists = await logic.UserExists(cUD.UserName, cUD.Email);
+        //        Assert.True(userExists);
+        //    }
+        //}
 
         /// <summary>
         /// Tests the LoginUser() method of LogicClass
         /// Tests if logged in user data is retrieved from database
         /// </summary>
-        [Fact]
-        public async void TestForLoginUser()
-        {
-            var options = new DbContextOptionsBuilder<ProgContext>()
-            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-            .Options;
+        //[Fact]
+        //public async void TestForLoginUser()
+        //{
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
 
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, new NullLogger<Repo>());
-                Mapper mapper = new Mapper();
-                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
-                CreateUserDto cUD = new CreateUserDto()
-                {
-                    UserName = "jerryrice",
-                    Password = "jerry123",
-                    FullName = "Jerry Rice",
-                    PhoneNumber = "111-111-1111",
-                    Email = "jerryrice@gmail.com"
-                };
-                var userAdd = await logic.CreateUser(cUD);
-                LoginDto loginDto = new LoginDto()
-                {
-                    UserName = cUD.UserName,
-                    Password = cUD.Email
-                };
-                var user = await logic.LoginUser(loginDto);
-                Assert.True(user.Equals(userAdd));
-            }
-        }
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        Mapper mapper = new Mapper();
+        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+        //        CreateUserDto cUD = new CreateUserDto()
+        //        {
+        //            UserName = "jerryrice",
+        //            Password = "jerry123",
+        //            FullName = "Jerry Rice",
+        //            PhoneNumber = "111-111-1111",
+        //            Email = "jerryrice@gmail.com"
+        //        };
+        //        var userAdd = await logic.CreateUser(cUD);
+        //        LoginDto loginDto = new LoginDto()
+        //        {
+        //            UserName = cUD.UserName,
+        //            Password = cUD.Email
+        //        };
+        //        var user = await logic.LoginUser(loginDto);
+        //        Assert.True(user.Equals(userAdd));
+        //    }
+        //}
 
         /// <summary>
         /// Tests the DeleteUser() method of the LogicClass

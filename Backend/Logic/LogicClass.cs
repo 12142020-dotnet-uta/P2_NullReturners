@@ -34,6 +34,7 @@ namespace Logic
         private readonly ILogger<Repo> _logger;
 
         // Context accessors
+        // Users
         /// <summary>
         /// UserID -> Repo.GetUser
         /// </summary>
@@ -56,40 +57,8 @@ namespace Logic
                 UserDto userDto = _mapper.ConvertUserToUserDto(user);
                 userDtos.Add(userDto);
             }
-
             return userDtos;
         }
-        //Users
-        // can likely be deleted
-        public async Task<User> CreateUser(CreateUserDto createUser)
-        {
-            User user = _repo.users.FirstOrDefault(x => x.UserName == createUser.UserName || x.Email == createUser.Email);
-            if (user == null)
-            {
-                user = new User()
-                {
-                    UserName = createUser.UserName,
-                    Password = createUser.Password,
-                    FullName = createUser.FullName,
-                    PhoneNumber = createUser.PhoneNumber,
-                    Email = createUser.Email,
-                    TeamID = createUser.TeamID,
-                    RoleID = createUser.RoleID
-                };
-                await _repo.users.AddAsync(user);
-                await _repo.CommitSave();
-                _logger.LogInformation("User created");
-            }
-            else
-            {
-                _logger.LogInformation("User found in database");
-            }
-            return user;
-        }
-
-
-
-        // DANIEL TESTING
         /// <summary>
         /// Takes user input, creates authentication data
         /// </summary>
@@ -109,16 +78,13 @@ namespace Logic
                     TeamID = createUser.TeamID,
                     RoleID = createUser.RoleID
                 };
-                await _repo.users.AddAsync(user);
-                await _repo.CommitSave();
-                _logger.LogInformation("User created");
-            
+            await _repo.users.AddAsync(user);
+            await _repo.CommitSave();
+            _logger.LogInformation("User created");            
             UserLoggedInDto newUser = _mapper.ConvertUserToUserLoggedInDto(user);
             newUser.Token = _token.CreateToken(user);
             return newUser;
         }
-
-        // testing if user by username or email exists
         /// <summary>
         /// Checks if user or email already exists in DB
         /// </summary>
@@ -155,7 +121,6 @@ namespace Logic
         {
             using var hmac = new HMACSHA512(user.Result.PasswordSalt);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-
             for (int i = 0; i < computedHash.Length; i++)
             {
                 if (computedHash[i] != user.Result.PasswordHash[i])
@@ -163,20 +128,15 @@ namespace Logic
                     return null;
                 }
             }
-
             User loggedIn = await user;
-
             UserLoggedInDto loggedInUser = _mapper.ConvertUserToUserLoggedInDto(loggedIn);
             loggedInUser.Token = _token.CreateToken(loggedIn);
             return loggedInUser;
         }
-
-
-        // END TESTING
         /// <summary>
         /// Delete user from context by ID
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">UserID</param>
         /// <returns>deleted User</returns>
         public async Task<User> DeleteUser(Guid id)
         {
@@ -240,7 +200,7 @@ namespace Logic
             await _repo.CommitSave();
             return tUser;
         }
-        //Teams
+        // Teams
         /// <summary>
         /// Get Team by ID
         /// </summary>
@@ -273,7 +233,7 @@ namespace Logic
             await _repo.CommitSave();
             return tTeam;
         }
-        //Roles
+        // Roles
         /// <summary>
         /// Get user Role
         /// </summary>
@@ -304,7 +264,7 @@ namespace Logic
             await _repo.CommitSave();
             return await GetRoleById(roleId);
         }
-        //Playbooks
+        // Playbooks
         /// <summary>
         /// Get Playbook
         /// </summary>
@@ -562,7 +522,7 @@ namespace Logic
             }
             await _repo.CommitSave();
         }
-        //Games
+        // Games
         /// <summary>
         /// Get a Game by GameID
         /// </summary>
@@ -617,7 +577,7 @@ namespace Logic
             }
             return editedGame;
         }
-        //Calendar
+        // Calendar
         /// <summary>
         /// Initialize Calendar service with credentials
         /// </summary>
@@ -715,7 +675,7 @@ namespace Logic
             }
             return myevent;
         }
-        //Equipment
+        // Equipment
         /// <summary>
         /// Get an EquipmentRequest by ID
         /// </summary>

@@ -17,7 +17,6 @@ namespace Models.DataTransfer
         public string FullName { get; set; }
         [DisplayName("Phone Number")]
         [DataType(DataType.PhoneNumber)]
-        //[RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone no.")]
         public string PhoneNumber { get; set; }
         [DisplayName("Email Address")]
         [DataType(DataType.EmailAddress)]

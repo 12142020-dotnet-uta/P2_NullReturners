@@ -10,7 +10,6 @@ namespace Logic
 {
     public class Mapper
     {
-      
         public byte[] ConvertImage(string image)
         {
             //take everything after the ,
@@ -18,7 +17,6 @@ namespace Logic
             byte[] bytes = Convert.FromBase64String(base64Image1);
             return bytes;
         }
-      
         public UserDto ConvertUserToUserDto(User user)
         {
             UserDto convertedUser = new UserDto()
@@ -33,7 +31,6 @@ namespace Logic
             };
             return convertedUser;
         }
-
         public UserLoggedInDto ConvertUserToUserLoggedInDto(User user)
         {
             UserLoggedInDto convertedUser = new UserLoggedInDto()

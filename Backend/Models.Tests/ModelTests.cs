@@ -311,7 +311,7 @@ namespace Models.Tests
             };
 
             var errorcount = ValidateModel(coachEdit).Count;
-            Assert.Equal(2, errorcount);
+            Assert.Equal(1, errorcount);
         }
 
         /// <summary>

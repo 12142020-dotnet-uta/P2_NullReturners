@@ -59,50 +59,50 @@ namespace P2_Main.Tests
         /// <summary>
         /// Test for the CreateUser() method of UsersController
         /// </summary>
-        [Fact]
-        public async void TestForCreateUser()
-        {
-            var options = new DbContextOptionsBuilder<ProgContext>()
-            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-            .Options;
+        //[Fact]
+        //public async void TestForCreateUser()
+        //{
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
 
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, new NullLogger<Repo>());
-                Mapper mapper = new Mapper();
-                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, mapper, new NullLogger<UsersController>());
-                var user = new CreateUserDto()
-                {
-                    UserName = "jerry",
-                    Password = "jerryrice",
-                    FullName = "Jerry Rice",
-                    PhoneNumber = "111-111-1111",
-                    Email = "jerryrice@gmail.com",
-                    TeamID = 1,
-                    RoleID = 1
-                };
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        Mapper mapper = new Mapper();
+        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+        //        UsersController userController = new UsersController(logic, mapper, new NullLogger<UsersController>());
+        //        var user = new CreateUserDto()
+        //        {
+        //            UserName = "jerry",
+        //            Password = "jerryrice",
+        //            FullName = "Jerry Rice",
+        //            PhoneNumber = "111-111-1111",
+        //            Email = "jerryrice@gmail.com",
+        //            TeamID = 1,
+        //            RoleID = 1
+        //        };
 
-                var listOfUsers = await userController.CreateUser(user);
-                //Assert.NotEmpty(context.Users);
-                Assert.Contains<User>(listOfUsers.Value, context.Users);
+        //        var listOfUsers = await userController.CreateUser(user);
+        //        //Assert.NotEmpty(context.Users);
+        //        Assert.Contains<User>(listOfUsers.Value, context.Users);
 
-                var user2 = await logic.CreateUser(user);
-                //Assert.Equal(1, context.Users.CountAsync().Result);
-                var countUsers = from u in context.Users
-                                 where u.Email == user.Email
-                                 select u;
-                int count = 0;
-                foreach (User userMail in countUsers)
-                {
-                    count++;
-                }
-                Assert.Equal(1, count);
-            }
-        }
+        //        var user2 = await logic.CreateUser(user);
+        //        //Assert.Equal(1, context.Users.CountAsync().Result);
+        //        var countUsers = from u in context.Users
+        //                         where u.Email == user.Email
+        //                         select u;
+        //        int count = 0;
+        //        foreach (User userMail in countUsers)
+        //        {
+        //            count++;
+        //        }
+        //        Assert.Equal(1, count);
+        //    }
+        //}
 
         /// <summary>
         /// Tests the GetUser() method of UserController
