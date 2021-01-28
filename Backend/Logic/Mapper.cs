@@ -11,7 +11,7 @@ namespace Logic
     public class Mapper
     {
       
-        public byte[] convertImage(string image)
+        public byte[] ConvertImage(string image)
         {
             //take everything after the ,
             string base64Image1 = image.Split(',')[1];

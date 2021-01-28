@@ -1566,7 +1566,7 @@ namespace Logic.Tests
 
             Mapper mapper = new Mapper();
             string textSting = "text,text";
-            var convert = mapper.convertImage(textSting);
+            var convert = mapper.ConvertImage(textSting);
 
             Assert.IsType<byte[]>(convert);
             Assert.NotNull(convert);

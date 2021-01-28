@@ -13,8 +13,15 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: AzureAppServiceManage@0
+  displayName: 'Stop App Service'
+  inputs:
+    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+    Action: 'Stop Azure App Service'
+    WebAppName: 'nrtmportal'
+
 - task: NodeTool@0
-  displayName: 'Setup Environment'
+  displayName: 'Setup Node Environment'
   inputs:
     versionSpec: '10.x'
 
@@ -38,8 +45,33 @@ steps:
     workingDir: './Frontend/'
     customCommand: 'run ng build --prod'
 
-- task: PublishBuildArtifacts@1
+- task: ArchiveFiles@2
+  displayName: 'Archive Angular Build Files'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/Frontend/dist/'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    rootFolderOrFile: 'Frontend/dist'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+#- task: PublishBuildArtifacts@1
+#  inputs:
+#    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#    ArtifactName: 'drop'
+#    publishLocation: 'Container'
+
+- task: AzureRmWebAppDeployment@4
+  displayName: 'Deploy Angular App'
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+    appType: 'webApp'
+    WebAppName: 'nrtmportal'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+
+- task: AzureAppServiceManage@0
+  displayName: 'Start App Service'
+  inputs:
+    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+    Action: 'Start Azure App Service'
+    WebAppName: 'nrtmportal'

@@ -29,7 +29,6 @@
 
 <h3>Request Equipment</h3>
 <form #createEquipmentRequestForm="ngForm"  (ngSubmit)="createEquipmentRequest()" autocomplete="off">
-   
     <label for="DateRequested">Date Requested (remove)</label>
     <input name="DateRequested" [(ngModel)]="model.dateRequested" class="form-control me-2" type="date" placeholder="Date">
     <label for="Message">Message</label>
