@@ -47,5 +47,19 @@ namespace P2_Main.Controllers
         {
             return await _logic.EditEquipmentRequest(id, equipmentRequest);
         }
+
+        [HttpGet("items")]
+        public async Task<IEnumerable<EquipmentItem>> GetEquipmentItems()
+        {
+            return await _logic.GetEquipmentItems();
+        }
+
+        [HttpGet("items/{id}")]
+        public async Task<ActionResult<EquipmentItem>> GetEquipmentItemById(int id)
+        {
+            return await _logic.GetEquipmentItemtById(id);
+        }
+
+
     }
 }
