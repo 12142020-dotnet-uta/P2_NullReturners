@@ -516,11 +516,11 @@ namespace Logic
         {
             return await _repo.GetEquipmentRequests();
         }
-        public async Task<EquipmentRequest> GetEquipmentItemtById(int id)
+        public async Task<EquipmentItem> GetEquipmentItemtById(int id)
         {
             return await _repo.GetEquipmentItemById(id);
         }
-        public async Task<IEnumerable<EquipmentRequest>> GetEquipmentItems()
+        public async Task<IEnumerable<EquipmentItem>> GetEquipmentItems()
         {
             return await _repo.GetEquipmentItems();
         }

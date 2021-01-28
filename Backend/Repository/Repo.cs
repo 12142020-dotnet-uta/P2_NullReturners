@@ -131,13 +131,13 @@ namespace Repository
         {
             return await equipmentRequests.ToListAsync();
         }
-        public async Task<EquipmentRequest> GetEquipmentItemById(int id)
+        public async Task<EquipmentItem> GetEquipmentItemById(int id)
         {
-            return await equipmentRequests.FindAsync(id);
+            return await equipmentItems.FindAsync(id);
         }
-        public async Task<IEnumerable<EquipmentRequest>> GetEquipmentItems()
+        public async Task<IEnumerable<EquipmentItem>> GetEquipmentItems()
         {
-            return await equipmentRequests.ToListAsync();
+            return await equipmentItems.ToListAsync();
         }
 
         private void ValidateRoleTable()

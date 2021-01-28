@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EquipmentService {
 
-  baseUrl = 'https://localhost:44342/api/'
+  baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
   getRequests() {
@@ -32,6 +33,10 @@ export class EquipmentService {
 
   createRequest(model: any) {
     return this.http.post(this.baseUrl + 'equipment', model);
+  }
+
+  getItesm(model: any) {
+    return this.http.get(this.baseUrl + `equipment`)
   }
 
 }
