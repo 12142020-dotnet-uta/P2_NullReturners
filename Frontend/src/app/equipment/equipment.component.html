@@ -1,6 +1,6 @@
 <div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
 <h2>Equipment Requests</h2>
-
+<a routerLink="/equipment/create">Create Request</a>
 <table class="table table-striped">
     <thead>
       <tr>

@@ -20,12 +20,20 @@ export class UserService {
     return this.http.get(this.baseUrl + `users/${userId}`)
   }
 
+  getTeams() {
+    return this.http.get(this.baseUrl + 'teams');
+  }
+
   getTeam(teamId) {
     return this.http.get(this.baseUrl + `teams/${teamId}`)
   }
 
   editUser(id:string, model:any) {
     return this.http.put(this.baseUrl + `users/edit/${id}`, model );
+  }
+
+  getRoles() {
+    return this.http.get(this.baseUrl + 'users/roles');
   }
 
   getRole(roleId) {
