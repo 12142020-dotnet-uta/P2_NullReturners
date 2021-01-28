@@ -343,12 +343,29 @@ namespace Logic
             return await _repo.GetPlayById(id);
         }
         /// <summary>
+        /// Get PlayDto by PlayID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<PlayDto> GetPlayDto(int id)
+        {
+            Play play = await _repo.GetPlayById(id);
+            return _mapper.ConvertToPlayDto(play);
+        }
+        /// <summary>
         /// Get list of Plays
         /// </summary>
         /// <returns>list of Plays</returns>
-        public async Task<IEnumerable<Play>> GetPlays()
+        public async Task<IEnumerable<PlayDto>> GetPlays()
         {
-            return await _repo.GetPlays();
+            IEnumerable<Play> playList = await _repo.GetPlays();
+            List<PlayDto> playDtos = new List<PlayDto>();
+            foreach (var play in playList)
+            {
+                PlayDto playDto = _mapper.ConvertToPlayDto(play);
+                playDtos.Add(playDto);
+            }
+            return playDtos;
         }
         /// <summary>
         /// Delete a Playbook by ID
