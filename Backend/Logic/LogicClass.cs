@@ -274,14 +274,29 @@ namespace Logic
             return tTeam;
         }
         //Roles
+        /// <summary>
+        /// Get user Role
+        /// </summary>
+        /// <param name="id">UserID</param>
+        /// <returns>RoleID</returns>
         public async Task<Role> GetRoleById(int id)
         {
             return await _repo.GetRoleById(id);
         }
+        /// <summary>
+        /// Get list of user Roles
+        /// </summary>
+        /// <returns>list of Roles</returns>
         public async Task<IEnumerable<Role>> GetRoles()
         {
             return await _repo.GetRoles();
         }
+        /// <summary>
+        /// Edit User to change Role
+        /// </summary>
+        /// <param name="userId">UserID</param>
+        /// <param name="roleId">RoleID</param>
+        /// <returns>Role added</returns>
         public async Task<Role> EditUserRole(Guid userId, int roleId)
         {
             User tUser = await GetUserById(userId);
@@ -290,14 +305,28 @@ namespace Logic
             return await GetRoleById(roleId);
         }
         //Playbooks
+        /// <summary>
+        /// Get Playbook
+        /// </summary>
+        /// <param name="id">PlaybookID</param>
+        /// <returns>PlaybookID</returns>
         public async Task<Playbook> GetPlaybookById(int id)
         {
             return await _repo.GetPlaybookById(id);
         }
+        /// <summary>
+        /// Get list of Playbooks
+        /// </summary>
+        /// <returns>list of Playbooks</returns>
         public async Task<IEnumerable<Playbook>> GetPlaybooks()
         {
             return await _repo.GetPlaybooks();
         }
+        /// <summary>
+        /// Create new Playbook and assign it to a team
+        /// </summary>
+        /// <param name="teamId">TeamID</param>
+        /// <returns>Playbook</returns>
         public async Task<Playbook> CreatePlaybook(int teamId)
         {
             Playbook newPlayBook = new Playbook()
@@ -308,6 +337,11 @@ namespace Logic
             await _repo.CommitSave();
             return newPlayBook;
         }
+        /// <summary>
+        /// Create new Play and assign it to the current Playbook
+        /// </summary>
+        /// <param name="playDto">new Play</param>
+        /// <returns>Play</returns>
         public async Task<Play> CreatePlay(PlayDto playDto)
         {
             Play newPlay = new Play()
@@ -321,6 +355,12 @@ namespace Logic
             await _repo.CommitSave();
             return newPlay;
         }
+        /// <summary>
+        /// Edit a Play
+        /// </summary>
+        /// <param name="playId">Play to edit</param>
+        /// <param name="playDto">New Play info</param>
+        /// <returns>edited Play</returns>
         public async Task<Play> EditPlay(int playId, PlayDto playDto) 
         {
             Play editedPlay = await GetPlayById(playId);
@@ -333,14 +373,28 @@ namespace Logic
             }
             return editedPlay;
         }
+        /// <summary>
+        /// Get Play by PlayID
+        /// </summary>
+        /// <param name="id">PlayID</param>
+        /// <returns>Play</returns>
         public async Task<Play> GetPlayById(int id)
         {
             return await _repo.GetPlayById(id);
         }
+        /// <summary>
+        /// Get list of Plays
+        /// </summary>
+        /// <returns>list of Plays</returns>
         public async Task<IEnumerable<Play>> GetPlays()
         {
             return await _repo.GetPlays();
         }
+        /// <summary>
+        /// Delete a Playbook by ID
+        /// </summary>
+        /// <param name="id">PlaybookID</param>
+        /// <returns>deleted Playbook</returns>
         public async Task<Playbook> DeletePlaybook(int id)
         {
             Playbook playbook = await GetPlaybookById(id);
@@ -351,6 +405,11 @@ namespace Logic
             }
             return playbook;
         }
+        /// <summary>
+        /// Delete a Play from a Playbook
+        /// </summary>
+        /// <param name="id">PlayID</param>
+        /// <returns>deleted Play</returns>
         public async Task<Play> DeletePlay(int id)
         {
             Play play = await GetPlayById(id);
@@ -362,22 +421,47 @@ namespace Logic
             return play;
         }
         //Messaging
+        /// <summary>
+        /// Get Message by MessageID
+        /// </summary>
+        /// <param name="id">MessageID</param>
+        /// <returns>Message</returns>
         public async Task<Message> GetMessageById(Guid id)
         {
             return await _repo.GetMessageById(id);
         }
+        /// <summary>
+        /// Get list of Messages
+        /// </summary>
+        /// <returns>list of Messages</returns>
         public async Task<IEnumerable<Message>> GetMessages()
         {
             return await _repo.GetMessages();
         }
+        /// <summary>
+        /// Get RecipientList by ID
+        /// </summary>
+        /// <param name="listId">RecipientListID</param>
+        /// <param name="recId">RecipientID</param>
+        /// <returns>RecipientList</returns>
         public async Task<RecipientList> GetRecipientListById(Guid listId, Guid recId)
         {
             return await _repo.GetRecipientListById(listId, recId);
         }
+        /// <summary>
+        /// Get list of RecipientLists
+        /// </summary>
+        /// <returns>list of RecipientLists</returns>
         public async Task<IEnumerable<RecipientList>> GetRecipientLists()
         {
             return await _repo.GetRecipientLists();
         }
+        /// <summary>
+        /// Create RecipientList entity with ListID from Message and RecipientID from input
+        /// </summary>
+        /// <param name="listId">RecipientListID</param>
+        /// <param name="recId">RecipientID</param>
+        /// <returns>RecipientList</returns>
         public async Task<RecipientList> BuildRecipientList(Guid listId, Guid recId)
         {
             RecipientList rL = new RecipientList()
@@ -389,6 +473,11 @@ namespace Logic
             await _repo.CommitSave();
             return rL;
         }
+        /// <summary>
+        /// Create a new Message
+        /// </summary>
+        /// <param name="newMessageDto">Message from user</param>
+        /// <returns>Message</returns>
         public async Task<Message> CreateNewMessage(NewMessageDto newMessageDto)
         {
             Message newMessage = new Message()
@@ -405,6 +494,11 @@ namespace Logic
             await _repo.CommitSave();
             return newMessage;
         }
+        /// <summary>
+        /// Assign Message to Recipients via RecipientList
+        /// </summary>
+        /// <param name="message">Message to be assigned</param>
+        /// <returns>Boolean success</returns>
         public async Task<bool> SendMessage(Message message)
         {            
             List<Guid> recipientList = new List<Guid>();
@@ -413,8 +507,7 @@ namespace Logic
             {
                 if (r.RecipientListID == message.RecipientListID)
                 {
-                    recipientList.Add(r.RecipientID);
-                    
+                    recipientList.Add(r.RecipientID);                    
                 }
             }
             foreach (Guid r in recipientList)
@@ -425,10 +518,21 @@ namespace Logic
             await _repo.CommitSave();
             return success;
         }
+        /// <summary>
+        /// Get a UserInbox entity for given User
+        /// </summary>
+        /// <param name="userId">UserID</param>
+        /// <returns>UserInbox</returns>
         public async Task<IEnumerable<UserInbox>> GetUserInbox(Guid userId)
         {
             return await _repo.GetUserInbox(userId);
         }
+        /// <summary>
+        /// Create a UserInbox item for assigned Message
+        /// </summary>
+        /// <param name="userId">UserID</param>
+        /// <param name="messageId">MessageID</param>
+        /// <returns>UserInbox</returns>
         public async Task<UserInbox> CreateUserInbox(Guid userId, Guid messageId)
         {
             UserInbox uI = new UserInbox()
@@ -441,6 +545,12 @@ namespace Logic
             await _repo.CommitSave();
             return uI;
         }
+        /// <summary>
+        /// Delete a Message from given User
+        /// </summary>
+        /// <param name="userId">UserID</param>
+        /// <param name="messageId">MessageID</param>
+        /// <returns></returns>
         public async Task DeleteMessageFromInbox(Guid userId, Guid messageId)
         {
             foreach (UserInbox u in _repo.userInboxes)
@@ -453,14 +563,28 @@ namespace Logic
             await _repo.CommitSave();
         }
         //Games
+        /// <summary>
+        /// Get a Game by GameID
+        /// </summary>
+        /// <param name="id">GameID</param>
+        /// <returns>Game</returns>
         public async Task<Game> GetGameById(int id)
         {
             return await _repo.GetGameById(id);
         }
+        /// <summary>
+        /// Get a list of Games
+        /// </summary>
+        /// <returns>list of Games</returns>
         public async Task<IEnumerable<Game>> GetGames()
         {
             return await _repo.GetGames();
         }
+        /// <summary>
+        /// Create a new Game
+        /// </summary>
+        /// <param name="createGameDto">Game from input</param>
+        /// <returns>Game</returns>
         public async Task<Game> CreateGame(CreateGameDto createGameDto)
         {
             Game newGame = new Game()
@@ -472,6 +596,12 @@ namespace Logic
             await _repo.CommitSave();
             return newGame;
         }
+        /// <summary>
+        /// Edit a Game
+        /// </summary>
+        /// <param name="id">GameID</param>
+        /// <param name="editGameDto">New information</param>
+        /// <returns>modified Game</returns>
         public async Task<Game> EditGame(int id, EditGameDto editGameDto)
         {
             Game editedGame = await GetGameById(id);
@@ -488,13 +618,15 @@ namespace Logic
             return editedGame;
         }
         //Calendar
+        /// <summary>
+        /// Initialize Calendar service with credentials
+        /// </summary>
+        /// <returns>Calendar service</returns>
         public static async Task<CalendarService> InitializeCalendar()
         {
             string jsonFile = "p2nullreturners-997092916366.json";
             string[] Scopes = { CalendarService.Scope.Calendar };
-
             ServiceAccountCredential credential;
-
             await using (var stream =
                 new FileStream(jsonFile, FileMode.Open, FileAccess.Read))
             {
@@ -505,21 +637,29 @@ namespace Logic
                        Scopes = Scopes
                    }.FromPrivateKey(confg.PrivateKey));
             }
-
             var service = new CalendarService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
                 ApplicationName = "P2NullReturners",
-            });
-            
+            });            
             return service;
         }
+        /// <summary>
+        /// Get a Calendar by ID
+        /// </summary>
+        /// <param name="service">Calendar service</param>
+        /// <returns>Calendar</returns>
         public static async Task<Calendar> GetCalendar(CalendarService service)
         {
             string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
             var calendar = await service.Calendars.Get(calendarId).ExecuteAsync();
             return calendar;
         }
+        /// <summary>
+        /// Get list of Events from Calendar
+        /// </summary>
+        /// <param name="service">Calendar service</param>
+        /// <returns>list of Events</returns>
         public static async Task<IEnumerable<Event>> GetMyEvents(CalendarService service)
         {
             string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
@@ -540,6 +680,12 @@ namespace Logic
             }
             return eventList;
         }
+        /// <summary>
+        /// Create a new Event on Calendar
+        /// </summary>
+        /// <param name="service">Calendar service</param>
+        /// <param name="eventDto">Event info from input</param>
+        /// <returns>Calendar Event</returns>
         public static async Task<Event> CreateEvent(CalendarService service, EventDto eventDto)
         {
             string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
@@ -570,22 +716,45 @@ namespace Logic
             return myevent;
         }
         //Equipment
+        /// <summary>
+        /// Get an EquipmentRequest by ID
+        /// </summary>
+        /// <param name="id">EquipmentRequestID</param>
+        /// <returns>EquipmentRequest</returns>
         public async Task<EquipmentRequest> GetEquipmentRequestById(int id)
         {
             return await _repo.GetEquipmentRequestById(id);
         }
+        /// <summary>
+        /// Get a list of EquipmentRequests
+        /// </summary>
+        /// <returns>list of EquipmentRequests</returns>
         public async Task<IEnumerable<EquipmentRequest>> GetEquipmentRequests()
         {
             return await _repo.GetEquipmentRequests();
         }
+        /// <summary>
+        /// Get EquipmentRequest by ID
+        /// </summary>
+        /// <param name="id">EquipmentRequestID</param>
+        /// <returns>EquipmentRequest</returns>
         public async Task<EquipmentItem> GetEquipmentItemtById(int id)
         {
             return await _repo.GetEquipmentItemById(id);
         }
+        /// <summary>
+        /// Get list of EquipmentItems
+        /// </summary>
+        /// <returns>list of EquipmentRequests</returns>
         public async Task<IEnumerable<EquipmentItem>> GetEquipmentItems()
         {
             return await _repo.GetEquipmentItems();
         }
+        /// <summary>
+        /// Create new EquipmentRequest
+        /// </summary>
+        /// <param name="createEquipmentRequestDto">EquipmentRequest from input</param>
+        /// <returns>EquipmentRequest</returns>
         public async Task<EquipmentRequest> CreateEquipmentRequest(CreateEquipmentRequestDto createEquipmentRequestDto)
         {
             EquipmentRequest newEquipmentRequest = new EquipmentRequest()
@@ -601,6 +770,12 @@ namespace Logic
             await _repo.CommitSave();
             return newEquipmentRequest;
         }
+        /// <summary>
+        /// Edit an EquipmentRequest
+        /// </summary>
+        /// <param name="id">EqupmentRequestID</param>
+        /// <param name="editEquipmentRequestDto">new information from input</param>
+        /// <returns>modified EquipmentRequest</returns>
         public async Task<EquipmentRequest> EditEquipmentRequest(int id, EditEquipmentRequestDto editEquipmentRequestDto)
         {
             EquipmentRequest editedEquipmentRequest = await GetEquipmentRequestById(id);
@@ -608,10 +783,14 @@ namespace Logic
             await _repo.CommitSave();
             return editedEquipmentRequest;
         }
+        /// <summary>
+        /// Get an EquipmentItem by Name
+        /// </summary>
+        /// <param name="eqName">Equipment Name</param>
+        /// <returns>EquipmentItem</returns>
         public async Task<EquipmentItem> GetEquipmentItemByName(string eqName)
         {
             return await _repo.equipmentItems.FirstOrDefaultAsync(x => x.Description == eqName);
-            //return eqItem;
         }
     }
 }
