@@ -44,7 +44,7 @@ namespace Logic
             List<UserDto> userDtos = new List<UserDto>();
             foreach (var user in users)
             {
-                UserDto userDto = _mapper.ConvertUserToUserDto(user);
+                UserDto userDto = Mapper.ConvertUserToUserDto(user);
                 userDtos.Add(userDto);
             }
 
@@ -103,7 +103,7 @@ namespace Logic
             _logger.LogInformation("User created");
 
 
-            UserLoggedInDto newUser = _mapper.ConvertUserToUserLoggedInDto(user);
+            UserLoggedInDto newUser = Mapper.ConvertUserToUserLoggedInDto(user);
             newUser.Token = _token.CreateToken(user);
             return newUser;
         }
@@ -140,7 +140,7 @@ namespace Logic
 
             User loggedIn = await user;
 
-            UserLoggedInDto loggedInUser = _mapper.ConvertUserToUserLoggedInDto(loggedIn);
+            UserLoggedInDto loggedInUser = Mapper.ConvertUserToUserLoggedInDto(loggedIn);
             loggedInUser.Token = _token.CreateToken(loggedIn);
             return loggedInUser;
         }
@@ -248,13 +248,12 @@ namespace Logic
         }
         public async Task<Play> CreatePlay(PlayDto playDto)
         {
-            Mapper mapper = new Mapper(); // needed to use this because _mapper was null
             Play newPlay = new Play()
             {
                 PlaybookId = playDto.PlaybookID,
                 Name = playDto.Name,
                 Description = playDto.Description,
-                DrawnPlay = mapper.ConvertImage(playDto.ImageString)
+                DrawnPlay = Mapper.ConvertImage(playDto.ImageString)
             };
             await _repo.plays.AddAsync(newPlay);
             await _repo.CommitSave();

@@ -128,7 +128,6 @@ namespace P2_Main.Tests
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
                 LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                Mapper mapper = new Mapper();
                 UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
                 var user = new User()
                 {
@@ -145,7 +144,7 @@ namespace P2_Main.Tests
                 r.users.Add(user);
                 //context.SaveChanges();
                 var listOfUsers = userController.GetUser(user.UserID);
-                var convertUser = mapper.ConvertUserToUserDto(user);
+                var convertUser = Mapper.ConvertUserToUserDto(user);
                 //Assert.True(listOfUsers.Result.Value.Equals(convertUser));
             }
         }
