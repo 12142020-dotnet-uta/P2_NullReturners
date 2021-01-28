@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
 <h2>Equipment Requests</h2>
 
 <table class="table table-striped">
@@ -29,18 +29,13 @@
 
 <h3>Request Equipment</h3>
 <form #createEquipmentRequestForm="ngForm"  (ngSubmit)="createEquipmentRequest()" autocomplete="off">
-    <label for="UserID">UserID (remove)</label>
-    <input name="UserID" [(ngModel)]="model.userid" class="form-control me-2" type="text" placeholder="User">
-    <label for="TeamID">TeamID (remove)</label>
-    <input name="TeamID" [(ngModel)]="model.teamid" class="form-control me-2" type="number" placeholder="Team">
+   
     <label for="DateRequested">Date Requested (remove)</label>
     <input name="DateRequested" [(ngModel)]="model.dateRequested" class="form-control me-2" type="date" placeholder="Date">
     <label for="Message">Message</label>
     <input name="Message" [(ngModel)]="model.message" class="form-control me-2" type="text" placeholder="Message">
     <label for="ItemId">ItemId (will change)</label>
-    <input name="ItemId" [(ngModel)]="model.itemid" class="form-control me-2" type="number" placeholder="Item Id">
-    <label for="Status">Status (likely remove)</label>
-    <input name="Status" [(ngModel)]="model.status" class="form-control me-2" type="text" placeholder="Status">
+    <input name="ItemId" [(ngModel)]="model.itemid" class="form-control me-2" type="number" placeholder="Item Id">  
     <br>
     <button class="btn btn-outline-success" type="submit">Create</button>
 </form>

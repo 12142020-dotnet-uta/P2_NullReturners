@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  baseUrl = 'https://localhost:44342/api/'
+  baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
   getUsers() {
