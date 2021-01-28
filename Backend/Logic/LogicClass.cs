@@ -86,8 +86,8 @@ namespace Logic
         public async Task<UserLoggedInDto> RegisterUser(CreateUserDto createUser)
         {
             using var hmac = new HMACSHA512();
-            User user = new User()
-            {
+                User user = new User()
+                {
                     UserName = createUser.UserName,
                     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(createUser.Password)),
                     PasswordSalt = hmac.Key,
@@ -96,12 +96,11 @@ namespace Logic
                     Email = createUser.Email,
                     TeamID = createUser.TeamID,
                     RoleID = createUser.RoleID
-            };
-            await _repo.users.AddAsync(user);
-            await _repo.CommitSave();
-            _logger.LogInformation("User created");
-
-
+                };
+                await _repo.users.AddAsync(user);
+                await _repo.CommitSave();
+                _logger.LogInformation("User created");
+            
             UserLoggedInDto newUser = _mapper.ConvertUserToUserLoggedInDto(user);
             newUser.Token = _token.CreateToken(user);
             return newUser;
@@ -110,7 +109,8 @@ namespace Logic
         // testing if user by username or email exists
         public async Task<bool> UserExists(string username, string email)
         {
-            bool userExists = await _repo.users.AnyAsync(x => x.UserName == username || x.Email == email);
+            // should be && so that username and email are both unique right?
+            bool userExists = await _repo.users.AnyAsync(x => x.UserName == username && x.Email == email);
             if (userExists)
             {
                 _logger.LogInformation("User found in database");
@@ -547,8 +547,8 @@ namespace Logic
         }
         public async Task<EquipmentItem> GetEquipmentItemByName(string eqName)
         {
-            EquipmentItem eqItem = await _repo.equipmentItems.FirstOrDefaultAsync(x => x.Description == eqName);
-            return eqItem;
+            return await _repo.equipmentItems.FirstOrDefaultAsync(x => x.Description == eqName);
+            //return eqItem;
         }
     }
 }

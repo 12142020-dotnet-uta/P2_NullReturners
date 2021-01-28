@@ -181,26 +181,6 @@ namespace Models.Tests
         }
 
         /// <summary>
-        /// Makes sure Event Model works with valid data
-        /// </summary>
-        //[Fact]
-        //public void ValidateEventSchedule()
-        //{
-        //    var eventSchedule = new Event()
-        //    {
-        //        EventID = 1,
-        //        TeamID = 1,
-        //        Description = "Training",
-        //        EventDate = DateTime.Now,
-        //        Location = "Local park",
-        //        Message = "Show up to training!"
-        //    };
-
-        //    var results = ValidateModel(eventSchedule);
-        //    Assert.True(results.Count == 0);
-        //}
-
-        /// <summary>
         /// Makes sure EquipmentRequest Model works with valid data
         /// </summary>
         [Fact]
@@ -303,14 +283,14 @@ namespace Models.Tests
                 Token = "requestgranted",
                 UserName = "brettfavre",
                 FullName = "Brett Favre",
-                PhoneNumber = "2222222",
+                PhoneNumber = "222-222-2222",
                 Email = "brettfavregmail.com",
                 TeamID = 1,
                 RoleID = 1
             };
 
             var errorcount = ValidateModel(user).Count;
-            Assert.Equal(2, errorcount);
+            Assert.Equal(1, errorcount);
         }
 
         /// <summary>
@@ -384,14 +364,14 @@ namespace Models.Tests
                 UserName = "brettfavre",
                 Password = "brett123",
                 FullName = "Brett Favre",
-                PhoneNumber = "2222222",
+                PhoneNumber = "222-222-2222",
                 Email = "brettfavregmail.com",
                 TeamID = 1,
                 RoleID = 1
             };
 
             var errorcount = ValidateModel(user).Count;
-            Assert.Equal(2, errorcount);
+            Assert.Equal(1, errorcount);
         }
 
         /// <summary>
@@ -405,14 +385,14 @@ namespace Models.Tests
                 UserID = Guid.NewGuid(),
                 UserName = "brettfavre",
                 FullName = "Brett Favre",
-                PhoneNumber = "2222222",
+                PhoneNumber = "222-222-2222",
                 Email = "brettfavregmail.com",
                 TeamID = 1,
                 RoleID = 1
             };
 
             var errorcount = ValidateModel(user).Count;
-            Assert.Equal(2, errorcount);
+            Assert.Equal(1, errorcount);
         }
 
         /// <summary>
@@ -471,22 +451,20 @@ namespace Models.Tests
         /// Validates the EditUserDto Model works with proper data
         /// </summary>
         /// 
+        [Fact]
+        public void ValidateEditUserDto()
+        {
+            var userEdit = new EditUserDto()
+            {
+                FullName = "Terry Bradshaw",
+                Email = "footballiscoolgmail.com",
+                Password = "bradshaw123",
+                PhoneNumber = "222-222-2222",
+            };
 
-        // TRAVIS RIGHT HERE
-        //[Fact]
-        //public void ValidateEditUserDto()
-        //{
-        //    var userEdit = new EditUserDto()
-        //    {
-        //        FullName = "Terry Bradshaw",
-        //        Email = "footballiscoolgmail.com",
-        //        Password = "bradshaw123",
-        //        PhoneNumber = "2222",
-        //    };
-
-        //    var errorcount = ValidateModel(userEdit).Count;
-        //    Assert.Equal(2, errorcount);
-        //}
+            var errorcount = ValidateModel(userEdit).Count;
+            Assert.Equal(1, errorcount);
+        }
 
         /// <summary>
         /// Validates the PlayDto Model works with proper data
@@ -499,7 +477,8 @@ namespace Models.Tests
                 PlaybookID = 1,
                 Name = "tackles",
                 Description = "tackle other players",
-                DrawnPlay = new byte[1]
+                DrawnPlay = new byte[1],
+                ImageString = "football, football"
             };
 
             var errorcount = ValidateModel(play).Count;
