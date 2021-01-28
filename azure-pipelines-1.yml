@@ -22,12 +22,12 @@ steps:
     projectKey: 'P2NullReturners_P2_NullReturners'
     projectName: 'P2_NullReturners'
 
-- task: AzureAppServiceManage@0
-  displayName: 'Stop App Service'
-  inputs:
-    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
-    Action: 'Stop Azure App Service'
-    WebAppName: 'nrteammanager'
+#- task: AzureAppServiceManage@0
+#  displayName: 'Stop App Service'
+#  inputs:
+#    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+#    Action: 'Stop Azure App Service'
+#    WebAppName: 'nrteammanager'
 
 - script: dotnet build ./Backend/P2_NullReturners.sln --configuration $(buildConfiguration)
   displayName: 'Dotnet Build'
@@ -66,18 +66,18 @@ steps:
     ArtifactName: 'Dotnet Build And Test'
     publishLocation: 'Container'
 
-- task: AzureRmWebAppDeployment@4
-  displayName: 'Deploy ASP.NET Api'
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
-    appType: 'webApp'
-    WebAppName: 'nrteammanager'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+#- task: AzureRmWebAppDeployment@4
+#  displayName: 'Deploy ASP.NET Api'
+#  inputs:
+#    ConnectionType: 'AzureRM'
+#    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+#    appType: 'webApp'
+#    WebAppName: 'nrteammanager'
+#    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
-- task: AzureAppServiceManage@0
-  displayName: 'Start App Service'
-  inputs:
-    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
-    Action: 'Start Azure App Service'
-    WebAppName: 'nrteammanager'
+#- task: AzureAppServiceManage@0
+#  displayName: 'Start App Service'
+#  inputs:
+#    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+#    Action: 'Start Azure App Service'
+#    WebAppName: 'nrteammanager'
