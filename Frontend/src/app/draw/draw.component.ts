@@ -5,7 +5,9 @@ import {
 import { NgModel } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
+import { PlayerdetailsComponent } from '../players/playerdetails/playerdetails.component';
 import { DrawService } from '../_services/draw.service';
+import { UserService } from '../_services/user.service';
 import { play } from './play';
 
 @Component({
@@ -20,8 +22,9 @@ export class DrawComponent implements AfterViewInit {
   // setting a width and height for the canvas
   @Input() public width = 600;
   @Input() public height = 600;
-  constructor(private drawService: DrawService){}
+  constructor(private drawService: DrawService, private userService: UserService){}
   model = new play;
+  
   ImageString;
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
@@ -157,6 +160,10 @@ saveCanvas() {
   }), err => {
     console.log(err)
   }
+}
+
+getPlaybookId(){
+//this.model.PlaybookId = this.userService.getTeam(); 
 }
   
   //descrition

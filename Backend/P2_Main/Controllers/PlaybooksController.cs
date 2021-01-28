@@ -37,15 +37,16 @@ namespace P2_Main.Controllers
         }
 
         [HttpGet("plays")]
-        public async Task<IEnumerable<Play>> GetPlays()
+        public async Task<IEnumerable<PlayDto>> GetPlays()
         {
             return await _logic.GetPlays();
         }
 
         [HttpGet("plays/{id}")]
-        public async Task<ActionResult<Play>> GetPlay(int id)
+        public async Task<ActionResult<PlayDto>> GetPlayDto(int id)
         {
-            return await _logic.GetPlayById(id);
+
+            return await _logic.GetPlayDto(id);
         }
 
         [HttpPost]
