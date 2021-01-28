@@ -79,6 +79,54 @@ namespace Logic.Tests
             }
         }
 
+
+        /// <summary>
+        /// Tests the RegisterUser() method of LogicClass
+        /// Tests that a user is added to the database
+        /// </summary>
+        [Fact]
+        public async void TestForRegisterUser()
+        {
+
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                CreateUserDto cUD = new CreateUserDto()
+                {
+                    UserName = "jerryrice",
+                    Password = "jerry123",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com",
+                    RoleID = 1,
+                    TeamID = 1
+                };
+                var user = await logic.RegisterUser(cUD);
+                //Assert.NotEmpty(context.Users);
+                Assert.Equal(context.Users.Find(cUD.Email).Email, cUD.Email);
+
+                var user2 = logic.CreateUser(cUD);
+                //Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
+                var countUsers = from u in context.Users
+                                 where u.Email == user.Email
+                                 select u;
+                int count = 0;
+                foreach (User userMail in countUsers)
+                {
+                    count++;
+                }
+                Assert.Equal(1, count);
+            }
+        }
+
         /// <summary>
         /// Tests the DeleteUser() method of the LogicClass
         /// Tests that a user is removed from the database
@@ -1564,8 +1612,8 @@ namespace Logic.Tests
         public void TestForconvertImage()
         {
 
-            string textSting = "text,text";
-            var convert = Mapper.ConvertImage(textSting);
+            string textString = "text,text";
+            var convert = Mapper.ConvertImage(textString);
 
             Assert.IsType<byte[]>(convert);
             Assert.NotNull(convert);

@@ -86,7 +86,6 @@ namespace Logic
         public async Task<UserLoggedInDto> RegisterUser(CreateUserDto createUser)
         {
             using var hmac = new HMACSHA512();
-
             User user = new User()
             {
                     UserName = createUser.UserName,
