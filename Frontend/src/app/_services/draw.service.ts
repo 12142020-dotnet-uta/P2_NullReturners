@@ -17,5 +17,9 @@ export class DrawService {
   getPlays(){
     return this.http.get(this.baseUrl + 'playbooks/plays');
   }
+
+  getPlaybooks() {
+    return this.http.get(this.baseUrl + 'playbooks')
+  }
   
 }
