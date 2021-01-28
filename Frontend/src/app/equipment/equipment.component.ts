@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../_services/account.service';
 import { EquipmentService } from '../_services/equipment.service';
 
 
@@ -10,9 +11,8 @@ import { EquipmentService } from '../_services/equipment.service';
 export class EquipmentComponent implements OnInit {
 
   equipmentList: any;
-  model: any = {};
 
-  constructor(private equipmentService: EquipmentService) { }
+  constructor(private equipmentService: EquipmentService, public accountService: AccountService) { }
 
   ngOnInit(): void {
     this.getEquipment();
@@ -23,6 +23,7 @@ export class EquipmentComponent implements OnInit {
       this.equipmentList = response;
       this.getTeam();
       this.getUser();
+      this.getItem();
       console.log(this.equipmentList);
     }), err => {
       console.log(err)
@@ -50,13 +51,15 @@ export class EquipmentComponent implements OnInit {
     });
   }
 
-  createEquipmentRequest() {
-    this.equipmentService.createRequest(this.model).subscribe(response => {
-      console.log(response);
-    }, err => {
-      console.log(err);
-    })
-    this.getEquipment();
+  getItem() {
+    this.equipmentList.forEach(element => {
+      this.equipmentService.getItem(element.itemId).subscribe( response => {
+        element.item = response;
+      }), err => {
+        console.log(err);
+      };
+    });
   }
+
 
 }

@@ -5,6 +5,8 @@
     <form #editRequestForm="ngForm" (ngSubmit)="editRequest()">
         <label for="FullName">Requester Full Name</label>
         <input name="FullName" class="form-control me-2" type="text" value="{{equipmentRequest?.user?.userName}}" aria-label="FullName" readonly>
+        <label for="Item">Item Requested</label>
+        <input name="Item" class="form-control me-2" type="text" value="{{equipmentRequest?.item?.description}}" aria-label="TeamName" readonly>
         <label for="TeamName">Requester Team</label>
         <input name="TeamName" class="form-control me-2" type="text" value="{{equipmentRequest?.team?.name}}" aria-label="TeamName" readonly>
         <label for="RequestDate">Request Date</label>
@@ -12,7 +14,11 @@
         <label for="Message">Message</label>
         <input name="Message" class="form-control me-2" type="text" value="{{equipmentRequest.message}}" aria-label="Message" readonly>
         <label for="Status">Status</label>
-        <input name="Status" [(ngModel)]="editedEquipmentRequest.status" class="form-control me-2" type="text" value="{{equipmentRequest.status}}" aria-label="Status">
+        <select name="Status" [(ngModel)]="editedEquipmentRequest.status">
+            <option>Requested</option>
+            <option>Ordered</option>
+            <option>Complete</option>
+          </select>
         <br>
         <button type="submit" class="btn btn-primary">Edit</button>
     </form>

@@ -12,6 +12,8 @@ import { EditplayerComponent } from './players/editplayer/editplayer.component';
 import { EquipmentRequestDetailsComponent } from './equipment/equipment-request-details/equipment-request-details.component';
 import { EditEquipmentRequestComponent } from './equipment/edit-equipment-request/edit-equipment-request.component';
 import { PlaysComponent } from './draw/plays/plays.component';
+import { CreateEquipmentRequestComponent } from './equipment/create-equipment-request/create-equipment-request.component';
+
 
 
 const routes: Routes = [
@@ -24,7 +26,8 @@ const routes: Routes = [
   {path: 'players/details/:id', component: PlayerdetailsComponent},
   {path: 'players/edit/:id', component: EditplayerComponent},
   {path: 'equipment/details/:id', component: EquipmentRequestDetailsComponent},
-  {path: 'equipment/edit/:id', component: EditEquipmentRequestComponent}
+  {path: 'equipment/edit/:id', component: EditEquipmentRequestComponent},
+  {path: "equipment/create", component: CreateEquipmentRequestComponent}
 ];
 
 @NgModule({

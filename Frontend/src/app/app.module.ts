@@ -18,6 +18,8 @@ import { EditplayerComponent } from './players/editplayer/editplayer.component';
 import { EquipmentRequestDetailsComponent } from './equipment/equipment-request-details/equipment-request-details.component';
 import { EditEquipmentRequestComponent } from './equipment/edit-equipment-request/edit-equipment-request.component';
 import { PlaysComponent } from './draw/plays/plays.component';
+import { CreateEquipmentRequestComponent } from './equipment/create-equipment-request/create-equipment-request.component';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { PlaysComponent } from './draw/plays/plays.component';
     EquipmentRequestDetailsComponent,
     EditEquipmentRequestComponent,
     PlaysComponent,
+    CreateEquipmentRequestComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

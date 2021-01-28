@@ -26,6 +26,7 @@ export class EquipmentRequestDetailsComponent implements OnInit {
       this.equipmentRequest = res;
       this.getTeam();
       this.getUser();
+      this.getItem()
     }), err => {
       console.log(err);
     }
@@ -47,5 +48,12 @@ export class EquipmentRequestDetailsComponent implements OnInit {
     }
   }
 
+  getItem() {
+      this.equipmentService.getItem(this.equipmentRequest.itemId).subscribe( response => {
+        this.equipmentRequest.item = response;
+      }, err => {
+        console.log(err);
+      });
+  };
 
 }
