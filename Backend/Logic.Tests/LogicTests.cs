@@ -1564,9 +1564,8 @@ namespace Logic.Tests
         public void TestForconvertImage()
         {
 
-            Mapper mapper = new Mapper();
             string textSting = "text,text";
-            var convert = mapper.ConvertImage(textSting);
+            var convert = Mapper.ConvertImage(textSting);
 
             Assert.IsType<byte[]>(convert);
             Assert.NotNull(convert);
@@ -1588,8 +1587,6 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                Mapper mapper = new Mapper();
                 var user = new User()
                 {
                     UserID = Guid.NewGuid(),
@@ -1602,7 +1599,7 @@ namespace Logic.Tests
                     RoleID = 1
                 };
 
-                var convert = mapper.ConvertUserToUserDto(user);
+                var convert = Mapper.ConvertUserToUserDto(user);
 
                 Assert.True(convert.UserName.Equals(user.UserName));
             }
@@ -1626,7 +1623,6 @@ namespace Logic.Tests
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
                 LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                Mapper mapper = new Mapper();
                 var user = new User()
                 {
                     UserID = Guid.NewGuid(),
@@ -1639,7 +1635,7 @@ namespace Logic.Tests
                     RoleID = 1
                 };
 
-                var convert = mapper.ConvertUserToUserLoggedInDto(user);
+                var convert = Mapper.ConvertUserToUserLoggedInDto(user);
 
                 Assert.True(convert.UserName.Equals(user.UserName));
             }

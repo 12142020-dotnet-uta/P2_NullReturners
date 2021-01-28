@@ -47,7 +47,7 @@ namespace P2_Main.Controllers
         public async Task<ActionResult<UserDto>> GetUser(Guid id)
         {
             User user = await _logic.GetUserById(id);
-            return _mapper.ConvertUserToUserDto(user);
+            return Mapper.ConvertUserToUserDto(user);
         }
 
         [HttpGet("roles")]
