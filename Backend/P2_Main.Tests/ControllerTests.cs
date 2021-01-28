@@ -144,7 +144,7 @@ namespace P2_Main.Tests
                 r.users.Add(user);
                 //context.SaveChanges();
                 var listOfUsers = userController.GetUser(user.UserID);
-                var convertUser = Mapper.ConvertUserToUserDto(user);
+                var convertUser = _mapper.ConvertUserToUserDto(user);
                 //Assert.True(listOfUsers.Result.Value.Equals(convertUser));
             }
         }
