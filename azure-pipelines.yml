@@ -13,12 +13,12 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: AzureAppServiceManage@0
-  displayName: 'Stop App Service'
-  inputs:
-    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
-    Action: 'Stop Azure App Service'
-    WebAppName: 'nrtmportal'
+#- task: AzureAppServiceManage@0
+#  displayName: 'Stop App Service'
+#  inputs:
+#    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+#    Action: 'Stop Azure App Service'
+#    WebAppName: 'nrtmportal'
 
 - task: NodeTool@0
   displayName: 'Setup Node Environment'
@@ -60,18 +60,18 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-- task: AzureRmWebAppDeployment@4
-  displayName: 'Deploy Angular App'
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
-    appType: 'webApp'
-    WebAppName: 'nrtmportal'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#- task: AzureRmWebAppDeployment@4
+#  displayName: 'Deploy Angular App'
+#  inputs:
+#    ConnectionType: 'AzureRM'
+#    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+#    appType: 'webApp'
+#    WebAppName: 'nrtmportal'
+#    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
-- task: AzureAppServiceManage@0
-  displayName: 'Start App Service'
-  inputs:
-    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
-    Action: 'Start Azure App Service'
-    WebAppName: 'nrtmportal'
+#- task: AzureAppServiceManage@0
+#  displayName: 'Start App Service'
+#  inputs:
+#    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+#    Action: 'Start Azure App Service'
+#    WebAppName: 'nrtmportal'
