@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DrawService } from 'src/app/_services/draw.service';
+import { play } from '../play';
 
 @Component({
   selector: 'app-plays',
@@ -11,6 +12,7 @@ export class PlaysComponent implements OnInit {
 
   constructor(private drawService: DrawService, private route: ActivatedRoute) { }
 
+  myPlay: play;
   play: any;
   model: any = {};
   imageString: string;
@@ -23,13 +25,11 @@ export class PlaysComponent implements OnInit {
 
     this.drawService.getPlays().subscribe(response => {
       this.play = response;
+      //this.myPlay = this.play; 
       console.log(response);
     }), err => {
       console.log(err);
     }
   }
 
-  convertImage(){
-    
-  }
 }
