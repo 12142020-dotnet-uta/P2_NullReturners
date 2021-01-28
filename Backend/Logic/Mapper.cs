@@ -23,7 +23,8 @@ namespace Logic
         {
             PlayDto playDto = new PlayDto
             {
-                PlaybookID = play.PlayID,
+                PlayID = play.PlayID,
+                PlaybookID = play.PlaybookId,
                 Name = play.Name,
                 Description = play.Description,
                 DrawnPlay = play.DrawnPlay,
@@ -41,13 +42,6 @@ namespace Logic
                 return imageDataURL;
             }
             else return null;
-            //Image image;
-            //using (MemoryStream ms = new MemoryStream(bytes))
-            //{
-            //    image = Image.FromStream(ms);
-            //}
-
-            //return image;
         }
 
         public UserDto ConvertUserToUserDto(User user)

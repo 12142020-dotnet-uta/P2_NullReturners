@@ -1,4 +1,5 @@
 
+import { CONTEXT_NAME } from '@angular/compiler/src/render3/view/util';
 import {
   Component, Input, ElementRef, AfterViewInit,OnInit, ViewChild
 } from '@angular/core';
@@ -6,6 +7,7 @@ import { NgModel } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { PlayerdetailsComponent } from '../players/playerdetails/playerdetails.component';
+import { AccountService } from '../_services/account.service';
 import { DrawService } from '../_services/draw.service';
 import { UserService } from '../_services/user.service';
 import { play } from './play';
@@ -22,8 +24,11 @@ export class DrawComponent implements AfterViewInit {
   // setting a width and height for the canvas
   @Input() public width = 600;
   @Input() public height = 600;
-  constructor(private drawService: DrawService, private userService: UserService){}
+  constructor(private drawService: DrawService, private userService: UserService, private accountService: AccountService){}
   model = new play;
+  playbooks: any = {};
+  playBookList: any = [];
+  test:number;
   
   ImageString;
   canvasEl: HTMLCanvasElement;
@@ -39,6 +44,11 @@ export class DrawComponent implements AfterViewInit {
     this.canvasEl.width = this.width;
     this.canvasEl.height = this.height;
     this.cx.lineCap = 'round';
+  }
+
+  public ngOnInit() {
+    this.getTeamPlayBook();
+    this.getPlaybooks();
   }
 
   
@@ -137,24 +147,34 @@ public restetTemplate(){
 }
 
 SetBackGroundTan(){
-  this.canvasEl.style.backgroundColor = "Bisque";
+  this.cx.fillStyle = "bisque";
+  this.cx.fillRect(0,0,600,600);
+  //this.canvasEl.style.backgroundColor = "Bisque";
 }
 
 SetBackGroundGreen(){
-  this.canvasEl.style.backgroundColor = "Green";
+  this.cx.fillStyle = "Green";
+  this.cx.fillRect(0,0,600,600);
+  //this.canvasEl.style.backgroundColor = "Green";
 }
 
 SetBackGroundWhite(){
-  this.canvasEl.style.backgroundColor = "White";
+  this.cx.fillStyle = "White";
+  this.cx.fillRect(0,0,600,600);
+  //sthis.canvasEl.style.backgroundColor = "White";
 
 }
+
+// backend logic here
 
 saveCanvas() {
 
   this.ImageString = this.canvasEl.toDataURL(); //1 indicates full quality
- // console.log(this.imageData);
   this.model.ImageString  = this.ImageString;
   console.log(this.model.ImageString);
+  this.getPlayBook();
+
+  console.log(this.model.PlaybookId);
   this.drawService.createDrawing(this.model).subscribe(response => {
     console.log(response);
   }), err => {
@@ -162,13 +182,38 @@ saveCanvas() {
   }
 }
 
-getPlaybookId(){
-//this.model.PlaybookId = this.userService.getTeam(); 
+
+// re think playbooks later
+// might need to get a list of playbooks by team ID from backend
+getPlaybooks() {
+  this.drawService.getPlaybooks().subscribe( playBooks => {
+    this.playBookList = playBooks;
+  }, err => {
+    console.log(err);
+  })
 }
+
+// gets the team id of the user
+getTeamPlayBook() {
+  this.accountService.currentUser$.subscribe( user => {
+    this.playbooks.teamid = user.teamID;
+  })
+}
+
+// looks through playbooks and grabs the first one with matching ID
+getPlayBook() {
+  this.playBookList.forEach(playbook => {
+    if (playbook.teamID == this.playbooks.teamid) {
+      this.model.PlaybookId = playbook.playbookID;
+    }
+  });
+}
+
+
+
+
   
-  //descrition
-  //name
-  //playbook Id
+
 }
 
 
