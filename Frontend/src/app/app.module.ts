@@ -20,6 +20,7 @@ import { EditEquipmentRequestComponent } from './equipment/edit-equipment-reques
 import { PlaysComponent } from './draw/plays/plays.component';
 import { CreateEquipmentRequestComponent } from './equipment/create-equipment-request/create-equipment-request.component';
 import { CreatePlayerComponent } from './players/create-player/create-player.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { CreatePlayerComponent } from './players/create-player/create-player.com
     PlaysComponent,
     CreateEquipmentRequestComponent,
     CreatePlayerComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

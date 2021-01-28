@@ -8,36 +8,39 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link" href="#">Home</a>
+              <a *ngIf="accountService.currentUser$ | async" class="nav-link" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link">View Schedule</a>
+              <a *ngIf="accountService.currentUser$ | async" class="nav-link">View Schedule</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="/plays">View Playbook</a>
+              <a *ngIf="accountService.currentUser$ | async" class="nav-link" routerLink="/plays">View Playbook</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="/equipment">Equipment Requests</a>
+              <a *ngIf="accountService.currentUser$ | async" class="nav-link" routerLink="/equipment">Equipment Requests</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="/teams">League Standings</a>
+              <a *ngIf="accountService.currentUser$ | async" class="nav-link" routerLink="/teams">League Standings</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="/players">Manage Users</a>
+              <a *ngIf="accountService.currentUser$ | async" class="nav-link" routerLink="/players">Manage Users</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link">Chat</a>
+              <a *ngIf="accountService.currentUser$ | async" class="nav-link" class="nav-link">Chat</a>
             </li>
           </ul>
-          <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm=""ngForm class="d-flex" (ngSubmit)="login()" autocomplete="off">
-            <input name="username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username">
-            <input name = "password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password">
-            <button class="btn btn-outline-success" type="submit">Login</button>
-          </form>
-          <div *ngIf="(accountService.currentUser$ | async) as user">
-            <span class="text-light m-3">Welcome {{user.fullName}}</span>
-            <a (click)="logout()" class="btn btn-primary">Logout</a>
+          <div class="login">
+            <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" ngNativeValidate autocomplete="off">
+              <input name="username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username" required>
+              <input name = "password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password" requried>
+              <button class="btn btn-outline-success" type="submit">Login</button>
+            </form>
+            <div *ngIf="(accountService.currentUser$ | async) as user">
+              <span class="text-light m-3">Welcome {{user.fullName}}</span>
+              <a (click)="logout()" class="btn btn-primary">Logout</a>
+            </div>
           </div>
+          
           
 
         </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AccountService } from 'src/app/_services/account.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
@@ -12,7 +13,9 @@ export class EditplayerComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private userService: UserService,
-              private titleService: Title) { }
+              private titleService: Title,
+              public accountService: AccountService,
+              private redirect: Router) { }
 
   userId: string;
   user: any = {};
@@ -47,10 +50,7 @@ export class EditplayerComponent implements OnInit {
     console.log(this.editedUser);
     this.userService.editUser(this.userId, this.editedUser).subscribe(res => {
       console.log(res);
-      this.editedUser = {};
-
-      // make this a redirect later
-      this.getUser(this.userId);
+      this.redirect.navigate([`/players/details/${this.user.userID}`])
     }), err => {
       console.log(err);
     }
