@@ -44,7 +44,7 @@ namespace Logic
             List<UserDto> userDtos = new List<UserDto>();
             foreach (var user in users)
             {
-                UserDto userDto = Mapper.ConvertUserToUserDto(user);
+                UserDto userDto = _mapper.ConvertUserToUserDto(user);
                 userDtos.Add(userDto);
             }
 
@@ -103,7 +103,7 @@ namespace Logic
             _logger.LogInformation("User created");
 
 
-            UserLoggedInDto newUser = Mapper.ConvertUserToUserLoggedInDto(user);
+            UserLoggedInDto newUser = _mapper.ConvertUserToUserLoggedInDto(user);
             newUser.Token = _token.CreateToken(user);
             return newUser;
         }
@@ -140,7 +140,7 @@ namespace Logic
 
             User loggedIn = await user;
 
-            UserLoggedInDto loggedInUser = Mapper.ConvertUserToUserLoggedInDto(loggedIn);
+            UserLoggedInDto loggedInUser = _mapper.ConvertUserToUserLoggedInDto(loggedIn);
             loggedInUser.Token = _token.CreateToken(loggedIn);
             return loggedInUser;
         }
@@ -253,7 +253,7 @@ namespace Logic
                 PlaybookId = playDto.PlaybookID,
                 Name = playDto.Name,
                 Description = playDto.Description,
-                DrawnPlay = Mapper.ConvertImage(playDto.ImageString)
+                DrawnPlay = _mapper.ConvertImage(playDto.ImageString)
             };
             await _repo.plays.AddAsync(newPlay);
             await _repo.CommitSave();

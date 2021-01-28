@@ -1565,7 +1565,7 @@ namespace Logic.Tests
         {
 
             string textSting = "text,text";
-            var convert = Mapper.ConvertImage(textSting);
+            var convert = _mapper.ConvertImage(textSting);
 
             Assert.IsType<byte[]>(convert);
             Assert.NotNull(convert);
@@ -1599,7 +1599,7 @@ namespace Logic.Tests
                     RoleID = 1
                 };
 
-                var convert = Mapper.ConvertUserToUserDto(user);
+                var convert = _mapper.ConvertUserToUserDto(user);
 
                 Assert.True(convert.UserName.Equals(user.UserName));
             }
@@ -1635,7 +1635,7 @@ namespace Logic.Tests
                     RoleID = 1
                 };
 
-                var convert = Mapper.ConvertUserToUserLoggedInDto(user);
+                var convert = _mapper.ConvertUserToUserLoggedInDto(user);
 
                 Assert.True(convert.UserName.Equals(user.UserName));
             }
