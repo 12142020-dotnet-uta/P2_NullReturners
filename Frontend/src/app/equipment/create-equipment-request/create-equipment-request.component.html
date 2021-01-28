@@ -1,5 +1,6 @@
 <div class="container">
     <h3>Request Equipment</h3>
+    <a routerLink="/equipment">Back to Requests</a><br>
     <form #createEquipmentRequestForm="ngForm"  (ngSubmit)="createEquipmentRequest()" ngNativeValidate  autocomplete="off">
     <label for="DateRequested">Date Requested (remove)</label>
     <input name="DateRequested" [(ngModel)]="model.dateRequested" class="form-control me-2" type="date" placeholder="Date">

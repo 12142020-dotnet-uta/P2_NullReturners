@@ -1,6 +1,6 @@
 <div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
     <h2>Players Details</h2>
-
+    <a routerLink="/players/create">Create User</a><br>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -29,7 +29,7 @@
         </tbody>
     </table>
 
-    <div *ngIf="loggedInUser.roleID === 1">
+    <!-- <div *ngIf="loggedInUser.roleID === 1">
         <h3>Add New User</h3>
         <form   #createUserForm="ngForm" (ngSubmit)="createUser()" autocomplete="off">
             <label for="Username">Username</label>
@@ -49,5 +49,5 @@
             <br>
             <button class="btn btn-outline-success" type="submit">Create</button>
         </form>
-    </div>
+    </div> -->
 </div>
