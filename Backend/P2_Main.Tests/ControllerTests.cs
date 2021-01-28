@@ -116,6 +116,8 @@ namespace P2_Main.Tests
         //THIS NOW RETURNS A UserDto not a User - Daniel
 
         // TRAVIS RIGHT HERE
+        // THIS BROKE BAD IDK WTF
+
        //[Fact]
        // public void TestForGetUser()
        // {
@@ -128,28 +130,13 @@ namespace P2_Main.Tests
        //         context.Database.EnsureDeleted();
        //         context.Database.EnsureCreated();
 
-       //         Repo r = new Repo(context, new NullLogger<Repo>());
-       //         LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-       //         UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
-       //         var user = new User()
-       //         {
-       //             UserID = Guid.NewGuid(),
-       //             UserName = "jerry",
-       //             Password = "jerryrice",
-       //             FullName = "Jerry Rice",
-       //             PhoneNumber = "111-111-1111",
-       //             Email = "jerryrice@gmail.com",
-       //             TeamID = 1,
-       //             RoleID = 1
-       //         };
-
-       //         r.users.Add(user);
-       //         //context.SaveChanges();
-       //         var listOfUsers = userController.GetUser(user.UserID);
-       //         var convertUser = _mapper.ConvertUserToUserDto(user);
-       //         //Assert.True(listOfUsers.Result.Value.Equals(convertUser));
+            //    r.users.Add(user);
+                //context.SaveChanges();
+        //        var listOfUsers = userController.GetUser(user.UserID);
+           //     var convertUser = Mapper.ConvertUserToUserDto(user);
+                //Assert.True(listOfUsers.Result.Value.Equals(convertUser));
        //     }
-       // }
+      //  }
 
         /// <summary>
         /// Tests the GetRoles() method of UserController
@@ -702,6 +689,7 @@ namespace P2_Main.Tests
         /// <summary>
         /// Tests the EditPlays() method of PlaybookController
         /// </summary>
+        /// 
         [Fact]
         public async void TestForEditPlay()
         {
