@@ -41,11 +41,11 @@ namespace Repository
             this.messages = _progContext.Messages;
             this.recipientLists = _progContext.RecipientLists;
             this.userInboxes = _progContext.UserInboxes;
-            ValidateRoleTable();
-            ValidateTeamTable();
-            ValidateUserTable();
-            ValidateEquipmentRequestTable();
-            ValidateItemTable();
+            //ValidateRoleTable();
+            //ValidateTeamTable();
+            //ValidateUserTable();
+            //ValidateEquipmentRequestTable();
+            //ValidateItemTable();
         }
 
         // Access SaveChanges from Logic class
