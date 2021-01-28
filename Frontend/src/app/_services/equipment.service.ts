@@ -18,16 +18,15 @@ export class EquipmentService {
     return this.http.put(this.baseUrl + `equipment/edit/${id}`, model);
   }
 
-
-  getRequest(id) {
+  getRequest(id:number) {
     return this.http.get(this.baseUrl + `equipment/${id}`)
   }
 
-  getTeam(teamId) {
+  getTeam(teamId:number) {
     return this.http.get(this.baseUrl + `teams/${teamId}`);
   }
 
-  getUser(userId) {
+  getUser(userId:string) {
     return this.http.get(this.baseUrl + `users/${userId}`)
   }
 
@@ -35,8 +34,12 @@ export class EquipmentService {
     return this.http.post(this.baseUrl + 'equipment', model);
   }
 
-  getItesm(model: any) {
-    return this.http.get(this.baseUrl + `equipment`)
+  getItems() {
+    return this.http.get(this.baseUrl + `equipment/items`);
+  }
+
+  getItem(id:number) {
+    return this.http.get(this.baseUrl + `equipment/items/${id}`);
   }
 
 }

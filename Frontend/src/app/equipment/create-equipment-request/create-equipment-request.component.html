@@ -1,0 +1,17 @@
+<div class="container">
+    <h3>Request Equipment</h3>
+    <form #createEquipmentRequestForm="ngForm"  (ngSubmit)="createEquipmentRequest()" ngNativeValidate  autocomplete="off">
+    <label for="DateRequested">Date Requested (remove)</label>
+    <input name="DateRequested" [(ngModel)]="model.dateRequested" class="form-control me-2" type="date" placeholder="Date">
+    <label for="Message">Message</label>
+    <input name="Message" [(ngModel)]="model.message" class="form-control me-2" type="text" placeholder="Message">
+    <label for="ItemId">ItemId (will change)</label>
+    <!-- <input name="ItemId" [(ngModel)]="model.itemid" class="form-control me-2" type="number" placeholder="Item Id">   -->
+    <select name="Status" [(ngModel)]="model.item" required>
+      <option selected></option>
+      <option *ngFor="let item of itemList">{{item.description}}</option>
+    </select>
+    <br>
+    <button class="btn btn-outline-success" type="submit">Create</button>
+</form>
+</div>
