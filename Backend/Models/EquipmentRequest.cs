@@ -24,9 +24,8 @@ namespace Models
         [DisplayName("Request Date")]
         [DataType(DataType.DateTime)]
         public DateTime RequestDate { get; set; }
-        // optional
         [DisplayName("Request Message")]
-        public string Message { get; set; }
+        public string Message { get; set; }  // optional
         [DisplayName("Item ID")]
         [ForeignKey("EquipmentID")]
         public int ItemId { get; set; }

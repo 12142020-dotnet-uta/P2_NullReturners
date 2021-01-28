@@ -30,10 +30,8 @@ namespace P2_Main
         {
             _config = configuration;
         }
-
         public IConfiguration _config { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // Build Services
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<LogicClass>();
@@ -45,12 +43,9 @@ namespace P2_Main
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "P2_Main", Version = "v1" });
             });
-
             services.AddScoped<ITokenService, TokenService>();
-
             services.AddDbContext<ProgContext>(options =>
-                options.UseSqlServer(_config.GetConnectionString("LocalDB")));
-
+                options.UseSqlServer(_config.GetConnectionString("AzureDB")));
             services.AddCors(options =>
             {
                 options.AddPolicy(name: "CorsPolicy",
@@ -61,7 +56,6 @@ namespace P2_Main
                                             .AllowAnyHeader();
                                 });
             });
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -73,7 +67,6 @@ namespace P2_Main
                         ValidateAudience = false
                     };
                 });
-
             // dont thing i need this
             services.AddControllers()
                  .AddNewtonsoftJson(options =>
@@ -81,7 +74,6 @@ namespace P2_Main
                      options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                  });
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -91,21 +83,15 @@ namespace P2_Main
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "P2_Main v1"));
             }
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseCors("CorsPolicy");
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
         }
     }
 }

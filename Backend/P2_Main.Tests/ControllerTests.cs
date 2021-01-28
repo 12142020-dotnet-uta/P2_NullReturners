@@ -15,15 +15,8 @@ namespace P2_Main.Tests
 {
     public class ControllerTests
     {
-
-        private readonly Mapper _mapper;
+        // needs to be instantiated
         private readonly ITokenService _token;
-        /*private readonly ILogger<Repo> _repoLogger;
-        private readonly ILogger<UsersController> _userLogger;
-        private readonly ILogger<GamesController> _gamesLogger;
-        private readonly ILogger<PlaybooksController> _playbooksLogger;
-        private readonly ILogger<EquipmentController> _equipmentLogger;
-        private readonly ILogger<TeamsController> _teamsLogger;*/
 
         //----------------------UserContollerTests----------------------------------
 
@@ -31,7 +24,7 @@ namespace P2_Main.Tests
         /// Test for the GetUsers() method of UsersController
         /// </summary>
         [Fact]
-        public void TestForGetUsers()
+        public async void TestForGetUsers()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -43,8 +36,9 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, mapper, new NullLogger<UsersController>());
                 var user = new User()
                 {
                     UserName = "jerry",
@@ -57,7 +51,7 @@ namespace P2_Main.Tests
                 };
 
                 r.users.Add(user);
-                var listOfUsers = userController.GetUsers();
+                var listOfUsers = await userController.GetUsers();
                 Assert.NotNull(listOfUsers);
             }
         }
@@ -65,8 +59,57 @@ namespace P2_Main.Tests
         /// <summary>
         /// Test for the CreateUser() method of UsersController
         /// </summary>
+        //[Fact]
+        //public async void TestForCreateUser()
+        //{
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
+
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
+
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        Mapper mapper = new Mapper();
+        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+        //        UsersController userController = new UsersController(logic, mapper, new NullLogger<UsersController>());
+        //        var user = new CreateUserDto()
+        //        {
+        //            UserName = "jerry",
+        //            Password = "jerryrice",
+        //            FullName = "Jerry Rice",
+        //            PhoneNumber = "111-111-1111",
+        //            Email = "jerryrice@gmail.com",
+        //            TeamID = 1,
+        //            RoleID = 1
+        //        };
+
+        //        var listOfUsers = await userController.CreateUser(user);
+        //        //Assert.NotEmpty(context.Users);
+        //        Assert.Contains<User>(listOfUsers.Value, context.Users);
+
+        //        var user2 = await logic.CreateUser(user);
+        //        //Assert.Equal(1, context.Users.CountAsync().Result);
+        //        var countUsers = from u in context.Users
+        //                         where u.Email == user.Email
+        //                         select u;
+        //        int count = 0;
+        //        foreach (User userMail in countUsers)
+        //        {
+        //            count++;
+        //        }
+        //        Assert.Equal(1, count);
+        //    }
+        //}
+
+        /// <summary>
+        /// Tests the GetUser() method of UserController
+        /// </summary>
+        /// 
         [Fact]
-        public void TestForCreateUser()
+        public async void TestForGetUser()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -78,10 +121,13 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
-                var user = new CreateUserDto()
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, mapper, new NullLogger<UsersController>());
+
+                var user = new User()
                 {
+                    UserID = Guid.NewGuid(),
                     UserName = "jerry",
                     Password = "jerryrice",
                     FullName = "Jerry Rice",
@@ -91,58 +137,18 @@ namespace P2_Main.Tests
                     RoleID = 1
                 };
 
-                var listOfUsers = userController.CreateUser(user);
-                //Assert.NotEmpty(context.Users);
-                Assert.Contains<User>(listOfUsers.Result.Value, context.Users);
-
-                var user2 = logic.CreateUser(user);
-                //Assert.Equal(1, context.Users.CountAsync().Result);
-                var countUsers = from u in context.Users
-                                 where u.Email == user.Email
-                                 select u;
-                int count = 0;
-                foreach (User userMail in countUsers)
-                {
-                    count++;
-                }
-                Assert.Equal(1, count);
+                r.users.Add(user);
+                await r.CommitSave();
+                var getUser = await userController.GetUser(user.UserID);
+                Assert.True(getUser.Value.UserID.Equals(mapper.ConvertUserToUserDto(user).UserID));
             }
         }
-
-        /// <summary>
-        /// Tests the GetUser() method of UserController
-        /// </summary>
-        /// 
-        //THIS NOW RETURNS A UserDto not a User - Daniel
-
-        // TRAVIS RIGHT HERE
-        // THIS BROKE BAD IDK WTF
-
-       //[Fact]
-       // public void TestForGetUser()
-       // {
-       //     var options = new DbContextOptionsBuilder<ProgContext>()
-       //     .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-       //     .Options;
-
-       //     using (var context = new ProgContext(options))
-       //     {
-       //         context.Database.EnsureDeleted();
-       //         context.Database.EnsureCreated();
-
-            //    r.users.Add(user);
-                //context.SaveChanges();
-        //        var listOfUsers = userController.GetUser(user.UserID);
-           //     var convertUser = Mapper.ConvertUserToUserDto(user);
-                //Assert.True(listOfUsers.Result.Value.Equals(convertUser));
-       //     }
-      //  }
 
         /// <summary>
         /// Tests the GetRoles() method of UserController
         /// </summary>
         [Fact]
-        public void TestForGetRoles()
+        public async void TestForGetRoles()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -154,8 +160,9 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, mapper, new NullLogger<UsersController>());
                 var role = new Role
                 {
                     RoleID = 4, // 4 because of seeding
@@ -163,7 +170,7 @@ namespace P2_Main.Tests
                 };
 
                 r.roles.Add(role);
-                var listOfRoles = userController.GetRoles();
+                var listOfRoles = await userController.GetRoles();
                 Assert.NotNull(listOfRoles);
             }
         }
@@ -172,7 +179,7 @@ namespace P2_Main.Tests
         /// Tests the GetRole() method of UserController
         /// </summary>
         [Fact]
-        public void TestForGetRole()
+        public async void TestForGetRole()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -184,8 +191,9 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, mapper, new NullLogger<UsersController>());
                 var role = new Role
                 {
                     RoleID = 5, // 5 for seeding
@@ -193,8 +201,8 @@ namespace P2_Main.Tests
                 };
 
                 r.roles.Add(role);
-                var listOfRoles = userController.GetRole(role.RoleID);
-                Assert.True(listOfRoles.Result.Value.Equals(role));
+                var listOfRoles = await userController.GetRole(role.RoleID);
+                Assert.True(listOfRoles.Value.Equals(role));
                 //Assert.NotNull(listOfRoles);
             }
         }
@@ -215,8 +223,9 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, mapper, new NullLogger<UsersController>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -240,8 +249,8 @@ namespace P2_Main.Tests
                     Email = "jerryrice@gmail.com"
                 };
 
-                var editedUser = userController.EditUser(user.UserID, user2);
-                Assert.Equal(editedUser.Result.Value.FullName, context.Users.Find(user.UserID).FullName);
+                var editedUser = await userController.EditUser(user.UserID, user2);
+                Assert.Equal(editedUser.Value.FullName, context.Users.Find(user.UserID).FullName);
             }
         }
 
@@ -261,8 +270,9 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, mapper, new NullLogger<UsersController>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -289,8 +299,8 @@ namespace P2_Main.Tests
                     RoleID = 2
                 };
 
-                var editedUser = userController.CoachEditUser(user.UserID, user2);
-                Assert.Equal(editedUser.Result.Value.RoleID, context.Users.Find(user.UserID).RoleID);
+                var editedUser = await userController.CoachEditUser(user.UserID, user2);
+                Assert.Equal(editedUser.Value.RoleID, context.Users.Find(user.UserID).RoleID);
             }
         }
 
@@ -311,8 +321,9 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                UsersController userController = new UsersController(logic, _mapper, new NullLogger<UsersController>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                UsersController userController = new UsersController(logic, mapper, new NullLogger<UsersController>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -326,11 +337,9 @@ namespace P2_Main.Tests
                 };
                 r.users.Add(user);
                 await r.CommitSave();
-                userController.DeleteUser(Guid.NewGuid());
-                //Assert.NotEmpty(context.Users);
+                await userController.DeleteUser(Guid.NewGuid());
                 Assert.Contains<User>(user, context.Users);
-                userController.DeleteUser(user.UserID);
-                //Assert.Equal(0, context.Users.CountAsync().Result);
+                await userController.DeleteUser(user.UserID);
                 var countUsers = from u in context.Users
                                  where u.Email == user.Email
                                  select u;
@@ -351,7 +360,7 @@ namespace P2_Main.Tests
         /// Tests the GetGames() method of GamesController
         /// </summary>
         [Fact]
-        public void TestForGetGames()
+        public async void TestForGetGames()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -363,7 +372,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 GamesController gamesController = new GamesController(logic, new NullLogger<GamesController>());
                 var game = new Game
                 {
@@ -376,7 +386,7 @@ namespace P2_Main.Tests
                 };
 
                 r.games.Add(game);
-                var listOfGames = gamesController.GetGames();
+                var listOfGames = await gamesController.GetGames();
                 Assert.NotNull(listOfGames);
             }
         }
@@ -385,7 +395,7 @@ namespace P2_Main.Tests
         /// Tests the GetGame() method of GamesController
         /// </summary>
         [Fact]
-        public void TestForGetGame()
+        public async void TestForGetGame()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -397,7 +407,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 GamesController gamesController = new GamesController(logic, new NullLogger<GamesController>());
                 var game = new Game
                 {
@@ -410,8 +421,8 @@ namespace P2_Main.Tests
                 };
 
                 r.games.Add(game);
-                var listOfGames = gamesController.GetGame(game.GameID);
-                Assert.True(listOfGames.Result.Value.Equals(game));
+                var listOfGames = await gamesController.GetGame(game.GameID);
+                Assert.True(listOfGames.Value.Equals(game));
             }
         }
 
@@ -420,7 +431,7 @@ namespace P2_Main.Tests
         /// Tests that a user is added to the database
         /// </summary>
         [Fact]
-        public void TestForCreateGame()
+        public async void TestForCreateGame()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -432,16 +443,16 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 GamesController gamesController = new GamesController(logic, new NullLogger<GamesController>());
                 CreateGameDto game = new CreateGameDto()
                 {
                     HomeTeamID = 1,
                     AwayTeamID = 2
                 };
-                var createGame = gamesController.CreateGame(game);
-                //Assert.Equal(1, context.Games.CountAsync().Result);
-                Assert.Contains<Game>(createGame.Result.Value, context.Games);
+                var createGame = await gamesController.CreateGame(game);
+                Assert.Contains<Game>(createGame.Value, context.Games);
             }
         }
 
@@ -461,7 +472,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 GamesController gamesController = new GamesController(logic, new NullLogger<GamesController>());
                 var game = new Game()
                 {
@@ -483,8 +495,8 @@ namespace P2_Main.Tests
                     AwayScore = 24
                 };
 
-                var editedGame = gamesController.EditGame(game.GameID, game2);
-                Assert.Equal(editedGame.Result.Value.HomeScore, context.Games.Find(game.GameID).HomeScore);
+                var editedGame = await gamesController.EditGame(game.GameID, game2);
+                Assert.Equal(editedGame.Value.HomeScore, context.Games.Find(game.GameID).HomeScore);
             }
         }
         //------------------End of GamesController Tests----------------------------
@@ -495,7 +507,7 @@ namespace P2_Main.Tests
         /// Tests the GetPlaybooks() method of PlaybooksController 
         /// </summary>
         [Fact]
-        public void TestForGetPlaybooks()
+        public async void TestForGetPlaybooks()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -507,7 +519,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var playbook = new Playbook
                 {
@@ -516,7 +529,7 @@ namespace P2_Main.Tests
                 };
 
                 r.playbooks.Add(playbook);
-                var listOfPlaybooks = playbooksController.GetPlaybooks();
+                var listOfPlaybooks = await playbooksController.GetPlaybooks();
                 Assert.NotNull(listOfPlaybooks);
             }
         }
@@ -525,7 +538,7 @@ namespace P2_Main.Tests
         /// Tests the GetPlaybook() method of PlaybooksController
         /// </summary>
         [Fact]
-        public void TestForGetPlaybook()
+        public async void TestForGetPlaybook()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -537,7 +550,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var playbook = new Playbook
                 {
@@ -546,8 +560,8 @@ namespace P2_Main.Tests
                 };
 
                 r.playbooks.Add(playbook);
-                var listOfPlaybooks = playbooksController.GetPlaybook(playbook.PlaybookID);
-                Assert.True(listOfPlaybooks.Result.Value.Equals(playbook));
+                var listOfPlaybooks = await playbooksController.GetPlaybook(playbook.PlaybookID);
+                Assert.True(listOfPlaybooks.Value.Equals(playbook));
             }
         }
 
@@ -555,7 +569,7 @@ namespace P2_Main.Tests
         /// Tests the GetPlays() method of PlaybookController
         /// </summary>
         [Fact]
-        public void TestForGetPlays()
+        public async void TestForGetPlays()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -568,7 +582,8 @@ namespace P2_Main.Tests
 
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var play = new Play
                 {
@@ -580,7 +595,7 @@ namespace P2_Main.Tests
                 };
 
                 r.plays.Add(play);
-                var listOfPlays = playbooksController.GetPlays();
+                var listOfPlays = await playbooksController.GetPlays();
                 Assert.NotNull(listOfPlays);
             }
         }
@@ -589,7 +604,7 @@ namespace P2_Main.Tests
         /// Tests the GetPlay() method of PlaybookController
         /// </summary>
         [Fact]
-        public void TestForGetPlay()
+        public async void TestForGetPlay()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -601,7 +616,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var play = new Play
                 {
@@ -613,8 +629,8 @@ namespace P2_Main.Tests
                 };
 
                 r.plays.Add(play);
-                var listOfPlays = playbooksController.GetPlay(play.PlayID);
-                Assert.True(listOfPlays.Result.Value.Equals(play));
+                var listOfPlays = await playbooksController.GetPlay(play.PlayID);
+                Assert.True(listOfPlays.Value.Equals(play));
             }
         }
 
@@ -623,7 +639,7 @@ namespace P2_Main.Tests
         /// Tests that a playbook is added to the database
         /// </summary>
         [Fact]
-        public void TestForCreatePlaybook()
+        public async void TestForCreatePlaybook()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -635,7 +651,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 Team team = new Team()
                 {
@@ -644,10 +661,8 @@ namespace P2_Main.Tests
                     Wins = 2,
                     Losses = 0
                 };
-                var createPlaybook = playbooksController.CreatePlaybook(team.TeamID);
-
-                //Assert.Equal(1, context.Playbooks.CountAsync().Result);
-                Assert.Contains<Playbook>(createPlaybook.Result.Value, context.Playbooks);
+                var createPlaybook = await playbooksController.CreatePlaybook(team.TeamID);
+                Assert.Contains<Playbook>(createPlaybook.Value, context.Playbooks);
             }
         }
 
@@ -656,35 +671,34 @@ namespace P2_Main.Tests
         /// Tests that a play is added to the database
         /// </summary>
         /// 
+        [Fact]
+        public async void TestForCreatePlay()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
 
-        // TRAVIS RIGHT HERE
-        //[Fact]
-        //public async void TestForCreatePlay()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
+                PlayDto play = new PlayDto()
+                {
+                    PlaybookID = 1,
+                    Name = "Tackle",
+                    Description = "Tackle other players",
+                    ImageString = "football, football, football"
+                };
+                var createPlay = await playbooksController.CreatePlay(play);
+                Assert.Contains<Play>(createPlay.Value, context.Plays);
+            }
+        }
 
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-        //        PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
-        //        PlayDto play = new PlayDto()
-        //        {
-        //            PlaybookID = 1,
-        //            Name = "Tackle",
-        //            Description = "Tackle other players",
-        //            ImageString = "football, football, football"
-        //        };
-        //        var createPlay = await playbooksController.CreatePlay(play);
-        //        //Assert.Equal(1, context.Plays.CountAsync().Result);
-        //        Assert.Contains<Play>(createPlay.Value, context.Plays);
-        //    }
-        //}
 
         /// <summary>
         /// Tests the EditPlays() method of PlaybookController
@@ -703,7 +717,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var play = new Play()
                 {
@@ -725,8 +740,8 @@ namespace P2_Main.Tests
                     DrawnPlay = new byte[1]
                 };
 
-                var editedPlay = playbooksController.EditPlay(play.PlayID, play2);
-                Assert.Equal(editedPlay.Result.Value.Description, context.Plays.Find(play.PlayID).Description);
+                var editedPlay = await playbooksController.EditPlay(play.PlayID, play2);
+                Assert.Equal(editedPlay.Value.Description, context.Plays.Find(play.PlayID).Description);
             }
         }
 
@@ -747,7 +762,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var play = new Play()
                 {
@@ -759,11 +775,9 @@ namespace P2_Main.Tests
                 };
                 r.plays.Add(play);
                 await r.CommitSave();
-                playbooksController.DeletePlay(3); // fails for some reason when I add await
-                //Assert.NotEmpty(context.Plays);
+                await playbooksController.DeletePlay(3); 
                 Assert.Contains<Play>(play, context.Plays);
-                playbooksController.DeletePlay(play.PlayID); // fails for some reason when I add await
-                //Assert.Equal(0, context.Plays.CountAsync().Result);
+                await playbooksController.DeletePlay(play.PlayID);
                 var countPlays = from p in context.Plays
                                  where p.Name == play.Name
                                  select p;
@@ -793,7 +807,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 PlaybooksController playbooksController = new PlaybooksController(logic, new NullLogger<PlaybooksController>());
                 var playbook = new Playbook()
                 {
@@ -802,11 +817,9 @@ namespace P2_Main.Tests
                 };
                 r.playbooks.Add(playbook);
                 await r.CommitSave();
-                playbooksController.DeletePlaybook(3); // fails for some reason when I add await
-                //Assert.NotEmpty(context.Playbooks);
+                await playbooksController.DeletePlaybook(3);
                 Assert.Contains<Playbook>(playbook, context.Playbooks);
-                playbooksController.DeletePlaybook(playbook.PlaybookID); // fails for some reason when I add await
-                //Assert.Equal(0, context.Playbooks.CountAsync().Result);
+                await playbooksController.DeletePlaybook(playbook.PlaybookID);
                 var countPlaybooks = from p in context.Playbooks
                                      where p.PlaybookID == playbook.PlaybookID
                                      select p;
@@ -826,7 +839,7 @@ namespace P2_Main.Tests
         /// Tests the GetEquipmentRequests() method of EquipmentController
         /// </summary>
         [Fact]
-        public void TestForGetEquipmentRequests()
+        public async void TestForGetEquipmentRequests()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -838,7 +851,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 EquipmentController equipmentController = new EquipmentController(logic, new NullLogger<EquipmentController>());
                 var equipment = new EquipmentRequest
                 {
@@ -852,7 +866,7 @@ namespace P2_Main.Tests
                 };
 
                 r.equipmentRequests.Add(equipment);
-                var listOfEquipment = equipmentController.GetEquipmentRequests();
+                var listOfEquipment = await equipmentController.GetEquipmentRequests();
                 Assert.NotNull(listOfEquipment);
             }
         }
@@ -861,7 +875,7 @@ namespace P2_Main.Tests
         /// Tests the GetEquipmentRequest() method of EquipmentController
         /// </summary>
         [Fact]
-        public void TestForGetEquipmentRequest()
+        public async void TestForGetEquipmentRequest()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -874,7 +888,8 @@ namespace P2_Main.Tests
 
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 EquipmentController equipmentController = new EquipmentController(logic, new NullLogger<EquipmentController>());
                 var equipment = new EquipmentRequest
                 {
@@ -888,8 +903,8 @@ namespace P2_Main.Tests
                 };
 
                 r.equipmentRequests.Add(equipment);
-                var listOfEquipment = equipmentController.GetEquipmentRequest(equipment.RequestID);
-                Assert.True(listOfEquipment.Result.Value.Equals(equipment));
+                var listOfEquipment = await equipmentController.GetEquipmentRequest(equipment.RequestID);
+                Assert.True(listOfEquipment.Value.Equals(equipment));
             }
         }
 
@@ -898,7 +913,7 @@ namespace P2_Main.Tests
         /// Tests that an equipment request is added to the database
         /// </summary>
         [Fact]
-        public void TestForCreateEquipmentRequest()
+        public async void TestForCreateEquipmentRequest()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -910,7 +925,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 EquipmentController equipmentController = new EquipmentController(logic, new NullLogger<EquipmentController>());
                 CreateEquipmentRequestDto equipmentRequest = new CreateEquipmentRequestDto()
                 {
@@ -921,9 +937,70 @@ namespace P2_Main.Tests
                     Message = "Need this equipment",
                     Status = "Pending"
                 };
-                var createEquipmentRequest = equipmentController.CreateEquipmentRequest(equipmentRequest);
-                //Assert.Equal(1, context.EquipmentRequests.CountAsync().Result);
-                Assert.Contains<EquipmentRequest>(createEquipmentRequest.Result.Value, context.EquipmentRequests);
+                var createEquipmentRequest = await equipmentController.CreateEquipmentRequest(equipmentRequest);
+                Assert.Contains<EquipmentRequest>(createEquipmentRequest.Value, context.EquipmentRequests);
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetEquipmentItems() method of EquipmentController
+        /// </summary>
+        [Fact]
+        public async void TestForGetEquipmentItems()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                EquipmentController equipmentController = new EquipmentController(logic, new NullLogger<EquipmentController>());
+                var equipment = new EquipmentItem()
+                {
+                    EquipmentID = 9,
+                    Description = "cup"
+                };
+
+                r.equipmentItems.Add(equipment);
+                var listOfEquipment = await equipmentController.GetEquipmentItems();
+                Assert.NotNull(listOfEquipment);
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetEquipmentItemById() method of EquipmentController
+        /// </summary>
+        [Fact]
+        public async void TestForGetEquipmentItemById()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                EquipmentController equipmentController = new EquipmentController(logic, new NullLogger<EquipmentController>());
+                var equipment = new EquipmentItem()
+                {
+                    EquipmentID = 9,
+                    Description = "cup"
+                };
+
+                r.equipmentItems.Add(equipment);
+                var listOfEquipment = await equipmentController.GetEquipmentItemById(equipment.EquipmentID);
+                Assert.True(listOfEquipment.Value.Equals(equipment));
             }
         }
 
@@ -943,7 +1020,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 EquipmentController equipmentController = new EquipmentController(logic, new NullLogger<EquipmentController>());
                 var equipmentRequest = new EquipmentRequest()
                 {
@@ -964,8 +1042,8 @@ namespace P2_Main.Tests
                     Status = "Accepted"
                 };
 
-                var editedEquipmentRequest = equipmentController.EditEquipmentRequest(equipmentRequest.RequestID, equipmentRequest2);
-                Assert.Equal(editedEquipmentRequest.Result.Value.Status, context.EquipmentRequests.Find(equipmentRequest.RequestID).Status);
+                var editedEquipmentRequest = await equipmentController.EditEquipmentRequest(equipmentRequest.RequestID, equipmentRequest2);
+                Assert.Equal(editedEquipmentRequest.Value.Status, context.EquipmentRequests.Find(equipmentRequest.RequestID).Status);
             }
         }
         //-----------------End of EquipmentController Tests-------------------------
@@ -976,7 +1054,7 @@ namespace P2_Main.Tests
         /// Tests the GetTeams() method of TeamsController
         /// </summary>
         [Fact]
-        public void TestForGetTeams()
+        public async void TestForGetTeams()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -988,7 +1066,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 TeamsController teamsController = new TeamsController(logic, new NullLogger<TeamsController>());
                 var team = new Team
                 {
@@ -999,7 +1078,7 @@ namespace P2_Main.Tests
                 };
 
                 r.teams.Add(team);
-                var listOfTeams = teamsController.GetTeams();
+                var listOfTeams = await teamsController.GetTeams();
                 Assert.NotNull(listOfTeams);
             }
         }
@@ -1008,7 +1087,7 @@ namespace P2_Main.Tests
         /// Tests the GetTeam() method of TeamsController
         /// </summary>
         [Fact]
-        public void TestForGetTeamById()
+        public async void TestForGetTeamById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1020,7 +1099,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 TeamsController teamsController = new TeamsController(logic, new NullLogger<TeamsController>());
                 var team = new Team
                 {
@@ -1031,8 +1111,8 @@ namespace P2_Main.Tests
                 };
 
                 r.teams.Add(team);
-                var listOfTeams = teamsController.GetTeam(team.TeamID);
-                Assert.True(listOfTeams.Result.Value.Equals(team));
+                var listOfTeams = await teamsController.GetTeam(team.TeamID);
+                Assert.True(listOfTeams.Value.Equals(team));
             }
         }
 
@@ -1052,7 +1132,8 @@ namespace P2_Main.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 TeamsController teamsController = new TeamsController(logic, new NullLogger<TeamsController>());
                 var team = new Team()
                 {
@@ -1072,14 +1153,65 @@ namespace P2_Main.Tests
                     Losses = 5
                 };
 
-                var editedTeam = teamsController.EditTeam(team.TeamID, team2);
-                Assert.Equal(editedTeam.Result.Value.Name, context.Teams.Find(team.TeamID).Name);
+                var editedTeam = await teamsController.EditTeam(team.TeamID, team2);
+                Assert.Equal(editedTeam.Value.Name, context.Teams.Find(team.TeamID).Name);
             }
         }
         //-------------------End of TeamsController Tests---------------------------
 
         //-----------------Start of AccountController Tests-------------------------
 
+        /// <summary>
+        /// Tests the Register() method of AccountController
+        /// </summary>
+        /// 
+        [Fact]
+        public async void TestForRegister()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                AccountController accountController = new AccountController(logic, mapper, new NullLogger<AccountController>());
+
+                var user = new User()
+                {
+                    UserID = Guid.NewGuid(),
+                    UserName = "jerry",
+                    Password = "jerryrice",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com",
+                    TeamID = 1,
+                    RoleID = 1
+                };
+
+                r.users.Add(user);
+                await r.CommitSave();
+
+                var createUserDto = new CreateUserDto()
+                {
+                    UserName = user.UserName,
+                    Password = user.Password,
+                    FullName = user.FullName,
+                    PhoneNumber = user.PhoneNumber,
+                    Email = user.Email,
+                    TeamID = user.TeamID,
+                    RoleID = user.RoleID
+                };
+                
+                //var userExists = await accountController.GetUserById(user.UserID);
+                //Assert.True(getUser.Value.UserID.Equals(mapper.ConvertUserToUserDto(user).UserID));
+            }
+        }
 
         //------------------End of AccountController Tests--------------------------
     }

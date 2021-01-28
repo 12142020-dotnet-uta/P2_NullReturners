@@ -25,7 +25,6 @@ namespace Repository
         public DbSet<UserInbox> UserInboxes { get; set; }
 
         public ProgContext() { }
-
         public ProgContext(DbContextOptions<ProgContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -10,7 +10,6 @@ namespace Logic
 {
     public class Mapper
     {
-      
         public byte[] ConvertImage(string image)
         {
             //take everything after the ,
@@ -58,7 +57,6 @@ namespace Logic
             };
             return convertedUser;
         }
-
         public UserLoggedInDto ConvertUserToUserLoggedInDto(User user)
         {
             UserLoggedInDto convertedUser = new UserLoggedInDto()

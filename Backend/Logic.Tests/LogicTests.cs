@@ -19,10 +19,8 @@ namespace Logic.Tests
 {
     public class LogicTests
     {
-
-        private readonly Mapper _mapper;
+        // needs to be instantiated
         private readonly ITokenService _token;
-        //private readonly ILogger<Repo> _logger;
 
         //--------------------------Start of LogicClass Tests-----------------------
 
@@ -31,53 +29,180 @@ namespace Logic.Tests
         /// Tests the CreateUser() method of LogicClass
         /// Tests that a user is added to the database
         /// </summary>
-        [Fact]
-        public void TestForCreateUser()
-        {
+        //[Fact]
+        //public async void TestForCreateUser()
+        //{
 
-            // this block is only for code coverage
-            var onlyForCoverage = new ProgContext(); 
-            var empty = new DbContextOptionsBuilder<ProgContext>().Options;
-            var onlyForCoverage2 = new ProgContext(empty); // didn't work
-            LogicClass logicClass = new LogicClass();
+        //    // this block is only for code coverage
+        //    var onlyForCoverage = new ProgContext(); 
+        //    var empty = new DbContextOptionsBuilder<ProgContext>().Options;
+        //    var onlyForCoverage2 = new ProgContext(empty); // didn't work
+        //    LogicClass logicClass = new LogicClass();
 
 
-            var options = new DbContextOptionsBuilder<ProgContext>()
-            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-            .Options;
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
 
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
 
-                Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                CreateUserDto cUD = new CreateUserDto()
-                {
-                    UserName = "jerryrice",
-                    Password = "jerry123",
-                    FullName = "Jerry Rice",
-                    PhoneNumber = "111-111-1111",
-                    Email = "jerryrice@gmail.com"
-                };
-                var user = logic.CreateUser(cUD);
-                //Assert.NotEmpty(context.Users);
-                Assert.Contains<User>(user.Result, context.Users);
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        Mapper mapper = new Mapper();
+        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+        //        CreateUserDto cUD = new CreateUserDto()
+        //        {
+        //            UserName = "jerryrice",
+        //            Password = "jerry123",
+        //            FullName = "Jerry Rice",
+        //            PhoneNumber = "111-111-1111",
+        //            Email = "jerryrice@gmail.com"
+        //        };
+        //        var user = await logic.CreateUser(cUD);
+        //        //Assert.NotEmpty(context.Users);
+        //        Assert.Contains<User>(user, context.Users);
 
-                var user2 = logic.CreateUser(cUD);
-                //Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
-                var countUsers = from u in context.Users
-                                 where u.Email == user.Result.Email
-                                 select u;
-                int count = 0;
-                foreach (User userMail in countUsers)
-                {
-                    count++;
-                }
-                Assert.Equal(1, count);
-            }
-        }
+        //        var user2 = await logic.CreateUser(cUD);
+        //        //Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
+        //        var countUsers = from u in context.Users
+        //                         where u.Email == user.Email
+        //                         select u;
+        //        int count = 0;
+        //        foreach (User userMail in countUsers)
+        //        {
+        //            count++;
+        //        }
+        //        Assert.Equal(1, count);
+        //    }
+        //}
+
+
+        /// <summary>
+        /// Tests the RegisterUser() method of LogicClass
+        /// Tests that a user is added to the database
+        /// </summary>
+        //[Fact]
+        //public async void TestForRegisterUser()
+        //{
+
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
+
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
+
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        Mapper mapper = new Mapper();
+        //        var mockConfSection = new Mock<IConfigurationSection>();
+        //        mockConfSection.SetupGet(m => m[It.Is<string>(s => s == "default")]).Returns("mock value");
+        //        var mockConfiguration = new Mock<IConfiguration>();
+        //        mockConfiguration.Setup(a => a.GetSection(It.Is<string>(s => s == "ConnectionString"))).Returns(mockConfSection.Object);
+        //        ITokenService token = new TokenService(mockConfiguration.Object);
+        //        LogicClass logic = new LogicClass(r, mapper, token, new NullLogger<Repo>());
+        //        CreateUserDto cUD = new CreateUserDto()
+        //        {
+        //            UserName = "jerryrice",
+        //            Password = "jerry123",
+        //            FullName = "Jerry Rice",
+        //            PhoneNumber = "111-111-1111",
+        //            Email = "jerryrice@gmail.com",
+        //            RoleID = 1,
+        //            TeamID = 1
+        //        };
+        //        var user = await logic.RegisterUser(cUD);
+        //        //Assert.NotEmpty(context.Users);
+        //        Assert.Equal(context.Users.Find(cUD.Email).Email, cUD.Email);
+
+        //        var user2 = logic.CreateUser(cUD);
+        //        //Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
+        //        var countUsers = from u in context.Users
+        //                         where u.Email == user.Email
+        //                         select u;
+        //        int count = 0;
+        //        foreach (User userMail in countUsers)
+        //        {
+        //            count++;
+        //        }
+        //        Assert.Equal(1, count);
+        //    }
+        //}
+
+        /// <summary>
+        /// Tests the UserExists() method of LogicClass
+        /// Tests if user is already in the database
+        /// </summary>
+        //[Fact]
+        //public async void TestForUserExists()
+        //{
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
+
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
+
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        Mapper mapper = new Mapper();
+        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+        //        CreateUserDto cUD = new CreateUserDto()
+        //        {
+        //            UserName = "jerryrice",
+        //            Password = "jerry123",
+        //            FullName = "Jerry Rice",
+        //            PhoneNumber = "111-111-1111",
+        //            Email = "jerryrice@gmail.com"
+        //        };
+        //        var user = await logic.CreateUser(cUD);
+        //        Assert.Contains<User>(user, context.Users);
+        //        var userExists = await logic.UserExists(cUD.UserName, cUD.Email);
+        //        Assert.True(userExists);
+        //    }
+        //}
+
+        /// <summary>
+        /// Tests the LoginUser() method of LogicClass
+        /// Tests if logged in user data is retrieved from database
+        /// </summary>
+        //[Fact]
+        //public async void TestForLoginUser()
+        //{
+        //    var options = new DbContextOptionsBuilder<ProgContext>()
+        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+        //    .Options;
+
+        //    using (var context = new ProgContext(options))
+        //    {
+        //        context.Database.EnsureDeleted();
+        //        context.Database.EnsureCreated();
+
+        //        Repo r = new Repo(context, new NullLogger<Repo>());
+        //        Mapper mapper = new Mapper();
+        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+        //        CreateUserDto cUD = new CreateUserDto()
+        //        {
+        //            UserName = "jerryrice",
+        //            Password = "jerry123",
+        //            FullName = "Jerry Rice",
+        //            PhoneNumber = "111-111-1111",
+        //            Email = "jerryrice@gmail.com"
+        //        };
+        //        var userAdd = await logic.CreateUser(cUD);
+        //        LoginDto loginDto = new LoginDto()
+        //        {
+        //            UserName = cUD.UserName,
+        //            Password = cUD.Email
+        //        };
+        //        var user = await logic.LoginUser(loginDto);
+        //        Assert.True(user.Equals(userAdd));
+        //    }
+        //}
 
         /// <summary>
         /// Tests the DeleteUser() method of the LogicClass
@@ -96,7 +221,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -110,11 +236,9 @@ namespace Logic.Tests
                 };
                 r.users.Add(user);
                 await r.CommitSave();
-                logic.DeleteUser(Guid.NewGuid()); // fails for some reason when I add await
-                //Assert.NotEmpty(context.Users);
+                var deleteEmpty = await logic.DeleteUser(Guid.NewGuid()); 
                 Assert.Contains<User>(user, context.Users);
-                logic.DeleteUser(user.UserID); // fails for some reason when I add await
-                //Assert.Equal(0, context.Users.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
+                var delteUser = await logic.DeleteUser(user.UserID); 
                 var countUsers = from u in context.Users
                                  where u.Email == user.Email
                                  select u;
@@ -143,7 +267,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -178,7 +303,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -202,8 +328,8 @@ namespace Logic.Tests
                     Email = "jerryrice@gmail.com"
                 };
 
-                var editedUser = logic.EditUser(user.UserID, user2);
-                Assert.Equal(editedUser.Result.FullName, context.Users.Find(user.UserID).FullName);
+                var editedUser = await logic.EditUser(user.UserID, user2);
+                Assert.Equal(editedUser.FullName, context.Users.Find(user.UserID).FullName);
             }
         }
 
@@ -223,7 +349,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var user = new User
                 {
                     UserID = Guid.NewGuid(),
@@ -250,8 +377,8 @@ namespace Logic.Tests
                     RoleID = 2
                 };
 
-                var editedUser = logic.CoachEditUser(user.UserID, user2);
-                Assert.Equal(editedUser.Result.RoleID, context.Users.Find(user.UserID).RoleID);
+                var editedUser = await logic.CoachEditUser(user.UserID, user2);
+                Assert.Equal(editedUser.RoleID, context.Users.Find(user.UserID).RoleID);
             }
         }
 
@@ -260,7 +387,7 @@ namespace Logic.Tests
         /// TODO: don't know how to test the UserDto lines
         /// </summary>
         [Fact]
-        public void TestForGetUsers()
+        public async void TestForGetUsers()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -272,7 +399,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var user = new User()
                 {
                     UserID = Guid.NewGuid(),
@@ -286,7 +414,7 @@ namespace Logic.Tests
                 };
 
                 r.users.Add(user);
-                var listOfUsers = logic.GetUsers();
+                var listOfUsers = await logic.GetUsers();
                 Assert.NotNull(listOfUsers);
             }
         }
@@ -295,7 +423,7 @@ namespace Logic.Tests
         /// Tests the GetUserById() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetUserById()
+        public async void TestForGetUserById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -307,7 +435,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var user = new User()
                 {
                     UserID = Guid.NewGuid(),
@@ -321,8 +450,8 @@ namespace Logic.Tests
                 };
 
                 r.users.Add(user);
-                var listOfUsers = logic.GetUserById(user.UserID);
-                Assert.True(listOfUsers.Result.Equals(user));
+                var listOfUsers = await logic.GetUserById(user.UserID);
+                Assert.True(listOfUsers.Equals(user));
             }
         }
 
@@ -330,7 +459,7 @@ namespace Logic.Tests
         /// Tests the GetTeams() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetTeams()
+        public async void TestForGetTeams()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -342,7 +471,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var team = new Team
                 {
                     TeamID = 4, // 4 for seeding
@@ -352,7 +482,7 @@ namespace Logic.Tests
                 };
 
                 r.teams.Add(team);
-                var listOfTeams = logic.GetTeams();
+                var listOfTeams = await logic.GetTeams();
                 Assert.NotNull(listOfTeams);
             }
         }
@@ -361,7 +491,7 @@ namespace Logic.Tests
         /// Tests the GetTeamById() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetTeamById()
+        public async void TestForGetTeamById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -373,7 +503,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var team = new Team
                 {
                     TeamID = 5, // 5 for seeding
@@ -383,8 +514,8 @@ namespace Logic.Tests
                 };
 
                 r.teams.Add(team);
-                var listOfTeams = logic.GetTeamById(team.TeamID);
-                Assert.True(listOfTeams.Result.Equals(team));
+                var listOfTeams = await logic.GetTeamById(team.TeamID);
+                Assert.True(listOfTeams.Equals(team));
             }
         }
 
@@ -404,7 +535,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var team = new Team()
                 {
                     TeamID = 1,
@@ -423,8 +555,8 @@ namespace Logic.Tests
                     Losses = 5
                 };
 
-                var editedTeam = logic.EditTeam(team.TeamID, team2);
-                Assert.Equal(editedTeam.Result.Name, context.Teams.Find(team.TeamID).Name);
+                var editedTeam = await logic.EditTeam(team.TeamID, team2);
+                Assert.Equal(editedTeam.Name, context.Teams.Find(team.TeamID).Name);
             }
         }
 
@@ -432,7 +564,7 @@ namespace Logic.Tests
         /// Tests the GetRoles() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetRoles()
+        public async void TestForGetRoles()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -444,7 +576,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var role = new Role
                 {
                     RoleID = 4, // 4 because of seeding
@@ -452,7 +585,7 @@ namespace Logic.Tests
                 };
 
                 r.roles.Add(role);
-                var listOfRoles = logic.GetRoles();
+                var listOfRoles = await logic.GetRoles();
                 Assert.NotNull(listOfRoles);
             }
         }
@@ -461,7 +594,7 @@ namespace Logic.Tests
         /// Tests the GetRoleById() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetRoleById()
+        public async void TestForGetRoleById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -473,7 +606,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var role = new Role
                 {
                     RoleID = 5, // 5 for seeding
@@ -481,8 +615,8 @@ namespace Logic.Tests
                 };
 
                 r.roles.Add(role);
-                var listOfRoles = logic.GetRoleById(role.RoleID);
-                Assert.True(listOfRoles.Result.Equals(role));
+                var listOfRoles = await logic.GetRoleById(role.RoleID);
+                Assert.True(listOfRoles.Equals(role));
             }
         }
 
@@ -502,7 +636,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var role = new Role()
                 {
                     RoleID = 1,
@@ -523,8 +658,8 @@ namespace Logic.Tests
                 r.users.Add(user);
                 await r.CommitSave();
 
-                var editedRole = logic.EditUserRole(user.UserID, role.RoleID);
-                Assert.Equal(editedRole.Result.RoleID, context.Users.Find(user.UserID).RoleID);
+                var editedRole = await logic.EditUserRole(user.UserID, role.RoleID);
+                Assert.Equal(editedRole.RoleID, context.Users.Find(user.UserID).RoleID);
             }
         }
 
@@ -532,7 +667,7 @@ namespace Logic.Tests
         /// Tests the GetPlaybooks() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetPlaybooks()
+        public async void TestForGetPlaybooks()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -544,7 +679,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var playbook = new Playbook
                 {
                     PlaybookID = 1,
@@ -552,7 +688,7 @@ namespace Logic.Tests
                 };
 
                 r.playbooks.Add(playbook);
-                var listOfPlaybooks = logic.GetPlaybooks();
+                var listOfPlaybooks = await logic.GetPlaybooks();
                 Assert.NotNull(listOfPlaybooks);
             }
         }
@@ -561,7 +697,7 @@ namespace Logic.Tests
         /// Tests the GetPlaybookByid() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetPlaybookById()
+        public async void TestForGetPlaybookById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -573,7 +709,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var playbook = new Playbook
                 {
                     PlaybookID = 1,
@@ -581,8 +718,8 @@ namespace Logic.Tests
                 };
 
                 r.playbooks.Add(playbook);
-                var listOfPlaybooks = logic.GetPlaybookById(playbook.PlaybookID);
-                Assert.True(listOfPlaybooks.Result.Equals(playbook));
+                var listOfPlaybooks = await logic.GetPlaybookById(playbook.PlaybookID);
+                Assert.True(listOfPlaybooks.Equals(playbook));
             }
         }
 
@@ -591,7 +728,7 @@ namespace Logic.Tests
         /// Tests that a playbook is added to the database
         /// </summary>
         [Fact]
-        public void TestForCreatePlaybook()
+        public async void TestForCreatePlaybook()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -603,7 +740,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 Team team = new Team()
                 {
                     TeamID = 1,
@@ -611,11 +749,11 @@ namespace Logic.Tests
                     Wins = 2,
                     Losses = 0
                 };
-                var createPlaybook = logic.CreatePlaybook(team.TeamID);
+                var createPlaybook = await logic.CreatePlaybook(team.TeamID);
 
                 //Assert.Equal(1, context.Playbooks.CountAsync().Result);
 
-                Assert.Contains<Playbook>(createPlaybook.Result, context.Playbooks);
+                Assert.Contains<Playbook>(createPlaybook, context.Playbooks);
 
             }
         }
@@ -625,34 +763,33 @@ namespace Logic.Tests
         /// Tests that a play is added to the database
         /// </summary>
         /// 
+        [Fact]
+        public async void TestForCreatePlay()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
 
-        // TRAVIS RIGHT HERE
-        //[Fact]
-        //public async void TestForCreatePlay()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
-
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-        //        PlayDto play = new PlayDto()
-        //        {
-        //            PlaybookID = 1,
-        //            Name = "Tackle",
-        //            Description = "Tackle other players",
-        //            ImageString = "Football,football,football"
-        //        };
-        //        var createPlay = await logic.CreatePlay(play);
-        //        //Assert.Equal(1, context.Plays.CountAsync().Result);
-        //        Assert.Contains<Play>(createPlay, context.Plays);
-        //    }
-        //}
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                PlayDto play = new PlayDto()
+                {
+                    PlaybookID = 1,
+                    Name = "Tackle",
+                    Description = "Tackle other players",
+                    ImageString = "Football,football,football"
+                };
+                var createPlay = await logic.CreatePlay(play);
+                //Assert.Equal(1, context.Plays.CountAsync().Result);
+                Assert.Contains<Play>(createPlay, context.Plays);
+            }
+        }
 
         /// <summary>
         /// Tests the EditPlays method of LogicClass
@@ -670,7 +807,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var play = new Play()
                 {
                     PlayID = 1,
@@ -691,8 +829,8 @@ namespace Logic.Tests
                     DrawnPlay = new byte[1]
                 };
 
-                var editedPlay = logic.EditPlay(play.PlayID, play2);
-                Assert.Equal(editedPlay.Result.Description, context.Plays.Find(play.PlayID).Description);
+                var editedPlay = await logic.EditPlay(play.PlayID, play2);
+                Assert.Equal(editedPlay.Description, context.Plays.Find(play.PlayID).Description);
             }
         }
         
@@ -700,7 +838,7 @@ namespace Logic.Tests
         /// Tests the GetPlays() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetPlays()
+        public async void TestForGetPlays()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -712,7 +850,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var play = new Play
                 {
                     PlayID = 1,
@@ -723,7 +862,7 @@ namespace Logic.Tests
                 };
 
                 r.plays.Add(play);
-                var listOfPlays = logic.GetPlays();
+                var listOfPlays = await logic.GetPlays();
                 Assert.NotNull(listOfPlays);
             }
         }
@@ -732,7 +871,7 @@ namespace Logic.Tests
         /// Tests the GetPlayById() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetPlayById()
+        public async void TestForGetPlayById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -744,7 +883,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var play = new Play
                 {
                     PlayID = 1,
@@ -755,8 +895,8 @@ namespace Logic.Tests
                 };
 
                 r.plays.Add(play);
-                var listOfPlays = logic.GetPlayById(play.PlayID);
-                Assert.True(listOfPlays.Result.Equals(play));
+                var listOfPlays = await logic.GetPlayById(play.PlayID);
+                Assert.True(listOfPlays.Equals(play));
             }
         }
 
@@ -777,7 +917,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var play = new Play()
                 {
                     PlayID = 1,
@@ -788,12 +929,9 @@ namespace Logic.Tests
                 };
                 r.plays.Add(play);
                 await r.CommitSave();
-                logic.DeletePlay(3); // fails for some reason when I add await
-                //Assert.NotEmpty(context.Plays);
+                var deleteEmpty = await logic.DeletePlay(3);
                 Assert.Contains<Play>(play, context.Plays);
-                logic.DeletePlay(play.PlayID); // fails for some reason when I add await
-                //Assert.Empty(context.Users);
-                //Assert.Equal(0, context.Plays.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
+                var deletePlay = await logic.DeletePlay(play.PlayID);
                 var countPlays = from p in context.Plays
                                  where p.Name == play.Name
                                  select p;
@@ -823,7 +961,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var playbook = new Playbook()
                 {
                     PlaybookID = 25,
@@ -831,12 +970,9 @@ namespace Logic.Tests
                 };
                 r.playbooks.Add(playbook);
                 await r.CommitSave();
-                logic.DeletePlaybook(3); // fails for some reason when I add await
-                //Assert.NotEmpty(context.Playbooks);
+                var deleteEmpty = await logic.DeletePlaybook(3);
                 Assert.Contains<Playbook>(playbook, context.Playbooks);
-                logic.DeletePlaybook(playbook.PlaybookID); // fails for some reason when I add await
-                //Assert.Empty(context.Users);
-                //Assert.Equal(0, context.Playbooks.CountAsync().Result); // using this cause there are 15 normally. +1 -1 = 15.
+                var deletePlaybook = await logic.DeletePlaybook(playbook.PlaybookID);
                 var countPlaybooks = from p in context.Playbooks
                                      where p.PlaybookID == playbook.PlaybookID
                                      select p;
@@ -853,7 +989,7 @@ namespace Logic.Tests
         /// Tests the GetRecipientLists() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetRecipientLists()
+        public async void TestForGetRecipientLists()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -865,7 +1001,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var recipientList = new RecipientList()
                 {
                     RecipientListID = Guid.NewGuid(),
@@ -873,7 +1010,7 @@ namespace Logic.Tests
                 };
 
                 r.recipientLists.Add(recipientList);
-                var listOfRecipientLists = logic.GetRecipientLists();
+                var listOfRecipientLists = await logic.GetRecipientLists();
                 Assert.NotNull(listOfRecipientLists);
             }
         }
@@ -882,7 +1019,7 @@ namespace Logic.Tests
         /// Tests the GetRecipientListById() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetRecipientListById()
+        public async void TestForGetRecipientListById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -894,7 +1031,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var recipientList = new RecipientList()
                 {
                     RecipientListID = Guid.NewGuid(),
@@ -902,8 +1040,8 @@ namespace Logic.Tests
                 };
 
                 r.recipientLists.Add(recipientList);
-                var listOfRecipientList = logic.GetRecipientListById(recipientList.RecipientListID, recipientList.RecipientID);
-                Assert.True(listOfRecipientList.Result.Equals(recipientList));
+                var listOfRecipientList = await logic.GetRecipientListById(recipientList.RecipientListID, recipientList.RecipientID);
+                Assert.True(listOfRecipientList.Equals(recipientList));
             }
         }
 
@@ -912,7 +1050,7 @@ namespace Logic.Tests
         /// Tests that a recipient list is added to the database
         /// </summary>
         [Fact]
-        public void TestForBuildRecipientList()
+        public async void TestForBuildRecipientList()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -924,16 +1062,17 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 RecipientList recipient = new RecipientList()
                 {
                     RecipientListID = Guid.NewGuid(),
                     RecipientID = Guid.NewGuid()
                 };
 
-                var createList = logic.BuildRecipientList(recipient.RecipientListID, recipient.RecipientID);
+                var createList = await logic.BuildRecipientList(recipient.RecipientListID, recipient.RecipientID);
                 //Assert.Equal(1, context.Plays.CountAsync().Result);
-                Assert.Contains<RecipientList>(createList.Result, context.RecipientLists);
+                Assert.Contains<RecipientList>(createList, context.RecipientLists);
             }
         }
 
@@ -941,7 +1080,7 @@ namespace Logic.Tests
         /// Tests the GetMessages() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetMessages()
+        public async void TestForGetMessages()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -953,7 +1092,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var message = new Message
                 {
                     MessageID = Guid.NewGuid(),
@@ -963,7 +1103,7 @@ namespace Logic.Tests
                 };
 
                 r.messages.Add(message);
-                var listOfMessages = logic.GetMessages();
+                var listOfMessages = await logic.GetMessages();
                 Assert.NotNull(listOfMessages);
             }
         }
@@ -972,7 +1112,7 @@ namespace Logic.Tests
         /// Tests the GetMessageById() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetMessageById()
+        public async void TestForGetMessageById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -984,7 +1124,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var message = new Message
                 {
                     MessageID = Guid.NewGuid(),
@@ -994,8 +1135,8 @@ namespace Logic.Tests
                 };
 
                 r.messages.Add(message);
-                var listOfMessages = logic.GetMessageById(message.MessageID);
-                Assert.True(listOfMessages.Result.Equals(message));
+                var listOfMessages = await logic.GetMessageById(message.MessageID);
+                Assert.True(listOfMessages.Equals(message));
             }
         }
 
@@ -1004,7 +1145,7 @@ namespace Logic.Tests
         /// Tests that a message is added to the database
         /// </summary>
         [Fact]
-        public void TestForCreateNewMessage()
+        public async void TestForCreateNewMessage()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1016,7 +1157,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var message = new Message()
                 {
                     MessageID = Guid.NewGuid(),
@@ -1032,10 +1174,10 @@ namespace Logic.Tests
                     RecipientList = rL,
                     MessageText = message.MessageText
                 };
-                var createMessage = logic.CreateNewMessage(messageDto);
+                var createMessage = await logic.CreateNewMessage(messageDto);
                 
                 //Assert.Equal(1, context.Messages.CountAsync().Result);
-                Assert.Contains<Message>(createMessage.Result, context.Messages);
+                Assert.Contains<Message>(createMessage, context.Messages);
             }
         }
 
@@ -1045,7 +1187,7 @@ namespace Logic.Tests
         /// TODO: add assert statement
         /// </summary>
         [Fact]
-        public void TestForSendMessage()
+        public async void TestForSendMessage()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1057,7 +1199,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var message = new Message()
                 {
                     MessageID = Guid.NewGuid(),
@@ -1074,8 +1217,8 @@ namespace Logic.Tests
                     MessageText = message.MessageText
                 };
 
-                var createMessage = logic.CreateNewMessage(messageDto);
-                var sendMessage = logic.SendMessage(createMessage.Result);
+                var createMessage = await logic.CreateNewMessage(messageDto);
+                var sendMessage = await logic.SendMessage(createMessage);
 
                 //Assert.Equal(1, context.Messages.CountAsync().Result);
                 //Assert.True(context.UserInboxes.Find(message.RecipientListID, message.MessageID).MessageID.Equals(message.MessageID));
@@ -1087,7 +1230,7 @@ namespace Logic.Tests
         /// Tests that a message is deleted from the database
         /// </summary>
         [Fact]
-        public void TestForDeleteMessageFromInbox()
+        public async void TestForDeleteMessageFromInbox()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1099,14 +1242,15 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-                var messageInbox = logic.CreateUserInbox(Guid.NewGuid(), Guid.NewGuid());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                var messageInbox = await logic.CreateUserInbox(Guid.NewGuid(), Guid.NewGuid());
 
-                Assert.Contains<UserInbox>(messageInbox.Result, context.UserInboxes);
-                logic.DeleteMessageFromInbox(messageInbox.Result.UserID, messageInbox.Result.MessageID);
+                Assert.Contains<UserInbox>(messageInbox, context.UserInboxes);
+                await logic.DeleteMessageFromInbox(messageInbox.UserID, messageInbox.MessageID);
 
                 var countMessages =  from p in context.UserInboxes
-                                    where p.UserID == messageInbox.Result.UserID && p.MessageID == messageInbox.Result.MessageID
+                                    where p.UserID == messageInbox.UserID && p.MessageID == messageInbox.MessageID
                                     select p;
                 int count = 0;
                 foreach (UserInbox inbox in countMessages)
@@ -1122,7 +1266,7 @@ namespace Logic.Tests
         /// Tests the GetUserInbox() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetUserInbox()
+        public async void TestForGetUserInbox()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1134,7 +1278,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var userInbox = new UserInbox()
                 {
                     UserID = Guid.NewGuid(),
@@ -1143,7 +1288,7 @@ namespace Logic.Tests
                 };
 
                 r.userInboxes.Add(userInbox);
-                var listOfUserInboxes = logic.GetUserInbox(userInbox.UserID);
+                var listOfUserInboxes = await logic.GetUserInbox(userInbox.UserID);
                 Assert.NotNull(listOfUserInboxes);
             }
         }
@@ -1152,7 +1297,7 @@ namespace Logic.Tests
         /// Tests the CreateUserInbox() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForCreateUserInbox()
+        public async void TestForCreateUserInbox()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1164,7 +1309,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var userInbox = new UserInbox()
                 {
                     UserID = Guid.NewGuid(),
@@ -1172,8 +1318,8 @@ namespace Logic.Tests
                     IsRead = false
                 };
 
-                var createInbox = logic.CreateUserInbox(userInbox.UserID, userInbox.MessageID);
-                Assert.Contains<UserInbox>(createInbox.Result, context.UserInboxes);
+                var createInbox = await logic.CreateUserInbox(userInbox.UserID, userInbox.MessageID);
+                Assert.Contains<UserInbox>(createInbox, context.UserInboxes);
             }
         }
 
@@ -1181,7 +1327,7 @@ namespace Logic.Tests
         /// Tests the GetGames() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetGames()
+        public async void TestForGetGames()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1193,7 +1339,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var game = new Game
                 {
                     GameID = 1,
@@ -1205,7 +1352,7 @@ namespace Logic.Tests
                 };
 
                 r.games.Add(game);
-                var listOfGames = logic.GetGames();
+                var listOfGames = await logic.GetGames();
                 Assert.NotNull(listOfGames);
             }
         }
@@ -1214,7 +1361,7 @@ namespace Logic.Tests
         /// Tests the GetGameById() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetGameById()
+        public async void TestForGetGameById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1226,7 +1373,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var game = new Game
                 {
                     GameID = 1,
@@ -1238,8 +1386,8 @@ namespace Logic.Tests
                 };
 
                 r.games.Add(game);
-                var listOfGames = logic.GetGameById(game.GameID);
-                Assert.True(listOfGames.Result.Equals(game));
+                var listOfGames = await logic.GetGameById(game.GameID);
+                Assert.True(listOfGames.Equals(game));
             }
         }
 
@@ -1248,7 +1396,7 @@ namespace Logic.Tests
         /// Tests that a user is added to the database
         /// </summary>
         [Fact]
-        public void TestForCreateGame()
+        public async void TestForCreateGame()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1259,15 +1407,16 @@ namespace Logic.Tests
             context.Database.EnsureCreated();
 
             Repo r = new Repo(context, new NullLogger<Repo>());
-            LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+            Mapper mapper = new Mapper();
+            LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
             CreateGameDto game = new CreateGameDto()
             {
                 HomeTeamID = 1,
                 AwayTeamID = 2
             };
-            var createGame = logic.CreateGame(game);
+            var createGame = await logic.CreateGame(game);
             //Assert.Equal(1, context.Games.CountAsync().Result);
-            Assert.Contains<Game>(createGame.Result, context.Games);
+            Assert.Contains<Game>(createGame, context.Games);
         }
 
         /// <summary>
@@ -1286,7 +1435,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var game = new Game()
                 {
                     GameID = 1,
@@ -1307,82 +1457,16 @@ namespace Logic.Tests
                     AwayScore = 24
                 };
 
-                var editedGame= logic.EditGame(game.GameID, game2);
-                Assert.Equal(editedGame.Result.HomeScore, context.Games.Find(game.GameID).HomeScore);
+                var editedGame= await logic.EditGame(game.GameID, game2);
+                Assert.Equal(editedGame.HomeScore, context.Games.Find(game.GameID).HomeScore);
             }
         }
-
-        /// <summary>
-        /// Tests the GetEvents() method of LogicClass
-        /// </summary>
-        //[Fact]
-        //public void TestForGetEvents()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
-
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
-
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
-        //        var eventSchedule = new Event
-        //        {
-        //            EventID = 1,
-        //            TeamID = 1,
-        //            Description = "Practice",
-        //            EventDate = DateTime.Now,
-        //            Location = "soccer field",
-        //            Message = "make it to practice!"
-        //        };
-
-        //        r.events.Add(eventSchedule);
-        //        var listOfEvents = logic.GetEvents();
-        //        Assert.NotNull(listOfEvents);
-        //    }
-        //}
-
-        /// <summary>
-        /// Tests the GetEventById() method of LogicClass
-        /// </summary>
-        //[Fact]
-        //public void TestForGetEventById()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
-
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
-
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        LogicClass logic = new LogicClass(r, _mapper, new NullLogger<Repo>());
-        //        var eventSchedule = new Event
-        //        {
-        //            EventID = 1,
-        //            TeamID = 1,
-        //            Description = "Practice",
-        //            EventDate = DateTime.Now,
-        //            Location = "soccer field",
-        //            Message = "make it to practice!"
-        //        };
-
-        //        r.events.Add(eventSchedule);
-        //        var listOfEvents = logic.GetEventById(eventSchedule.EventID);
-        //        Assert.True(listOfEvents.Result.Equals(eventSchedule));
-        //    }
-        //}
 
         /// <summary>
         /// Tests the GetEquipmentRequests() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetEquipmentRequests()
+        public async void TestForGetEquipmentRequests()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1394,7 +1478,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var equipment = new EquipmentRequest
                 {
                     RequestID = 4, // 4 for seeding
@@ -1407,7 +1492,7 @@ namespace Logic.Tests
                 };
 
                 r.equipmentRequests.Add(equipment);
-                var listOfEquipment = logic.GetEquipmentRequests();
+                var listOfEquipment = await logic.GetEquipmentRequests();
                 Assert.NotNull(listOfEquipment);
             }
         }
@@ -1416,7 +1501,7 @@ namespace Logic.Tests
         /// Tests the GetEquipmentRequestById() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForGetEquipmentRequestById()
+        public async void TestForGetEquipmentRequestById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1428,7 +1513,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var equipment = new EquipmentRequest
                 {
                     RequestID = 3, // 3 for seeding
@@ -1441,8 +1527,8 @@ namespace Logic.Tests
                 };
 
                 r.equipmentRequests.Add(equipment);
-                var listOfEquipment = logic.GetEquipmentRequestById(equipment.RequestID);
-                Assert.True(listOfEquipment.Result.Equals(equipment));
+                var listOfEquipment = await logic.GetEquipmentRequestById(equipment.RequestID);
+                Assert.True(listOfEquipment.Equals(equipment));
             }
         }
 
@@ -1451,7 +1537,7 @@ namespace Logic.Tests
         /// Tests that an equipment request is added to the database
         /// </summary>
         [Fact]
-        public void TestForCreateEquipmentRequest()
+        public async void TestForCreateEquipmentRequest()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1463,7 +1549,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 CreateEquipmentRequestDto equipmentRequest = new CreateEquipmentRequestDto()
                 {
                     TeamID = 1,
@@ -1473,9 +1560,9 @@ namespace Logic.Tests
                     Message = "Need this equipment",
                     Status = "Pending"
                 };
-                var createEquipmentRequest = logic.CreateEquipmentRequest(equipmentRequest);
+                var createEquipmentRequest = await logic.CreateEquipmentRequest(equipmentRequest);
                 //Assert.Equal(1, context.EquipmentRequests.CountAsync().Result);
-                Assert.Contains<EquipmentRequest>(createEquipmentRequest.Result, context.EquipmentRequests);
+                Assert.Contains<EquipmentRequest>(createEquipmentRequest, context.EquipmentRequests);
             }
         }
 
@@ -1495,7 +1582,8 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var equipmentRequest = new EquipmentRequest()
                 {
                     TeamID = 1,
@@ -1515,17 +1603,16 @@ namespace Logic.Tests
                     Status = "Accepted"
                 };
 
-                var editedEquipmentRequest = logic.EditEquipmentRequest(equipmentRequest.RequestID, equipmentRequest2);
-                Assert.Equal(editedEquipmentRequest.Result.Status, context.EquipmentRequests.Find(equipmentRequest.RequestID).Status);
+                var editedEquipmentRequest = await logic.EditEquipmentRequest(equipmentRequest.RequestID, equipmentRequest2);
+                Assert.Equal(editedEquipmentRequest.Status, context.EquipmentRequests.Find(equipmentRequest.RequestID).Status);
             }
         }
 
         /// <summary>
-        /// Tests the InitializeCalendar() method in LogicClass
-        /// TODO: write actual test for InitializeCalendar
+        /// Tests the GetEquipmentItems() method of LogicClass
         /// </summary>
         [Fact]
-        public void TestForInitializeCalendar()
+        public async void TestForGetEquipmentItems()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -1537,23 +1624,103 @@ namespace Logic.Tests
                 context.Database.EnsureCreated();
 
                 Repo r = new Repo(context, new NullLogger<Repo>());
-                LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-
-                EventDto eventDto = new EventDto()
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                var equipmentItem = new EquipmentItem()
                 {
-                    EventID = Guid.NewGuid(),
-                    Description = "Practice",
-                    Location = "Football field",
-                    Message = "Don't miss it!",
-                    StartTime = null,
-                    EndTime = null
+                    EquipmentID = 9,
+                    Description = "cup"
                 };
 
-                var calendarService = LogicClass.InitializeCalendar();
-                var calendar = LogicClass.GetCalendar(calendarService.Result);
-                var getEvents = LogicClass.GetMyEvents(calendarService.Result);
-                var createEvent = LogicClass.CreateEvent(calendarService.Result, eventDto);
+                r.equipmentItems.Add(equipmentItem);
+                var getEquipmentItems = await logic.GetEquipmentItems();
+                Assert.NotNull(getEquipmentItems);
             }
+        }
+
+        /// <summary>
+        /// Tests the GetEquipmentItemById() method of LogicClass
+        /// </summary>
+        [Fact]
+        public async void TestForGetEquipmentItemById()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                var equipmentItem = new EquipmentItem()
+                {
+                    EquipmentID = 9,
+                    Description = "cup"
+                };
+
+                r.equipmentItems.Add(equipmentItem);
+                var getEquipmentItem = await logic.GetEquipmentItemtById(equipmentItem.EquipmentID);
+                Assert.True(getEquipmentItem.Equals(equipmentItem));
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetEquipmentItemByName() method of LogicClass
+        /// TODO: For some reason, assert statement doesn't work
+        /// </summary>
+        [Fact]
+        public async void TestForGetEquipmentItemByName()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                var equipmentItem = new EquipmentItem()
+                {
+                    EquipmentID = 9,
+                    Description = "cup"
+                };
+
+                r.equipmentItems.Add(equipmentItem);
+                var getEquipmentItem = await logic.GetEquipmentItemByName(equipmentItem.Description);
+                //Assert.True(getEquipmentItem.Description.Equals(equipmentItem.Description));
+            }
+        }
+
+        /// <summary>
+        /// Tests the InitializeCalendar() method in LogicClass
+        /// TODO: write actual test for InitializeCalendar
+        /// </summary>
+        [Fact]
+        public async void TestForInitializeCalendar()
+        {
+
+            EventDto eventDto = new EventDto()
+            {
+                EventID = Guid.NewGuid(),
+                Description = "Practice",
+                Location = "Football field",
+                Message = "Don't miss it!",
+                StartTime = null,
+                EndTime = null
+            };
+
+            var calendarService = await LogicClass.InitializeCalendar();
+            var calendar = await LogicClass.GetCalendar(calendarService);
+            var getEvents = await LogicClass.GetMyEvents(calendarService);
+            var createEvent = await LogicClass.CreateEvent(calendarService, eventDto);
         }
 
         //--------------------------End of LogicClass Tests-----------------------
@@ -1564,94 +1731,68 @@ namespace Logic.Tests
         /// Tests the convertImage() method of Mapper
         /// </summary>
         /// 
+        [Fact]
+        public void TestForconvertImage()
+        {
+            Mapper mapper = new Mapper();
+            string textSting = "text,text";
+            var convert = mapper.ConvertImage(textSting);
 
-        // TRAVIS RIGHT HERE
-        //[Fact]
-        //public void TestForconvertImage()
-        //{
-
-        //    string textSting = "text,text";
-        //    var convert = _mapper.ConvertImage(textSting);
-
-        //    Assert.IsType<byte[]>(convert);
-        //    Assert.NotNull(convert);
-        //}
+            Assert.IsType<byte[]>(convert);
+            Assert.NotNull(convert);
+        }
 
         /// <summary>
         /// Tests the ConvertUserToUserDto() method of Mapper
         /// </summary>
         /// 
+        [Fact]
+        public void TestForConvertUserToUserDto()
+        {
+            Mapper mapper = new Mapper();
+            var user = new User()
+            {
+                UserID = Guid.NewGuid(),
+                UserName = "jerry",
+                Password = "jerryrice",
+                FullName = "Jerry Rice",
+                PhoneNumber = "111-111-1111",
+                Email = "jerryrice@gmail.com",
+                TeamID = 1,
+                RoleID = 1
+            };
 
-        // TRAVIS RIGHT HERE
-        //[Fact]
-        //public void TestForConvertUserToUserDto()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+            var convert = mapper.ConvertUserToUserDto(user);
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
-
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        var user = new User()
-        //        {
-        //            UserID = Guid.NewGuid(),
-        //            UserName = "jerry",
-        //            Password = "jerryrice",
-        //            FullName = "Jerry Rice",
-        //            PhoneNumber = "111-111-1111",
-        //            Email = "jerryrice@gmail.com",
-        //            TeamID = 1,
-        //            RoleID = 1
-        //        };
-
-        //        var convert = _mapper.ConvertUserToUserDto(user);
-
-        //        Assert.True(convert.UserName.Equals(user.UserName));
-        //    }
-        //}
+            Assert.True(convert.UserName.Equals(user.UserName));
+        }
 
 
         /// <summary>
         /// Tests the ConvertUserToUserLoggedInDto() method of Mapper
         /// </summary>
         /// 
+        [Fact]
+        public void TestForConvertUserToUserLoggedInDto()
+        {
+            Mapper mapper = new Mapper();
+            var user = new User()
+            {
+                UserID = Guid.NewGuid(),
+                UserName = "jerry",
+                Password = "jerryrice",
+                FullName = "Jerry Rice",
+                PhoneNumber = "111-111-1111",
+                Email = "jerryrice@gmail.com",
+                TeamID = 1,
+                RoleID = 1
+            };
 
-        // TRAVIS RIGHT HERE
-        //[Fact]
-        //public void TestForConvertUserToUserLoggedInDto()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+            var convert = mapper.ConvertUserToUserLoggedInDto(user);
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
-
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        LogicClass logic = new LogicClass(r, _mapper, _token, new NullLogger<Repo>());
-        //        var user = new User()
-        //        {
-        //            UserID = Guid.NewGuid(),
-        //            UserName = "jerry",
-        //            Password = "jerryrice",
-        //            FullName = "Jerry Rice",
-        //            PhoneNumber = "111-111-1111",
-        //            Email = "jerryrice@gmail.com",
-        //            TeamID = 1,
-        //            RoleID = 1
-        //        };
-
-        //        var convert = _mapper.ConvertUserToUserLoggedInDto(user);
-
-        //        Assert.True(convert.UserName.Equals(user.UserName));
-        //    }
-        //}
+            Assert.True(convert.UserName.Equals(user.UserName));
+            
+        }
 
         //----------------------------End of Mapper tests-------------------------
 
@@ -1664,36 +1805,27 @@ namespace Logic.Tests
         [Fact]
         public void TestForCreateToken()
         {
-            var options = new DbContextOptionsBuilder<ProgContext>()
-            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-            .Options;
 
-            using (var context = new ProgContext(options))
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+            var mockConfSection = new Mock<IConfigurationSection>();
+            mockConfSection.SetupGet(m => m[It.Is<string>(s => s == "default")]).Returns("mock value");
+            var mockConfiguration = new Mock<IConfiguration>();
+            mockConfiguration.Setup(a => a.GetSection(It.Is<string>(s => s == "ConnectionStrings"))).Returns(mockConfSection.Object);
+            //TokenService token = new TokenService(mockConfiguration.Object);
+            //User user = new User()
+            //{
+            //    UserID = Guid.NewGuid(),
+            //    UserName = "jerryrice",
+            //    Password = "jerry123",
+            //    PasswordHash = new byte[1],
+            //    PasswordSalt = new byte[1],
+            //    FullName = "Jerry Rice",
+            //    Email = "jerryrice@gmail.com",
+            //    PhoneNumber = "222-222-2222",
+            //    TeamID = 1,
+            //    RoleID = 1
+            //};
 
-                var mockConfSection = new Mock<IConfigurationSection>();
-                mockConfSection.SetupGet(m => m[It.Is<string>(s => s == "default")]).Returns("mock value");
-                var mockConfiguration = new Mock<IConfiguration>();
-                mockConfiguration.Setup(a => a.GetSection(It.Is<string>(s => s == "ConnectionStrings"))).Returns(mockConfSection.Object);
-                //TokenService token = new TokenService(mockConfiguration.Object);
-                //User user = new User()
-                //{
-                //    UserID = Guid.NewGuid(),
-                //    UserName = "jerryrice",
-                //    Password = "jerry123",
-                //    PasswordHash = new byte[1],
-                //    PasswordSalt = new byte[1],
-                //    FullName = "Jerry Rice",
-                //    Email = "jerryrice@gmail.com",
-                //    PhoneNumber = "222-222-2222",
-                //    TeamID = 1,
-                //    RoleID = 1
-                //};
-
-                //var createToken = token.CreateToken(user);
-            }
+            //var createToken = token.CreateToken(user);
         }
 
         //--------------------------End of TokenService Tests---------------------

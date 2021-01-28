@@ -19,66 +19,48 @@ namespace P2_Main.Controllers
         private readonly LogicClass _logic;
         private readonly Mapper _mapper;
         private readonly ILogger<UsersController> _logger;
-
         public UsersController(LogicClass logic, Mapper mapper, ILogger<UsersController> logger)
         {
             _logic = logic;
             _mapper = mapper;
             _logger = logger;
         }
-
-        
         [HttpGet]
         //[Authorize]
         public async Task<IEnumerable<UserDto>> GetUsers()
         {
             return await _logic.GetUsers();
         }
-
-        // likely not needed
-        [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(CreateUserDto createUser)
-        {
-            return await _logic.CreateUser(createUser);
-        }
-
-        // fix this grosness later
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(Guid id)
         {
-            User user = await _logic.GetUserById(id);
-            return _mapper.ConvertUserToUserDto(user);
+            return _mapper.ConvertUserToUserDto(await _logic.GetUserById(id));
         }
-
         [HttpGet("roles")]
         public async Task<IEnumerable<Role>> GetRoles()
         {
             return await _logic.GetRoles();
         }
-
         [HttpGet("roles/{id}")]
         public async Task<ActionResult<Role>> GetRole(int id)
         {
             return await _logic.GetRoleById(id);
         }
-
         [HttpPut("edit/{id}")]
         public async Task<ActionResult<User>> EditUser(Guid id, EditUserDto editedUser)
         {
             return await _logic.EditUser(id, editedUser);
         }
-
         [HttpPut("coach/edit/{id}")]
         public async Task<ActionResult<User>> CoachEditUser(Guid id, CoachEditUserDto editedUser)
         {
             return await _logic.CoachEditUser(id, editedUser);
         }
-
         [HttpDelete("delete/{id}")]
         public async Task<User> DeleteUser(Guid id)
         {
             _logger.LogInformation("User deleted.");
             return await _logic.DeleteUser(id);
         }
-     }
+    }
 }

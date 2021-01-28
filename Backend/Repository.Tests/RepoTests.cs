@@ -13,8 +13,6 @@ namespace Repository.Tests
     public class RepoTests
     {
 
-        //private readonly ILogger<Repo> _logger;
-
         /// <summary>
         /// Tests the CommitSave() method of Repo
         /// </summary>
@@ -53,7 +51,7 @@ namespace Repository.Tests
         /// Tests the GetUsers() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetUsers()
+        public async void TestForGetUsers()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -78,7 +76,7 @@ namespace Repository.Tests
                 };
 
                 r.users.Add(user);
-                var listOfUsers = r.GetUsers();
+                var listOfUsers = await r.GetUsers();
                 Assert.NotNull(listOfUsers);
             }
         }
@@ -87,7 +85,7 @@ namespace Repository.Tests
         /// Tests the GetUserById method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetUserById()
+        public async void TestForGetUserById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -112,8 +110,8 @@ namespace Repository.Tests
                 };
 
                 r.users.Add(user);
-                var searchForUser = r.GetUserById(user.UserID);
-                Assert.True(searchForUser.Result.Equals(user));
+                var searchForUser = await r.GetUserById(user.UserID);
+                Assert.True(searchForUser.Equals(user));
             }
         }
 
@@ -121,7 +119,7 @@ namespace Repository.Tests
         /// Tests the GetTeams() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetTeams()
+        public async void TestForGetTeams()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -142,7 +140,7 @@ namespace Repository.Tests
                 };
 
                 r.teams.Add(team);
-                var listOfTeams = r.GetTeams();
+                var listOfTeams = await r.GetTeams();
                 Assert.NotNull(listOfTeams);
             }
         }
@@ -151,7 +149,7 @@ namespace Repository.Tests
         /// Tests the GetTeamById() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetTeamById()
+        public async void TestForGetTeamById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -172,8 +170,8 @@ namespace Repository.Tests
                 };
 
                 r.teams.Add(team);
-                var listOfTeams = r.GetTeamById(team.TeamID);
-                Assert.True(listOfTeams.Result.Equals(team));
+                var listOfTeams = await r.GetTeamById(team.TeamID);
+                Assert.True(listOfTeams.Equals(team));
             }
         }
 
@@ -181,7 +179,7 @@ namespace Repository.Tests
         /// Tests the GetRoles() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetRoles()
+        public async void TestForGetRoles()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -200,7 +198,7 @@ namespace Repository.Tests
                 };
 
                 r.roles.Add(role);
-                var listOfRoles = r.GetRoles();
+                var listOfRoles = await r.GetRoles();
                 Assert.NotNull(listOfRoles);
             }
         }
@@ -209,7 +207,7 @@ namespace Repository.Tests
         /// Tests the GetRoleById() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetRoleById()
+        public async void TestForGetRoleById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -228,8 +226,8 @@ namespace Repository.Tests
                 };
 
                 r.roles.Add(role);
-                var listOfRoles = r.GetRoleById(role.RoleID);
-                Assert.True(listOfRoles.Result.Equals(role));
+                var listOfRoles = await r.GetRoleById(role.RoleID);
+                Assert.True(listOfRoles.Equals(role));
             }
         }
 
@@ -237,7 +235,7 @@ namespace Repository.Tests
         /// Tests the GetPlaybooks() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetPlaybooks()
+        public async void TestForGetPlaybooks()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -256,7 +254,7 @@ namespace Repository.Tests
                 };
 
                 r.playbooks.Add(playbook);
-                var listOfPlaybooks = r.GetPlaybooks();
+                var listOfPlaybooks = await r.GetPlaybooks();
                 Assert.NotNull(listOfPlaybooks);
             }
         }
@@ -265,7 +263,7 @@ namespace Repository.Tests
         /// Tests the GetPlaybookById() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetPlaybookById()
+        public async void TestForGetPlaybookById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -284,8 +282,8 @@ namespace Repository.Tests
                 };
 
                 r.playbooks.Add(playbook);
-                var listOfPlaybooks = r.GetPlaybookById(playbook.PlaybookID);
-                Assert.True(listOfPlaybooks.Result.Equals(playbook));
+                var listOfPlaybooks = await r.GetPlaybookById(playbook.PlaybookID);
+                Assert.True(listOfPlaybooks.Equals(playbook));
             }
         }
 
@@ -293,7 +291,7 @@ namespace Repository.Tests
         /// Tests the GetPlays() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetPlays()
+        public async void TestForGetPlays()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -315,7 +313,7 @@ namespace Repository.Tests
                 };
 
                 r.plays.Add(play);
-                var listOfPlays = r.GetPlays();
+                var listOfPlays = await r.GetPlays();
                 Assert.NotNull(listOfPlays);
             }
         }
@@ -325,7 +323,7 @@ namespace Repository.Tests
         /// Tests the GetPlayById() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetPlayById()
+        public async void TestForGetPlayById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -347,8 +345,8 @@ namespace Repository.Tests
                 };
 
                 r.plays.Add(play);
-                var listOfPlays = r.GetPlayById(play.PlayID);
-                Assert.True(listOfPlays.Result.Equals(play));
+                var listOfPlays = await r.GetPlayById(play.PlayID);
+                Assert.True(listOfPlays.Equals(play));
             }
         }
 
@@ -356,7 +354,7 @@ namespace Repository.Tests
         /// Tests the GetMessages() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetMessages()
+        public async void TestForGetMessages()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -377,7 +375,7 @@ namespace Repository.Tests
                 };
 
                 r.messages.Add(message);
-                var listOfMessages = r.GetMessages();
+                var listOfMessages = await r.GetMessages();
                 Assert.NotNull(listOfMessages);
             }
         }
@@ -387,7 +385,7 @@ namespace Repository.Tests
         /// Tests the GetMessageByid() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetMessageById()
+        public async void TestForGetMessageById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -408,8 +406,8 @@ namespace Repository.Tests
                 };
 
                 r.messages.Add(message);
-                var listOfMessages = r.GetMessageById(message.MessageID);
-                Assert.True(listOfMessages.Result.Equals(message));
+                var listOfMessages = await r.GetMessageById(message.MessageID);
+                Assert.True(listOfMessages.Equals(message));
             }
         }
 
@@ -417,7 +415,7 @@ namespace Repository.Tests
         /// Tests the GetRecipientLists() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetRecipientLists()
+        public async void TestForGetRecipientLists()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -436,7 +434,7 @@ namespace Repository.Tests
                 };
 
                 r.recipientLists.Add(recipientList);
-                var listOfRecipientLists = r.GetRecipientLists();
+                var listOfRecipientLists = await r.GetRecipientLists();
                 Assert.NotNull(listOfRecipientLists);
             }
         }
@@ -445,7 +443,7 @@ namespace Repository.Tests
         /// Tests the GetRecipientListById() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetRecipientListById()
+        public async void TestForGetRecipientListById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -464,8 +462,8 @@ namespace Repository.Tests
                 };
 
                 r.recipientLists.Add(recipientList);
-                var listOfRecipientList = r.GetRecipientListById(recipientList.RecipientListID, recipientList.RecipientID);
-                Assert.True(listOfRecipientList.Result.Equals(recipientList));
+                var listOfRecipientList = await r.GetRecipientListById(recipientList.RecipientListID, recipientList.RecipientID);
+                Assert.True(listOfRecipientList.Equals(recipientList));
             }
         }
 
@@ -473,7 +471,7 @@ namespace Repository.Tests
         /// Tests the GetGames() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetGames()
+        public async void TestForGetGames()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -496,7 +494,7 @@ namespace Repository.Tests
                 };
 
                 r.games.Add(game);
-                var listOfGames = r.GetGames();
+                var listOfGames = await r.GetGames();
                 Assert.NotNull(listOfGames);
             }
         }
@@ -505,7 +503,7 @@ namespace Repository.Tests
         /// Tests the GetGameByid() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetGameById()
+        public async void TestForGetGameById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -528,80 +526,16 @@ namespace Repository.Tests
                 };
 
                 r.games.Add(game);
-                var listOfGames = r.GetGameById(game.GameID);
-                Assert.True(listOfGames.Result.Equals(game));
+                var listOfGames = await r.GetGameById(game.GameID);
+                Assert.True(listOfGames.Equals(game));
             }
         }
-
-        /// <summary>
-        /// Tests the GetEvents() method of Repo
-        /// </summary>
-        //[Fact]
-        //public void TestForGetEvents()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
-
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
-
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        var eventSchedule = new Event
-        //        {
-        //            EventID = 1,
-        //            TeamID = 1,
-        //            Description = "Practice",
-        //            EventDate = DateTime.Now,
-        //            Location = "soccer field",
-        //            Message = "make it to practice!"
-        //        };
-
-        //        r.events.Add(eventSchedule);
-        //        var listOfEvents = r.GetEvents();
-        //        Assert.NotNull(listOfEvents);
-        //    }
-        //}
-
-        /// <summary>
-        /// Tests the GetEventById() method of Repo
-        /// </summary>
-        //[Fact]
-        //public void TestForGetEventById()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
-
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
-
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        var eventSchedule = new Event
-        //        {
-        //            EventID = 1,
-        //            TeamID = 1,
-        //            Description = "Practice",
-        //            EventDate = DateTime.Now,
-        //            Location = "soccer field",
-        //            Message = "make it to practice!"
-        //        };
-
-        //        r.events.Add(eventSchedule);
-        //        var listOfEvents = r.GetEventById(eventSchedule.EventID);
-        //        Assert.True(listOfEvents.Result.Equals(eventSchedule));
-        //    }
-        //}
 
         /// <summary>
         /// Tests the GetEquipmentRequests() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetEquipmentRequests()
+        public async void TestForGetEquipmentRequests()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -625,7 +559,7 @@ namespace Repository.Tests
                 };
 
                 r.equipmentRequests.Add(equipment);
-                var listOfEquipment = r.GetEquipmentRequests();
+                var listOfEquipment = await r.GetEquipmentRequests();
                 Assert.NotNull(listOfEquipment);
             }
         }
@@ -634,7 +568,7 @@ namespace Repository.Tests
         /// Tests the GetEquipmentRequestById() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetEquipmentRequestById()
+        public async void TestForGetEquipmentRequestById()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -658,8 +592,64 @@ namespace Repository.Tests
                 };
 
                 r.equipmentRequests.Add(equipment);
-                var listOfEquipment = r.GetEquipmentRequestById(equipment.RequestID);
-                Assert.True(listOfEquipment.Result.Equals(equipment));
+                var listOfEquipment = await r.GetEquipmentRequestById(equipment.RequestID);
+                Assert.True(listOfEquipment.Equals(equipment));
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetEquipmentItems() method of Repo
+        /// </summary>
+        [Fact]
+        public async void TestForGetEquipmentItems()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                var equipmentItem = new EquipmentItem()
+                {
+                    EquipmentID = 9,
+                    Description = "cup"
+                };
+
+                r.equipmentItems.Add(equipmentItem);
+                var listOfEquipment = await r.GetEquipmentItems();
+                Assert.NotNull(listOfEquipment);
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetEquipmentItemById() method of Repo
+        /// </summary>
+        [Fact]
+        public async void TestForGetEquipmentItemById()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                var equipmentItem = new EquipmentItem()
+                {
+                    EquipmentID = 9,
+                    Description = "cup"
+                };
+
+                r.equipmentItems.Add(equipmentItem);
+                var listOfEquipment = await r.GetEquipmentItemById(equipmentItem.EquipmentID);
+                Assert.True(listOfEquipment.Equals(equipmentItem));
             }
         }
 
@@ -667,7 +657,7 @@ namespace Repository.Tests
         /// Tests the GetUserInbox() method of Repo
         /// </summary>
         [Fact]
-        public void TestForGetUserInbox()
+        public async void TestForGetUserInbox()
         {
             var options = new DbContextOptionsBuilder<ProgContext>()
             .UseInMemoryDatabase(databaseName: "p2newsetuptest")
@@ -687,7 +677,7 @@ namespace Repository.Tests
                 };
 
                 r.userInboxes.Add(userInbox);
-                var listOfUserInboxes = r.GetUserInbox(userInbox.UserID);
+                var listOfUserInboxes = await r.GetUserInbox(userInbox.UserID);
                 Assert.NotNull(listOfUserInboxes);
             }
         }
