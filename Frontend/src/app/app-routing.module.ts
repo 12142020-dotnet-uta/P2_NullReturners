@@ -11,6 +11,7 @@ import { PlayerdetailsComponent } from './players/playerdetails/playerdetails.co
 import { EditplayerComponent } from './players/editplayer/editplayer.component';
 import { EquipmentRequestDetailsComponent } from './equipment/equipment-request-details/equipment-request-details.component';
 import { EditEquipmentRequestComponent } from './equipment/edit-equipment-request/edit-equipment-request.component';
+import { PlaysComponent } from './draw/plays/plays.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'teams', component: TeamsComponent},
   {path: 'equipment', component: EquipmentComponent},
   {path: 'roles', component: RolesComponent},
+  {path: 'plays', component: PlaysComponent},
   {path: 'draw', component: DrawComponent},
   {path: 'players/details/:id', component: PlayerdetailsComponent},
   {path: 'players/edit/:id', component: EditplayerComponent},

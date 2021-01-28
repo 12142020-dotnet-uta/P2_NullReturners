@@ -13,4 +13,8 @@ export class DrawService {
     return this.http.post(this.baseUrl + 'plays', model);
   }
  
+  getPlays(){
+    return this.http.get(this.baseUrl + 'plays');
+  }
+  
 }
