@@ -1,0 +1,23 @@
+<p>plays works!</p>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">PlayBookId</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let plays of play">
+        <td>{{plays.playID}}</td>
+        <td>{{plays.playbookId}}</td>
+        <td>{{plays.name}}</td>
+        <td>{{plays.description}}</td>
+        <img height="400" width="400"  src="{{plays.drawnPlay}}" />
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
