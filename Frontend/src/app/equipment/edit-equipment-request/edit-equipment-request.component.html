@@ -12,7 +12,12 @@
         <label for="Message">Message</label>
         <input name="Message" class="form-control me-2" type="text" value="{{equipmentRequest.message}}" aria-label="Message" readonly>
         <label for="Status">Status</label>
-        <input name="Status" [(ngModel)]="editedEquipmentRequest.status" class="form-control me-2" type="text" value="{{equipmentRequest.status}}" aria-label="Status">
+        <!-- <input name="Status" [(ngModel)]="editedEquipmentRequest.status" class="form-control me-2" type="text" value="{{equipmentRequest.status}}" aria-label="Status"> -->
+        <select name="Status" [(ngModel)]="editedEquipmentRequest.status">
+            <option>Requested</option>
+            <option>Ordered</option>
+            <option>Complete</option>
+          </select>
         <br>
         <button type="submit" class="btn btn-primary">Edit</button>
     </form>

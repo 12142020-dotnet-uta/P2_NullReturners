@@ -18,7 +18,6 @@ namespace Models.DataTransfer
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone no.")]
         public string PhoneNumber { get; set; }
     }
 }
