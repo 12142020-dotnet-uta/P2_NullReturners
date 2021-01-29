@@ -37,7 +37,7 @@ module.exports = function (config) {
     },
     reporters: ['progress', 'kjhtml', 'junit'],
     junitReporter: {
-      outputDir: './Frontend/coverage/junit'
+      outputDir: './coverage/junit'
     },
     port: 9876,
     colors: true,
