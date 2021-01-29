@@ -18,7 +18,7 @@ steps:
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'p2nullreturners'
-    scannerMode: 'CLI'
+    scannerMode: 'MSBuild'
     projectKey: 'P2NullReturners_P2_NullReturners'
     projectName: 'P2_NullReturners'
 
