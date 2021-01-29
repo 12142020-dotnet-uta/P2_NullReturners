@@ -25,12 +25,13 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/Frontend'),
+      dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
       reporters: [
         { type: 'html' },
         { type: 'text-summary' }
-      ]
+      ],
+      fixWebPackSourcePaths: true
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,

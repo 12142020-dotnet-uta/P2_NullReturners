@@ -5,8 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test --watch=false --browsers=ChromeHeadless",
-    "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
+    "test": "ng test",
+    "test-headless": "ng test --watch=false --browsers=ChromeHeadless --collect 'Code Coverage'",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
