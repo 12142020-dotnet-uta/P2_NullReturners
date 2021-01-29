@@ -13,6 +13,14 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'p2nullreturners'
+    scannerMode: 'MSBuild'
+    projectKey: 'P2NullReturners_P2_NullReturners'
+    projectName: 'P2_NullReturners'
+
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
   inputs:
@@ -44,6 +52,28 @@ steps:
     command: 'custom'
     workingDir: './Frontend/'
     customCommand: 'run ng build --prod'
+
+- task: Npm@1
+  displayName: 'NPM Test'
+  inputs:
+    command: 'custom'
+    customCommand: 'run test-headless'
+    workingDir: './Frontend/'
+
+- task: Npm@1
+  displayName: 'NPM Test'
+  inputs:
+    command: 'custom'
+    customCommand: 'run e2e'
+    workingDir: './Frontend/'
+
+- task: SonarCloudAnalyze@1
+  displayName: 'SonarCloud Analyze'
+
+- task: SonarCloudPublish@1
+  displayName: 'Publishing SonarCloud'
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: ArchiveFiles@2
   displayName: 'Archive Angular Build Files'
