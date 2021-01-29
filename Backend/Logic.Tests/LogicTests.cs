@@ -12,8 +12,19 @@ using System.Linq;
 using System.Collections.Generic;
 using Logic.Interfaces;
 using Logic.Services;
-using Microsoft.Extensions.Configuration;
+using System.Configuration;
 using Moq;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.AspNetCore.TestHost;
 
 namespace Logic.Tests
 {
@@ -83,54 +94,50 @@ namespace Logic.Tests
         /// Tests the RegisterUser() method of LogicClass
         /// Tests that a user is added to the database
         /// </summary>
-        //[Fact]
-        //public async void TestForRegisterUser()
-        //{
+        [Fact]
+        public async void TestForRegisterUser()
+        {
 
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        Mapper mapper = new Mapper();
-        //        var mockConfSection = new Mock<IConfigurationSection>();
-        //        mockConfSection.SetupGet(m => m[It.Is<string>(s => s == "default")]).Returns("mock value");
-        //        var mockConfiguration = new Mock<IConfiguration>();
-        //        mockConfiguration.Setup(a => a.GetSection(It.Is<string>(s => s == "ConnectionStrings"))).Returns(mockConfSection.Object);
-        //        ITokenService token = new TokenService(mockConfiguration.Object);
-        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
-        //        CreateUserDto cUD = new CreateUserDto()
-        //        {
-        //            UserName = "jerryrice",
-        //            Password = "jerry123",
-        //            FullName = "Jerry Rice",
-        //            PhoneNumber = "111-111-1111",
-        //            Email = "jerryrice@gmail.com",
-        //            RoleID = 1,
-        //            TeamID = 1
-        //        };
-        //        var user = await logic.RegisterUser(cUD);
-        //        //Assert.NotEmpty(context.Users);
-        //        Assert.Equal(context.Users.Find(cUD.Email).Email, cUD.Email);
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                //List<IConfigurationProvider> list = new List<IConfigurationProvider>();
+                //IConfiguration configuration = new ConfigurationRoot(list);
+                //ITokenService token = new TokenService(configuration);
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                CreateUserDto cUD = new CreateUserDto()
+                {
+                    UserName = "jerryrice",
+                    Password = "jerry123",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com",
+                    RoleID = 1,
+                    TeamID = 1
+                };
+                //var user = await logic.RegisterUser(cUD);
+                //Assert.Equal(context.Users.Find(cUD.Email).Email, cUD.Email);
 
-        //        var user2 = logic.CreateUser(cUD);
-        //        //Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
-        //        var countUsers = from u in context.Users
-        //                         where u.Email == user.Email
-        //                         select u;
-        //        int count = 0;
-        //        foreach (User userMail in countUsers)
-        //        {
-        //            count++;
-        //        }
-        //        Assert.Equal(1, count);
-        //    }
-        //}
+                //var user2 = logic.CreateUser(cUD);
+                //var countUsers = from u in context.Users
+                //                 where u.Email == user.Email
+                //                 select u;
+                //int count = 0;
+                //foreach (User userMail in countUsers)
+                //{
+                //    count++;
+                //}
+                //Assert.Equal(1, count);
+            }
+        }
 
         /// <summary>
         /// Tests the UserExists() method of LogicClass
@@ -1830,4 +1837,54 @@ namespace Logic.Tests
 
         //--------------------------End of TokenService Tests---------------------
     } // end of class
+
+    public static class MockJwtTokens
+    {
+        public static string Issuer { get; } = Guid.NewGuid().ToString();
+        public static SecurityKey SecurityKey { get; }
+        public static SigningCredentials SigningCredentials { get; }
+
+        private static readonly JwtSecurityTokenHandler s_tokenHandler = new JwtSecurityTokenHandler();
+        private static readonly RandomNumberGenerator s_rng = RandomNumberGenerator.Create();
+        private static readonly byte[] s_key = new byte[32];
+
+        static MockJwtTokens()
+        {
+            s_rng.GetBytes(s_key);
+            SecurityKey = new SymmetricSecurityKey(s_key) { KeyId = Guid.NewGuid().ToString() };
+            SigningCredentials = new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256);
+        }
+
+        public static string GenerateJwtToken(IEnumerable<Claim> claims)
+        {
+            return s_tokenHandler.WriteToken(new JwtSecurityToken(Issuer, null, claims, null, DateTime.UtcNow.AddMinutes(20), SigningCredentials));
+        }
+    }
+
+    public class BaseIntegrationTest : WebApplicationFactory<IStartup>
+    {
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            builder.ConfigureTestServices(ConfigureServices);
+            builder.ConfigureLogging((WebHostBuilderContext context, ILoggingBuilder loggingBuilder) =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddConsole(options => options.IncludeScopes = true);
+            });
+        }
+
+        protected virtual void ConfigureServices(IServiceCollection services)
+        {
+            services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                var config = new OpenIdConnectConfiguration()
+                {
+                    Issuer = MockJwtTokens.Issuer
+                };
+
+                config.SigningKeys.Add(MockJwtTokens.SecurityKey);
+                options.Configuration = config;
+            });
+        }
+    }
 } // end of namespace
