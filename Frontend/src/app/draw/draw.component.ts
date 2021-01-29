@@ -28,13 +28,10 @@ export class DrawComponent implements AfterViewInit {
   model = new play;
   playbooks: any = {};
   playBookList: any = [];
-  test:number;
   
   ImageString;
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
-
-  
 
   public ngAfterViewInit() {
     // get the context

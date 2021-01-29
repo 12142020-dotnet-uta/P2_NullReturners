@@ -1,0 +1,13 @@
+.form_container {
+    width: 600px;
+    padding: 50px;
+    margin: 0 auto;
+}
+.form_container input {
+    width: 300px;
+    margin: 0 auto 10px;
+}
+
+.form_container button {
+    width: 300px;
+}
