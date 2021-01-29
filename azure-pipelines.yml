@@ -16,11 +16,13 @@ steps:
 
 - task: SonarCloudPrepare@1
   inputs:
-    SonarCloud: 'SonarCloud'
+    SonarCloud: 'sonarcloud2'
     organization: 'p2nullreturners'
-    scannerMode: 'MSBuild'
-    projectKey: 'P2NullReturners_P2_NullReturners'
-    projectName: 'P2_NullReturners'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'NRFrontend'
+    cliProjectName: 'NRFrontend'
+    cliSources: './Frontend/'
 
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
@@ -72,7 +74,7 @@ steps:
   displayName: 'Publish Cobertura Code Coverage'
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: './Frontend/coverage/cobertura-coverage.xml'
+    summaryFileLocation: '../coverage/cobertura-coverage.xml'
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'

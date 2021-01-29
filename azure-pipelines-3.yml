@@ -13,14 +13,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: DeleteFiles@1
-  displayName: 'Delete JUnit files'
-  inputs:
-    SourceFolder: ./Frontend/coverage/junit
-    Contents: 'TESTS*.xml'
-
 - task: SonarCloudPrepare@1
-  displayName: 'SonarCloud Prepare'
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'p2nullreturners'
@@ -68,6 +61,16 @@ steps:
     Action: 'Start Azure App Service'
     WebAppName: 'nrteammanager'
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'p2nullreturners'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'P2NullReturners_NRFrontend'
+    cliProjectName: 'NRFrontend'
+    cliSources: '.'
+
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
   inputs:
@@ -108,20 +111,16 @@ steps:
     workingDir: './Frontend/'
 
 - task: PublishCodeCoverageResults@1
-  displayName: 'Publish Cobertura Code Coverage'
+  displayName: 'Publish DotNet Cobertura Code Coverage'
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/cobertura/coverage.xml'
-    additionalCodeCoverageFiles: './Frontend/coverage/cobertura-coverage.xml'
 
-- task: PublishTestResults@2
-  displayName: 'Publish Angular test results'
-  condition: succeededOrFailed()
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Angular Cobertura Code Coverage'
   inputs:
-    searchFolder: $(System.DefaultWorkingDirectory)/Frontend/coverage/junit
-    testRunTitle: Angular
-    testResultsFormat: JUnit
-    testResultsFiles: "**/TESTS*.xml"
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '../coverage/cobertura-coverage.xml'
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
