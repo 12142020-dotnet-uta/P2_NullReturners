@@ -18,7 +18,7 @@ steps:
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'p2nullreturners'
-    scannerMode: 'MSBuild'
+    scannerMode: 'CLI'
     projectKey: 'P2NullReturners_P2_NullReturners'
     projectName: 'P2_NullReturners'
 
@@ -72,7 +72,7 @@ steps:
   displayName: 'Publish Cobertura Code Coverage'
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
+    summaryFileLocation: './Frontend/coverage/cobertura-coverage.xml'
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
