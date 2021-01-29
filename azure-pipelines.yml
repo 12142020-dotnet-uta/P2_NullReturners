@@ -22,7 +22,7 @@ steps:
     configMode: 'manual'
     cliProjectKey: 'P2NullReturners_NRFrontend'
     cliProjectName: 'NRFrontend'
-    cliSources: '.'
+    cliSources: './Frontend/'
 
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
