@@ -13,14 +13,15 @@
             <input name="PhoneNumber" [(ngModel)]="model.phonenumber" class="form-control me-2" type="tel" placeholder="Phone Number" aria-label="PhoneNumber">
             <label for="Email">Email</label>
             <input name="Email" [(ngModel)]="model.email" class="form-control me-2" type="email" placeholder="Email" aria-label="Email">
-            <label for="Roles">RoleId (change later)</label>
-            <select name="Role" [(ngModel)]="model.role" required>
+            <label for="Roles">Role</label><br>
+            <select name="Role" [(ngModel)]="model.role" required class="form-select form-select-lg mb-3">
                 <option selected></option>
                 <option *ngFor="let role of roleList">{{role.roleName}}</option>
             </select>
             <br>
             <button class="btn btn-outline-success" type="submit">Create</button>
         </form>
+        
     </div>
 
     <ng-container *ngIf="loggedInUser.roleID != 1">
