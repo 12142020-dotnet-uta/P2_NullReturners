@@ -57,7 +57,7 @@ steps:
   displayName: 'NPM Test'
   inputs:
     command: 'custom'
-    customCommand: 'ng test --watch=false --browsers=ChromeHeadless'
+    customCommand: 'ng run test --watch=false --browsers=ChromeHeadless'
     workingDir: './Frontend/'
 
 - task: SonarCloudAnalyze@1
