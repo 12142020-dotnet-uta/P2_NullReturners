@@ -16,12 +16,12 @@ steps:
 
 - task: SonarCloudPrepare@1
   inputs:
-    SonarCloud: 'sonarcloud2'
+    SonarCloud: 'NRPortalSonar'
     organization: 'p2nullreturners'
     scannerMode: 'CLI'
     configMode: 'manual'
-    cliProjectKey: 'NRFrontend'
-    cliProjectName: 'NRFrontend'
+    cliProjectKey: 'NRTMPortal'
+    cliProjectName: 'NRTMPortal'
     cliSources: './Frontend/'
 
 - task: AzureAppServiceManage@0
