@@ -17,11 +17,9 @@ steps:
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'p2nullreturners'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'P2NullReturners_P2_NullReturners'
-    cliProjectName: 'P2_NullReturners'
-    cliSources: '.'
+    scannerMode: 'MSBuild'
+    projectKey: 'P2NullReturners_P2_NullReturners'
+    projectName: 'P2_NullReturners'
 
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
