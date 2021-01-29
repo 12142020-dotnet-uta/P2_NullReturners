@@ -106,7 +106,7 @@ steps:
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/cobertura/coverage.xml'
-    additionalCodeCoverageFiles: $(Agent.TempDirectory)/*/Frontend/cobertura/coverage.xml
+    additionalCodeCoverageFiles: $(Agent.TempDirectory)/*/Frontend/coverage/cobertura-coverage.xml
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
