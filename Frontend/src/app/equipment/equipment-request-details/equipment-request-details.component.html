@@ -1,5 +1,7 @@
 <div class="container">
     <h2>Equipment Request #{{equipmentRequest.requestID}}</h2>
+    <a routerLink="/equipment">Back to Requests</a><br>
+    <a routerLink="/equipment/edit/{{equipmentRequest.requestID}}">Edit Request</a>
     <table class="table table-striped">
         <thead>
           <tr>
@@ -14,7 +16,7 @@
           </tr>
           <tr>
             <td>Item</td>
-            <td>DO THIS LATER</td>
+            <td>{{equipmentRequest?.item?.description}}</td>
           </tr>
           <tr>
             <td>User</td>

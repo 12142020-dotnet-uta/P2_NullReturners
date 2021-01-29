@@ -26,7 +26,6 @@ namespace Models
         [DisplayName("Phone Number")]
         [DataType(DataType.PhoneNumber)]
         [Phone(ErrorMessage = "Phone number must be valid phone number")]
-       // [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone no.")]
         public string PhoneNumber { get; set; }
         [DisplayName("Email Address")]
         [DataType(DataType.EmailAddress)]

@@ -17,6 +17,10 @@ import { PlayerdetailsComponent } from './players/playerdetails/playerdetails.co
 import { EditplayerComponent } from './players/editplayer/editplayer.component';
 import { EquipmentRequestDetailsComponent } from './equipment/equipment-request-details/equipment-request-details.component';
 import { EditEquipmentRequestComponent } from './equipment/edit-equipment-request/edit-equipment-request.component';
+import { PlaysComponent } from './draw/plays/plays.component';
+import { CreateEquipmentRequestComponent } from './equipment/create-equipment-request/create-equipment-request.component';
+import { CreatePlayerComponent } from './players/create-player/create-player.component';
+
 
 @NgModule({
   declarations: [
@@ -31,6 +35,9 @@ import { EditEquipmentRequestComponent } from './equipment/edit-equipment-reques
     EditplayerComponent,
     EquipmentRequestDetailsComponent,
     EditEquipmentRequestComponent,
+    PlaysComponent,
+    CreateEquipmentRequestComponent,
+    CreatePlayerComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

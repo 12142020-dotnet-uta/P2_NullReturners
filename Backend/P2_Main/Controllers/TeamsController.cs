@@ -17,25 +17,21 @@ namespace P2_Main.Controllers
     {
         private readonly LogicClass _logic;
         private readonly ILogger<TeamsController> _logger;
-
         public TeamsController(LogicClass logic, ILogger<TeamsController> logger)
         {
             _logic = logic;
             _logger = logger;
         }
-
         [HttpGet]
         public async Task<IEnumerable<Team>> GetTeams()
         {
             return await _logic.GetTeams();
         }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
             return await _logic.GetTeamById(id);
         }
-
         [HttpPut("edit/{id}")]
         public async Task<ActionResult<Team>> EditTeam(int id, EditTeamDto editTeam)
         {

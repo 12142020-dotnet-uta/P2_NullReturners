@@ -1,7 +1,7 @@
 import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EquipmentService } from 'src/app/_services/equipment.service';
 
 @Component({
@@ -13,7 +13,8 @@ export class EditEquipmentRequestComponent implements OnInit {
 
   constructor(private equipmentService: EquipmentService,
               private route: ActivatedRoute,
-              private titleService: Title) { }
+              private titleService: Title,
+              private router: Router) { }
 
   equipmentRequestId: string;
   equipmentRequest: any = {}
@@ -35,6 +36,7 @@ export class EditEquipmentRequestComponent implements OnInit {
       // getting more information about the request
       this.getTeam();
       this.getUser();
+      this.getItem();
 
       this.titleService.setTitle(`Edit Request - #${this.equipmentRequest.requestID}`)
       this.editedEquipmentRequest = {
@@ -65,11 +67,16 @@ export class EditEquipmentRequestComponent implements OnInit {
     console.log(this.editedEquipmentRequest)
     this.equipmentService.editRequest(this.equipmentRequestId, this.editedEquipmentRequest).subscribe(res =>{
       console.log(res);
-      this.editedEquipmentRequest = {};
-
-      // make this a redirect later
-      this.getRequest(this.equipmentRequestId);
+      this.router.navigate([`/equipment/details/${this.equipmentRequestId}`])
     })
   }
+
+  getItem() {
+    this.equipmentService.getItem(this.equipmentRequest.itemId).subscribe( response => {
+      this.equipmentRequest.item = response;
+    }, err => {
+      console.log(err);
+    });
+};
 
 }

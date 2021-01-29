@@ -311,7 +311,7 @@ namespace Models.Tests
             };
 
             var errorcount = ValidateModel(coachEdit).Count;
-            Assert.Equal(2, errorcount);
+            Assert.Equal(1, errorcount);
         }
 
         /// <summary>
@@ -474,6 +474,7 @@ namespace Models.Tests
         {
             var play = new PlayDto()
             {
+                PlayID = 4,
                 PlaybookID = 1,
                 Name = "tackles",
                 Description = "tackle other players",

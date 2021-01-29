@@ -17,31 +17,26 @@ namespace P2_Main.Controllers
     {
         private readonly LogicClass _logic;
         private readonly ILogger<GamesController> _logger;
-
         public GamesController(LogicClass logic, ILogger<GamesController> logger)
         {
             _logic = logic;
             _logger = logger;
         }
-
         [HttpGet]
         public async Task<IEnumerable<Game>> GetGames()
         {
             return await _logic.GetGames();
         }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGame(int id)
         {
             return await _logic.GetGameById(id);
         }
-
         [HttpPost]
         public async Task<ActionResult<Game>> CreateGame(CreateGameDto game)
         {
             return await _logic.CreateGame(game);
         }
-
         [HttpPut("edit/{id}")]
         public async Task<ActionResult<Game>> EditGame(int id, EditGameDto editGameDto)
         {
