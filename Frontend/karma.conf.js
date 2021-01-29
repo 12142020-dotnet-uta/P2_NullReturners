@@ -10,8 +10,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma'),
-      require('karma-junit-reporter')
+      require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
       jasmine: {
@@ -35,10 +34,7 @@ module.exports = function (config) {
       ],
       fixWebPackSourcePaths: true
     },
-    reporters: ['progress', 'kjhtml', 'junit'],
-    junitReporter: {
-      outputDir: './coverage/junit'
-    },
+    reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
