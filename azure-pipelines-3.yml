@@ -98,7 +98,7 @@ steps:
   displayName: 'NPM Test'
   inputs:
     command: 'custom'
-    customCommand: 'run test-headless --collect "Code Coverage"'
+    customCommand: 'run test-headless'
     workingDir: './Frontend/'
 
 - task: PublishCodeCoverageResults@1
