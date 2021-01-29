@@ -94,6 +94,14 @@ steps:
     workingDir: './Frontend/'
     customCommand: 'run ng build --prod'
 
+- task: Npm@1
+  displayName: 'NPM Test'
+  inputs:
+    command: 'custom'
+    customCommand: 'run test-headless'
+    workingDir: './Frontend/'
+
+
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish Cobertura Code Coverage'
   inputs:
