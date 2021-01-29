@@ -54,9 +54,10 @@ steps:
     customCommand: 'run ng build --prod'
 
 - task: Npm@1
+  displayName: 'NPM Test'
   inputs:
     command: 'custom'
-    customCommand: 'run ng test-headless'
+    customCommand: 'ng test --watch=false --browsers=ChromeHeadless'
     workingDir: './Frontend/'
 
 - task: SonarCloudAnalyze@1
