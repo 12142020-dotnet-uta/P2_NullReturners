@@ -60,12 +60,12 @@ steps:
     customCommand: 'run test-headless'
     workingDir: './Frontend/'
 
-- task: Npm@1
-  displayName: 'NPM Test'
-  inputs:
-    command: 'custom'
-    customCommand: 'run e2e'
-    workingDir: './Frontend/'
+#- task: Npm@1
+#  displayName: 'NPM Test'
+#  inputs:
+#    command: 'custom'
+#    customCommand: 'run e2e'
+#    workingDir: './Frontend/'
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
