@@ -16,11 +16,11 @@ steps:
 - task: SonarCloudPrepare@1
   displayName: 'SonarCloud Prepare'
   inputs:
-    SonarCloud: 'SonarCloud'
+    SonarCloud: 'NRApiSonar'
     organization: 'p2nullreturners'
     scannerMode: 'MSBuild'
-    projectKey: 'P2NullReturners_P2_NullReturners'
-    projectName: 'P2_NullReturners'
+    projectKey: 'NRTMApi'
+    projectName: 'NRTMApi'
 
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
