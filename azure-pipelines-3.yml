@@ -39,20 +39,6 @@ steps:
     projects: '**/*Tests/*.csproj'
     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
 
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish Cobertura Code Coverage'
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
-
-- task: SonarCloudAnalyze@1
-  displayName: 'SonarCloud Analyze'
-
-- task: SonarCloudPublish@1
-  displayName: 'Publishing SonarCloud'
-  inputs:
-    pollingTimeoutSec: '300'
-
 - task: DotNetCoreCLI@2
   displayName: 'Dotnet Publish and Zip'
   inputs:
@@ -107,6 +93,20 @@ steps:
     command: 'custom'
     workingDir: './Frontend/'
     customCommand: 'run ng build --prod'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Cobertura Code Coverage'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
+
+- task: SonarCloudAnalyze@1
+  displayName: 'SonarCloud Analyze'
+
+- task: SonarCloudPublish@1
+  displayName: 'Publishing SonarCloud'
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: ArchiveFiles@2
   displayName: 'Archive Angular Build Files'
