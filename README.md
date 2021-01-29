@@ -6,16 +6,19 @@ Upon successful login, users will be able to view scheduled meetings and practic
 view team announcements, view the playbook, view/add statistics, and request new gear. 
 
 ## Technologies Used
-* .NET Core 5 
+* .NET Core 5
 * Microsoft Entity Framework 6.4
 * SQL Server 2019
 * Angular 11
 
 ## Features
 List of features ready
-* Login
-* Edit/Add Plays
-* Edit/Add User
+* Login/Authentication
+* User level based features
+* Populate and edit teams
+* Create and edit users
+* Create new and edit existing Plays in a Playbook
+* Parents can request equipment replacement
 
 ToDo
 * Add live video capabilities
@@ -25,10 +28,10 @@ ToDo
 ## Usage
 
 ## Contributors
-Joshua Raneri
+Joshua Raneri - Backend / DevOps
 
-Daniel Baker
+Daniel Baker - Team Lead - Frontend / API Integration
 
-Anthony Mungle
+Anthony Mungle - Frontend Design and Implementation
 
-Travis Martin
+Travis Martin - Unit / Integration Testing

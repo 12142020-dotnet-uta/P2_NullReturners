@@ -4,6 +4,8 @@ import { PlayerdetailsComponent } from './playerdetails.component';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Component } from '@angular/core';
+import {Location} from '@angular/common';
 
 describe('PlayerdetailsComponent', () => {
   let component: PlayerdetailsComponent;
@@ -11,7 +13,7 @@ describe('PlayerdetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([{path: 'players/create', component: DummyComponent}])],
       declarations: [ PlayerdetailsComponent ]
     })
     .compileComponents();
@@ -26,4 +28,15 @@ describe('PlayerdetailsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should navigate to player details', () => {
+    const location = TestBed.inject(Location)
+    expect(location.isCurrentPathEqualTo(''));
+  });
+
 });
+
+@Component({template: ''})
+class DummyComponent {
+
+}

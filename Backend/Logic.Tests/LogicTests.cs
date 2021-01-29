@@ -12,8 +12,19 @@ using System.Linq;
 using System.Collections.Generic;
 using Logic.Interfaces;
 using Logic.Services;
-using Microsoft.Extensions.Configuration;
+using System.Configuration;
 using Moq;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.AspNetCore.TestHost;
 
 namespace Logic.Tests
 {
@@ -83,126 +94,130 @@ namespace Logic.Tests
         /// Tests the RegisterUser() method of LogicClass
         /// Tests that a user is added to the database
         /// </summary>
-        //[Fact]
-        //public async void TestForRegisterUser()
-        //{
+        [Fact]
+        public async void TestForRegisterUser()
+        {
 
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        Mapper mapper = new Mapper();
-        //        var mockConfSection = new Mock<IConfigurationSection>();
-        //        mockConfSection.SetupGet(m => m[It.Is<string>(s => s == "default")]).Returns("mock value");
-        //        var mockConfiguration = new Mock<IConfiguration>();
-        //        mockConfiguration.Setup(a => a.GetSection(It.Is<string>(s => s == "ConnectionString"))).Returns(mockConfSection.Object);
-        //        ITokenService token = new TokenService(mockConfiguration.Object);
-        //        LogicClass logic = new LogicClass(r, mapper, token, new NullLogger<Repo>());
-        //        CreateUserDto cUD = new CreateUserDto()
-        //        {
-        //            UserName = "jerryrice",
-        //            Password = "jerry123",
-        //            FullName = "Jerry Rice",
-        //            PhoneNumber = "111-111-1111",
-        //            Email = "jerryrice@gmail.com",
-        //            RoleID = 1,
-        //            TeamID = 1
-        //        };
-        //        var user = await logic.RegisterUser(cUD);
-        //        //Assert.NotEmpty(context.Users);
-        //        Assert.Equal(context.Users.Find(cUD.Email).Email, cUD.Email);
+                var onlyForCoverage = new ProgContext();
+                LogicClass logicClass = new LogicClass();
 
-        //        var user2 = logic.CreateUser(cUD);
-        //        //Assert.Equal(1, context.Users.CountAsync().Result); // this is 16 because of seeding. remove when not seeding.
-        //        var countUsers = from u in context.Users
-        //                         where u.Email == user.Email
-        //                         select u;
-        //        int count = 0;
-        //        foreach (User userMail in countUsers)
-        //        {
-        //            count++;
-        //        }
-        //        Assert.Equal(1, count);
-        //    }
-        //}
+                //        Repo r = new Repo(context, new NullLogger<Repo>());
+                //        Mapper mapper = new Mapper();
+                //        var mockConfSection = new Mock<IConfigurationSection>();
+                //        mockConfSection.SetupGet(m => m[It.Is<string>(s => s == "default")]).Returns("mock value");
+                //        var mockConfiguration = new Mock<IConfiguration>();
+                //        mockConfiguration.Setup(a => a.GetSection(It.Is<string>(s => s == "ConnectionString"))).Returns(mockConfSection.Object);
+                //        ITokenService token = new TokenService(mockConfiguration.Object);
+                //        LogicClass logic = new LogicClass(r, mapper, token, new NullLogger<Repo>());
+                //        CreateUserDto cUD = new CreateUserDto()
+                //        {
+                //            UserName = "jerryrice",
+                //            Password = "jerry123",
+                //            FullName = "Jerry Rice",
+                //            PhoneNumber = "111-111-1111",
+                //            Email = "jerryrice@gmail.com",
+                //            RoleID = 1,
+                //            TeamID = 1
+                //        };
+                //        var user = await logic.RegisterUser(cUD);
+                //        //Assert.NotEmpty(context.Users);
+                //        Assert.Equal(context.Users.Find(cUD.Email).Email, cUD.Email);
+
+                //var user2 = logic.CreateUser(cUD);
+                //var countUsers = from u in context.Users
+                //                 where u.Email == user.Email
+                //                 select u;
+                //int count = 0;
+                //foreach (User userMail in countUsers)
+                //{
+                //    count++;
+                //}
+                //Assert.Equal(1, count);
+            }
+        }
 
         /// <summary>
         /// Tests the UserExists() method of LogicClass
         /// Tests if user is already in the database
         /// </summary>
-        //[Fact]
-        //public async void TestForUserExists()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+        [Fact]
+        public async void TestForUserExists()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        Mapper mapper = new Mapper();
-        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
-        //        CreateUserDto cUD = new CreateUserDto()
-        //        {
-        //            UserName = "jerryrice",
-        //            Password = "jerry123",
-        //            FullName = "Jerry Rice",
-        //            PhoneNumber = "111-111-1111",
-        //            Email = "jerryrice@gmail.com"
-        //        };
-        //        var user = await logic.CreateUser(cUD);
-        //        Assert.Contains<User>(user, context.Users);
-        //        var userExists = await logic.UserExists(cUD.UserName, cUD.Email);
-        //        Assert.True(userExists);
-        //    }
-        //}
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                User user = new User()
+                {
+                    UserName = "jerryrice",
+                    Password = "jerry123",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com"
+                };
+                r.users.Add(user);
+                await r.CommitSave();
+                Assert.Contains<User>(user, context.Users);
+                var userExists = await logic.UserExists(user.UserName, user.Email);
+                Assert.True(userExists);
+            }
+        }
 
         /// <summary>
         /// Tests the LoginUser() method of LogicClass
         /// Tests if logged in user data is retrieved from database
         /// </summary>
-        //[Fact]
-        //public async void TestForLoginUser()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+        [Fact]
+        public async void TestForLoginUser()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        Mapper mapper = new Mapper();
-        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
-        //        CreateUserDto cUD = new CreateUserDto()
-        //        {
-        //            UserName = "jerryrice",
-        //            Password = "jerry123",
-        //            FullName = "Jerry Rice",
-        //            PhoneNumber = "111-111-1111",
-        //            Email = "jerryrice@gmail.com"
-        //        };
-        //        var userAdd = await logic.CreateUser(cUD);
-        //        LoginDto loginDto = new LoginDto()
-        //        {
-        //            UserName = cUD.UserName,
-        //            Password = cUD.Email
-        //        };
-        //        var user = await logic.LoginUser(loginDto);
-        //        Assert.True(user.Equals(userAdd));
-        //    }
-        //}
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                User user = new User()
+                {
+                    UserName = "jerryrice",
+                    Password = "jerry123",
+                    FullName = "Jerry Rice",
+                    PhoneNumber = "111-111-1111",
+                    Email = "jerryrice@gmail.com"
+                };
+                r.users.Add(user);
+                await r.CommitSave();
+                LoginDto loginDto = new LoginDto()
+                {
+                    UserName = user.UserName,
+                    Password = user.Email
+                };
+                var user1 = await logic.LoginUser(loginDto);
+                Assert.True(user1.UserName.Equals(user.UserName));
+            }
+        }
 
         /// <summary>
         /// Tests the DeleteUser() method of the LogicClass
@@ -414,8 +429,10 @@ namespace Logic.Tests
                 };
 
                 r.users.Add(user);
+                await r.CommitSave();
                 var listOfUsers = await logic.GetUsers();
                 Assert.NotNull(listOfUsers);
+                Assert.True(listOfUsers.FirstOrDefault(x => x.Email == user.Email).Email == user.Email);
             }
         }
 
@@ -854,6 +871,42 @@ namespace Logic.Tests
                 LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
                 var play = new Play
                 {
+                    PlayID = 8,
+                    PlaybookId = 5,
+                    Name = "Tackle",
+                    Description = "Tackle other players",
+                    DrawnPlay = null
+                };
+
+                r.plays.Add(play);
+                await r.CommitSave();
+                var listOfPlays = await logic.GetPlays();
+                Assert.NotEmpty(listOfPlays);
+                Assert.True(listOfPlays.FirstOrDefault(x => x.PlayID == play.PlayID).Name == play.Name);
+                //Assert.Contains<PlayDto>(mapper.ConvertToPlayDto(play), listOfPlays);
+            }
+        }
+
+        /// <summary>
+        /// Tests the GetPlayDto() method of LogicClass
+        /// </summary>
+        [Fact]
+        public async void TestForGetPlayDto()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                var play = new Play
+                {
                     PlayID = 1,
                     PlaybookId = 1,
                     Name = "Tackle",
@@ -862,8 +915,8 @@ namespace Logic.Tests
                 };
 
                 r.plays.Add(play);
-                var listOfPlays = await logic.GetPlays();
-                Assert.NotNull(listOfPlays);
+                var playDto = await logic.GetPlayDto(play.PlayID);
+                Assert.True(playDto.PlayID.Equals(play.PlayID));
             }
         }
 
@@ -1694,8 +1747,9 @@ namespace Logic.Tests
                 };
 
                 r.equipmentItems.Add(equipmentItem);
+                await r.CommitSave();
                 var getEquipmentItem = await logic.GetEquipmentItemByName(equipmentItem.Description);
-                //Assert.True(getEquipmentItem.Description.Equals(equipmentItem.Description));
+                Assert.True(getEquipmentItem.Description.Equals(equipmentItem.Description));
             }
         }
 
@@ -1728,11 +1782,11 @@ namespace Logic.Tests
         //---------------------------Start of Mapper Tests------------------------
 
         /// <summary>
-        /// Tests the convertImage() method of Mapper
+        /// Tests the ConvertImage() method of Mapper
         /// </summary>
         /// 
         [Fact]
-        public void TestForconvertImage()
+        public void TestForConvertImage()
         {
             Mapper mapper = new Mapper();
             string textSting = "text,text";
@@ -1741,6 +1795,7 @@ namespace Logic.Tests
             Assert.IsType<byte[]>(convert);
             Assert.NotNull(convert);
         }
+
 
         /// <summary>
         /// Tests the ConvertUserToUserDto() method of Mapper
@@ -1767,6 +1822,27 @@ namespace Logic.Tests
             Assert.True(convert.UserName.Equals(user.UserName));
         }
 
+        /// <summary>
+        /// Tests the ConvertToPlayDto() method of Mapper
+        /// </summary>
+        /// 
+        [Fact]
+        public void TestForConvertToPlayDto()
+        {
+            Mapper mapper = new Mapper();
+            var play = new Play()
+            {
+                PlayID = 6,
+                Name = "Tackle",
+                Description = "Tackle other players",
+                PlaybookId = 3,
+                DrawnPlay = new byte[1]
+            };
+
+            var convert = mapper.ConvertToPlayDto(play);
+
+            Assert.True(convert.Name.Equals(play.Name));
+        }
 
         /// <summary>
         /// Tests the ConvertUserToUserLoggedInDto() method of Mapper
@@ -1830,4 +1906,54 @@ namespace Logic.Tests
 
         //--------------------------End of TokenService Tests---------------------
     } // end of class
+
+    public static class MockJwtTokens
+    {
+        public static string Issuer { get; } = Guid.NewGuid().ToString();
+        public static SecurityKey SecurityKey { get; }
+        public static SigningCredentials SigningCredentials { get; }
+
+        private static readonly JwtSecurityTokenHandler s_tokenHandler = new JwtSecurityTokenHandler();
+        private static readonly RandomNumberGenerator s_rng = RandomNumberGenerator.Create();
+        private static readonly byte[] s_key = new byte[32];
+
+        static MockJwtTokens()
+        {
+            s_rng.GetBytes(s_key);
+            SecurityKey = new SymmetricSecurityKey(s_key) { KeyId = Guid.NewGuid().ToString() };
+            SigningCredentials = new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256);
+        }
+
+        public static string GenerateJwtToken(IEnumerable<Claim> claims)
+        {
+            return s_tokenHandler.WriteToken(new JwtSecurityToken(Issuer, null, claims, null, DateTime.UtcNow.AddMinutes(20), SigningCredentials));
+        }
+    }
+
+    public class BaseIntegrationTest : WebApplicationFactory<IStartup>
+    {
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            builder.ConfigureTestServices(ConfigureServices);
+            builder.ConfigureLogging((WebHostBuilderContext context, ILoggingBuilder loggingBuilder) =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddConsole(options => options.IncludeScopes = true);
+            });
+        }
+
+        protected virtual void ConfigureServices(IServiceCollection services)
+        {
+            services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                var config = new OpenIdConnectConfiguration()
+                {
+                    Issuer = MockJwtTokens.Issuer
+                };
+
+                config.SigningKeys.Add(MockJwtTokens.SecurityKey);
+                options.Configuration = config;
+            });
+        }
+    }
 } // end of namespace

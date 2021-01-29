@@ -474,6 +474,7 @@ namespace Models.Tests
         {
             var play = new PlayDto()
             {
+                PlayID = 4,
                 PlaybookID = 1,
                 Name = "tackles",
                 Description = "tackle other players",

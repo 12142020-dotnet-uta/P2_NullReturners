@@ -1,7 +1,15 @@
-<div class="container">
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
 
-    <h2>Welcome {{user.fullName}}</h2>
-    <p>Please edit your information below:</p>
+    <ng-container *ngIf="loggedInUser.userID == user.userID || loggedInUser.roleID == 1">
+    <div *ngIf="loggedInUser.userID == user.userID">
+        <h2>Welcome {{user.fullName}}</h2>
+        <p>Please edit your information below:</p>
+    </div>
+
+    <div *ngIf="loggedInUser.roleID == 1">
+        <h2>Welcome {{loggedInUser.fullName}}</h2>
+        <p>Edit {{user.fullName}} below:</p>
+    </div>
     
     <form #editUserForm="ngForm" (ngSubmit)="editUser()">
         <label for="FullName">Full Name</label>
@@ -15,4 +23,18 @@
         <br>
         <button type="submit" class="btn btn-primary">Edit</button>
     </form>
+    </ng-container>
+
+    <!-- If the user is not authorized to view  -->
+    <ng-container *ngIf="loggedInUser.userID != user.userID && loggedInUser.roleID != 1">
+        <h2 class="text-center">Not Authorized</h2>
+        <p class="text-center"><a  [routerLink]="['']">Go home.</a></p>
+    </ng-container>
+
+</div>
+
+
+<!-- If the user is not logged in -->
+<div *ngIf="(accountService.currentUser$ | async) === null">
+    <app-home></app-home>
 </div>

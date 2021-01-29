@@ -1,0 +1,17 @@
+<div *ngIf="(accountService.currentUser$ | async) === null" class="container text-center">
+    <h2>Welcome!</h2>
+    <h3>Please login below!</h3>
+    <div class="form_container">
+        <form  #loginForm="ngForm" (ngSubmit)="login()" ngNativeValidate autocomplete="off">
+            <input name="username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username" required>
+            <input name = "password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password" required>
+            <button class="btn btn-outline-success" type="submit">Login</button>
+          </form>
+    </div>
+    <p>Please contact your administrator if you need and account.</p>
+</div>
+
+<div *ngIf="(accountService.currentUser$ | async)" class="container">
+        <h2>Welcome, {{user.fullName}}.</h2>
+        <h3>{{team.name}} dashboard:</h3>
+</div>

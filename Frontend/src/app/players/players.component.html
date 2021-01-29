@@ -13,41 +13,26 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let user of users">
-            <td>{{user.fullName}}</td>
-            <td>{{user.userName}}</td>
-            <td>{{user?.team?.name}}</td>
-            <td>{{user?.role?.roleName}}</td>
-            <td>
-                <a [routerLink]="['/players/details', user.userID]">Details</a> - 
-                <a [routerLink]="['/players/edit', user.userID]">Edit</a>
-            </td>
-            <td *ngIf="loggedInUser.roleID === 1">
-                <a [routerLink]="['/players/edit', user.userID]">Edit</a>
-            </td>
-        </tr>
+            <ng-container *ngFor="let user of users">
+                <tr *ngIf="user.teamID === loggedInUser.teamID">
+                    <td>{{user.fullName}}</td>
+                    <td>{{user.userName}}</td>
+                    <td>{{user?.team?.name}}</td>
+                    <td>{{user?.role?.roleName}}</td>
+                    <td>
+                        <a [routerLink]="['/players/details', user.userID]">Details</a> &nbsp;
+                        <a [routerLink]="['/players/edit', user.userID]" *ngIf="loggedInUser.roleID === 1 || loggedInUser.userID === user.userID">Edit</a>
+                    </td>
+                    <td *ngIf="loggedInUser.roleID === 1">
+                        <a [routerLink]="['/players/edit', user.userID]">Edit</a>
+                    </td>
+                </tr>
+            </ng-container>
         </tbody>
     </table>
+</div>
 
-    <!-- <div *ngIf="loggedInUser.roleID === 1">
-        <h3>Add New User</h3>
-        <form   #createUserForm="ngForm" (ngSubmit)="createUser()" autocomplete="off">
-            <label for="Username">Username</label>
-            <input name="Username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username" aria-label="Username">
-            <label for="Password">Password</label>
-            <input name="Password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password" aria-label="Password">
-            <label for="FullName">Full Name</label>
-            <input name="FullName" [(ngModel)]="model.fullname" class="form-control me-2" type="text" placeholder="Full Name" aria-label="FullName">
-            <label for="PhoneNumber">Phone Number</label>
-            <input name="PhoneNumber" [(ngModel)]="model.phonenumber" class="form-control me-2" type="tel" placeholder="Phone Number" aria-label="PhoneNumber">
-            <label for="Email">Email</label>
-            <input name="Email" [(ngModel)]="model.email" class="form-control me-2" type="email" placeholder="Email" aria-label="Email">
-            <label for="TeamId">TeamID (change later)</label>
-            <input name="TeamId" [(ngModel)]="model.teamId" class="form-control me-2" type="text" placeholder="Team" aria-label="TeamId">
-            <label for="RoleId">RoleId (change later)</label>
-            <input name="RoleId" [(ngModel)]="model.roleId" class="form-control me-2" type="text" placeholder="Role" aria-label="RoleId">
-            <br>
-            <button class="btn btn-outline-success" type="submit">Create</button>
-        </form>
-    </div> -->
+<!-- If the user is not logged in -->
+<div *ngIf="(accountService.currentUser$ | async) === null">
+    <app-home></app-home>
 </div>
