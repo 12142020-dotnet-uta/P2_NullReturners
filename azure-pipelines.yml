@@ -20,7 +20,7 @@ steps:
     organization: 'p2nullreturners'
     scannerMode: 'CLI'
     configMode: 'manual'
-    cliProjectKey: 'NRFrontend_P2'
+    cliProjectKey: 'NRFrontend'
     cliProjectName: 'NRFrontend'
     cliSources: './Frontend/'
 
