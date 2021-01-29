@@ -16,11 +16,11 @@ steps:
 
 - task: SonarCloudPrepare@1
   inputs:
-    SonarCloud: 'SonarCloud'
+    SonarCloud: 'sonarcloud2'
     organization: 'p2nullreturners'
     scannerMode: 'CLI'
     configMode: 'manual'
-    cliProjectKey: 'P2NullReturners_NRFrontend'
+    cliProjectKey: 'NRFrontend_P2'
     cliProjectName: 'NRFrontend'
     cliSources: './Frontend/'
 
