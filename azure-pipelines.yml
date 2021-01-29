@@ -20,9 +20,9 @@ steps:
     organization: 'p2nullreturners'
     scannerMode: 'CLI'
     configMode: 'manual'
-    cliProjectKey: 'P2NullReturners_P2_NullReturners'
-    cliProjectName: 'P2_NullReturners'
-    cliSources: './Frontend/'
+    cliProjectKey: 'P2NullReturners_NRFrontend'
+    cliProjectName: 'NRFrontend'
+    cliSources: '.'
 
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
