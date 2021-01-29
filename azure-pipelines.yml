@@ -57,7 +57,14 @@ steps:
   displayName: 'NPM Test'
   inputs:
     command: 'custom'
-    customCommand: 'run ng test'
+    customCommand: 'run test-headless'
+    workingDir: './Frontend/'
+
+- task: Npm@1
+  displayName: 'NPM Test'
+  inputs:
+    command: 'custom'
+    customCommand: 'run e2e'
     workingDir: './Frontend/'
 
 - task: SonarCloudAnalyze@1
