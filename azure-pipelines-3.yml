@@ -13,20 +13,15 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: DeleteFiles@1
-  displayName: 'Delete JUnit files'
-  inputs:
-    SourceFolder: ./Frontend/coverage/junit
-    Contents: 'TESTS*.xml'
-
 - task: SonarCloudPrepare@1
-  displayName: 'SonarCloud Prepare'
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'p2nullreturners'
-    scannerMode: 'MSBuild'
-    projectKey: 'P2NullReturners_P2_NullReturners'
-    projectName: 'P2_NullReturners'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'P2NullReturners_P2_NullReturners'
+    cliProjectName: 'P2_NullReturners'
+    cliSources: '.'
 
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
@@ -112,16 +107,8 @@ steps:
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/cobertura/coverage.xml'
-    additionalCodeCoverageFiles: './Frontend/coverage/cobertura-coverage.xml'
-
-- task: PublishTestResults@2
-  displayName: 'Publish Angular test results'
-  condition: succeededOrFailed()
-  inputs:
-    searchFolder: $(System.DefaultWorkingDirectory)/Frontend/coverage/junit
-    testRunTitle: Angular
-    testResultsFormat: JUnit
-    testResultsFiles: "**/TESTS*.xml"
+    reportDirectory: '../coverage/'
+    additionalCodeCoverageFiles: '../coverage/cobertura-coverage.xml'
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
