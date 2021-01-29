@@ -76,8 +76,6 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '../coverage/cobertura-coverage.xml'
 
-
-
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
 
