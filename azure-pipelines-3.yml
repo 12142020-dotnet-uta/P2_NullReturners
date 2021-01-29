@@ -13,6 +13,12 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: DeleteFiles@1
+  displayName: 'Delete JUnit files'
+  inputs:
+    SourceFolder: ./Frontend/coverage/junit
+    Contents: 'TESTS*.xml'
+
 - task: SonarCloudPrepare@1
   displayName: 'SonarCloud Prepare'
   inputs:
@@ -106,14 +112,16 @@ steps:
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/cobertura/coverage.xml'
-#    additionalCodeCoverageFiles: './Frontend/coverage/cobertura-coverage.xml'
+    additionalCodeCoverageFiles: './Frontend/coverage/cobertura-coverage.xml'
 
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish Cobertura Code Coverage'
+- task: PublishTestResults@2
+  displayName: 'Publish Angular test results'
+  condition: succeededOrFailed()
   inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: './Frontend/coverage/'
-#    additionalCodeCoverageFiles: './Frontend/coverage/cobertura-coverage.xml'
+    searchFolder: $(System.DefaultWorkingDirectory)/Frontend/coverage/junit
+    testRunTitle: Angular
+    testResultsFormat: JUnit
+    testResultsFiles: "**/TESTS*.xml"
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
