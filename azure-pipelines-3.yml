@@ -63,6 +63,16 @@ steps:
     Action: 'Start Azure App Service'
     WebAppName: 'nrteammanager'
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'p2nullreturners'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'P2NullReturners_NRFrontend'
+    cliProjectName: 'NRFrontend'
+    cliSources: '.'
+
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
   inputs:
@@ -103,12 +113,16 @@ steps:
     workingDir: './Frontend/'
 
 - task: PublishCodeCoverageResults@1
-  displayName: 'Publish Cobertura Code Coverage'
+  displayName: 'Publish DotNet Cobertura Code Coverage'
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/cobertura/coverage.xml'
-    reportDirectory: '../coverage/'
-    additionalCodeCoverageFiles: '../coverage/cobertura-coverage.xml'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Angular Cobertura Code Coverage'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '../coverage/cobertura-coverage.xml'
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
