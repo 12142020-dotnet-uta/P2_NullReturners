@@ -421,9 +421,9 @@ namespace Logic
         /// <param name="listId">RecipientListID</param>
         /// <param name="recId">RecipientID</param>
         /// <returns>RecipientList</returns>
-        public async Task<RecipientList> GetRecipientListById(Guid listId, Guid recId)
+        public async Task<RecipientList> GetRecipientListById(Guid listId)
         {
-            return await _repo.GetRecipientListById(listId, recId);
+            return await _repo.GetRecipientListById(listId);
         }
         /// <summary>
         /// Get list of RecipientLists
@@ -461,7 +461,8 @@ namespace Logic
             {
                 SenderID = newMessageDto.SenderID,
                 RecipientListID = Guid.NewGuid(),
-                MessageText = newMessageDto.MessageText
+                MessageText = newMessageDto.MessageText,
+                SentDate = DateTime.Now
             };
             foreach (Guid id in newMessageDto.RecipientList)
             {
