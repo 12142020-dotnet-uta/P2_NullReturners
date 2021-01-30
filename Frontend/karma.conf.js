@@ -34,7 +34,7 @@ module.exports = function (config) {
         { type: 'cobertura' }
       ]
     },
-    reporters: ['progress', 'kjhtml', 'cobertura', 'lcovonly'],
+    reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
