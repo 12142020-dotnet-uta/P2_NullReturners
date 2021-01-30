@@ -71,9 +71,9 @@ describe('DrawComponent', () => {
     component.SetBackGroundWhite();
   });
 
-  it('should call SetBackgroundTan()', () => {
-    component.SetBackGroundTan();
-  });
+  // it('should call SetBackgroundTan()', () => {
+  //   component.SetBackGroundTan();
+  // });
 
   it('should call saveCanvas()', () => {
     component.saveCanvas();
