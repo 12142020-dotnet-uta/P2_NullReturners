@@ -50,6 +50,12 @@ steps:
     customCommand: 'install -g @angular/cli@latest'
 
 - task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: './Frontend/'
+    customCommand: 'install sonar-scanner'
+
+- task: Npm@1
   displayName: 'NPM Build Angular'
   inputs:
     command: 'custom'
@@ -67,7 +73,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: './Frontend/'
-    customCommand: 'run sonar'
+    customCommand: 'run ng sonar'
 
 #- task: Npm@1
 #  displayName: 'NPM Test'

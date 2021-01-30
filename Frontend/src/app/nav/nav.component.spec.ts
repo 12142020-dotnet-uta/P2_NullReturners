@@ -13,18 +13,22 @@ import { UserLoggingIn } from '../_models/UserLoggingIn';
 import { of } from 'rxjs';
 import { AccountService } from '../_services/account.service';
 import { HttpClient } from '@angular/common/http';
+import { UserLoggedIn } from '../_models/UserLoggedIn';
 
 describe('NavComponent', () => {
   let component: NavComponent;
   let fixture: ComponentFixture<NavComponent>;
-  let mockNav;
-  let user: UserLoggingIn = {
-    username: 'travis', password: 'travis123'
+  let mockLogin;
+  let accountServiceMock;
+  let user: UserLoggedIn = {
+    userID: "1", userName: "travis", fullName: "Travis Martin", 
+    phoneNumber: "111-111-1111", email: "travis@gmail.com",
+    teamID: null, roleID: null
   };
 
   beforeEach(async () => {
-    const accountServiceMock = jasmine.createSpyObj('AccountServices', ['login']);
-    mockNav = accountServiceMock.login.and.returnValue(of(user));
+    accountServiceMock = jasmine.createSpyObj('AccountService', ['login', 'logout']);
+    mockLogin = accountServiceMock.login.and.returnValue(of(user));
     await TestBed.configureTestingModule({
       imports: [FormsModule, HttpClientTestingModule, RouterTestingModule
         .withRoutes([{path: '', component: DummyComponent}, {path: 'plays', component: DummyComponent}])],
@@ -44,7 +48,7 @@ describe('NavComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show unordered list items', () => {
+  it('should show unordered list', () => {
     const unorderedList = fixture.debugElement.queryAll(By.css('ul'));
     expect(unorderedList.length).toBe(1);
   });
@@ -73,12 +77,15 @@ describe('NavComponent', () => {
     expect(userName.value).toBe('travis');
     expect(password.value).toBe('travis123');
 
-    let spyEvent = spyOn(component, 'login');
+    component.model.username = 'travis';
+    component.model.password = 'travis123';
+    expect(component.model.username).toBe('travis');
+    expect(component.model.password).toBe('travis123');
+    //let spyEvent = spyOn(component, 'login');
     component.login();
     // expect(mockNav.calls.any()).toBe(true)
     // expect(spyEvent.calls.any()).toBe(true)
-    // expect(component.model.username).toBe('travis');
-    // expect(component.model.password).toBe('travis123');
+    // expect(component.model2.userName).toBe('travis');
 
     // const allButtons = fixture.debugElement.queryAll(By.css('button'));
     // const submit: HTMLLinkElement = allButtons[1].nativeElement;
@@ -90,15 +97,16 @@ describe('NavComponent', () => {
   });
 
   it('should call logout', () => {
-    let spyEvent = spyOn(component, "login");
+    //let spyEvent = spyOn(component, "login");
+    component.model.username = 'travis';
+    component.model.password = 'travis123';
     component.login();
-    expect(spyEvent.calls.any()).toBe(true)
+    //expect(spyEvent.calls.any()).toBe(true)
 
-    let spyEvent2 = spyOn(component, "logout");
+    //let spyEvent2 = spyOn(component, "logout");
     component.logout();
-    expect(spyEvent2.calls.any()).toBe(true)
-    expect(component.model.username).toBe(null);
-    expect(component.model.password).toBe(null);
+    //expect(spyEvent2.calls.any()).toBe(true)
+    expect(component.model2.userName).toBe(null);
     // const listOfLinks = fixture.debugElement.queryAll(By.css('a'));
     // const logout: HTMLInputElement = listOfLinks[7].nativeElement;
     // logout.click();

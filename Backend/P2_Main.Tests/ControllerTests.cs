@@ -10,6 +10,7 @@ using P2_Main.Controllers;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Linq;
 using Logic.Interfaces;
+using System.Collections.Generic;
 
 namespace P2_Main.Tests
 {
@@ -1216,5 +1217,140 @@ namespace P2_Main.Tests
         }
 
         //------------------End of AccountController Tests--------------------------
+
+        //-----------------Start of MessagesController Tests------------------------
+
+        /// <summary>
+        /// Test for the GetMessages() method of MessagesController
+        /// </summary>
+        [Fact]
+        public async void TestForGetMessages()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                MessagesController messagesController = new MessagesController(logic, new NullLogger<UsersController>());
+                var message = new Message()
+                {
+                    MessageID = Guid.NewGuid(),
+                    RecipientListID = Guid.NewGuid(),
+                    SenderID = Guid.NewGuid(),
+                    SentDate = DateTime.Now,
+                    MessageText = "How you doin'?"
+                };
+
+                r.messages.Add(message);
+                await r.CommitSave();
+                var listOfMessages = await messagesController.GetMessages();
+                Assert.NotNull(listOfMessages);
+            }
+        }
+
+        /// <summary>
+        /// Test for the SendMessage() method of MessagesController
+        /// </summary>
+        [Fact]
+        public async void TestForSendMessage()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                MessagesController messagesController = new MessagesController(logic, new NullLogger<UsersController>());
+                List<Guid> listOfGuids = new List<Guid>();
+                var messageDto = new NewMessageDto()
+                {
+                    SenderID = Guid.NewGuid(),
+                    RecipientList = listOfGuids,
+                    MessageText = "What's up?!"
+                };
+
+                var sendMessage = await messagesController.SendMessage(messageDto);
+
+                Assert.True(sendMessage.Value.SenderID.Equals(messageDto.SenderID));
+            }
+        }
+
+        /// <summary>
+        /// Test for the GetRecipientList() method of MessagesController
+        /// </summary>
+        [Fact]
+        public async void TestForGetRecipientLists()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                MessagesController messagesController = new MessagesController(logic, new NullLogger<UsersController>());
+                var recipientList = new RecipientList()
+                {
+                    RecipientID = Guid.NewGuid(),
+                    RecipientListID = Guid.NewGuid()
+                };
+
+                r.recipientLists.Add(recipientList);
+                await r.CommitSave();
+                var recipientList1 = await messagesController.GetRecipientList(recipientList.RecipientListID);
+                Assert.NotNull(recipientList1);
+            }
+        }
+
+        /// <summary>
+        /// Test for the GetRecipientList() method of MessagesController
+        /// </summary>
+        [Fact]
+        public async void TestForGetRecipientList()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                MessagesController messagesController = new MessagesController(logic, new NullLogger<UsersController>());
+                var recipientList = new RecipientList()
+                {
+                    RecipientID = Guid.NewGuid(),
+                    RecipientListID = Guid.NewGuid()
+                };
+
+                r.recipientLists.Add(recipientList);
+                await r.CommitSave();
+                var recipientLists = await messagesController.GetRecipientLists();
+                Assert.NotNull(recipientLists);
+            }
+        }
+        //------------------End of MessagesController Tests-------------------------
     }
 }
