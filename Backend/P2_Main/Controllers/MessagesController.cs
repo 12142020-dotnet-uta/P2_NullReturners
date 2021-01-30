@@ -23,7 +23,7 @@ namespace P2_Main.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public async Task<IEnumerable<Message>> GetUsers()
+        public async Task<IEnumerable<Message>> GetMessages()
         {
             return await _logic.GetMessages();
         }
@@ -41,7 +41,7 @@ namespace P2_Main.Controllers
         }
 
         [HttpGet("RecipientLists")]
-        public async Task<IEnumerable<RecipientList>> GetRecipientLists(Guid id)
+        public async Task<IEnumerable<RecipientList>> GetRecipientLists()
         {
             return await _logic.GetRecipientLists();
         }

@@ -443,32 +443,31 @@ namespace Repository.Tests
         /// Tests the GetRecipientListById() method of Repo
         /// </summary>
         /// 
+        [Fact]
+        public async void TestForGetRecipientListById()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
 
-        // BROKE THIS TRAVIS
-        //[Fact]
-        //public async void TestForGetRecipientListById()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                var recipientList = new RecipientList()
+                {
+                    RecipientListID = Guid.NewGuid(),
+                    RecipientID = Guid.NewGuid(),
+                };
 
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        var recipientList = new RecipientList()
-        //        {
-        //            RecipientListID = Guid.NewGuid(),
-        //            RecipientID = Guid.NewGuid(),
-        //        };
-
-        //        r.recipientLists.Add(recipientList);
-        //        var listOfRecipientList = await r.GetRecipientListById(recipientList.RecipientListID);
-        //        Assert.True(listOfRecipientList.Equals(recipientList));
-        //    }
-        //}
+                r.recipientLists.Add(recipientList);
+                await r.CommitSave();
+                var recipientListId = await r.GetRecipientListById(recipientList.RecipientListID);
+                Assert.True(recipientListId.Equals(recipientList));
+            }
+        }
 
         /// <summary>
         /// Tests the GetGames() method of Repo

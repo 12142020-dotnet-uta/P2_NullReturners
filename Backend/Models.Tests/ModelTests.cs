@@ -153,6 +153,7 @@ namespace Models.Tests
                 MessageID = Guid.NewGuid(),
                 SenderID = Guid.NewGuid(),
                 RecipientListID = Guid.NewGuid(),
+                SentDate = DateTime.Now,
                 MessageText = "Yall ready for this?"
             };
 
@@ -486,5 +487,22 @@ namespace Models.Tests
             Assert.Equal(0, errorcount);
         }
 
+        /// <summary>
+        /// Validates the NewMessageDto Model works with proper data
+        /// </summary>
+        [Fact]
+        public void ValidateNewMessageDto()
+        {
+            List<Guid> guidList = new List<Guid>();
+            var newMessage = new NewMessageDto()
+            {
+                SenderID = Guid.NewGuid(),
+                RecipientList = guidList,
+                MessageText = "sup"
+            };
+
+            var errorcount = ValidateModel(newMessage).Count;
+            Assert.Equal(0, errorcount);
+        }
     }
 }
