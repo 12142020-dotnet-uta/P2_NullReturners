@@ -91,4 +91,8 @@ export class MessagesComponent implements OnInit {
     });
   }
 
+  sendMessage() {
+    
+  }
+
 }
