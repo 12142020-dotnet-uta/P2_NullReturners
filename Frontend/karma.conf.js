@@ -10,8 +10,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma'),
-      require('karma-sonarqube-generic-reporter')
+      require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
       jasmine: {
@@ -35,12 +34,7 @@ module.exports = function (config) {
         { type: 'cobertura' }
       ]
     },
-    reporters: ['progress', 'kjhtml', 'unitsonarqubegeneric'],
-    unitSonarqubeGenericReporter: {
-      outputDir: '../coverage/junit', // results will be saved as $outputDir/$browserName.xml
-      outputFile: undefined, // if included, results will be saved as $outputDir/$browserName/$outputFile
-      useBrowserName: false // add browser name to report and classes names
-    },
+    reporters: ['progress', 'kjhtml', 'cobertura', 'lcovonly'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
