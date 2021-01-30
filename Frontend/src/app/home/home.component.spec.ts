@@ -14,6 +14,7 @@ describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let mockLogin;
   let accountServiceMock;
+  let setUserMock;
   let user: UserLoggedIn = {
     userID: "1", userName: "travis", fullName: "Travis Martin", 
     phoneNumber: "111-111-1111", email: "travis@gmail.com",
@@ -21,12 +22,13 @@ describe('HomeComponent', () => {
   };
 
   beforeEach(async () => {
-    accountServiceMock = jasmine.createSpyObj('AccountService', ['login']);
+    accountServiceMock = jasmine.createSpyObj('AccountService', ['login', 'setCurrentUser']);
     mockLogin = accountServiceMock.login.and.returnValue(of(user));
+    setUserMock = accountServiceMock.setCurrentUser.and.returnValue(of(user));
     await TestBed.configureTestingModule({
       imports: [FormsModule, HttpClientTestingModule, RouterTestingModule],
       declarations: [ HomeComponent ],
-      providers: [{ provide: AccountService, useValue: accountServiceMock }]
+      providers: [{ provide: AccountService, useValue: accountServiceMock }, HttpClientTestingModule, RouterTestingModule]
     })
     .compileComponents();
   });
@@ -50,9 +52,18 @@ describe('HomeComponent', () => {
   });
 
   it('should get the current user', () => {
-    component.login();
+     component.user = {
+      userID: "1", userName: "travis", fullName: "Travis Martin", 
+      phoneNumber: "111-111-1111", email: "travis@gmail.com",
+      teamID: null, roleID: null
+    };
+    mockLogin = accountServiceMock.login.and.returnValue(of(component.user));
+    setUserMock = accountServiceMock.setCurrentUser.and.returnValue(of(component.user));
     component.ngOnInit();
-    //expect(component.user.userName).toEqual('travis');
+    expect(component.user.userName).toEqual('travis');
+    spyOn(component, "getLoggedInUser");
+    component.getLoggedInUser();
+    expect(component.getLoggedInUser).toHaveBeenCalled();
   });
 
 });

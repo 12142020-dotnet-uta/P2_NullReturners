@@ -5,15 +5,34 @@ import { CreateEquipmentRequestComponent } from './create-equipment-request.comp
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
+import { of } from 'rxjs';
+import { EquipmentService } from 'src/app/_services/equipment.service';
+import { ExpectedConditions } from 'protractor';
+import { AccountService } from 'src/app/_services/account.service';
 
 describe('CreateEquipmentRequestComponent', () => {
   let component: CreateEquipmentRequestComponent;
   let fixture: ComponentFixture<CreateEquipmentRequestComponent>;
+  let mockCreateRequest;
+  let equipmentServiceMock;
+ // let accountServiceMock;
+  let mockGetItems;
+  let model: any = {
+      itemId: "3", item: "football", status: "Requested"
+  };
 
   beforeEach(async () => {
+    //accountServiceMock = jasmine.createSpyObj('AccountService', []);
+    equipmentServiceMock = jasmine.createSpyObj('EquipmentService', ['createRequest', 'getItems']);
+    mockCreateRequest = equipmentServiceMock.createRequest.and.returnValue(of(model));
+    mockGetItems = equipmentServiceMock.getItems.and.returnValue(of());
     await TestBed.configureTestingModule({
       imports: [FormsModule, HttpClientTestingModule, RouterTestingModule],
-      declarations: [ CreateEquipmentRequestComponent ]
+      declarations: [ CreateEquipmentRequestComponent ],
+      providers: [
+        { provide: EquipmentService, useValue: equipmentServiceMock }, /*{ provide: AccountService, useValue: equipmentServiceMock },*/ 
+        HttpClientTestingModule, RouterTestingModule
+      ]
     })
     .compileComponents();
   });
@@ -26,5 +45,28 @@ describe('CreateEquipmentRequestComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should create an equipment request', () => {
+    component.model.user = "Chris";
+    component.model.item = "baseball";
+    component.model.status = "pending";
+
+    expect(component.model.user).toBe("Chris");
+    component.itemList = [];
+    //component.createEquipmentRequest();
+    //expect(component.model.user).toBe("travis");
+  });
+
+  it('should call getCurrentUser()', () => {
+    component.getCurrentUser();
+  });
+
+  it('should call getCreatedItem()', () => {
+    component.itemList = [{}];
+    component.itemList[0].description = "football";
+    component.itemList[0].equipmentId = "3"
+    component.getCreatedItem();
+    //expect(component.model.itemId).toBe("3");
   });
 });
