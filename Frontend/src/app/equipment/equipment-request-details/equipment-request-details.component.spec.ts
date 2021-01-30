@@ -4,15 +4,25 @@ import { EquipmentRequestDetailsComponent } from './equipment-request-details.co
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+import { EquipmentService } from 'src/app/_services/equipment.service';
 
 describe('EquipmentRequestDetailsComponent', () => {
   let component: EquipmentRequestDetailsComponent;
   let fixture: ComponentFixture<EquipmentRequestDetailsComponent>;
+  let equipmentServiceMock;
+  let mockGetTeam;
 
   beforeEach(async () => {
+    //equipmentServiceMock = jasmine.createSpyObj('EquipmentService', ['getRequest', 'getTeam', 'getUser', 'getItem']);
+    //mockGetTeam = equipmentServiceMock.getTeam.and.returnValue(of(2));
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [ EquipmentRequestDetailsComponent ]
+      declarations: [ EquipmentRequestDetailsComponent ],
+      providers: [
+       // { provide: EquipmentService, useValue: equipmentServiceMock }, 
+        HttpClientTestingModule, RouterTestingModule
+      ]
     })
     .compileComponents();
   });
@@ -25,5 +35,20 @@ describe('EquipmentRequestDetailsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call getTeam()', () => {
+    component.equipmentRequest = {
+      teamId: 2, team: null
+    }
+    component.getTeam();
+  });
+
+  it('should call getUser()', () => {
+    component.getUser();
+  });
+
+  it('should call getItem()', () => {
+    component.getItem();
   });
 });

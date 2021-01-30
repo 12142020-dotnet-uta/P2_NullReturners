@@ -8,11 +8,19 @@ import { PlayersComponent } from './players.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UserService } from '../_services/user.service';
 import { of } from 'rxjs';
+import { User } from '../_models/User';
+import { AccountService } from '../_services/account.service';
 
 describe('PlayersComponent', () => {
   let component: PlayersComponent;
   let fixture: ComponentFixture<PlayersComponent>;
   let userServiceMock: any;
+  let accountServiceMock: any;
+  let user: User = {
+    userID: "hi", userName: "elvis", fullName: "Elvis Presley", 
+    phoneNumber: "111-111-1111", email: "elvis@gmail.com",
+    teamID: null, roleID: null
+  };
   let submitEl: DebugElement;
   let userNameEl: DebugElement;
   let passwordEl: DebugElement;
@@ -24,12 +32,14 @@ describe('PlayersComponent', () => {
 
   beforeEach(async () => {
     userServiceMock = jasmine.createSpyObj('UserService', ['getUsers']);
-    userServiceMock.getUsers.and.returnValue(of([]));
+    userServiceMock.getUsers.and.returnValue(of(user));
+    accountServiceMock = jasmine.createSpyObj('AccountService', ['registerUser']);
+    accountServiceMock.registerUser.and.returnValue(of(user));
     await TestBed.configureTestingModule({
       imports: [FormsModule, HttpClientTestingModule],
       declarations: [ PlayersComponent ],
       providers: [
-        {provide: UserService, UseValue: userServiceMock}
+        {provide: UserService, UseValue: userServiceMock}, {provide: AccountService, UseValue: accountServiceMock}, HttpClientTestingModule
       ]
     })
     .compileComponents();
@@ -51,6 +61,27 @@ describe('PlayersComponent', () => {
 
   it('should be created', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should register a user', () => {
+    component.model.username = 'travis';
+    component.model.password = 'travis123';
+    expect(component.model.username).toBe('travis');
+    expect(component.model.password).toBe('travis123');
+    component.createUser();
+    //expect(component.model.userName).toBe("elvis");
+  });
+
+  it('should call getTeams()', () => {
+    component.users = [{}]
+    component.users[0].teamId = 4;
+    component.getTeams();
+  });
+
+  it('should call getRoles()', () => {
+    component.users = [{}]
+    component.users[0].roleId = 4;
+    component.getRoles();
   });
 
   // it('should have an h2 tag', () => {

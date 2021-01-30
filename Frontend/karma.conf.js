@@ -10,6 +10,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
+      require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
@@ -24,6 +25,11 @@ module.exports = function (config) {
     jasmineHtmlReporter: {
       suppressAll: true // removes the duplicated traces
     },
+    coverageIstanbulReporter: {
+      reports: ['html', 'lcovonly', 'text-summary'],
+      dir: require('path').join(__dirname, './coverage'),
+      fixWebpackSourcePaths: true,
+    },
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
@@ -34,7 +40,7 @@ module.exports = function (config) {
         { type: 'cobertura' }
       ]
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -42,6 +48,7 @@ module.exports = function (config) {
     browsers: [
       'Chrome'
     ],
+    fixWebpackSourcePaths: true,
     singleRun: false,
     restartOnFileChange: true
   });

@@ -17,4 +17,9 @@ describe('DrawService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should call createDrawing(model)', () => {
+    let model: any = {};
+    service.createDrawing(model);
+  });
 });

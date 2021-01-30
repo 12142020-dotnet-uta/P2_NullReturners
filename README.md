@@ -1,4 +1,4 @@
-# Sports Management Application
+# NR Team Manager
 
 ## Project Description
 We will be creating an application to act as a central hub for coaches, parents, and players of a youth sports team. 

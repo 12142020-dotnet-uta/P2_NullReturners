@@ -399,7 +399,6 @@ namespace Logic.Tests
 
         /// <summary>
         /// Tests the GetUsers() method of LogicClass
-        /// TODO: don't know how to test the UserDto lines
         /// </summary>
         [Fact]
         public async void TestForGetUsers()
@@ -1072,33 +1071,32 @@ namespace Logic.Tests
         /// Tests the GetRecipientListById() method of LogicClass
         /// </summary>
         /// 
+        [Fact]
+        public async void TestForGetRecipientListById()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
 
-        // BROKE THIS TRAVIS
-        //[Fact]
-        //public async void TestForGetRecipientListById()
-        //{
-        //    var options = new DbContextOptionsBuilder<ProgContext>()
-        //    .UseInMemoryDatabase(databaseName: "p2newsetuptest")
-        //    .Options;
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-        //    using (var context = new ProgContext(options))
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                var recipientList = new RecipientList()
+                {
+                    RecipientListID = Guid.NewGuid(),
+                };
 
-        //        Repo r = new Repo(context, new NullLogger<Repo>());
-        //        Mapper mapper = new Mapper();
-        //        LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
-        //        var recipientList = new RecipientList()
-        //        {
-        //            RecipientListID = Guid.NewGuid(),
-        //        };
-
-        //        r.recipientLists.Add(recipientList);
-        //        var listOfRecipientList = await logic.GetRecipientListById(recipientList.RecipientListID);
-        //        Assert.True(listOfRecipientList.Equals(recipientList));
-        //    }
-        //}
+                r.recipientLists.Add(recipientList);
+                await r.CommitSave();
+                var listOfRecipientList = await logic.GetRecipientListById(recipientList.RecipientListID);
+                Assert.True(listOfRecipientList.Equals(recipientList));
+            }
+        }
 
         /// <summary>
         /// Tests the BuildRecipientList() method of LogicClass
@@ -1219,6 +1217,7 @@ namespace Logic.Tests
                     MessageID = Guid.NewGuid(),
                     SenderID = Guid.NewGuid(),
                     RecipientListID = Guid.NewGuid(),
+                    SentDate = DateTime.Now,
                     MessageText = "How you doin'?"
                 };
                 var rL = new List<Guid>();
@@ -1261,22 +1260,22 @@ namespace Logic.Tests
                     MessageID = Guid.NewGuid(),
                     SenderID = Guid.NewGuid(),
                     RecipientListID = Guid.NewGuid(),
+                    SentDate = DateTime.Now,
                     MessageText = "How you doin'?"
                 };
-                var rL = new List<Guid>();
-                rL.Add(message.RecipientListID);
-                var messageDto = new NewMessageDto()
-                {
-                    SenderID = message.SenderID,
-                    RecipientList = rL,
-                    MessageText = message.MessageText
-                };
+                //var rL = new List<Guid>();
+                //rL.Add(message.RecipientListID);
+                //var messageDto = new NewMessageDto()
+                //{
+                //    SenderID = message.SenderID,
+                //    RecipientList = rL,
+                //    MessageText = message.MessageText
+                //};
 
-                var createMessage = await logic.CreateNewMessage(messageDto);
-                var sendMessage = await logic.SendMessage(createMessage);
+                //var createMessage = await logic.CreateNewMessage(messageDto);
+                var sendMessage = await logic.SendMessage(message);
 
-                //Assert.Equal(1, context.Messages.CountAsync().Result);
-                //Assert.True(context.UserInboxes.Find(message.RecipientListID, message.MessageID).MessageID.Equals(message.MessageID));
+                Assert.True(sendMessage);
             }
         }
 
