@@ -13,11 +13,12 @@ exports.config = {
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
+    chromeOptions: { args: [ "--headless"] },
     browserName: 'chrome'
   },
   directConnect: true,
   SELENIUM_PROMISE_MANAGER: false,
-  baseUrl: 'http://localhost:4200/',
+  baseUrl: 'https://nrtmportal.azurewebsites.net',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,

@@ -1071,6 +1071,9 @@ namespace Logic.Tests
         /// <summary>
         /// Tests the GetRecipientListById() method of LogicClass
         /// </summary>
+        /// 
+
+        // BROKE THIS TRAVIS
         //[Fact]
         //public async void TestForGetRecipientListById()
         //{
@@ -1089,11 +1092,10 @@ namespace Logic.Tests
         //        var recipientList = new RecipientList()
         //        {
         //            RecipientListID = Guid.NewGuid(),
-        //            RecipientID = Guid.NewGuid(),
         //        };
 
         //        r.recipientLists.Add(recipientList);
-        //        var listOfRecipientList = await logic.GetRecipientListById(recipientList.RecipientListID, recipientList.RecipientID);
+        //        var listOfRecipientList = await logic.GetRecipientListById(recipientList.RecipientListID);
         //        Assert.True(listOfRecipientList.Equals(recipientList));
         //    }
         //}

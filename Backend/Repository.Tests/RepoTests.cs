@@ -442,6 +442,9 @@ namespace Repository.Tests
         /// <summary>
         /// Tests the GetRecipientListById() method of Repo
         /// </summary>
+        /// 
+
+        // BROKE THIS TRAVIS
         //[Fact]
         //public async void TestForGetRecipientListById()
         //{
@@ -462,7 +465,7 @@ namespace Repository.Tests
         //        };
 
         //        r.recipientLists.Add(recipientList);
-        //        var listOfRecipientList = await r.GetRecipientListById(recipientList.RecipientListID, recipientList.RecipientID);
+        //        var listOfRecipientList = await r.GetRecipientListById(recipientList.RecipientListID);
         //        Assert.True(listOfRecipientList.Equals(recipientList));
         //    }
         //}

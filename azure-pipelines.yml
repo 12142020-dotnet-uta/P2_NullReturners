@@ -13,6 +13,17 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'NRPortalSonar'
+    organization: 'p2nullreturners'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'NRTMPortal'
+    cliProjectName: 'NRTMPortal'
+    cliSources: './Frontend/'
+
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
   inputs:
@@ -44,6 +55,40 @@ steps:
     command: 'custom'
     workingDir: './Frontend/'
     customCommand: 'run ng build --prod'
+
+- task: Npm@1
+  displayName: 'NPM Test'
+  inputs:
+    command: 'custom'
+    customCommand: 'run test-headless'
+    workingDir: './Frontend/'
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: './Frontend/'
+    customCommand: 'run sonar'
+
+#- task: Npm@1
+#  displayName: 'NPM Test'
+#  inputs:
+#    command: 'custom'
+#    customCommand: 'run e2e'
+#    workingDir: './Frontend/'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Cobertura Code Coverage'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '../coverage/cobertura-coverage.xml'
+
+- task: SonarCloudAnalyze@1
+  displayName: 'SonarCloud Analyze'
+
+- task: SonarCloudPublish@1
+  displayName: 'Publishing SonarCloud'
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: ArchiveFiles@2
   displayName: 'Archive Angular Build Files'
