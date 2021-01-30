@@ -1,4 +1,3 @@
-import { CompileShallowModuleMetadata } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
@@ -15,7 +14,7 @@ export class CreatePlayerComponent implements OnInit {
   teamList:any;
   roleList: any;
 
-  constructor(public accountService: AccountService, private userService: UserService, private router: Router) { }
+  constructor(private accountService: AccountService, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.getTeamList();
@@ -23,12 +22,9 @@ export class CreatePlayerComponent implements OnInit {
   }
 
   createUser() {
-    this.accountService.currentUser$.subscribe(user => {
-      this.model.teamId = user.roleID;
-    })
-
+    this.getTeam();
     this.getRole();
-    console.log(this.model);
+
     this.accountService.registerUser(this.model).subscribe(res => {
       console.log(res)
       this.router.navigate(['/players'])

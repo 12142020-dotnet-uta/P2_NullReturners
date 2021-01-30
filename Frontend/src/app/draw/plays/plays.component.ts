@@ -32,4 +32,8 @@ export class PlaysComponent implements OnInit {
     }
   }
 
+  deletePlay(play){
+
+  }
+
 }

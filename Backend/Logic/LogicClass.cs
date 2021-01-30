@@ -626,8 +626,9 @@ namespace Logic
         /// </summary>
         /// <param name="service">Calendar service</param>
         /// <returns>Calendar</returns>
-        public static async Task<Calendar> GetCalendar(CalendarService service)
+        public static async Task<Calendar> GetCalendar()
         {
+            CalendarService service = await InitializeCalendar();
             string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
             var calendar = await service.Calendars.Get(calendarId).ExecuteAsync();
             return calendar;
@@ -637,8 +638,9 @@ namespace Logic
         /// </summary>
         /// <param name="service">Calendar service</param>
         /// <returns>list of Events</returns>
-        public static async Task<IEnumerable<Event>> GetMyEvents(CalendarService service)
+        public static async Task<IEnumerable<Event>> GetMyEvents()
         {
+            CalendarService service = await InitializeCalendar();
             string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
             EventsResource.ListRequest listRequest = service.Events.List(calendarId);
             listRequest.TimeMin = DateTime.Now;
@@ -663,8 +665,9 @@ namespace Logic
         /// <param name="service">Calendar service</param>
         /// <param name="eventDto">Event info from input</param>
         /// <returns>Calendar Event</returns>
-        public static async Task<Event> CreateEvent(CalendarService service, EventDto eventDto)
+        public static async Task<Event> CreateEvent(EventDto eventDto)
         {
+            CalendarService service = await InitializeCalendar();
             string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
             var myevent = new Event()
             {

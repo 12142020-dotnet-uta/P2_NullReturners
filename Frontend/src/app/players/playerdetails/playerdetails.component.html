@@ -1,8 +1,5 @@
-<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
-    <ng-container *ngIf="loggedInUser.teamID == user.teamID">
+<div class="container">
     <h2>User: #{{user.userID}}</h2>
-    <a *ngIf="loggedInUser.userID == user.userID || loggedInUser.roleID == 1" [routerLink]="['/players/edit/', user.userID]">Edit</a>
-    <p *ngIf="loggedInUser.roleID == 1"><a [routerLink]="['/players/edit/', user.userID]">Admin Edit</a></p>
     <table class="table table-striped">
         <thead>
           <tr>
@@ -41,17 +38,4 @@
           </tr>
         </tbody>
       </table>
-    </ng-container>
-
-    <!-- If the user is not authorized to view  -->
-    <ng-container *ngIf="loggedInUser.teamID != user.teamID">
-      <h2 class="text-center">Not Authorized</h2>
-      <p class="text-center"><a  [routerLink]="['']">Go home.</a></p>
-    </ng-container>
-</div>
-
-
-<!-- If the user is not logged in -->
-<div *ngIf="(accountService.currentUser$ | async) === null">
-  <app-home></app-home>
 </div>

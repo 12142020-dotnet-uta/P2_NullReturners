@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { AccountService } from 'src/app/_services/account.service';
 import { UserService } from 'src/app/_services/user.service';
 
 
@@ -11,7 +10,7 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class PlayerdetailsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private userService: UserService, public accountService: AccountService) { }
+  constructor(private route: ActivatedRoute, private userService: UserService) { }
 
   user: any = {};
   userId: string;

@@ -20,8 +20,7 @@ import { EditEquipmentRequestComponent } from './equipment/edit-equipment-reques
 import { PlaysComponent } from './draw/plays/plays.component';
 import { CreateEquipmentRequestComponent } from './equipment/create-equipment-request/create-equipment-request.component';
 import { CreatePlayerComponent } from './players/create-player/create-player.component';
-import { HomeComponent } from './home/home.component';
-import { MessagesComponent } from './messages/messages.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 @NgModule({
@@ -40,8 +39,7 @@ import { MessagesComponent } from './messages/messages.component';
     PlaysComponent,
     CreateEquipmentRequestComponent,
     CreatePlayerComponent,
-    HomeComponent,
-    MessagesComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

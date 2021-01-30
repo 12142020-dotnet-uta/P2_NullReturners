@@ -1,5 +1,5 @@
-<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
-    <div *ngIf="loggedInUser.roleID == 1">
+<div class="container">
+    <div>
         <h3>Add New User</h3>
         <a routerLink="/players">Back to Users</a><br>
         <form #createUserForm="ngForm" (ngSubmit)="createUser()" ngNativeValidate autocomplete="off">
@@ -13,24 +13,20 @@
             <input name="PhoneNumber" [(ngModel)]="model.phonenumber" class="form-control me-2" type="tel" placeholder="Phone Number" aria-label="PhoneNumber">
             <label for="Email">Email</label>
             <input name="Email" [(ngModel)]="model.email" class="form-control me-2" type="email" placeholder="Email" aria-label="Email">
-            <label for="Roles">Role</label><br>
-            <select name="Role" [(ngModel)]="model.role" required class="form-select form-select-lg mb-3">
+            <label for="Team">TeamID (change later)</label>
+            <!-- <input name="TeamId" [(ngModel)]="model.teamId" class="form-control me-2" type="text" placeholder="Team" aria-label="TeamId"> -->
+            <select name="Team" [(ngModel)]="model.team" required>
+                <option selected></option>
+                <option *ngFor="let team of teamList">{{team.name}}</option>
+            </select>
+            <label for="Roles">RoleId (change later)</label>
+            <!-- <input name="RoleId" [(ngModel)]="model.roleId" class="form-control me-2" type="text" placeholder="Role" aria-label="RoleId"> -->
+            <select name="Role" [(ngModel)]="model.role" required>
                 <option selected></option>
                 <option *ngFor="let role of roleList">{{role.roleName}}</option>
             </select>
             <br>
             <button class="btn btn-outline-success" type="submit">Create</button>
         </form>
-        
     </div>
-
-    <ng-container *ngIf="loggedInUser.roleID != 1">
-        <h2 class="text-center">Not Authorized</h2>
-        <p class="text-center"><a  [routerLink]="['']">Go home.</a></p>
-    </ng-container>
-</div>
-
-<!-- If the user is not logged in -->
-<div *ngIf="(accountService.currentUser$ | async) === null">
-    <app-home></app-home>
 </div>
