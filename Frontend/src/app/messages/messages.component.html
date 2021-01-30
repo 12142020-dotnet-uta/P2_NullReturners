@@ -20,8 +20,8 @@
            </div>
         </div>
         <div class="input-message">
-            <form ngNativeValidate class="d-flex" autocomplete="off">
-                <input name="Message"  class="form-control me-2" type="text" placeholder="Message...">
+            <form #sendTextMessage="ngForm" (ngSubmit)="sendMessage()" ngNativeValidate class="d-flex" autocomplete="off">
+                <input name="Message" [(ngModel)]="message.messageText" class="form-control me-2" type="text" placeholder="Message..." required>
                 <button class="btn btn-outline-success" type="submit">Send</button>
               </form>
         </div>

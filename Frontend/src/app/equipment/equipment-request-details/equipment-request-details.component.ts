@@ -56,4 +56,5 @@ export class EquipmentRequestDetailsComponent implements OnInit {
       });
   };
 
+
 }

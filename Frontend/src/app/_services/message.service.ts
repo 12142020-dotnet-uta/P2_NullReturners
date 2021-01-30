@@ -22,4 +22,8 @@ export class MessageService {
     return this.http.get(this.baseUrl + `messages/recipientlists/${id}`);
   }
 
+  sendMessage(message:any) {
+    return this.http.post(this.baseUrl + `messages/send`, message);
+  }
+
 }
