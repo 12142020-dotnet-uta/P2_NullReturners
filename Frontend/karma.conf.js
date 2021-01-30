@@ -4,7 +4,8 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    frameworks: ['jasmine', '@angular-devkit/build-angular', 'karma-typescript'],
+    files: [ 'src/**/*.ts'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
@@ -25,9 +26,12 @@ module.exports = function (config) {
     jasmineHtmlReporter: {
       suppressAll: true // removes the duplicated traces
     },
+    preprocessors: {
+      '**/*.ts': 'karma-typescript'
+    },
     coverageIstanbulReporter: {
       reports: ['html', 'lcovonly', 'text-summary'],
-      dir: require('path').join(__dirname, 'coverage'),
+      dir: require('path').join(__dirname, './coverage'),
       combineBrowserReports: true,
       fixWebpackSourcePaths: true,
       skipFilesWithNoCoverage: true
@@ -42,7 +46,7 @@ module.exports = function (config) {
         { type: 'cobertura' }
       ]
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'karma-typescript'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
