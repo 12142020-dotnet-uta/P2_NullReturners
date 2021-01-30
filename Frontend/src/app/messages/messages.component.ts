@@ -1,5 +1,6 @@
 import { registerLocaleData } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { User } from '../_models/User';
 import { AccountService } from '../_services/account.service';
 import { MessageService } from '../_services/message.service';
@@ -17,6 +18,8 @@ export class MessagesComponent implements OnInit {
   usersArr: any = {};
   messagesSent:any[] = [];
   messagesRecieved:any[] = [];
+
+  message:any = {}
 
   messagesArr: any;
 
@@ -58,7 +61,6 @@ export class MessagesComponent implements OnInit {
     this.messagesService.getMessages().subscribe(messages => {
       this.messagesArr = messages;
       this.getRecipients();
-      console.log(messages)
     }, err => {
       console.log(err);
     })
@@ -91,8 +93,17 @@ export class MessagesComponent implements OnInit {
     });
   }
 
-  // sendMessage() {
-    
-  // }
+  sendMessage() {
+    this.message.senderID = this.userLoggedIn.userID;
+    this.message.recipientList = [this.selectedUserId];
+    this.messagesService.sendMessage(this.message).subscribe( msg => {
+      console.log(msg);
+      this.getMessages();
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  // work on refreshing and then sorting messages by when it was sent
 
 }
