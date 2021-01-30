@@ -13,13 +13,16 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
 - task: SonarCloudPrepare@1
   inputs:
-    SonarCloud: 'SonarCloud'
+    SonarCloud: 'NRPortalSonar'
     organization: 'p2nullreturners'
-    scannerMode: 'MSBuild'
-    projectKey: 'P2NullReturners_P2_NullReturners'
-    projectName: 'P2_NullReturners'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'NRTMPortal'
+    cliProjectName: 'NRTMPortal'
+    cliSources: './Frontend/'
 
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
@@ -47,6 +50,12 @@ steps:
     customCommand: 'install -g @angular/cli@latest'
 
 - task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: './Frontend/'
+    customCommand: 'install sonar-scanner'
+
+- task: Npm@1
   displayName: 'NPM Build Angular'
   inputs:
     command: 'custom'
@@ -61,11 +70,23 @@ steps:
     workingDir: './Frontend/'
 
 - task: Npm@1
-  displayName: 'NPM Test'
   inputs:
     command: 'custom'
-    customCommand: 'run e2e'
     workingDir: './Frontend/'
+    customCommand: 'run ng sonar'
+
+#- task: Npm@1
+#  displayName: 'NPM Test'
+#  inputs:
+#    command: 'custom'
+#    customCommand: 'run e2e'
+#    workingDir: './Frontend/'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Cobertura Code Coverage'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '../coverage/cobertura-coverage.xml'
 
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'

@@ -14,7 +14,6 @@ variables:
 
 steps:
 - task: SonarCloudPrepare@1
-  displayName: 'SonarCloud Prepare'
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'p2nullreturners'
@@ -39,20 +38,6 @@ steps:
     projects: '**/*Tests/*.csproj'
     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
 
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish Cobertura Code Coverage'
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
-
-- task: SonarCloudAnalyze@1
-  displayName: 'SonarCloud Analyze'
-
-- task: SonarCloudPublish@1
-  displayName: 'Publishing SonarCloud'
-  inputs:
-    pollingTimeoutSec: '300'
-
 - task: DotNetCoreCLI@2
   displayName: 'Dotnet Publish and Zip'
   inputs:
@@ -75,6 +60,16 @@ steps:
     azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
     Action: 'Start Azure App Service'
     WebAppName: 'nrteammanager'
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'p2nullreturners'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'P2NullReturners_NRFrontend'
+    cliProjectName: 'NRFrontend'
+    cliSources: '.'
 
 - task: AzureAppServiceManage@0
   displayName: 'Stop App Service'
@@ -107,6 +102,33 @@ steps:
     command: 'custom'
     workingDir: './Frontend/'
     customCommand: 'run ng build --prod'
+
+- task: Npm@1
+  displayName: 'NPM Test'
+  inputs:
+    command: 'custom'
+    customCommand: 'run test-headless'
+    workingDir: './Frontend/'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish DotNet Cobertura Code Coverage'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/cobertura/coverage.xml'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Angular Cobertura Code Coverage'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '../coverage/cobertura-coverage.xml'
+
+- task: SonarCloudAnalyze@1
+  displayName: 'SonarCloud Analyze'
+
+- task: SonarCloudPublish@1
+  displayName: 'Publishing SonarCloud'
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: ArchiveFiles@2
   displayName: 'Archive Angular Build Files'

@@ -18,7 +18,7 @@ exports.config = {
   },
   directConnect: true,
   SELENIUM_PROMISE_MANAGER: false,
-  baseUrl: 'http://localhost:4200/',
+  baseUrl: 'https://nrtmportal.azurewebsites.net',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
