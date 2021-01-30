@@ -34,7 +34,7 @@ module.exports = function (config) {
         { type: 'cobertura' }
       ]
     },
-    reporters: ['progress', 'kjhtml', 'unitsonarqubegeneric'],
+    reporters: ['progress', 'kjhtml', 'sonarqubegeneric'],
     unitSonarqubeGenericReporter: {
       outputDir: '../coverage/junit', // results will be saved as $outputDir/$browserName.xml
       outputFile: undefined, // if included, results will be saved as $outputDir/$browserName/$outputFile

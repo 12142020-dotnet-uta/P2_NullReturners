@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProgContext))]
-    [Migration("20210128012957_work-dammit")]
-    partial class workdammit
+    [Migration("20210130020426_whoopwhoop")]
+    partial class whoopwhoop
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,6 +116,9 @@ namespace Repository.Migrations
 
                     b.Property<Guid>("SenderID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("SentDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("MessageID");
 

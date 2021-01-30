@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class workdammit : Migration
+    public partial class whoopwhoop : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,6 +65,7 @@ namespace Repository.Migrations
                     MessageID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SenderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RecipientListID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MessageText = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
