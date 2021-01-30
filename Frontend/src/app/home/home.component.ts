@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   constructor(public accountService: AccountService, private userService: UserService, private router: Router) { }
 
-  user: UserLoggedIn;
+  user: UserLoggedIn; 
   team:any = {};
   model:any = {};
 
