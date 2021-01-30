@@ -28,10 +28,13 @@ export class DrawComponent implements AfterViewInit {
   model = new play;
   playbooks: any = {};
   playBookList: any = [];
-  
+  test:number;
+  Eraser: string = 'white';
   ImageString;
   canvasEl: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
+
+  
 
   public ngAfterViewInit() {
     // get the context
@@ -114,11 +117,11 @@ public getWhite(){
 }
 
 public getBlue(){
-  this.cx.strokeStyle = 'Blue';
+  this.cx.strokeStyle = 'turquoise';
 }
 
 public getEraser(){
-  this.cx.strokeStyle = this.canvasEl.style.backgroundColor;
+  this.cx.strokeStyle = this.Eraser;
 }
 
 public lineIncrease(){
@@ -143,19 +146,22 @@ public restetTemplate(){
   this.cx.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height);
 }
 
-SetBackGroundTan(){
-  this.cx.fillStyle = "bisque";
+SetBackGroundBlack(){
+  this.Eraser = 'Black';
+  this.cx.fillStyle = "Black";
   this.cx.fillRect(0,0,600,600);
   //this.canvasEl.style.backgroundColor = "Bisque";
 }
 
 SetBackGroundGreen(){
+  this.Eraser = 'Green';
   this.cx.fillStyle = "Green";
   this.cx.fillRect(0,0,600,600);
   //this.canvasEl.style.backgroundColor = "Green";
 }
 
 SetBackGroundWhite(){
+  this.Eraser = 'White';
   this.cx.fillStyle = "White";
   this.cx.fillRect(0,0,600,600);
   //sthis.canvasEl.style.backgroundColor = "White";

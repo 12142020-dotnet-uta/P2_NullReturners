@@ -22,6 +22,7 @@ import { CreateEquipmentRequestComponent } from './equipment/create-equipment-re
 import { CreatePlayerComponent } from './players/create-player/create-player.component';
 import { HomeComponent } from './home/home.component';
 import { MessagesComponent } from './messages/messages.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { MessagesComponent } from './messages/messages.component';
     PlaysComponent,
     CreateEquipmentRequestComponent,
     CreatePlayerComponent,
+    CalendarComponent,
     HomeComponent,
     MessagesComponent,
   ],

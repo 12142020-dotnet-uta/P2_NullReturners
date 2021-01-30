@@ -11,7 +11,7 @@
               <a *ngIf="accountService.currentUser$ | async" class="nav-link" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a *ngIf="accountService.currentUser$ | async" class="nav-link">View Schedule</a>
+              <a *ngIf="accountService.currentUser$ | async" class="nav-link" routerLink="/calendar">View Schedule</a>
             </li>
             <li class="nav-item">
               <a *ngIf="accountService.currentUser$ | async" class="nav-link" routerLink="/plays">View Playbook</a>

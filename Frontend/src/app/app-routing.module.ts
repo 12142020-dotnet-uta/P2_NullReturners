@@ -16,6 +16,7 @@ import { CreateEquipmentRequestComponent } from './equipment/create-equipment-re
 import { CreatePlayerComponent } from './players/create-player/create-player.component';
 import { HomeComponent } from './home/home.component';
 import { MessagesComponent } from './messages/messages.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'roles', component: RolesComponent},
   {path: 'plays', component: PlaysComponent},
   {path: 'draw', component: DrawComponent},
+  {path: 'calendar', component: CalendarComponent},
   {path: 'players/details/:id', component: PlayerdetailsComponent},
   {path: 'players/edit/:id', component: EditplayerComponent},
   {path: 'players/create', component: CreatePlayerComponent},
