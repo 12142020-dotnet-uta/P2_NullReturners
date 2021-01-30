@@ -39,7 +39,7 @@ describe('PlayersComponent', () => {
       imports: [FormsModule, HttpClientTestingModule],
       declarations: [ PlayersComponent ],
       providers: [
-        {provide: UserService, UseValue: userServiceMock}, {provide: AccountService, UseValue: accountServiceMock}
+        {provide: UserService, UseValue: userServiceMock}, {provide: AccountService, UseValue: accountServiceMock}, HttpClientTestingModule
       ]
     })
     .compileComponents();
@@ -69,7 +69,19 @@ describe('PlayersComponent', () => {
     expect(component.model.username).toBe('travis');
     expect(component.model.password).toBe('travis123');
     component.createUser();
-    //component.getUsers();
+    //expect(component.model.userName).toBe("elvis");
+  });
+
+  it('should call getTeams()', () => {
+    component.users = [{}]
+    component.users[0].teamId = 4;
+    component.getTeams();
+  });
+
+  it('should call getRoles()', () => {
+    component.users = [{}]
+    component.users[0].roleId = 4;
+    component.getRoles();
   });
 
   // it('should have an h2 tag', () => {

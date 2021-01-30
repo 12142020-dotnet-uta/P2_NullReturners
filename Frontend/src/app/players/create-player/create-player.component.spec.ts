@@ -12,6 +12,7 @@ import {Location} from '@angular/common';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { User } from 'src/app/_models/User';
+import { Team } from 'src/app/_models/Team';
 
 describe('CreatePlayerComponent', () => {
   let component: CreatePlayerComponent;
@@ -22,7 +23,10 @@ describe('CreatePlayerComponent', () => {
     userID: "1", userName: "travis", fullName: "Travis Martin", 
     phoneNumber: "111-111-1111", email: "travis@gmail.com",
     teamID: 1, roleID: 1
-  }
+  };
+  let team: Team = {
+    teamID: 1, name: "bulls", wins: 3, losses: 1
+  };
 
   beforeEach(async () => {
     accountServiceMock = jasmine.createSpyObj('AccountService', ['registerUser', 'currentUser$']);
@@ -56,6 +60,19 @@ describe('CreatePlayerComponent', () => {
     expect(component.model.username).toBe('travis');
     expect(component.model.password).toBe('travis123');
     component.createUser();
+  });
+
+  it('should get the team', () => {
+    component.teamList = [];
+    spyOn(component.teamList, "push")
+    component.teamList[0] ="tigers";
+    component.teamList[1] = "bulls";
+    component.teamList[2] = "sharks";
+
+    expect(component.teamList[0]).toBe("tigers");
+    spyOn(component, "getTeam");
+    component.getTeam();
+    expect(component.getTeam).toHaveBeenCalled();
   });
 
   // it('should have an h3 tag', () => {

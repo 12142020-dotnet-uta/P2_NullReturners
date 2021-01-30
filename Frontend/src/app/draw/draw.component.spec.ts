@@ -26,4 +26,69 @@ describe('DrawComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call captureEvents()', () => {
+    component.captureEvents();
+  });
+
+  it('should call getRed()', () => {
+    component.getRed();
+  });
+
+  it('should call getBlack()', () => {
+    component.getBlack();
+  });
+
+  it('should call getWhite()', () => {
+    component.getWhite();
+  });
+
+  it('should call getBlue()', () => {
+    component.getBlue();
+  });
+
+  it('should call getEraser()', () => {
+    component.getEraser();
+  });
+
+  it('should call lineIncrease()', () => {
+    component.lineIncrease();
+  });
+
+  it('should call lineDecrease()', () => {
+    component.lineDecrease();
+  });
+
+  it('should call resetTemplate', () => {
+    component.restetTemplate();
+  });
+
+  it('should call SetBackGroundGreen()', () => {
+    component.SetBackGroundGreen();
+  });
+
+  it('should call SetBackGroundWhite', () => {
+    component.SetBackGroundWhite();
+  });
+
+  it('should call SetBackgroundTan()', () => {
+    component.SetBackGroundTan();
+  });
+
+  it('should call saveCanvas()', () => {
+    component.saveCanvas();
+  });
+
+  it('should call getPlaybooks()', () => {
+    component.getPlaybooks();
+  });
+
+  it('should call getTeamPlayBook()', () => {
+    component.getTeamPlayBook();
+  });
+
+  it('should call getPlayBook()', () => {
+    component.getPlayBook();
+  });
+
 });

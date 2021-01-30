@@ -27,4 +27,22 @@ describe('MessagesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call getRecipients()', () => {
+    component.messagesArr = [{}];
+    component.messagesArr[0].recipientListId = 3;
+    component.getRecipients();
+  });
+
+  it('should call getMessageBox()', () => {
+    component.messagesArr = [{}];
+    component.messagesArr[0].recipient = [];
+    component.messagesArr[0].recipient[0] = "4";
+    component.messagesArr[0].senderID = 5
+    component.userLoggedIn = {};
+    component.userLoggedIn.userID = 5;
+    component.selectedUserId = "4";
+    component.getMessageBox(5);
+  });
+
 });
