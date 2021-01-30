@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://nrteammanager.azurewebsites.net/api/'
+  apiUrl: 'https://nrteammanager.azurewebsites.net/'
 };
