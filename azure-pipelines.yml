@@ -24,13 +24,6 @@ steps:
     cliProjectName: 'NRTMPortal'
     cliSources: './Frontend/'
 
-- task: AzureAppServiceManage@0
-  displayName: 'Stop App Service'
-  inputs:
-    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
-    Action: 'Stop Azure App Service'
-    WebAppName: 'nrtmportal'
-
 - task: NodeTool@0
   displayName: 'Setup Node Environment'
   inputs:
@@ -63,19 +56,6 @@ steps:
     customCommand: 'run test-headless'
     workingDir: './Frontend/'
 
-#- task: Npm@1
-#  displayName: 'NPM Test'
-#  inputs:
-#    command: 'custom'
-#    customCommand: 'run e2e'
-#    workingDir: './Frontend/'
-
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish Cobertura Code Coverage'
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: './Frontend/coverage/cobertura-coverage.xml'
-
 - task: SonarCloudAnalyze@1
   displayName: 'SonarCloud Analyze'
 
@@ -93,11 +73,12 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
 
-- task: PublishBuildArtifacts@1
+- task: AzureAppServiceManage@0
+  displayName: 'Stop App Service'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    azureSubscription: 'Azure subscription 1(0cfa6593-af85-4dcb-b1a3-7ead93b8def2)'
+    Action: 'Stop Azure App Service'
+    WebAppName: 'nrtmportal'
 
 - task: AzureRmWebAppDeployment@4
   displayName: 'Deploy Angular App'
