@@ -69,12 +69,6 @@ steps:
     customCommand: 'run test-headless'
     workingDir: './Frontend/'
 
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    workingDir: './Frontend/'
-    customCommand: 'run ng sonar'
-
 #- task: Npm@1
 #  displayName: 'NPM Test'
 #  inputs:
