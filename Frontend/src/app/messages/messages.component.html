@@ -1,10 +1,23 @@
 <div class="message_container row">
     <div class="message_users col-md-2">
-        <p *ngFor="let user of users">{{user.fullName}}</p>
+        <ng-container *ngFor="let user of users">
+            <p (click)="getMessageBox(user.userID)">{{user.fullName}}</p>
+        </ng-container> 
     </div>
     <div class="message_area col-md-9">
         <div class="messages">
-           test messages
+           <div *ngFor="let message of messagesArr" >
+                {{message.messageText}}
+           </div>
+           <div>
+               <p>testing here:</p>
+               <ng-container *ngFor="let sent of messagesSent">
+                   {{sent.messageText}} - {{sent.sentDate}}<br>
+               </ng-container>
+               <ng-container *ngFor="let recieved of messagesRecieved">
+                    <p style="color: red;">{{recieved.messageText}} - {{recieved.sentDate}}</p>
+                </ng-container>
+           </div>
         </div>
         <div class="input-message">
             <form ngNativeValidate class="d-flex" autocomplete="off">
