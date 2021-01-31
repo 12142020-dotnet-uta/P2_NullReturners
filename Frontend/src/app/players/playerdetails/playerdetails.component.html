@@ -1,4 +1,4 @@
-<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser" id="playerDetails">
     <ng-container *ngIf="loggedInUser.teamID == user.teamID">
     <h2>User: #{{user.userID}}</h2>
     <a *ngIf="loggedInUser.userID == user.userID || loggedInUser.roleID == 1" [routerLink]="['/players/edit/', user.userID]">Edit</a>

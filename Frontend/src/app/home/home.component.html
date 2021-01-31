@@ -1,4 +1,4 @@
-<div class="home">
+<div id="homePage">
     <div *ngIf="(accountService.currentUser$ | async) === null" class="container text-center" id="login">
         <h2>Welcome!</h2>
         <h3>Please login below!</h3>
@@ -10,14 +10,14 @@
                 </form>
         </div>
         <p><strong>Please contact your administrator if you need an account.</strong></p>
-    </div>
-    
-    <div *ngIf="(accountService.currentUser$ | async)" class="container" id="loggedIn">
+        </div>
+        
+        <div *ngIf="(accountService.currentUser$ | async)" class="container" id="loggedIn">
         <h1>Welcome, {{user.fullName}}.</h1>
         <h2>{{team.name}} dashboard:</h2>
-    </div>  
-    
+        </div>  
 </div>
+
 
 
 
