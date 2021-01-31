@@ -609,12 +609,12 @@ namespace Logic
             await using (var stream =
                 new FileStream(jsonFile, FileMode.Open, FileAccess.Read))
             {
-                var confg = Google.Apis.Json.NewtonsoftJsonSerializer.Instance.Deserialize<JsonCredentialParameters>(stream);
+                var config = Google.Apis.Json.NewtonsoftJsonSerializer.Instance.Deserialize<JsonCredentialParameters>(stream);
                 credential = new ServiceAccountCredential(
-                   new ServiceAccountCredential.Initializer(confg.ClientEmail)
+                   new ServiceAccountCredential.Initializer(config.ClientEmail)
                    {
                        Scopes = Scopes
-                   }.FromPrivateKey(confg.PrivateKey));
+                   }.FromPrivateKey(config.PrivateKey));
             }
             var service = new CalendarService(new BaseClientService.Initializer()
             {
@@ -671,30 +671,38 @@ namespace Logic
         {
             CalendarService service = await InitializeCalendar();
             string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
+            EventDateTime start = new EventDateTime()
+            {
+                DateTime = eventDto.StartTime
+            };
+            EventDateTime end = new EventDateTime()
+            {
+                DateTime = eventDto.EndTime
+            };
             var myevent = new Event()
             {
-                Id = eventDto.EventID.ToString(),
-                Start = eventDto.StartTime,
-                End = eventDto.EndTime,
+                Start = start,
+                End = end,
+                Location = eventDto.Location,
                 Summary = eventDto.Description,
                 Description = eventDto.Message
             };
-            var InsertRequest = service.Events.Insert(myevent, calendarId);
-            try
-            {
-                await InsertRequest.ExecuteAsync();
-            }
-            catch (Exception)
-            {
-                try
-                {
-                    await service.Events.Update(myevent, calendarId, myevent.Id).ExecuteAsync();
-                }
-                catch (Exception)
-                {
-                    myevent = new Event();
-                }
-            }
+            var insertRequest = service.Events.Insert(myevent, calendarId);
+            //try
+            //{
+                await insertRequest.ExecuteAsync();
+            //}
+            //catch (Exception)
+            //{
+            //    try
+            //    {
+            //        await service.Events.Update(myevent, calendarId, myevent.Id).ExecuteAsync();
+            //    }
+            //    catch (Exception)
+            //    {
+            //        myevent = new Event();
+            //    }
+            //}
             return myevent;
         }
         // Equipment
