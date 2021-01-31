@@ -6,10 +6,12 @@ Upon successful login, users will be able to view scheduled meetings and practic
 view team announcements, view the playbook, view/add statistics, and request new gear. 
 
 ## Technologies Used
-* .NET Core 5
+* ASP.NET Core 5
 * Microsoft Entity Framework 6.4
-* SQL Server 2019
+* AzureSQL
 * Angular 11
+* Azure DevOps
+* SonarCloud
 
 ## Features
 List of features ready
@@ -19,6 +21,9 @@ List of features ready
 * Create and edit users
 * Create new and edit existing Plays in a Playbook
 * Parents can request equipment replacement
+* Users can send messages to each other directly or in groups
+* Coaches can enter game results and highlights for players and parents to see
+* Integration with Google Calendar to schedule events and practices
 
 ToDo
 * Add live video capabilities
@@ -34,4 +39,4 @@ Daniel Baker - Team Lead - Frontend / API Integration
 
 Anthony Mungle - Frontend Design and Implementation
 
-Travis Martin - Unit / Integration Testing
+Travis Martin - Unit Testing and Documentation
