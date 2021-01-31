@@ -110,6 +110,7 @@ export class MessagesComponent implements OnInit {
     this.messagesService.sendMessage(this.message).subscribe( msg => {
       console.log(msg);
       this.getMessages();
+      this.message.messageText = '';
     }, err => {
       console.log(err);
     })
