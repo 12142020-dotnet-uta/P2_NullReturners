@@ -19,9 +19,18 @@ export class TeamsComponent implements OnInit {
   getTeams(){
     this.http.get('https://localhost:44342/api/teams').subscribe(response => {
       this.teams = response;
+      this.calculatePCT();
     }), err => {
       console.log(err)
     }
+  }
+
+  calculatePCT() {
+    this.teams.forEach(team => {
+      if(team.wins || team.losses) {
+        team.winningPct = (team.wins / (team.wins + team.losses)).toPrecision(2);
+      } 
+    });
   }
 
 }
