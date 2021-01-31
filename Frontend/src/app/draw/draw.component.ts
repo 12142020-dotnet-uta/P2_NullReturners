@@ -15,7 +15,7 @@ import { play } from './play';
 @Component({
   selector: 'app-draw',
   templateUrl: './draw.component.html',
-  styles: ['canvas { border: 1px solid; }']
+  styles: ['canvas { margin-right: auto; margin-left: auto;  border: 1px solid; }']
 })
 export class DrawComponent implements AfterViewInit {
   // a reference to the canvas element from our template

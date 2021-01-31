@@ -33,7 +33,14 @@ export class PlaysComponent implements OnInit {
   }
 
   deletePlay(play){
-
+    console.log(play);
+    this.drawService.deletePlay(play).subscribe(Response => {
+      console.log(Response);
+      this.getPlays();
+    }), err => {
+      console.log(err);
+    }
   }
+
 
 }
