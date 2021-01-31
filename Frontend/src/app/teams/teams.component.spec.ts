@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 
 import { TeamsComponent } from './teams.component';
 
@@ -24,5 +24,13 @@ describe('TeamsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call calculatePCT()', () => {
+    component.teams = [{}];
+    component.teams[0].wins = 4;
+    component.teams[0].losses = 3;
+    component.teams[0].winningPct = null;
+    component.calculatePCT();
   });
 });

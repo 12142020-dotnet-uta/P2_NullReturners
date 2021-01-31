@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { GamesService } from '../_services/games.service';
 
 @Component({
   selector: 'app-teams',
@@ -10,18 +11,27 @@ export class TeamsComponent implements OnInit {
   
   teams: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public gamesService: GamesService) { }
 
   ngOnInit(): void {
     this.getTeams();
   }
 
   getTeams(){
-    this.http.get('https://localhost:44342/api/teams').subscribe(response => {
+    this.gamesService.getTeams().subscribe(response => {
       this.teams = response;
-    }), err => {
+      this.calculatePCT();
+    }, err => {
       console.log(err)
-    }
+    })
+  }
+
+  calculatePCT() {
+    this.teams.forEach(team => {
+      if(team.wins || team.losses) {
+        team.winningPct = (team.wins / (team.wins + team.losses)).toPrecision(2);
+      } 
+    });
   }
 
 }

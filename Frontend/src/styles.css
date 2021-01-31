@@ -1,1 +1,68 @@
 /* You can add global styles to this file, and also import other style files */
+
+#navbar {
+
+}
+
+#calendar {
+    padding-top: 5vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+    height: 80vh;
+}
+
+
+
+#equipmentRequests {
+    text-align: center;
+}
+
+#playbooks {
+    text-align: center;
+}
+
+#drawPlay {
+    display: block;
+    margin-top: -2%;
+    text-align: center;
+}
+
+#drawPlayName {
+    margin-left: 28%;
+    width: 20%;
+}
+
+#drawPlayDescription {
+    margin-right: auto;
+    width: 20%;
+}
+
+#drawPlayCreate {
+    margin-right: 25.5%;
+}
+
+#games {
+    text-align: center;
+}
+
+#createGame {
+    text-align: center;
+}
+
+#players {
+    text-align: center;
+}
+
+#createPlayer {
+    text-align: center;
+}
+
+#editPlayer {
+    text-align: center;
+}
+
+#playerDetails {
+    text-align: center;
+}

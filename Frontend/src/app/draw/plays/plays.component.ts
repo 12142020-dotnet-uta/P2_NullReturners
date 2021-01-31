@@ -27,9 +27,9 @@ export class PlaysComponent implements OnInit {
       this.play = response;
       //this.myPlay = this.play; 
       console.log(response);
-    }), err => {
+    }, err => {
       console.log(err);
-    }
+    })
   }
 
   deletePlay(play){

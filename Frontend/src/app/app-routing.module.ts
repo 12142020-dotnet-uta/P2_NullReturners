@@ -19,6 +19,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { GamesComponent } from './games/games.component';
 import { CreateGameComponent } from './games/create-game/create-game.component';
+import { EditGameComponent } from './games/edit-game/edit-game.component';
 
 
 
@@ -33,6 +34,7 @@ const routes: Routes = [
   {path: 'calendar', component: CalendarComponent},
   {path: 'games', component: GamesComponent},
   {path: 'games/create', component: CreateGameComponent},
+  {path: 'games/edit/:id', component: EditGameComponent},
   {path: 'players/details/:id', component: PlayerdetailsComponent},
   {path: 'players/edit/:id', component: EditplayerComponent},
   {path: 'players/create', component: CreatePlayerComponent},

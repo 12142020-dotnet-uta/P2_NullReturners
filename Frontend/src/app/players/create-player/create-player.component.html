@@ -1,4 +1,4 @@
-<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser" id="createPlayer">
     <div *ngIf="loggedInUser.roleID == 1">
         <h3>Add New User</h3>
         <a routerLink="/players">Back to Users</a><br>

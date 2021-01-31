@@ -1,4 +1,4 @@
-<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser" id="editPlayer">
 
     <ng-container *ngIf="loggedInUser.userID == user.userID || loggedInUser.roleID == 1">
     <div *ngIf="loggedInUser.userID == user.userID">

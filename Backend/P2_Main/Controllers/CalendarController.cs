@@ -21,18 +21,11 @@ namespace P2_Main.Controllers
     [ApiController]
     public class CalendarController : ControllerBase
     {
-
         private readonly ILogger<CalendarController> _logger;
         public CalendarController(ILogger<CalendarController> logger)
         {
             _logger = logger;
         }
-
-        //[HttpGet]
-        //public async Task<ActionResult<CalendarService>> InitializeCalendar()
-        //{
-        //    return  await LogicClass.InitializeCalendar();
-        //}
 
         [HttpGet]
         public async Task<ActionResult<Calendar>> GetCalendar()
@@ -49,7 +42,12 @@ namespace P2_Main.Controllers
         [HttpPost]
         public async Task<ActionResult<Event>> CreateEvent(EventDto eventDto)
         {
-            return await LogicClass.CreateEvent(eventDto);
+            var ret = await LogicClass.CreateEvent(eventDto);
+            if (ret == null)
+            {
+                return BadRequest("Event not created");
+            }
+            return ret;
         }
     }
 }
