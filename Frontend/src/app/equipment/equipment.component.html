@@ -1,7 +1,7 @@
-<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser" id="equipmentRequests">
 <h2>Equipment Requests</h2>
 <a routerLink="/equipment/create">Create Request</a>
-<table class="table table-striped">
+<table class="table table-striped" style="border: groove gray 5px;">
     <thead>
       <tr>
         <th scope="col">ID</th>

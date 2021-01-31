@@ -6,7 +6,7 @@ body.home {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    
+    opacity: 85%;
 }
 
 #navbar {
@@ -14,10 +14,12 @@ body.home {
 }
 
 #calendar {
+    padding-top: 5vh;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 75%;
+    height: 80vh;
 }
 
 #login {
@@ -35,4 +37,21 @@ body.home {
     text-shadow: 0px 1px 14px rgba(0,0,0,1.0);
     margin-top: -2.3%;
     height: 94.2vh;
+    text-align: center;
+}
+
+#loginButton {
+    width: 20%;
+}
+
+#usernameInput {
+    width: 50%;
+}
+
+#passwordInput {
+    width: 50%;
+}
+
+#equipmentRequests {
+    text-align: center;
 }
