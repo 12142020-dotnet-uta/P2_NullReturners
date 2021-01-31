@@ -21,5 +21,9 @@ export class DrawService {
   getPlaybooks() {
     return this.http.get(this.baseUrl + 'playbooks')
   }
+
+  deletePlay(playId){
+    return this.http.delete(this.baseUrl + `playbooks/plays/delete/${playId}`);
+  }
   
 }
