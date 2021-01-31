@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using System.Linq;
 using Logic.Interfaces;
 using System.Collections.Generic;
+using Google.Apis.Calendar.v3.Data;
 
 namespace P2_Main.Tests
 {
@@ -1352,5 +1353,90 @@ namespace P2_Main.Tests
             }
         }
         //------------------End of MessagesController Tests-------------------------
+
+        //------------------Start of CalendarController Tests-----------------------
+
+        /// <summary>
+        /// Test for the GetCalendar() method of CalendarController
+        /// </summary>
+        [Fact]
+        public async void TestForGetCalendar()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                CalendarController calendarController = new CalendarController(new NullLogger<CalendarController>());
+
+                await calendarController.GetCalendar();
+            }
+        }
+
+        /// <summary>
+        /// Test for the GetMyEvents() method of CalendarController
+        /// </summary>
+        [Fact]
+        public async void TestForMyEvents()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                CalendarController calendarController = new CalendarController(new NullLogger<CalendarController>());
+
+                await calendarController.GetMyEvents();
+            }
+        }
+
+        /// <summary>
+        /// Test for the CreateEvent() method of CalendarController
+        /// </summary>
+        [Fact]
+        public async void TestForCreateEvent()
+        {
+            var options = new DbContextOptionsBuilder<ProgContext>()
+            .UseInMemoryDatabase(databaseName: "p2newsetuptest")
+            .Options;
+
+            using (var context = new ProgContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Mapper mapper = new Mapper();
+                LogicClass logic = new LogicClass(r, mapper, _token, new NullLogger<Repo>());
+                CalendarController calendarController = new CalendarController(new NullLogger<CalendarController>());
+                var createEvent = new EventDto()
+                {
+                    EventID = Guid.NewGuid(),
+                    Description = "Practice",
+                    Location = "Football field",
+                    StartTime = null,
+                    EndTime = null,
+                    Message = "Don't miss it!!"
+                };
+
+                await calendarController.CreateEvent(createEvent);
+            }
+        }
+
+        //------------------End of CalendarController Tests-------------------------
     }
 }

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DrawComponent } from './draw.component';
 
 import { FormsModule } from '@angular/forms';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('DrawComponent', () => {
   let component: DrawComponent;
@@ -71,9 +71,9 @@ describe('DrawComponent', () => {
     component.SetBackGroundWhite();
   });
 
-  // it('should call SetBackgroundTan()', () => {
-  //   component.SetBackGroundTan();
-  // });
+  it('should call SetBackgroundBlack()', () => {
+    component.SetBackGroundBlack();
+  });
 
   it('should call saveCanvas()', () => {
     component.saveCanvas();

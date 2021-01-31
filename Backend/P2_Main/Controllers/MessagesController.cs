@@ -33,8 +33,9 @@ namespace P2_Main.Controllers
         {
             Message message = await _logic.CreateNewMessage(newMessageDto);
             bool sent = await _logic.SendMessage(message);
-            if (sent == false)
+            if (!sent)
             {
+                _logger.LogInformation("Bad Request");
                 return BadRequest("Message was not sent");
             }
             return message;

@@ -4,7 +4,7 @@ import { EditplayerComponent } from './editplayer.component';
 
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('EditplayerComponent', () => {
   let component: EditplayerComponent;

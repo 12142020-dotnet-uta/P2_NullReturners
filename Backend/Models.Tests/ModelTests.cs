@@ -504,5 +504,25 @@ namespace Models.Tests
             var errorcount = ValidateModel(newMessage).Count;
             Assert.Equal(0, errorcount);
         }
+
+        /// <summary>
+        /// Validates the EventDto Model works with proper data
+        /// </summary>
+        [Fact]
+        public void ValidateEventDto()
+        {
+            var eventDto = new EventDto()
+            {
+                EventID = Guid.NewGuid(),
+                Location = "field",
+                Description = "practice",
+                StartTime = null,
+                EndTime = null,
+                Message = "come"
+            };
+
+            var errorcount = ValidateModel(eventDto).Count;
+            Assert.Equal(0, errorcount);
+        }
     }
 }

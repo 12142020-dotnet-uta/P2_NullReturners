@@ -1,14 +1,13 @@
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { UserService } from './user.service';
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { User } from '../_models/User';
 
 
 describe('UserServiceService', () => {
   let service: UserService;
-  let httpMock: HttpTestingController;
   let user: User = {
     userID: "hello", userName: "john", fullName: "John Jingleheimer",
     phoneNumber: "111-111-1111", email: "john@gmail.com", teamID: 3, roleID: 6
@@ -19,7 +18,6 @@ describe('UserServiceService', () => {
       imports: [HttpClientTestingModule]
     });
     service = TestBed.inject(UserService);
-    httpMock = getTestBed().inject(HttpTestingController);
   });
 
   it('should create service', () => {

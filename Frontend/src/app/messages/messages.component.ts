@@ -19,7 +19,7 @@ export class MessagesComponent implements OnInit {
   messagesSent:any[] = [];
   messagesRecieved:any[] = [];
 
-  message:any = {}
+  message:any = {};
 
   messagesArr: any;
 

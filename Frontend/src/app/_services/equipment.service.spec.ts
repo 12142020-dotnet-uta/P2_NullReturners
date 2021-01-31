@@ -1,13 +1,12 @@
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { EquipmentService } from './equipment.service';
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { User } from '../_models/User';
 
 describe('EquipmentService', () => {
   let service: EquipmentService;
-  let httpMock: HttpTestingController;
   let model: any = {
     equipmentId: "6", item: "bat"
   }
@@ -21,7 +20,6 @@ describe('EquipmentService', () => {
       imports: [HttpClientTestingModule]
     });
     service = TestBed.inject(EquipmentService);
-    httpMock = getTestBed().inject(HttpTestingController);
   });
 
   it('should be created', () => {
