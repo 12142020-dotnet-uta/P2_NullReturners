@@ -1,0 +1,11 @@
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
+    <a class="nav-link" routerLink="/games/create">Create Game</a>
+    <div *ngFor="let game of games">
+        <p>{{game.gameDate}} | Home team: {{game?.homeTeam?.name}} | Away Team: {{game?.awayTeam?.name}}</p>
+    </div>
+</div>
+
+<!-- If the user is not logged in -->
+<div *ngIf="(accountService.currentUser$ | async) === null">
+    <app-home></app-home>
+</div>

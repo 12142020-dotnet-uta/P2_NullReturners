@@ -14,8 +14,6 @@ namespace Models.DataTransfer
         public Guid UserID { get; set; }
         [DisplayName("Team ID")]
         public int TeamID { get; set; }
-        [DisplayName("Request Date")]
-        public DateTime RequestDate { get; set; }
         [DisplayName("Message")]
         public string Message { get; set; }
         [DisplayName("Item ID")]

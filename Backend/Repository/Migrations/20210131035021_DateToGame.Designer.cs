@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProgContext))]
-    [Migration("20210130020426_whoopwhoop")]
-    partial class whoopwhoop
+    [Migration("20210131035021_DateToGame")]
+    partial class DateToGame
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,6 +78,9 @@ namespace Repository.Migrations
 
                     b.Property<int>("AwayTeamID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("GameDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("HomeScore")
                         .HasColumnType("int");

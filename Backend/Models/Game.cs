@@ -21,6 +21,9 @@ namespace Models
         [DisplayName("Away Team ID")]
         [ForeignKey("TeamID")]
         public int AwayTeamID { get; set; }
+        [DisplayName("Game Date")]
+        [DataType(DataType.DateTime)]
+        public DateTime GameDate { get; set; }
         [DisplayName("Winning Team")]
         public int WinningTeam { get; set; }
         [DisplayName("Home Team Score")]
