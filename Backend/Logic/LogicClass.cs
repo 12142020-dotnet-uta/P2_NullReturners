@@ -705,6 +705,13 @@ namespace Logic
             }
             return myevent;
         }
+        public static async Task<string> DeleteEvent(string eventId)
+        {
+            CalendarService service = await InitializeCalendar();
+            string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
+            var status = await service.Events.Delete(calendarId, eventId).ExecuteAsync();
+            return status;
+        }
         // Equipment
         /// <summary>
         /// Get an EquipmentRequest by ID
