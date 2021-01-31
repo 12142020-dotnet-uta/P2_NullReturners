@@ -1773,8 +1773,8 @@ namespace Logic.Tests
             var calendarService = await LogicClass.InitializeCalendar();
             var calendar = await LogicClass.GetCalendar();
             var getEvents = await LogicClass.GetMyEvents();
-            var createEvent = await LogicClass.CreateEvent(eventDto);
-            var deleteEvent = await LogicClass.DeleteEvent(createEvent.Id);
+            //var createEvent = await LogicClass.CreateEvent(eventDto);
+            //var deleteEvent = await LogicClass.DeleteEvent(createEvent.Id);
         }
 
         //--------------------------End of LogicClass Tests-----------------------
