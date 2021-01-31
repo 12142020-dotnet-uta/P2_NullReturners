@@ -3,13 +3,12 @@ import { FormsModule } from '@angular/forms';
 
 import { NavComponent } from './nav.component';
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { By } from '@angular/platform-browser';
 import {Location} from '@angular/common';
 import { Component } from '@angular/core';
-import { UserLoggingIn } from '../_models/UserLoggingIn';
 import { of } from 'rxjs';
 import { AccountService } from '../_services/account.service';
 import { HttpClient } from '@angular/common/http';

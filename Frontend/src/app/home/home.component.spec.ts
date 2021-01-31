@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
@@ -18,7 +18,7 @@ describe('HomeComponent', () => {
   let user: UserLoggedIn = {
     userID: "1", userName: "travis", fullName: "Travis Martin", 
     phoneNumber: "111-111-1111", email: "travis@gmail.com",
-    teamID: null, roleID: null
+    teamID: 5, roleID: 2
   };
 
   beforeEach(async () => {
@@ -57,13 +57,14 @@ describe('HomeComponent', () => {
       phoneNumber: "111-111-1111", email: "travis@gmail.com",
       teamID: null, roleID: null
     };
-    mockLogin = accountServiceMock.login.and.returnValue(of(component.user));
-    setUserMock = accountServiceMock.setCurrentUser.and.returnValue(of(component.user));
-    component.ngOnInit();
     expect(component.user.userName).toEqual('travis');
-    spyOn(component, "getLoggedInUser");
-    component.getLoggedInUser();
-    expect(component.getLoggedInUser).toHaveBeenCalled();
+    // accountServiceMock.currentUser$ = component.user;
+    // component.getLoggedInUser();
+  });
+
+  it('should call getUserTeam()', () => {
+    component.user = user;
+    component.getUserTeam();
   });
 
 });

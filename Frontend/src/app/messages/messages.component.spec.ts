@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MessagesComponent } from './messages.component';
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 
@@ -43,6 +43,16 @@ describe('MessagesComponent', () => {
     component.userLoggedIn.userID = 5;
     component.selectedUserId = "4";
     component.getMessageBox(5);
+  });
+
+  it('should call sendMessage()', () => {
+    component.message = {
+      senderID: null, recipientList: null 
+    };
+    component.userLoggedIn = {
+      userID: 3, 
+    }
+    component.sendMessage();
   });
 
 });

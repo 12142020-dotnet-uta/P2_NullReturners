@@ -1,14 +1,13 @@
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { AccountService } from './account.service';
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserLoggingIn } from '../_models/UserLoggingIn';
 import { UserLoggedIn } from '../_models/UserLoggedIn';
 
 describe('AccountService', () => {
   let service: AccountService;
-  let httpMock: HttpTestingController;
   let userLoggingIn: UserLoggingIn;
   let userLoggedIn: UserLoggedIn;
 
@@ -17,7 +16,6 @@ describe('AccountService', () => {
       imports: [HttpClientTestingModule]
     });
     service = TestBed.inject(AccountService);
-    httpMock = getTestBed().inject(HttpTestingController);
   });
 
   it('should be created', () => {
@@ -28,9 +26,7 @@ describe('AccountService', () => {
     userLoggingIn = {
       username: "travis", password: "travis123"
     };
-    //spyOn(service, "login")
     service.login(userLoggingIn);
-    //expect(service.login).toHaveBeenCalled();
 
   });
 
@@ -40,9 +36,7 @@ describe('AccountService', () => {
       phoneNumber: "111-111-1111", email: "travis@gmail.com", 
       roleID: null, teamID: null
     };
-    //spyOn(service, "login")
     service.setCurrentUser(userLoggedIn);
-    //expect(service.login).toHaveBeenCalled();
   });
 
   it('should call logout()', () => {

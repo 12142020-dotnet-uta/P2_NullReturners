@@ -1,9 +1,9 @@
-import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EquipmentComponent } from './equipment.component';
 
 import { FormsModule } from '@angular/forms';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EquipmentService } from '../_services/equipment.service';
 import { of } from 'rxjs';
 

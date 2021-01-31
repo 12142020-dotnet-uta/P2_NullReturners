@@ -1,15 +1,13 @@
-import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreatePlayerComponent } from './create-player.component';
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 
-import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import {Location} from '@angular/common';
-import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { User } from 'src/app/_models/User';
 import { Team } from 'src/app/_models/Team';
@@ -70,9 +68,18 @@ describe('CreatePlayerComponent', () => {
     component.teamList[2] = "sharks";
 
     expect(component.teamList[0]).toBe("tigers");
-    spyOn(component, "getTeam");
     component.getTeam();
-    expect(component.getTeam).toHaveBeenCalled();
+  });
+
+  it('should get the role', () => {
+    component.roleList = [];
+    spyOn(component.roleList, "push")
+    component.roleList[0] ="coach";
+    component.roleList[1] = "player";
+    component.roleList[2] = "parent";
+
+    expect(component.roleList[0]).toBe("coach");
+    component.getRole();
   });
 
   // it('should have an h3 tag', () => {

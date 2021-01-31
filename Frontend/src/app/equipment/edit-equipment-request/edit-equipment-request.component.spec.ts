@@ -3,22 +3,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditEquipmentRequestComponent } from './edit-equipment-request.component';
 
 import { FormsModule } from '@angular/forms';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { EquipmentService } from 'src/app/_services/equipment.service';
-import { of } from 'rxjs';
+
 
 describe('EditEquipmentRequestComponent', () => {
   let component: EditEquipmentRequestComponent;
   let fixture: ComponentFixture<EditEquipmentRequestComponent>;
-  let mockGetRequest;
-  let mockGetTeam;
-  let equipmentServiceMock;
-  //let mockGetItems;
-  //let equipmentRequestId: number = 9;
-  let equipmentRequest: any = {
-    requestId: 4, teamId: 3
-  };
+  // let mockGetRequest;
+  // let mockGetTeam;
+  // let equipmentServiceMock;
+  // let mockGetItems;
+  // let equipmentRequestId: number = 9;
+  // let equipmentRequest: any = {
+  //   requestId: 4, teamId: 3
+  // };
 
   beforeEach(async () => {
     // equipmentServiceMock = jasmine.createSpyObj('EquipmentService', ['getRequest', 'getTeam', 'getUser', 'getItem']);
