@@ -688,21 +688,21 @@ namespace Logic
                 Description = eventDto.Message
             };
             var insertRequest = service.Events.Insert(myevent, calendarId);
-            //try
-            //{
+            try
+            {
                 await insertRequest.ExecuteAsync();
-            //}
-            //catch (Exception)
-            //{
-            //    try
-            //    {
-            //        await service.Events.Update(myevent, calendarId, myevent.Id).ExecuteAsync();
-            //    }
-            //    catch (Exception)
-            //    {
-            //        myevent = new Event();
-            //    }
-            //}
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    await service.Events.Update(myevent, calendarId, myevent.Id).ExecuteAsync();
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
             return myevent;
         }
         // Equipment
