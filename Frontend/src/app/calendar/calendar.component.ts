@@ -22,9 +22,9 @@ calendar: any
     this.calendarService.getCalendar().subscribe(response => { 
       this.model = response;
       console.log(this.model)
-    }), err => {
+    }, err => {
       console.log(err);
-    }    
+    })  
   }
 
 }

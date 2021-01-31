@@ -21,9 +21,9 @@ export class TeamsComponent implements OnInit {
     this.gamesService.getTeams().subscribe(response => {
       this.teams = response;
       this.calculatePCT();
-    }), err => {
+    }, err => {
       console.log(err)
-    }
+    })
   }
 
   calculatePCT() {

@@ -44,25 +44,25 @@ export class EditEquipmentRequestComponent implements OnInit {
       this.editedEquipmentRequest = {
         status: this.equipmentRequest.status
       };
-    }), err => {
+    }, err => {
       console.log(err);
-    }
+    })
   }
 
   getTeam() {
     this.equipmentService.getTeam(this.equipmentRequest.teamID).subscribe( response => {
       this.equipmentRequest.team = response;
-    }), err => {
+    }, err => {
       console.log(err);
-    };
+    })
   }
 
   getUser() {
     this.equipmentService.getUser(this.equipmentRequest.userID).subscribe( res => {
       this.equipmentRequest.user = res;
-    }), err => {
+    }, err => {
       console.log(err);
-    }
+    })
   }
 
   editRequest() {
@@ -78,7 +78,7 @@ export class EditEquipmentRequestComponent implements OnInit {
       this.equipmentRequest.item = response;
     }, err => {
       console.log(err);
-    });
+    })
 };
 
 }

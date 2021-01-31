@@ -28,25 +28,25 @@ export class PlayerdetailsComponent implements OnInit {
       this.user = response;
       this.getTeam();
       this.getRole();
-    }), err => {
+    }, err => {
       console.log(err);
-    }
+    })
   }
 
   getTeam() {
       this.userService.getTeam(this.user.teamID).subscribe(response => {
         this.user.team = response;
-      }), err => {
+      }, err => {
         console.log(err);
-      };
+      })
   }
 
   getRole() {
     this.userService.getRole(this.user.roleID).subscribe(res => {
       this.user.role = res;
-    }), err => {
+    }, err => {
       console.log(err);
-    }
+    })
   }
 
 
