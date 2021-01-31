@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
   <h3>Request Equipment</h3>
   <a routerLink="/equipment">Back to Requests</a><br>
   <form #createEquipmentRequestForm="ngForm"  (ngSubmit)="createEquipmentRequest()" ngNativeValidate  autocomplete="off">
@@ -14,4 +14,9 @@
     <br>
     <button class="btn btn-outline-success" type="submit">Create</button>
   </form>
+</div>
+
+<!-- If the user is not logged in -->
+<div *ngIf="(accountService.currentUser$ | async) === null">
+  <app-home></app-home>
 </div>

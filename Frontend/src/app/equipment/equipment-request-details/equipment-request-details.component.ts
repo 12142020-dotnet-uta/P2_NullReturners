@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AccountService } from 'src/app/_services/account.service';
 import { EquipmentService } from 'src/app/_services/equipment.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { EquipmentService } from 'src/app/_services/equipment.service';
 })
 export class EquipmentRequestDetailsComponent implements OnInit {
 
-  constructor(private equipmentService: EquipmentService, private route: ActivatedRoute) { }
+  constructor(private equipmentService: EquipmentService, private route: ActivatedRoute, public accountService: AccountService) { }
   equipmentRequestId: string;
   equipmentRequest: any = {};
 

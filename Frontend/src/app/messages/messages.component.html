@@ -6,18 +6,12 @@
     </div>
     <div class="message_area col-md-9">
         <div class="messages">
-           <div *ngFor="let message of messagesArr" >
-                {{message.messageText}}
-           </div>
            <div>
-               <p>testing here:</p>
-               <ng-container *ngFor="let sent of messagesSent">
-                   {{sent.messageText}} - {{sent.sentDate}}<br>
-               </ng-container>
-               <ng-container *ngFor="let recieved of messagesRecieved">
-                    <p style="color: red;">{{recieved.messageText}} - {{recieved.sentDate}}</p>
-                </ng-container>
-           </div>
+            <p>The Final Test:</p>
+            <ng-container *ngFor="let msg of allMessages">
+                <p [ngClass]="{sent: msg.state == 'sent'}">{{msg.msg.messageText}}: {{msg.msg.sentDate}} - {{msg.state}}</p>
+            </ng-container>
+        </div>
         </div>
         <div class="input-message">
             <form #sendTextMessage="ngForm" (ngSubmit)="sendMessage()" ngNativeValidate class="d-flex" autocomplete="off">
