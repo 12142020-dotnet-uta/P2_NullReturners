@@ -180,9 +180,9 @@ saveCanvas() {
   console.log(this.model.PlaybookId);
   this.drawService.createDrawing(this.model).subscribe(response => {
     console.log(response);
-  }), err => {
+  }, err => {
     console.log(err)
-  }
+  })
 }
 
 
