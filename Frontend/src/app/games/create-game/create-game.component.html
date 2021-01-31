@@ -1,18 +1,30 @@
 <div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
-    <h3>Create Game</h3>
-    <a routerLink="/games">Back to Games</a><br>
-    <form #createGameForm="ngForm"  (ngSubmit)="createGame()" ngNativeValidate  autocomplete="off">
-      <label for="GameDate"></label>
-      <input name="DateRequested" [(ngModel)]="newGame.gameDate" class="form-control me-2" type="datetime-local" placeholder="Date">
-      <label for="ItemId">Away Team</label>
-      <select name="AwayTeam" [(ngModel)]="newGame.awayteam" required>
-        <option selected></option>
-        <option *ngFor="let team of teamList">{{team.name}}</option>
-      </select>
+    <ng-container *ngIf="loggedInUser.roleID == 1">
+      <h3>Create Game</h3>
+      <a routerLink="/games">Back to Games</a><br>
+      <form #createGameForm="ngForm"  (ngSubmit)="createGame()" ngNativeValidate  autocomplete="off">
+        <label for="GameDate"></label>
+        <input name="DateRequested" [(ngModel)]="newGame.gameDate" class="form-control me-2" type="datetime-local" required placeholder="Date">
+        <label for="ItemId">Home Team</label>
+        <select name="HomeTeam" [(ngModel)]="newGame.hometeam" required>
+          <option selected></option>
+          <option *ngFor="let team of teamList">{{team.name}}</option>
+        </select>
+        <label for="ItemId">Away Team</label>
+        <select name="AwayTeam" [(ngModel)]="newGame.awayteam" required>
+          <option selected></option>
+          <option *ngFor="let team of teamList">{{team.name}}</option>
+        </select>
 
-      <br>
-      <button class="btn btn-outline-success" type="submit">Create</button>
-    </form>
+        <br>
+        <button class="btn btn-outline-success" type="submit">Create</button>
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="loggedInUser.roleID != 1">
+      <h2 class="text-center">Not Authorized</h2>
+      <p class="text-center"><a  [routerLink]="['']">Go home.</a></p>
+    </ng-container>
   </div>
   
   <!-- If the user is not logged in -->

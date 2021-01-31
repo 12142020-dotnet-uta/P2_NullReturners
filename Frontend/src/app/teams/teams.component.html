@@ -1,12 +1,12 @@
 <div class="container">
     <h2>League Standings</h2>
-    <table class="table table-striped">
+    <table matSort class="table table-striped">
         <thead>
           <tr>
             <th scope="col">Team Name</th>
             <th scope="col">Wins</th>
             <th scope="col">Losses</th>
-            <th scope="col">PCT</th>
+            <th scope="col" mat-sort-header="winning%">PCT</th>
           </tr>
         </thead>
         <tbody>
@@ -14,7 +14,7 @@
             <td>{{team.name}}</td>
             <td>{{team.wins}}</td>
             <td>{{team.losses}}</td>
-            <td>1.000</td>
+            <td><p *ngIf="team.winningPct || team.winningPct === 0">{{team.winningPct}}</p></td>
           </tr>
         </tbody>
       </table>
