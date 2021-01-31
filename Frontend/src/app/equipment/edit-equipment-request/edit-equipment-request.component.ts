@@ -2,6 +2,7 @@ import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AccountService } from 'src/app/_services/account.service';
 import { EquipmentService } from 'src/app/_services/equipment.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class EditEquipmentRequestComponent implements OnInit {
   constructor(private equipmentService: EquipmentService,
               private route: ActivatedRoute,
               private titleService: Title,
-              private router: Router) { }
+              private router: Router,
+              public accountService: AccountService) { }
 
   equipmentRequestId: string;
   equipmentRequest: any = {}

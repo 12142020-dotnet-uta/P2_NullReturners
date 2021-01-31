@@ -1,5 +1,6 @@
-<div class="container">
-    <h2>Equipment Request #{{equipmentRequest.requestID}}</h2>
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
+  <ng-container *ngIf="loggedInUser.roleID == 1">  
+  <h2>Equipment Request #{{equipmentRequest.requestID}}</h2>
     <a routerLink="/equipment">Back to Requests</a><br>
     <a routerLink="/equipment/edit/{{equipmentRequest.requestID}}">Edit Request</a>
     <table class="table table-striped">
@@ -36,4 +37,17 @@
           </tr>
         </tbody>
       </table>
+    </ng-container>
+
+      <ng-container *ngIf="loggedInUser.roleID != 1">
+        <h2 class="text-center">Not Authorized</h2>
+        <p class="text-center"><a  [routerLink]="['']">Go home.</a></p>
+    </ng-container>
+
+    
+</div>
+
+<!-- If the user is not logged in -->
+<div *ngIf="(accountService.currentUser$ | async) === null">
+  <app-home></app-home>
 </div>
