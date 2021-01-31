@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProgContext))]
-    [Migration("20210131035021_DateToGame")]
-    partial class DateToGame
+    [Migration("20210131181522_HopefullyTheLastMigration")]
+    partial class HopefullyTheLastMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

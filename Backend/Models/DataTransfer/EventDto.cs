@@ -10,8 +10,6 @@ namespace Models.DataTransfer
 {
     public class EventDto
     {
-        [DisplayName("Event ID")]
-        public Guid EventID { get; set; }
         [DisplayName("Description")]
         public string Description { get; set; }
         [DisplayName("Event Location")]
@@ -19,8 +17,8 @@ namespace Models.DataTransfer
         [DisplayName("Event Message")]
         public string Message { get; set; }
         [DisplayName("Start Time")]
-        public EventDateTime StartTime { get; set; }
+        public DateTime StartTime { get; set; }
         [DisplayName("End Time")]
-        public EventDateTime EndTime { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }

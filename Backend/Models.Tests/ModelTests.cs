@@ -512,11 +512,10 @@ namespace Models.Tests
         {
             var eventDto = new EventDto()
             {
-                EventID = Guid.NewGuid(),
                 Location = "field",
                 Description = "practice",
-                StartTime = null,
-                EndTime = null,
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now,
                 Message = "come"
             };
 

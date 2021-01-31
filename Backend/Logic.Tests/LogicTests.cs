@@ -1763,12 +1763,11 @@ namespace Logic.Tests
 
             EventDto eventDto = new EventDto()
             {
-                EventID = Guid.NewGuid(),
                 Description = "Practice",
                 Location = "Football field",
                 Message = "Don't miss it!",
-                StartTime = null,
-                EndTime = null
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now
             };
 
             var calendarService = await LogicClass.InitializeCalendar();

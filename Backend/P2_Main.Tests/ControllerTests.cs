@@ -1424,11 +1424,10 @@ namespace P2_Main.Tests
                 CalendarController calendarController = new CalendarController(new NullLogger<CalendarController>());
                 var createEvent = new EventDto()
                 {
-                    EventID = Guid.NewGuid(),
                     Description = "Practice",
                     Location = "Football field",
-                    StartTime = null,
-                    EndTime = null,
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now,
                     Message = "Don't miss it!!"
                 };
 
