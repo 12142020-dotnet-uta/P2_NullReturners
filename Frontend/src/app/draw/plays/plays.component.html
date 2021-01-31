@@ -1,6 +1,7 @@
 <a class="nav-link" routerLink="/draw">Create Play</a>
 <a class="nav-link" routerLink="/draw">select Playbook</a>
 <table class="table table-striped">
+  <caption></caption>
     <thead>
       <tr>
         <th scope="col">ID</th>
@@ -16,7 +17,7 @@
         <td>{{plays.playbookID}}</td>
         <td>{{plays.name}}</td>
         <td>{{plays.description}}</td>
-        <img width="400" height="400" src="{{plays.imageString}}" />
+        <img width="400" height="400" src="{{plays.imageString}}" alt="Image not found"/>
         <button>View</button>
         <td>
         </td>

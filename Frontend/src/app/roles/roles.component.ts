@@ -18,8 +18,8 @@ export class RolesComponent implements OnInit {
   getRoles() { 
     this.http.get('https://localhost:44342/api/users/roles').subscribe(response => {
       this.roles = response;
-    }), err => {
+    }, err => {
       console.log(err)
-    }
+    })
   }
 }
