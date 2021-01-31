@@ -77,6 +77,9 @@ namespace Repository.Migrations
                     b.Property<int>("AwayTeamID")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("GameDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("HomeScore")
                         .HasColumnType("int");
 

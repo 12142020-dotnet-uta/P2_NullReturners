@@ -23,6 +23,8 @@ import { CreatePlayerComponent } from './players/create-player/create-player.com
 import { HomeComponent } from './home/home.component';
 import { MessagesComponent } from './messages/messages.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { GamesComponent } from './games/games.component';
+import { CreateGameComponent } from './games/create-game/create-game.component';
 
 
 @NgModule({
@@ -44,6 +46,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     CalendarComponent,
     HomeComponent,
     MessagesComponent,
+    GamesComponent,
+    CreateGameComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -568,7 +568,8 @@ namespace Logic
             Game newGame = new Game()
             {
                 HomeTeamID = createGameDto.HomeTeamID,
-                AwayTeamID = createGameDto.AwayTeamID
+                AwayTeamID = createGameDto.AwayTeamID,
+                GameDate = createGameDto.GameDate
             };
             await _repo.games.AddAsync(newGame);
             await _repo.CommitSave();
@@ -742,7 +743,7 @@ namespace Logic
             {
                 UserID = createEquipmentRequestDto.UserID,
                 TeamID = createEquipmentRequestDto.TeamID,
-                RequestDate = createEquipmentRequestDto.RequestDate,
+                RequestDate = DateTime.Now,
                 Message = createEquipmentRequestDto.Message,
                 ItemId = createEquipmentRequestDto.ItemID,
                 Status = createEquipmentRequestDto.Status

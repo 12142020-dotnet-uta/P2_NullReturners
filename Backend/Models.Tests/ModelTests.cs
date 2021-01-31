@@ -325,7 +325,6 @@ namespace Models.Tests
             {
                 UserID = Guid.NewGuid(),
                 TeamID = 1,
-                RequestDate = DateTime.Now,
                 Message = "I need this now!",
                 ItemID = 1,
                 Status = "Pending"

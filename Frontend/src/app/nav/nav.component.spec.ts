@@ -54,7 +54,7 @@ describe('NavComponent', () => {
 
   it('should show unordered list items', () => {
     const listItems = fixture.debugElement.queryAll(By.css('li'));
-    expect(listItems.length).toBe(7);
+    expect(listItems.length).toBe(8);
   });
 
   it('should navigate to home page', () => {

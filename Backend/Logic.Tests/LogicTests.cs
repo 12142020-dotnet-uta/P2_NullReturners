@@ -1609,7 +1609,6 @@ namespace Logic.Tests
                     TeamID = 1,
                     UserID = Guid.NewGuid(),
                     ItemID = 2,
-                    RequestDate = DateTime.Now,
                     Message = "Need this equipment",
                     Status = "Pending"
                 };
