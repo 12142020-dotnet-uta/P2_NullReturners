@@ -20,9 +20,9 @@ export class TeamsComponent implements OnInit {
     this.http.get('https://localhost:44342/api/teams').subscribe(response => {
       this.teams = response;
       this.calculatePCT();
-    }), err => {
+    }, err => {
       console.log(err)
-    }
+    })
   }
 
   calculatePCT() {

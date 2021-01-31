@@ -41,9 +41,9 @@ export class EditplayerComponent implements OnInit {
         phonenumber: this.user.phoneNumber,
         email: this.user.email
       };
-    }), err => {
+    }, err => {
       console.log(err);
-    }
+    })
   }
 
   editUser() {
@@ -51,9 +51,9 @@ export class EditplayerComponent implements OnInit {
     this.userService.editUser(this.userId, this.editedUser).subscribe(res => {
       console.log(res);
       this.redirect.navigate([`/players/details/${this.user.userID}`])
-    }), err => {
+    }, err => {
       console.log(err);
-    }
+    })
   }
 
 

@@ -4,6 +4,7 @@
     <a *ngIf="loggedInUser.userID == user.userID || loggedInUser.roleID == 1" [routerLink]="['/players/edit/', user.userID]">Edit</a>
     <p *ngIf="loggedInUser.roleID == 1"><a [routerLink]="['/players/edit/', user.userID]">Admin Edit</a></p>
     <table class="table table-striped">
+      <caption></caption>
         <thead>
           <tr>
             <th scope="col">Detail</th>
