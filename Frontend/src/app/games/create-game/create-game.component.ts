@@ -17,12 +17,11 @@ export class CreateGameComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTeamList();
-    this.getCurrentUser();
   }
 
   createGame() {
-    this.getTeam();
-    console.log(this.newGame);
+    this.getAwayTeam();
+    this.getHomeTeam();
     this.gamesService.createGame(this.newGame).subscribe(game => {
       console.log(game);
       this.router.navigate(['/games'])
@@ -40,18 +39,20 @@ export class CreateGameComponent implements OnInit {
     });
   }
 
-  getTeam() {
+  getHomeTeam() {
+    for (let i = 0; i < this.teamList.length; i++) {
+      if (this.teamList[i].name == this.newGame.hometeam) {
+        this.newGame.homeTeamID = this.teamList[i].teamID;
+      }
+    }
+  }
+
+  getAwayTeam() {
     for (let i = 0; i < this.teamList.length; i++) {
       if (this.teamList[i].name == this.newGame.awayteam) {
         this.newGame.awayTeamID = this.teamList[i].teamID;
       }
     }
-  }
-
-  getCurrentUser() {
-    this.accountService.currentUser$.subscribe( user => {
-      this.newGame.homeTeamID = user.teamID;
-    })
   }
 
 }

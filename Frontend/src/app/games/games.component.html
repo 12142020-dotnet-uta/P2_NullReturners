@@ -1,8 +1,30 @@
 <div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
-    <a class="nav-link" routerLink="/games/create">Create Game</a>
-    <div *ngFor="let game of games">
-        <p>{{game.gameDate}} | Home team: {{game?.homeTeam?.name}} | Away Team: {{game?.awayTeam?.name}}</p>
-    </div>
+    <h2>Games</h2>
+    <a *ngIf="loggedInUser.roleID === 1" routerLink="/games/create">Create Game</a>
+        <table class="table table-striped">
+            <tr>
+                <th scope="col">Game Time</th>
+                <th scope="col">Home Team</th>
+                <th scope="col">Home Score</th>
+                <th scope="col">Away Team</th>
+                <th scope="col">Away Score</th>
+                <th scope="col">Winning Team</th>
+                <th *ngIf="loggedInUser.roleID === 1" scope="col">Admin</th>
+            </tr>
+                <ng-container *ngFor="let game of games">
+                    <tr *ngIf="game.homeTeamID == loggedInUser.teamID || game.awayTeamID == loggedInUser.teamID">
+                        <td>{{game.gameDate}}</td>
+                        <td>{{game?.homeTeam?.name}}</td>
+                        <td>{{game.homeScore}}</td>
+                        <td>{{game?.awayTeam?.name}}</td>
+                        <td>{{game.awayScore}}</td>
+                        <td>{{game?.winner?.name}}</td>
+                        <td><a *ngIf="game.winningTeam == 0" routerLink="/games/edit/{{game.gameID}}">Edit</a></td>
+                    </tr>
+                </ng-container>
+            
+        </table>
+
 </div>
 
 <!-- If the user is not logged in -->

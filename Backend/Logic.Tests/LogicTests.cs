@@ -1263,16 +1263,15 @@ namespace Logic.Tests
                     SentDate = DateTime.Now,
                     MessageText = "How you doin'?"
                 };
-                //var rL = new List<Guid>();
-                //rL.Add(message.RecipientListID);
-                //var messageDto = new NewMessageDto()
-                //{
-                //    SenderID = message.SenderID,
-                //    RecipientList = rL,
-                //    MessageText = message.MessageText
-                //};
+                var recipientList = new RecipientList()
+                {
+                    RecipientListID = message.RecipientListID,
+                    RecipientID = Guid.NewGuid()
+                };
 
-                //var createMessage = await logic.CreateNewMessage(messageDto);
+                r.recipientLists.Add(recipientList);
+                await r.CommitSave();
+
                 var sendMessage = await logic.SendMessage(message);
 
                 Assert.True(sendMessage);
@@ -1758,27 +1757,25 @@ namespace Logic.Tests
         /// TODO: write actual test for InitializeCalendar
         /// </summary>
         /// 
+        [Fact]
+        public async void TestForInitializeCalendar()
+        {
 
-        // TRAVIS HERE
-        //[Fact]
-        //public async void TestForInitializeCalendar()
-        //{
+            EventDto eventDto = new EventDto()
+            {
+                EventID = Guid.NewGuid(),
+                Description = "Practice",
+                Location = "Football field",
+                Message = "Don't miss it!",
+                StartTime = null,
+                EndTime = null
+            };
 
-        //    EventDto eventDto = new EventDto()
-        //    {
-        //        EventID = Guid.NewGuid(),
-        //        Description = "Practice",
-        //        Location = "Football field",
-        //        Message = "Don't miss it!",
-        //        StartTime = null,
-        //        EndTime = null
-        //    };
-
-        //    var calendarService = await LogicClass.InitializeCalendar();
-        //    var calendar = await LogicClass.GetCalendar(calendarService);
-        //    var getEvents = await LogicClass.GetMyEvents(calendarService);
-        //    var createEvent = await LogicClass.CreateEvent(calendarService, eventDto);
-        //}
+            var calendarService = await LogicClass.InitializeCalendar();
+            var calendar = await LogicClass.GetCalendar();
+            var getEvents = await LogicClass.GetMyEvents();
+            var createEvent = await LogicClass.CreateEvent(eventDto);
+        }
 
         //--------------------------End of LogicClass Tests-----------------------
 

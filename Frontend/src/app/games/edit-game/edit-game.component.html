@@ -1,0 +1,26 @@
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
+    <ng-container *ngIf="loggedInUser.roleID == 1"> 
+    <form #editGameForm="ngForm" (ngSubmit)="editGame()">
+        <label for="HomeTeam">Home Team</label>
+        <input name="HomeTeam" class="form-control me-2" type="text" value="{{homeTeam?.name}}" disabled>
+        <label for="HomeTeamScore">Home Team Score</label>
+        <input name="HomeTeamScore" [(ngModel)]="editedGame.homeScore" class="form-control me-2" type="number" value="{{game.homeScore}}}">
+        <label for="HomeTeam">Away Team</label>
+        <input name="HomeTeam" class="form-control me-2" type="text" value="{{awayTeam?.name}}"disabled>
+        <label for="HomeTeamScore">Away Team Score</label>
+        <input name="HomeTeamScore" [(ngModel)]="editedGame.awayScore" class="form-control me-2" type="number" value="{{game.awayScore}}}" >
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    </ng-container>
+    <ng-container *ngIf="loggedInUser.roleID != 1">
+        <h2 class="text-center">Not Authorized</h2>
+        <p class="text-center"><a  [routerLink]="['']">Go home.</a></p>
+      </ng-container>
+</div>
+
+
+<!-- If the user is not logged in -->
+<div *ngIf="(accountService.currentUser$ | async) === null">
+    <app-home></app-home>
+</div>

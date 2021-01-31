@@ -24,6 +24,7 @@ export class GamesComponent implements OnInit {
       console.log(games);
       this.getHomeTeams();
       this.getAwayTeams();
+      this.getWinningTeams();
     }, err => {
       console.log(err);
     })
@@ -48,5 +49,17 @@ export class GamesComponent implements OnInit {
       })
     });
   }
+
+  getWinningTeams() {
+    this.games.forEach(game => {
+      return this.gamesService.getTeam(game.winningTeam).subscribe(team => {
+        game.winner = team;
+      }, err => {
+        console.log(err);
+      })
+    })
+  }
+
+
 
 }
