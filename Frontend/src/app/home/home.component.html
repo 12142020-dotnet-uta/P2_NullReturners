@@ -1,4 +1,4 @@
-<body class="home">
+<div class="home">
     <div *ngIf="(accountService.currentUser$ | async) === null" class="container text-center" id="login">
         <h2>Welcome!</h2>
         <h3>Please login below!</h3>
@@ -17,7 +17,7 @@
         <h2>{{team.name}} dashboard:</h2>
     </div>  
     
-</body>
+</div>
 
 
 

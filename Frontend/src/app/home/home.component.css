@@ -11,3 +11,12 @@
 .form_container button {
     width: 300px;
 }
+
+.home {
+    background: url("https://ca-times.brightspotcdn.com/dims4/default/706c139/2147483647/strip/true/crop/1800x1200+0+0/resize/840x560!/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fda%2F8d%2F0078a106450faf47bd3a98aee997%2Fsports-clip-art-adobe-stock.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    opacity: 85%;
+}

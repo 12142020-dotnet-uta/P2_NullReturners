@@ -1,13 +1,15 @@
 <div class="message_container row">
     <div class="message_users col-md-2">
         <ng-container *ngFor="let user of users">
-            <p (click)="getMessageBox(user.userID)">{{user.fullName}}</p>
+        <div class="users" [class.selected]="user.userID === selectedUserId" (click)="getMessageBox(user.userID)">
+            <p>{{user.fullName}}</p>
+        </div>
         </ng-container> 
     </div>
     <div class="message_area col-md-9">
         <div class="messages">
-           <div>
-            <p>The Final Test:</p>
+        <div *ngIf="selectedUserId">
+            <p>Start of messages</p>
             <ng-container *ngFor="let msg of allMessages">
                 <p [ngClass]="{sent: msg.state == 'sent'}">{{msg.msg.messageText}}: {{msg.msg.sentDate}} - {{msg.state}}</p>
             </ng-container>
