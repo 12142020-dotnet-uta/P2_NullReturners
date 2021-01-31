@@ -1,6 +1,6 @@
 import { registerLocaleData } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { concatMap, map } from 'rxjs/operators';
 import { User } from '../_models/User';
 import { AccountService } from '../_services/account.service';
 import { MessageService } from '../_services/message.service';
@@ -19,14 +19,13 @@ export class MessagesComponent implements OnInit {
   messagesSent:any[] = [];
   messagesRecieved:any[] = [];
 
-  message:any = {};
+  allMessages:any[] = [];
+
+  message:any = {}
 
   messagesArr: any;
 
   selectedUserId: string;
-
-
-
 
   constructor(public accountService: AccountService, private userService: UserService, private messagesService: MessageService) { }
 
@@ -67,10 +66,16 @@ export class MessagesComponent implements OnInit {
   }
 
   // gets the recipients from the messages
-  getRecipients() {
+  getRecipients() { 
+    let iterations:number = 0;
     this.messagesArr.forEach(message => {
       this.messagesService.getRecipientList(message.recipientListID).subscribe(recipients => {
+        iterations ++;
         message.recipient = recipients;
+        // this refreshes the message box if a new message is sent
+        if(this.selectedUserId && this.messagesArr.length === iterations) {
+          this.getMessageBox(this.selectedUserId);
+        }
       }, err => {
         console.log(err);
       })
@@ -80,15 +85,21 @@ export class MessagesComponent implements OnInit {
   // gets a list of the messages between the two users
   getMessageBox(userId) {
     this.selectedUserId = userId;
-    this.messagesSent = [];
-    this.messagesRecieved = [];
+    this.allMessages = [];
     this.messagesArr.forEach(message => {
       if (message.senderID === this.userLoggedIn.userID && message.recipient.recipientID === this.selectedUserId) {
         this.messagesSent.push(message);
+        this.allMessages.push({
+          msg: message,
+          state: 'sent'
+        });
       } 
       if (message.senderID === this.selectedUserId && message.recipient.recipientID === this.userLoggedIn.userID) {
         this.messagesRecieved.push(message);
-        console.log(message.senderID);
+        this.allMessages.push({
+          msg: message,
+          state: 'recieved'
+        });
       }
     });
   }
@@ -103,7 +114,5 @@ export class MessagesComponent implements OnInit {
       console.log(err);
     })
   }
-
-  // work on refreshing and then sorting messages by when it was sent
 
 }

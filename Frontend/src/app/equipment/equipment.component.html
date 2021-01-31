@@ -9,22 +9,29 @@
         <th scope="col">Requested By</th>
         <th scope="col">Team</th>
         <th scope="col">Status</th>
-        <th scope="col">Actions</th>
+        <th *ngIf="loggedInUser.roleID === 1" scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let equipment of equipmentList">
+      <ng-container *ngFor="let equipment of equipmentList">
+      <tr *ngIf="equipment.teamID === loggedInUser.teamID">
         <td>{{equipment.requestID}}</td>
         <td>{{equipment?.item?.description}}</td>
         <td>{{equipment?.user?.fullName}}</td>
         <td>{{equipment?.team?.name}}</td>
         <td>{{equipment.status}}</td>
-        <td>
+        <td *ngIf="loggedInUser.roleID === 1">
             <a [routerLink]="['/equipment/details', equipment.requestID]">Details</a> - 
             <a [routerLink]="['/equipment/edit', equipment.requestID]">Edit</a>
         </td>
       </tr>
+      </ng-container>
     </tbody>
   </table>
 
+</div>
+
+<!-- If the user is not logged in -->
+<div *ngIf="(accountService.currentUser$ | async) === null">
+  <app-home></app-home>
 </div>

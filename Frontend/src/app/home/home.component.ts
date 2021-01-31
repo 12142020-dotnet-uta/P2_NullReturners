@@ -42,7 +42,6 @@ export class HomeComponent implements OnInit {
 
   login() {
     this.accountService.login(this.model).subscribe( res => {
-      console.log(res);
       this.router.navigate([''])
     }, err => {
       console.log(err);
