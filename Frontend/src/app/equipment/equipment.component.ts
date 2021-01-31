@@ -25,9 +25,9 @@ export class EquipmentComponent implements OnInit {
       this.getUser();
       this.getItem();
       console.log(this.equipmentList);
-    }), err => {
+    }, err => {
       console.log(err)
-    }
+    })
     
   }
 
@@ -35,30 +35,30 @@ export class EquipmentComponent implements OnInit {
     this.equipmentList.forEach(element => {
       this.equipmentService.getTeam(element.teamID).subscribe( response => {
         element.team = response;
-      }), err => {
+      }, err => {
         console.log(err);
-      };
-    });
+      })
+    })
   }
 
   getUser() {
     this.equipmentList.forEach(element => {
       this.equipmentService.getUser(element.userID).subscribe( response => {
         element.user = response;
-      }), err => {
+      }, err => {
         console.log(err);
-      };
-    });
+      })
+    })
   }
 
   getItem() {
     this.equipmentList.forEach(element => {
       this.equipmentService.getItem(element.itemId).subscribe( response => {
         element.item = response;
-      }), err => {
+      }, err => {
         console.log(err);
-      };
-    });
+      })
+    })
   }
 
 
