@@ -47,7 +47,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: './Frontend/'
-    customCommand: 'run ng build --prod --configuration="production"'
+    customCommand: 'run ng build --prod --aot=false --build-optimizer=true'
 
 - task: Npm@1
   displayName: 'NPM Test'
