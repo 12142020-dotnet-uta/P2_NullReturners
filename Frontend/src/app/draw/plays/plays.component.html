@@ -1,25 +1,28 @@
-<a class="nav-link" routerLink="/draw">Create Play</a>
-<a class="nav-link" routerLink="/draw">select Playbook</a>
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">PlayBookId</th>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let plays of play">
-        <td>{{plays.playID}}</td>
-        <td>{{plays.playbookID}}</td>
-        <td>{{plays.name}}</td>
-        <td>{{plays.description}}</td>
-        <img width="400" height="400" src="{{plays.imageString}}" />
-        <button>View</button>
-        <td>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="container" id="playbooks"> 
+  <h2>Playbooks</h2>
+  <a class="nav-link" routerLink="/draw">Create Play</a>
+  <a class="nav-link" routerLink="/draw">select Playbook</a>
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">PlayBookId</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Image</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let plays of play">
+          <td>{{plays.playID}}</td>
+          <td>{{plays.playbookID}}</td>
+          <td>{{plays.name}}</td>
+          <td>{{plays.description}}</td>
+          <img width="400" height="400" src="{{plays.imageString}}" />
+          <button>View</button>
+          <td>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
