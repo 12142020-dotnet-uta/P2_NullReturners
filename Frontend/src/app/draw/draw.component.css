@@ -1,7 +1,25 @@
-#drawPlay {
+
+
+#createPlaysTitle {
+    text-align: center;
+    margin: 100vh;
+}
+
+#backToPlaybook {
+    margin-left: 20%;
+}
+
+#resetCanvas {
+    margin: 100vh;
+}
+
+#drawCanvas {
     display: block;
     margin-top: -2%;
-    text-align: center;
+}
+
+#eraserButton {
+    background-color: gray;
 }
 
 #drawPlayName {
