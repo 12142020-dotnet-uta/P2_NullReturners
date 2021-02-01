@@ -26,4 +26,9 @@ export class CalendarService {
   deleteEvent(eventId:string) {
     return this.http.delete(this.baseUrl + `calendar/events/${eventId}`);
   }
+
+  editEvent(eventId:string, event:any) {
+    return this.http.put(this.baseUrl + `calendar/events/${eventId}`, event);
+  }
+
 }

@@ -27,7 +27,7 @@ import { GamesComponent } from './games/games.component';
 import { CreateGameComponent } from './games/create-game/create-game.component';
 import { EditGameComponent } from './games/edit-game/edit-game.component';
 import { CreateEventComponent } from './calendar/create-event/create-event.component';
-import { DeleteEventsComponent } from './calendar/delete-events/delete-events.component';
+import { EditEventsComponent } from './calendar/edit-events/edit-events.component';
 
 
 @NgModule({
@@ -53,7 +53,7 @@ import { DeleteEventsComponent } from './calendar/delete-events/delete-events.co
     CreateGameComponent,
     EditGameComponent,
     CreateEventComponent,
-    DeleteEventsComponent,
+    EditEventsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
