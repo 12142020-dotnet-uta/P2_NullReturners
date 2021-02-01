@@ -1,0 +1,19 @@
+#drawPlay {
+    display: block;
+    margin-top: -2%;
+    text-align: center;
+}
+
+#drawPlayName {
+    margin-left: 28%;
+    width: 20%;
+}
+
+#drawPlayDescription {
+    margin-right: auto;
+    width: 20%;
+}
+
+#drawPlayCreate {
+    margin-right: 25.5%;
+}
