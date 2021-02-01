@@ -18,7 +18,8 @@
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    height: 94.2vh;
+    margin-top: -5%;
+    height: 99.6vh;
 }
 
 #login {
