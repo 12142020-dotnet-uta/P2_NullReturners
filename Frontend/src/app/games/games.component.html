@@ -14,7 +14,7 @@
             </tr>
                 <ng-container *ngFor="let game of games">
                     <tr *ngIf="game.homeTeamID == loggedInUser.teamID || game.awayTeamID == loggedInUser.teamID">
-                        <td>{{game.gameDate}}</td>
+                        <td>{{game.test}}</td>
                         <td>{{game?.homeTeam?.name}}</td>
                         <td>{{game.homeScore}}</td>
                         <td>{{game?.awayTeam?.name}}</td>
