@@ -25,8 +25,16 @@ export class GamesComponent implements OnInit {
       this.getHomeTeams();
       this.getAwayTeams();
       this.getWinningTeams();
+      this.setTimes();
     }, err => {
       console.log(err);
+    })
+  }
+
+  setTimes() {
+    this.games.forEach(game => { 
+      game.test = new Date(game.gameDate);
+      console.log(game.test);
     })
   }
 
