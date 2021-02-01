@@ -13,10 +13,6 @@ using System.Threading.Tasks;
 namespace P2_Main.Controllers
 {
 
-
-
-    
-
     [Route("api/[controller]")]
     [ApiController]
     public class CalendarController : ControllerBase
@@ -33,7 +29,7 @@ namespace P2_Main.Controllers
             return await LogicClass.GetCalendar();
         }
 
-        [HttpGet("/events")]
+        [HttpGet("events")]
         public async Task<IEnumerable<Event>> GetMyEvents()
         {
             return await LogicClass.GetMyEvents();
@@ -48,6 +44,12 @@ namespace P2_Main.Controllers
                 return BadRequest("Event not created");
             }
             return ret;
+        }
+
+        [HttpDelete("events/{id}")]
+        public async Task<ActionResult<string>> DeleteEvent(string id)
+        {
+            return await LogicClass.DeleteEvent(id);
         }
     }
 }
