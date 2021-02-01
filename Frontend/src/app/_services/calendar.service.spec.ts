@@ -16,13 +16,17 @@ describe('MessageService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call getMyEvents()', () => {
-    service.getMyEvents();
+  it('should call getEvents()', () => {
+    service.getEvents();
   });
 
-  it('should call createMyEvent()', () => {
+  it('should call createEvent()', () => {
     let model: any = {};
-    service.createMyEvent(model);
+    service.createEvent(model);
+  });
+
+  it('should be call deleteEvent(eventid)', () => {
+    service.deleteEvent("event");
   });
 
 });

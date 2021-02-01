@@ -39,7 +39,7 @@ export class PlaysComponent implements OnInit {
       this.tempPlay = this.model;
       this.getCurrentPlays();
     }, err => {
-      console.log(err);
+      console.log(err)
     })
   
   
@@ -60,9 +60,9 @@ export class PlaysComponent implements OnInit {
     this.drawService.deletePlay(play).subscribe(Response => {
       console.log(Response);
       this.getPlays();
-    }), err => {
-      console.log(err);
-    }
+    }, err => {
+      console.log(err)
+    })
   }
 
   // getTeams(){

@@ -1,16 +1,21 @@
 <div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
-  <h3>Request Equipment</h3>
-  <a routerLink="/equipment">Back to Requests</a><br>
+  <h3 id="requestTitle">Request Equipment</h3>
+  <br>
+  <a id="backToRequest" routerLink="/equipment" >Back to Requests</a>
+  <br>
+  <br>
   <form #createEquipmentRequestForm="ngForm"  (ngSubmit)="createEquipmentRequest()" ngNativeValidate  autocomplete="off">
-    <label for="Message">Message</label>
-    <input name="Message" [(ngModel)]="model.message" class="form-control me-2" type="text" placeholder="Message">
-    <label for="ItemId">ItemId (will change)</label>
+    <label for="Message" id="messageLabel">Message</label>
+    <input id="messageInput" name="Message" [(ngModel)]="model.message" class="form-control me-2" type="text" placeholder="Message">
+    <br>
+    <label id="dropdownLabel" for="ItemId">ItemId (will change)</label>
     <select name="Status" [(ngModel)]="model.item" required>
       <option selected></option>
       <option *ngFor="let item of itemList">{{item.description}}</option>
     </select>
     <br>
-    <button class="btn btn-outline-success" type="submit">Create</button>
+    <br>
+    <button id="createRequestButton" class="btn btn-outline-success" type="submit">Create</button>
   </form>
 </div>
 

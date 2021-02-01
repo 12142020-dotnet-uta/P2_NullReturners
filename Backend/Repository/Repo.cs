@@ -46,6 +46,7 @@ namespace Repository
             //ValidateUserTable();
             //ValidateEquipmentRequestTable();
             //ValidateItemTable();
+            //ValidatePlaybookTable();
         }
 
         // Access SaveChanges from Logic class
@@ -160,15 +161,42 @@ namespace Repository
         //{
         //    if (teams.Count() == 0)
         //    {
-        //        string[] teamnames = { "Milwaukee Beers", "Dallas Felons", "New Jersey Informants", "Roswell Aliens", "Miami Dealers", "Los Angeles Riots" };
-        //        for (int i = 0; i < teamnames.Length; i++)
+        //        Team newteam1 = new Team()
         //        {
-        //            Team newteam = new Team()
-        //            {
-        //                Name = $"{teamnames[i]}"
-        //            };
-        //            teams.Add(newteam);
-        //        }
+        //            TeamID = 1,
+        //            Name = "Milwaukee Beers"
+        //        };
+        //        teams.Add(newteam1);
+        //        Team newteam2 = new Team()
+        //        {
+        //            TeamID = 2,
+        //            Name = "Dallas Felons"
+        //        };
+        //        teams.Add(newteam2);
+        //        Team newteam3 = new Team()
+        //        {
+        //            TeamID = 3,
+        //            Name = "New Jersey Informants"
+        //        };
+        //        teams.Add(newteam3);
+        //        Team newteam4 = new Team()
+        //        {
+        //            TeamID = 4,
+        //            Name = "Roswell Aliens"
+        //        };
+        //        teams.Add(newteam4);
+        //        Team newteam5 = new Team()
+        //        {
+        //            TeamID = 5,
+        //            Name = "Miami Dealers"
+        //        };
+        //        teams.Add(newteam5);
+        //        Team newteam6 = new Team()
+        //        {
+        //            TeamID = 6,
+        //            Name = "Los Angeles Riots"
+        //        };
+        //        teams.Add(newteam6);
         //        _progContext.SaveChanges();
         //    }
         //}
@@ -283,6 +311,21 @@ namespace Repository
         //        }
         //        _progContext.SaveChanges();
         //    }
+        //}
+        //private void ValidatePlaybookTable()
+        //{
+        //    if (playbooks.Count() == 0)
+        //    {
+        //        for (int i = 1; i <= 6; i++)
+        //        {
+        //            Playbook playbook = new Playbook()
+        //            {
+        //                TeamID = i
+        //            };
+        //            playbooks.Add(playbook);
+        //        }
+        //    }
+        //    _progContext.SaveChanges();
         //}
     }
 }

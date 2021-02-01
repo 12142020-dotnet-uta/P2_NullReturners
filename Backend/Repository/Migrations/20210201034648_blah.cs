@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class HopefullyTheLastMigration : Migration
+    public partial class blah : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -132,8 +132,7 @@ namespace Repository.Migrations
                 name: "Teams",
                 columns: table => new
                 {
-                    TeamID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TeamID = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Wins = table.Column<int>(type: "int", nullable: false),
                     Losses = table.Column<int>(type: "int", nullable: false)

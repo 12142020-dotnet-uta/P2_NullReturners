@@ -1431,7 +1431,7 @@ namespace P2_Main.Tests
                     Message = "Don't miss it!!"
                 };
 
-                await calendarController.CreateEvent(createEvent);
+                //await calendarController.CreateEvent(createEvent);
             }
         }
 

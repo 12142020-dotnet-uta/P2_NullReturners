@@ -1,5 +1,5 @@
 <div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser" id="players">
-    <h2>Players Details</h2>
+    <h2 id="playersTitle">Players Details</h2>
     <a routerLink="/players/create">Create User</a><br>
     <table class="table table-striped">
         <caption></caption>
@@ -10,7 +10,6 @@
             <th scope="col">Team</th>
             <th scope="col">Role</th>
             <th scope="col">Actions</th>
-            <th *ngIf="loggedInUser.roleID === 1" scope="col">Admin</th>
         </tr>
         </thead>
         <tbody>
@@ -23,9 +22,6 @@
                     <td>
                         <a [routerLink]="['/players/details', user.userID]">Details</a> &nbsp;
                         <a [routerLink]="['/players/edit', user.userID]" *ngIf="loggedInUser.roleID === 1 || loggedInUser.userID === user.userID">Edit</a>
-                    </td>
-                    <td *ngIf="loggedInUser.roleID === 1">
-                        <a [routerLink]="['/players/edit', user.userID]">Edit</a>
                     </td>
                 </tr>
             </ng-container>
