@@ -1,5 +1,6 @@
 <div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
     <ng-container *ngIf="loggedInUser.roleID == 1">
+        <h2 id="deleteEventTitle">Delete Event</h2>
         <p><a routerLink="/calendar">Back to Calendar</a></p>
         <table class="table table-striped">
             <caption></caption>

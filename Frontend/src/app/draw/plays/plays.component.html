@@ -24,7 +24,7 @@
         <td>{{plays.name}}</td>
         <td>{{plays.description}}</td>
         <td><img width="400" height="400" src="{{plays.imageString}}" alt="Image not found"/></td>
-        <td style="vertical-align: middle;"><button (click)="deletePlay(plays.playID)">Delete</button></td>
+        <td style="vertical-align: middle;"><button class="btn btn-danger" (click)="deletePlay(plays.playID)">Delete</button></td>
       </tr>
     </tbody>
   </table>
