@@ -16,8 +16,8 @@
             </thead>
             <tbody>
                 <tr *ngFor="let event of events">
+                    <td>{{event.summary}}</td>
                     <td>{{event.description}}</td>
-                    <td>{{event.id}}</td>
                     <td>{{event.location}}</td>
                     <td>{{event.start.dateTime}}</td>
                     <td>{{event.end.dateTime}}</td>

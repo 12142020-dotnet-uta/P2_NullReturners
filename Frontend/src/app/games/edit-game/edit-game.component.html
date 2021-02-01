@@ -15,6 +15,15 @@
         <label for="HomeTeamScore">Away Team Score</label>
         <input name="HomeTeamScore" [(ngModel)]="editedGame.awayScore" class="form-control me-2" type="number" min="0" value="{{game.awayScore}}}" >
         <br>
+        <label for="HomeTeamScore">Highlight</label>
+        <input name="HomeTeamScore" [(ngModel)]="editedGame.statistic1" class="form-control me-2" type="text" >
+        <br>
+        <label for="HomeTeamScore">Highlight</label>
+        <input name="HomeTeamScore" [(ngModel)]="editedGame.statistic2" class="form-control me-2" type="text" >
+        <br>
+        <label for="HomeTeamScore">Highlight</label>
+        <input name="HomeTeamScore" [(ngModel)]="editedGame.statistic3" class="form-control me-2" type="text" >
+        <br>
         <button type="submit" class="btn btn-outline-success" id="editGameButton">Submit</button>
     </form>
     </ng-container>
