@@ -1,5 +1,12 @@
 <a class="nav-link" routerLink="/draw">Create Play</a>
-<a class="nav-link" routerLink="/draw">select Playbook</a>
+
+<select ><option value="0">--Team--</option>  
+  <option *ngFor="let team of myTeams"  
+          value={{team.teamID}}>  
+      {{team.name}}  
+  </option>
+</select>
+
 <table class="table table-striped">
   <caption></caption>
     <thead>
