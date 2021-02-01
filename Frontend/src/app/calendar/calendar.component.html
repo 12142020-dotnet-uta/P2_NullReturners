@@ -1,10 +1,9 @@
 <div *ngIf="(accountService.currentUser$ | async) as loggedInUser">
-
-    <div class="container">
-        <a *ngIf="loggedInUser.roleID === 1" class="nav-link" routerLink="/calendar/create">Create Event</a><br>
-        <a *ngIf="loggedInUser.roleID === 1" class="nav-link" routerLink="/calendar/delete">Delete Events</a>
+    <div class="parent flex-parent">
+        <div class="flex-child" style="text-align: right"><a *ngIf="loggedInUser.roleID === 1" class="nav-link" routerLink="/calendar/create">Create Event</a></div>
+        <div class="flex-child"><a *ngIf="loggedInUser.roleID === 1" class="nav-link" routerLink="/calendar/delete">Delete Events</a></div>
     </div>
-
+<br/>
 <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1
 &amp;bgcolor=%23ffffff&amp;ctz=America%2FNew_York&amp;
 src=YTZqZGhkYnA1bXB2OGF1OG1icHM4cWZlbGtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ
@@ -12,7 +11,8 @@ src=YTZqZGhkYnA1bXB2OGF1OG1icHM4cWZlbGtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ
 width="800" height="600" id="calendar" title="Team Calendar"></iframe>
 
 </div>
-
+<br/>
+<br/>
 
 <!-- If the user is not logged in -->
 <div *ngIf="(accountService.currentUser$ | async) === null">
