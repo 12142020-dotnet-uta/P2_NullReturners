@@ -5,3 +5,10 @@
 #plays {
     text-align: center;
 }
+.flex-parent {
+    display: flex;
+    margin-top: -20px;
+}
+.flex-child {
+    flex: 1;
+}
