@@ -46,6 +46,12 @@ namespace P2_Main.Controllers
             return ret;
         }
 
+        [HttpPut("events/{id}")]
+        public async Task<ActionResult<Event>> EditEvent(EventDto eventDto, string id)
+        {
+            return await LogicClass.EditEvent(eventDto, id);
+        }
+
         [HttpDelete("events/{id}")]
         public async Task<ActionResult<string>> DeleteEvent(string id)
         {

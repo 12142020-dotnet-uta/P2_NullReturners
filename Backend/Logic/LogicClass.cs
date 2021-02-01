@@ -705,7 +705,7 @@ namespace Logic
             }
             return myevent;
         }
-        public static async Task<Event> EditEvent(EventDto eventDto)
+        public static async Task<Event> EditEvent(EventDto eventDto, string Id)
         {
             CalendarService service = await InitializeCalendar();
             string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
@@ -723,7 +723,8 @@ namespace Logic
                 End = end,
                 Location = eventDto.Location,
                 Summary = eventDto.Description,
-                Description = eventDto.Message
+                Description = eventDto.Message,
+                Id = Id
             };
             var updateRequest = service.Events.Update(myevent, calendarId, myevent.Id);
             try
