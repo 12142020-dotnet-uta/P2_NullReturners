@@ -10,7 +10,7 @@ import { CalendarService } from '../_services/calendar.service';
 })
 export class CalendarComponent implements OnInit {
 
-  constructor(private calendarService: CalendarService) { }
+  constructor(private calendarService: CalendarService, public accountService: AccountService) { }
   @ViewChild('calendar') model: any;//calendarService;
 calendar: any
 

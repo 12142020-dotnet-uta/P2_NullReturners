@@ -1,0 +1,28 @@
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
+    <ng-container *ngIf="loggedInUser.roleID == 1">
+        <form #createEventForm="ngForm"  (ngSubmit)="createEvent()" ngNativeValidate  autocomplete="off">
+            <label for="Description">Description</label>
+            <input name="Description" [(ngModel)]="event.description" class="form-control me-2" type="text" required placeholder="Description">
+            <label for="Message">Message</label>
+            <input name="Message" [(ngModel)]="event.message" class="form-control me-2" type="text" required placeholder="Message">
+            <label for="Location">Location</label>
+            <input name="location" [(ngModel)]="event.location" class="form-control me-2" type="text" required placeholder="Location">
+            <label for="StartTime">Start Time</label>
+            <input name="StartTime" [(ngModel)]="event.startTime" class="form-control me-2" type="datetime-local" required>
+            <label for="EndTime">End Time</label>
+            <input name="EndTime" [(ngModel)]="event.endTime" class="form-control me-2" type="datetime-local" required>
+            <br>
+            <button class="btn btn-outline-success" type="submit">Create</button>
+          </form>
+    </ng-container>
+
+    <ng-container *ngIf="loggedInUser.roleID != 1">
+        <h2 class="text-center">Not Authorized</h2>
+        <p class="text-center"><a  [routerLink]="['']">Go home.</a></p>
+      </ng-container>
+</div>
+
+<!-- If the user is not logged in -->
+<div *ngIf="(accountService.currentUser$ | async) === null">
+    <app-home></app-home>
+</div>
