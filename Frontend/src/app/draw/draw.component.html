@@ -1,35 +1,40 @@
-<div class="container" id="drawPlay">
-<a style="margin-top: 0%;" class="nav-link" routerLink="/plays">Back to Play Book</a>
-<button  (click)="restetTemplate()">Reset</button><br>
-<div style="display: inline;">
-<div style="width: 20%; display: inline-block; float:left; margin-right: 10px;">
-    <button  (click)="getEraser()">Erase</button>
-    <button (click)="lineIncrease()">Brush +</button>
-    <button (click)="lineDecrease()">Brush -</button>
-  
+<div class="container">
+    <h2 id="createPlaysTitle">Create Play</h2>
+    <a routerLink="/plays" id="backToPlaybook">Back to Play Book</a>
+    <button  (click)="restetTemplate()" id="resetCanvas">Reset</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="display: inline;">
+    <div style="width: 20%; display: inline-block; float:left; margin-right: 10px;">
+        <button id="eraserButton" (click)="getEraser()" >Erase</button>
+        <button (click)="lineIncrease()">Brush +</button>
+        <button (click)="lineDecrease()">Brush -</button>
+    
 
- 
-    <p style="margin-bottom: 0%;">Brush Color</p>
-    <button style="color:black;" style="background-color: red;" (click)="getRed()">Red</button>
-    <button style="background-color: black;" (click)="getBlack()">Black</button>
-    <button style="color:white;" style="background-color: White;" (click)="getWhite()">White</button>
-    <button style="color:white;" style="background-color: turquoise;" (click)="getBlue()">Blue</button>
+    
+        <p style="margin-bottom: 0%;">Brush Color</p>
+        <button style="color:black;" style="background-color: red;" (click)="getRed()">Red</button>
+        <button style="background-color: black;" (click)="getBlack()">Black</button>
+        <button style="color:black;" style="background-color: White;" (click)="getWhite()">White</button>
+        <button style="color:white;" style="background-color: turquoise;" (click)="getBlue()">Blue</button>
 
 
-    <p style="margin-bottom: 0%;">background-color</p>
-    <button style="background-color: black;" (click)="SetBackGroundBlack()">BlackB</button>
-    <button style="background-color: Green;" (click)="SetBackGroundGreen()">GreenB</button>
-    <button  (click)="SetBackGroundWhite()">WhiteB</button>
+        <p style="margin-bottom: 0%;">background-color</p>
+        <button style="background-color: black;" (click)="SetBackGroundBlack()">BlackB</button>
+        <button style="background-color: Green;" (click)="SetBackGroundGreen()">GreenB</button>
+        <button  (click)="SetBackGroundWhite()">WhiteB</button>
 
-</div>
-<div style="width: 41%; display: inline-block;">
-<canvas #canvas (mousedown)="captureEvents()"></canvas> 
+    </div>
+    <div style="width: 41%; display: inline-block;">
+    <canvas #canvas (mousedown)="captureEvents()" id="drawCanvas"></canvas> 
 
-    <form #createDrawingForm="ngForm" class="d-flex" (ngSubmit)="saveCanvas()" autocomplete="off">
-        <input name="Name" [(ngModel)]="model.Name" class="form-control me-2" type="text" placeholder="Name" aria-label="Name">
-        <input name="Description" [(ngModel)]="model.Description" class="form-control me-2" type="text" placeholder="Description" aria-label="Description">
-        <button class="btn btn-outline-success" type="submit">Create</button>
-    </form>
+        <form #createDrawingForm="ngForm" class="d-flex" (ngSubmit)="saveCanvas()" autocomplete="off">
+            <input name="Name" [(ngModel)]="model.Name" class="form-control me-2" type="text" placeholder="Name" aria-label="Name">
+            <input name="Description" [(ngModel)]="model.Description" class="form-control me-2" type="text" placeholder="Description" aria-label="Description">
+            <button class="btn btn-outline-success" type="submit">Create</button>
+        </form>
 
-</div>
+    </div>
 </div>

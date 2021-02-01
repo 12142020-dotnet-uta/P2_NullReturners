@@ -2,8 +2,10 @@
     <ng-container *ngIf="loggedInUser.teamID == user.teamID">
     <h2 id="playerID">User: #{{user.userID}}</h2>
     <a *ngIf="loggedInUser.userID == user.userID || loggedInUser.roleID == 1" [routerLink]="['/players/edit/', user.userID]">Edit</a>
-    <p *ngIf="loggedInUser.roleID == 1"><a [routerLink]="['/players/edit/', user.userID]">Admin Edit</a></p>
-    <table class="table table-striped" id="playerDetails">
+    <br>
+    <!--<p *ngIf="loggedInUser.roleID == 1"><a [routerLink]="['/players/edit/', user.userID]">Admin Edit</a></p>-->
+    <a id="backToUsers" routerLink="/players">Back to Users</a>
+    <table class="table table-striped">
       <caption></caption>
         <thead>
           <tr>

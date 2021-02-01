@@ -48,4 +48,11 @@ describe('GamesComponent', () => {
     component.games[0].winningTeam = 5;
     component.getWinningTeams();
   });
+
+  it('should call setTimes()', () => {
+    component.games = [{}];
+    component.games[0].test = null;
+    component.games[0].gameDate = Date.now;
+    component.setTimes();
+  });
 });

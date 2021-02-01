@@ -1,55 +1,55 @@
-<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser" id="equipmentRequests">
-<ng-container *ngIf="loggedInUser.roleID != 2">
-  <h2>Equipment Requests</h2>
-<a routerLink="/equipment/create">Create Request</a>
-<table class="table table-striped" >
-  <caption></caption>
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Item</th>
-        <th scope="col">Requested By</th>
-        <th scope="col">Team</th>
-        <th scope="col">Status</th>
-        <th *ngIf="loggedInUser.roleID === 1" scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- table if coach -->
-      <ng-container *ngFor="let equipment of equipmentList">
-      <tr *ngIf="equipment.teamID === loggedInUser.teamID && loggedInUser.roleID === 1">
-        <td>{{equipment.requestID}}</td>
-        <td>{{equipment?.item?.description}}</td>
-        <td>{{equipment?.user?.fullName}}</td>
-        <td>{{equipment?.team?.name}}</td>
-        <td>{{equipment.status}}</td>
-        <td>
-            <a [routerLink]="['/equipment/details', equipment.requestID]">Details</a> - 
-            <a [routerLink]="['/equipment/edit', equipment.requestID]">Edit</a>
-        </td>
-      </tr>
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
+  <ng-container *ngIf="loggedInUser.roleID != 2">
+  <h2 id="equipmentRequestTitle">Equipment Requests</h2>
+  <a routerLink="/equipment/create" id="equipmentRequestTable">Create Request</a>
+  <table class="table table-striped" >
+    <caption></caption>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Item</th>
+          <th scope="col">Requested By</th>
+          <th scope="col">Team</th>
+          <th scope="col">Status</th>
+          <th *ngIf="loggedInUser.roleID === 1" scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- table if coach -->
+        <ng-container *ngFor="let equipment of equipmentList">
+        <tr *ngIf="equipment.teamID === loggedInUser.teamID && loggedInUser.roleID === 1">
+          <td>{{equipment.requestID}}</td>
+          <td>{{equipment?.item?.description}}</td>
+          <td>{{equipment?.user?.fullName}}</td>
+          <td>{{equipment?.team?.name}}</td>
+          <td>{{equipment.status}}</td>
+          <td>
+              <a [routerLink]="['/equipment/details', equipment.requestID]">Details</a> - 
+              <a [routerLink]="['/equipment/edit', equipment.requestID]">Edit</a>
+          </td>
+        </tr>
 
-      <!-- table if parent -->
-      <tr *ngIf="equipment.teamID === loggedInUser.teamID && loggedInUser.roleID === 3 && equipment.userID === loggedInUser.userID">
-        <td>{{equipment.requestID}}</td>
-        <td>{{equipment?.item?.description}}</td>
-        <td>{{equipment?.user?.fullName}}</td>
-        <td>{{equipment?.team?.name}}</td>
-        <td>{{equipment.status}}</td>
-        <td>
-            <a [routerLink]="['/equipment/details', equipment.requestID]">Details</a> - 
-            <a [routerLink]="['/equipment/edit', equipment.requestID]">Edit</a>
-        </td>
-      </tr>
-      </ng-container>
-    </tbody>
-  </table>
-</ng-container>
+        <!-- table if parent -->
+        <tr *ngIf="equipment.teamID === loggedInUser.teamID && loggedInUser.roleID === 3 && equipment.userID === loggedInUser.userID">
+          <td>{{equipment.requestID}}</td>
+          <td>{{equipment?.item?.description}}</td>
+          <td>{{equipment?.user?.fullName}}</td>
+          <td>{{equipment?.team?.name}}</td>
+          <td>{{equipment.status}}</td>
+          <td>
+              <a [routerLink]="['/equipment/details', equipment.requestID]">Details</a> - 
+              <a [routerLink]="['/equipment/edit', equipment.requestID]">Edit</a>
+          </td>
+        </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </ng-container>
 
-<ng-container *ngIf="loggedInUser.roleID == 2">
-  <h2 class="text-center">Not Authorized</h2>
-  <p class="text-center"><a  [routerLink]="['']">Go home.</a></p>
-</ng-container>
+  <ng-container *ngIf="loggedInUser.roleID == 2">
+    <h2 class="text-center">Not Authorized</h2>
+    <p class="text-center"><a  [routerLink]="['']">Go home.</a></p>
+  </ng-container>
 </div>
 
 <!-- If the user is not logged in -->
