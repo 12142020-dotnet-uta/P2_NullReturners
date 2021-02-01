@@ -12,7 +12,6 @@ namespace Models
     public class Team
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName("Team ID")]
         public int TeamID { get; set; }
         [DisplayName("Team Name")]
