@@ -1,7 +1,7 @@
-<div class="message_container row">
+<div class="message_container row" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
     <div class="message_users col-md-2">
         <ng-container *ngFor="let user of users">
-        <div class="users" [class.selected]="user.userID === selectedUserId" (click)="getMessageBox(user.userID)">
+        <div *ngIf="user.userID != loggedInUser.userID" class="users" [class.selected]="user.userID === selectedUserId" (click)="getMessageBox(user.userID)">
             <p>{{user.fullName}}</p>
         </div>
         </ng-container> 
