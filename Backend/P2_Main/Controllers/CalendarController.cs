@@ -43,6 +43,7 @@ namespace P2_Main.Controllers
             {
                 return BadRequest("Event not created");
             }
+            await LogicClass.DeleteEvent(ret.Id);
             return ret;
         }
 
