@@ -14,8 +14,11 @@ export class CalendarComponent implements OnInit {
   @ViewChild('calendar') model: any;//calendarService;
 calendar: any
 
+events:any = [];
+
   ngOnInit(): void {
     this.getCalendar();
+    this.getEvents();
   }
 
   getCalendar() {
@@ -25,6 +28,24 @@ calendar: any
     }, err => {
       console.log(err);
     })  
+  }
+
+  getEvents() {
+    this.calendarService.getEvents().subscribe(events => {
+      this.events = events;
+      console.log(events);
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  deleteEvent(eventId:string) {
+    this.calendarService.deleteEvent(eventId).subscribe(event => {
+      console.log(event);
+      this.getEvents();
+    }, err => {
+      console.log(err);
+    })
   }
 
 }
