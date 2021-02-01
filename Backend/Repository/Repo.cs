@@ -46,6 +46,7 @@ namespace Repository
             //ValidateUserTable();
             //ValidateEquipmentRequestTable();
             //ValidateItemTable();
+            //ValidatePlaybookTable();
         }
 
         // Access SaveChanges from Logic class
@@ -283,6 +284,21 @@ namespace Repository
         //        }
         //        _progContext.SaveChanges();
         //    }
+        //}
+        //private void ValidatePlaybookTable()
+        //{
+        //    if (playbooks.Count() == 0)
+        //    {
+        //        for(int i = 1; i <= 6; i++)
+        //        {
+        //            Playbook playbook = new Playbook()
+        //            {
+        //                TeamID = i
+        //            };
+        //            playbooks.Add(playbook);
+        //        }
+        //    }
+        //    _progContext.SaveChanges();
         //}
     }
 }
