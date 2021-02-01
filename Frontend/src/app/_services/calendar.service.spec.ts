@@ -1,29 +1,33 @@
-// import { TestBed } from '@angular/core/testing';
-// import { HttpClientTestingModule } from '@angular/common/http/testing';
-// import { CalendarService } from './calendar.service';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CalendarService } from './calendar.service';
 
-// describe('MessageService', () => {
-//   let service: CalendarService;
+describe('MessageService', () => {
+  let service: CalendarService;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//         imports: [HttpClientTestingModule]
-//     });
-//     service = TestBed.inject(CalendarService);
-//   });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule]
+    });
+    service = TestBed.inject(CalendarService);
+  });
 
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 
-//   it('should call getMyEvents()', () => {
-//     service.getMyEvents();
-//   });
+  it('should call getEvents()', () => {
+    service.getEvents();
+  });
 
-//   it('should call createMyEvent()', () => {
-//     let model: any = {};
-//     service.createMyEvent(model);
-//   });
+  it('should call createEvent()', () => {
+    let model: any = {};
+    service.createEvent(model);
+  });
 
-// });
+  it('should be call deleteEvent(eventid)', () => {
+    service.deleteEvent("event");
+  });
+
+});
 

@@ -705,6 +705,37 @@ namespace Logic
             }
             return myevent;
         }
+        public static async Task<Event> EditEvent(EventDto eventDto)
+        {
+            CalendarService service = await InitializeCalendar();
+            string calendarId = @"a6jdhdbp5mpv8au8mbps8qfelk@group.calendar.google.com";
+            EventDateTime start = new EventDateTime()
+            {
+                DateTime = eventDto.StartTime
+            };
+            EventDateTime end = new EventDateTime()
+            {
+                DateTime = eventDto.EndTime
+            };
+            var myevent = new Event()
+            {
+                Start = start,
+                End = end,
+                Location = eventDto.Location,
+                Summary = eventDto.Description,
+                Description = eventDto.Message
+            };
+            var updateRequest = service.Events.Update(myevent, calendarId, myevent.Id);
+            try
+            {
+                await updateRequest.ExecuteAsync();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return myevent;
+        }
         public static async Task<string> DeleteEvent(string eventId)
         {
             CalendarService service = await InitializeCalendar();

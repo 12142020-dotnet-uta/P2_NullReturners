@@ -1,25 +1,33 @@
-<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser" id="createPlayer">
+<div class="container" *ngIf="(accountService.currentUser$ | async) as loggedInUser">
     <div *ngIf="loggedInUser.roleID == 1">
-        <h3>Add New User</h3>
-        <a routerLink="/players">Back to Users</a><br>
+        <h2 id="createPlayerTitle">Add New User</h2>
+        <br>
+        <a id="backToUsers" routerLink="/players">Back to Users</a>
+        <br>
         <form #createUserForm="ngForm" (ngSubmit)="createUser()" ngNativeValidate autocomplete="off">
-            <label for="Username">Username</label>
-            <input name="Username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username" aria-label="Username">
-            <label for="Password">Password</label>
-            <input name="Password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password" aria-label="Password">
-            <label for="FullName">Full Name</label>
-            <input name="FullName" [(ngModel)]="model.fullname" class="form-control me-2" type="text" placeholder="Full Name" aria-label="FullName">
-            <label for="PhoneNumber">Phone Number</label>
-            <input name="PhoneNumber" [(ngModel)]="model.phonenumber" class="form-control me-2" type="tel" placeholder="Phone Number" aria-label="PhoneNumber">
-            <label for="Email">Email</label>
-            <input name="Email" [(ngModel)]="model.email" class="form-control me-2" type="email" placeholder="Email" aria-label="Email">
-            <label for="Roles">Role</label><br>
+            <label id="createPlayerLabel" for="Username">Username</label>
+            <input id="createPlayerInput" name="Username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username" aria-label="Username">
+            <br>
+            <label id="createPlayerLabel" for="Password">Password</label>
+            <input id="createPlayerInput" name="Password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password" aria-label="Password">
+            <br>
+            <label id="createPlayerLabel" for="FullName">Full Name</label>
+            <input id="createPlayerInput" name="FullName" [(ngModel)]="model.fullname" class="form-control me-2" type="text" placeholder="Full Name" aria-label="FullName">
+            <br>
+            <label id="createPlayerLabel" for="PhoneNumber">Phone Number</label>
+            <input id="createPlayerInput" name="PhoneNumber" [(ngModel)]="model.phonenumber" class="form-control me-2" type="tel" placeholder="Phone Number" aria-label="PhoneNumber">
+            <br>
+            <label id="createPlayerLabel" for="Email">Email</label>
+            <input id="createPlayerInput" name="Email" [(ngModel)]="model.email" class="form-control me-2" type="email" placeholder="Email" aria-label="Email">
+            <br>
+            <label id="createPlayerLabel" for="Roles">Role</label>
             <select name="Role" [(ngModel)]="model.role" required class="form-select form-select-lg mb-3">
                 <option selected></option>
                 <option *ngFor="let role of roleList">{{role.roleName}}</option>
             </select>
             <br>
-            <button class="btn btn-outline-success" type="submit">Create</button>
+            <br>
+            <button id="createPlayerButton" class="btn btn-outline-success" type="submit">Create</button>
         </form>
         
     </div>

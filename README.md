@@ -27,6 +27,7 @@ List of features ready
 
 ToDo
 * Add live video capabilities
+* Add Notifications
 
 ## Getting Started
 
