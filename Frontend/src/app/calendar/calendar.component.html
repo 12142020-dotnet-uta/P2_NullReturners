@@ -1,4 +1,6 @@
 <div *ngIf="(accountService.currentUser$ | async) as loggedInUser">
+    <h2 id="calendarTitle">View Events</h2>
+    <br>
     <div class="parent flex-parent">
         <div class="flex-child" style="text-align: right"><a *ngIf="loggedInUser.roleID === 1" class="nav-link" routerLink="/calendar/create">Create Event</a></div>
         <div class="flex-child"><a *ngIf="loggedInUser.roleID === 1" class="nav-link" routerLink="/calendar/delete">Delete Events</a></div>

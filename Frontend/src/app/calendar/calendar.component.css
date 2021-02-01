@@ -1,9 +1,6 @@
-#createEvent {
-    margin-left: -15%;
+#calendarTitle {
+    text-align: center;
 }
- #deleteEvent {
-    margin-left: -15%;
- }
 
 #calendar {
 
@@ -11,7 +8,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 60%;
-    height: 80vh;
+    height: 75vh;
 }
 .flex-parent {
     display: flex;
