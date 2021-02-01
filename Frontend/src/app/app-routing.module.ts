@@ -20,6 +20,8 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { GamesComponent } from './games/games.component';
 import { CreateGameComponent } from './games/create-game/create-game.component';
 import { EditGameComponent } from './games/edit-game/edit-game.component';
+import { CreateEventComponent } from './calendar/create-event/create-event.component';
+import { DeleteEventsComponent } from './calendar/delete-events/delete-events.component';
 
 
 
@@ -32,6 +34,8 @@ const routes: Routes = [
   {path: 'plays', component: PlaysComponent},
   {path: 'draw', component: DrawComponent},
   {path: 'calendar', component: CalendarComponent},
+  {path: 'calendar/create', component: CreateEventComponent},
+  {path: 'calendar/delete', component: DeleteEventsComponent},
   {path: 'games', component: GamesComponent},
   {path: 'games/create', component: CreateGameComponent},
   {path: 'games/edit/:id', component: EditGameComponent},

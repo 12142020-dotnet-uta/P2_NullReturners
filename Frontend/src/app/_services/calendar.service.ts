@@ -11,19 +11,19 @@ export class CalendarService {
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  //getCalendarInitialized(){
-  //return this.http.get(this.baseUrl + 'calendar');
-  //}
-
   getCalendar() {
-    return this.http.get(this.baseUrl + 'calendar/');
+    return this.http.get(this.baseUrl + 'calendar');
   }
 
-  getMyEvents() {
-    return this.http.get(this.baseUrl + 'calendar/events/');
+  getEvents() {
+    return this.http.get(this.baseUrl + 'calendar/events');
   }
 
-  createMyEvent(model: any) {
-    return this.http.post(this.baseUrl + `calendar/`, model);
+  createEvent(model: any) {
+    return this.http.post(this.baseUrl + `calendar`, model);
+  }
+
+  deleteEvent(eventId:string) {
+    return this.http.delete(this.baseUrl + `calendar/events/${eventId}`);
   }
 }
