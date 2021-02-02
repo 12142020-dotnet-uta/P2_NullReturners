@@ -14,7 +14,8 @@
         
         <div *ngIf="(accountService.currentUser$ | async)" class="container" id="loggedIn">
         <h1>Welcome, {{user.fullName}}</h1>
-        <h2>{{team.name}} dashboard</h2>
+        <h2>This is your {{team.name}} portal</h2>
+        <p>Please use the links above</p>
         </div>  
 </div>
 
