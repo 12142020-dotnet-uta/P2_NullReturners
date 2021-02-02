@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '@auth0/auth0-spa-js';
 import { AccountService } from 'src/app/_services/account.service';
 import { GamesService } from 'src/app/_services/games.service';
 
@@ -14,20 +15,35 @@ export class CreateGameComponent implements OnInit {
 
   newGame:any = {};
   teamList:any = [];
+  userLoggedIn:any;
 
   ngOnInit(): void {
     this.getTeamList();
+    this.getLoggedInUser();
   }
 
   createGame() {
     this.getAwayTeam();
     this.getHomeTeam();
-    this.gamesService.createGame(this.newGame).subscribe(game => {
-      console.log(game);
-      this.router.navigate(['/games'])
-    }, err => {
-      console.log(err);
-    })
+
+    if (this.userLoggedIn.teamID == this.newGame.homeTeamID || this.userLoggedIn.teamID == this.newGame.awayTeamID) {
+      this.gamesService.createGame(this.newGame).subscribe(game => {
+        console.log(game);
+        this.router.navigate(['/games'])
+      }, err => {
+        console.log(err);
+      });
+    } else {
+      this.teamList.forEach(team => {
+        if (team.teamID == this.userLoggedIn.teamID) {
+          let teamName = team.name;
+          alert(`Created game must include ${teamName}`);
+        }
+      });
+      
+    }
+
+    
   }
 
   getTeamList() {
@@ -37,6 +53,12 @@ export class CreateGameComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+  }
+
+  getLoggedInUser() {
+    this.accountService.currentUser$.subscribe( user$ => {
+      this.userLoggedIn = user$;
+    })
   }
 
   getHomeTeam() {

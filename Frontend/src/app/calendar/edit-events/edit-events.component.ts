@@ -49,7 +49,7 @@ export class EditEventsComponent implements OnInit {
     if(!this.editedEvent.startTime) {this.editedEvent.startTime = this.event.start.dateTime;}
     if(!this.editedEvent.endTime) {this.editedEvent.endTime = this.event.end.dateTime;}
     this.calendarService.editEvent(id, this.editedEvent).subscribe(event => {
-      this.router.navigate([`/calendar`])
+      this.router.navigate([`/calendar`]);
     }, err => {
       console.log(err);
     })

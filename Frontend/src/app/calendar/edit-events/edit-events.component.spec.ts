@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditEventsComponent } from './edit-events.component';
+// import { EditEventsComponent } from './edit-events.component';
 
-describe('EditEventsComponent', () => {
-  let component: EditEventsComponent;
-  let fixture: ComponentFixture<EditEventsComponent>;
+// describe('EditEventsComponent', () => {
+//   let component: EditEventsComponent;
+//   let fixture: ComponentFixture<EditEventsComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ EditEventsComponent ]
-    })
-    .compileComponents();
-  });
+//   beforeEach(async () => {
+//     await TestBed.configureTestingModule({
+//       declarations: [ EditEventsComponent ]
+//     })
+//     .compileComponents();
+//   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(EditEventsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(EditEventsComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
