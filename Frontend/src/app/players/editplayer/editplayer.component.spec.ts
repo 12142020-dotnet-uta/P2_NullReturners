@@ -27,4 +27,8 @@ describe('EditplayerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call editUser()', () => {
+    component.editUser();
+  });
 });

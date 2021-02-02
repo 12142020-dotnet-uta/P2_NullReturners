@@ -8,7 +8,7 @@
     <label for="Message" id="messageLabel">Message</label>
     <input id="messageInput" name="Message" [(ngModel)]="model.message" class="form-control me-2" type="text" placeholder="Message">
     <br>
-    <label id="dropdownLabel" for="ItemId">ItemId (will change)</label>
+    <label id="dropdownLabel" for="ItemId">Item</label>
     <select name="Status" [(ngModel)]="model.item" required>
       <option selected></option>
       <option *ngFor="let item of itemList">{{item.description}}</option>

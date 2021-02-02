@@ -22,7 +22,7 @@ export class CreateEquipmentRequestComponent implements OnInit {
   createEquipmentRequest() {
     this.getCurrentUser();
     this.getCreatedItem();
-    this.model.status = 'Requested';
+    this.model.status = 'App. Pending';
     this.equipmentService.createRequest(this.model).subscribe(response => {
       console.log(response);
       this.router.navigate(['/equipment'])
