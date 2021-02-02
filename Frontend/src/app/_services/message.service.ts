@@ -10,8 +10,20 @@ export class MessageService {
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
+  getInboxes(id:string) {
+    return this.http.get(this.baseUrl + `messages/inboxes/${id}`)
+  }
+
   getMessages() {
     return this.http.get(this.baseUrl + 'messages')
+  }
+
+  getMessage(id:string) {
+    return this.http.get(this.baseUrl + `messages/${id}`);
+  }
+
+  getSentMessages(id: string) {
+    return this.http.get(this.baseUrl + `messages/sender/${id}`)
   }
 
   getRecipientLists() {
@@ -24,6 +36,10 @@ export class MessageService {
 
   sendMessage(message:any) {
     return this.http.post(this.baseUrl + `messages/send`, message);
+  }
+
+  sendCarpool(message:any) {
+    return this.http.post(this.baseUrl + `messages/send/carpool`, message);
   }
 
 }

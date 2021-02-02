@@ -407,6 +407,11 @@ namespace Logic
         {
             return await _repo.GetMessageById(id);
         }
+
+        public async Task<IEnumerable<Message>> GetMessagesBySenderById(Guid id)
+        {
+            return await _repo.GetMessagesBySenderById(id);
+        }
         /// <summary>
         /// Get list of Messages
         /// </summary>
@@ -463,6 +468,25 @@ namespace Logic
                 RecipientListID = Guid.NewGuid(),
                 MessageText = newMessageDto.MessageText,
                 SentDate = DateTime.Now
+            };
+            foreach (Guid id in newMessageDto.RecipientList)
+            {
+                await BuildRecipientList(newMessage.RecipientListID, id);
+            }
+            await _repo.messages.AddAsync(newMessage);
+            await _repo.CommitSave();
+            return newMessage;
+        }
+
+        public async Task<Message> CreateCarpool(NewMessageDto newMessageDto)
+        {
+            Message newMessage = new Message()
+            {
+                SenderID = newMessageDto.SenderID,
+                RecipientListID = Guid.NewGuid(),
+                MessageText = newMessageDto.MessageText,
+                SentDate = DateTime.Now,
+                IsCarpool = true
             };
             foreach (Guid id in newMessageDto.RecipientList)
             {

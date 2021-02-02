@@ -1,5 +1,5 @@
 import { registerLocaleData } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { concatMap, map } from 'rxjs/operators';
 import { User } from '../_models/User';
 import { AccountService } from '../_services/account.service';
@@ -13,32 +13,41 @@ import { UserService } from '../_services/user.service';
 })
 export class MessagesComponent implements OnInit {
 
-  userLoggedIn:any;
-  users:User[] = [];
-  usersArr: any = {};
+  
+ 
   messagesSent:any[] = [];
   messagesRecieved:any[] = [];
-
-  allMessages:any[] = [];
-
+  
   message:any = {}
 
-  messagesArr: any;
+  // need these 
+  userLoggedIn:any;
+  usersArr: any = {};
+  users:User[] = [];
+  inboxes:any = [];
+  recievedMessagesArr:any[] = [];
+  sentMessagesArr:any = [];
+
+  recievedMessages:any[] = [];
+  sentMessages:any = [];
 
   selectedUserId: string;
+  allMessages:any = [];
+
+  displayedMessages:any = [];
 
   constructor(public accountService: AccountService, private userService: UserService, private messagesService: MessageService) { }
 
   ngOnInit(): void {
     this.getLoggedInUser();
     this.getUsers();
-    this.getMessages();
   }
 
   // Finds the currently logged in user
   getLoggedInUser() {
     this.accountService.currentUser$.subscribe( user$ => {
       this.userLoggedIn = user$;
+      this.getInboxes();
     })
   }
 
@@ -52,68 +61,105 @@ export class MessagesComponent implements OnInit {
           this.users.push(user)
         }
       })
+    }) 
+  }
+
+  getInboxes() {
+    this.messagesService.getInboxes(this.userLoggedIn.userID).subscribe(inboxes => {
+      this.inboxes = inboxes;
+      this.getRecievedMessages();
+      this.getSentMessages();
+    }, err => {
+      console.log(err);
     })
   }
 
-  // Gets a list of messages
-  getMessages() {
-    this.messagesService.getMessages().subscribe(messages => {
-      this.messagesArr = messages;
+  getRecievedMessages() {
+    this.inboxes.forEach(inbox => {
+      this.messagesService.getMessage(inbox.messageID).subscribe(message => {
+        this.recievedMessagesArr.push(message);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  getSentMessages() {
+    this.messagesService.getSentMessages(this.userLoggedIn.userID).subscribe(messages => {
+      this.sentMessagesArr = messages;
       this.getRecipients();
     }, err => {
       console.log(err);
     })
   }
 
-  // gets the recipients from the messages
-  getRecipients() { 
+  getRecipients() {
     let iterations:number = 0;
-    this.messagesArr.forEach(message => {
+    this.sentMessagesArr.forEach(message => {
       this.messagesService.getRecipientList(message.recipientListID).subscribe(recipients => {
         iterations ++;
-        message.recipient = recipients;
-        // this refreshes the message box if a new message is sent
-        if(this.selectedUserId && this.messagesArr.length === iterations) {
-          this.getMessageBox(this.selectedUserId);
+        message.recipients = recipients;
+        if(this.sentMessagesArr.length === iterations) {
+          this.getAllMessages();
         }
       }, err => {
         console.log(err);
-      })
+      });
     });
-  }  
+  }
+
+  getAllMessages() {
+    this.allMessages = [];
+    this.sentMessagesArr.forEach(message => {
+      this.allMessages.push({
+        state: 'sent',
+        message: message
+      });
+    });
+    this.recievedMessagesArr.forEach(message => {
+      this.allMessages.push({
+        state: 'recieved',
+        message: message
+      })
+    })
+    if (this.selectedUserId) {
+      this.getMessageBox(this.selectedUserId);
+    }
+  }
 
   // gets a list of the messages between the two users
   getMessageBox(userId) {
     this.selectedUserId = userId;
-    this.allMessages = [];
-    this.messagesArr.forEach(message => {
-      if (message.senderID === this.userLoggedIn.userID && message.recipient.recipientID === this.selectedUserId) {
+    this.displayedMessages = [];
+    this.allMessages.forEach(message => {
+      if (message.message.senderID === this.userLoggedIn.userID && message.message.recipients.recipientID === this.selectedUserId) {
         this.messagesSent.push(message);
-        this.allMessages.push({
+        this.displayedMessages.push({
           msg: message,
-          state: 'sent'
+          state: 'sent',
+          date: new Date(message.message.sentDate)
         });
       } 
-      if (message.senderID === this.selectedUserId && message.recipient.recipientID === this.userLoggedIn.userID) {
+      if (message.message.senderID === this.selectedUserId) {
         this.messagesRecieved.push(message);
-        this.allMessages.push({
+        this.displayedMessages.push({
           msg: message,
-          state: 'recieved'
+          state: 'recieved',
+          date: new Date(message.message.sentDate)
         });
       }
     });
+    this.displayedMessages.sort((a, b) => a.date - b.date);
   }
-
-  sendMessage() {
+   sendMessage() {
     this.message.senderID = this.userLoggedIn.userID;
     this.message.recipientList = [this.selectedUserId];
     this.messagesService.sendMessage(this.message).subscribe( msg => {
-      console.log(msg);
-      this.getMessages();
       this.message.messageText = '';
+      this.getInboxes();
+      
     }, err => {
       console.log(err);
     })
   }
-
 }

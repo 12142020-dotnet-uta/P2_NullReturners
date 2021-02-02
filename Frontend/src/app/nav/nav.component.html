@@ -31,6 +31,9 @@
           <li class="nav-item">
             <a *ngIf="accountService.currentUser$ | async" class="nav-link" routerLink="/messages">Messages</a>
           </li>
+          <li class="nav-item">
+            <a *ngIf="accountService.currentUser$ | async" class="nav-link" routerLink="/messages/carpool">Carpool</a>
+          </li>
         </ul>
         <div class="login">
           <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" ngNativeValidate autocomplete="off">

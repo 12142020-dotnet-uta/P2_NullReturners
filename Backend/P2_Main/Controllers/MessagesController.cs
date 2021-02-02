@@ -28,10 +28,35 @@ namespace P2_Main.Controllers
             return await _logic.GetMessages();
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Message>> GetMessage(Guid id)
+        {
+            return await _logic.GetMessageById(id);
+        }
+
+        [HttpGet("Sender/{id}")]
+        public async Task<IEnumerable<Message>> GetMessagesBySenderById(Guid id)
+        {
+            return await _logic.GetMessagesBySenderById(id);
+        }
+
         [HttpPost("Send")]
         public async Task<ActionResult<Message>> SendMessage(NewMessageDto newMessageDto)
         {
             Message message = await _logic.CreateNewMessage(newMessageDto);
+            bool sent = await _logic.SendMessage(message);
+            if (!sent)
+            {
+                _logger.LogInformation("Bad Request");
+                return BadRequest("Message was not sent");
+            }
+            return message;
+        }
+
+        [HttpPost("Send/Carpool")]
+        public async Task<ActionResult<Message>> SendCarpool(NewMessageDto newMessageDto)
+        {
+            Message message = await _logic.CreateCarpool(newMessageDto);
             bool sent = await _logic.SendMessage(message);
             if (!sent)
             {
@@ -52,5 +77,12 @@ namespace P2_Main.Controllers
         {
             return await _logic.GetRecipientListById(id);
         }
+
+        [HttpGet("Inboxes/{id}")]
+        public async Task<IEnumerable<UserInbox>> GetUserInboxes(Guid id)
+        {
+            return await _logic.GetUserInbox(id);
+        }
+
     }
 }
