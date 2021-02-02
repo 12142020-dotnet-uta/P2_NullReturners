@@ -9,8 +9,6 @@
   <caption></caption>
     <thead>
       <tr>
-        <th scope="col">ID</th>
-        <th scope="col">PlayBookId</th>
         <th scope="col">Name</th>
         <th scope="col">Description</th>
         <th scope="col">Image</th>
@@ -19,8 +17,6 @@
     </thead>
     <tbody>
       <tr *ngFor="let plays of play">
-        <td>{{plays.playID}}</td>
-        <td>{{plays.playbookID}}</td>
         <td>{{plays.name}}</td>
         <td>{{plays.description}}</td>
         <td><img width="400" height="400" src="{{plays.imageString}}" alt="Image not found"/></td>
