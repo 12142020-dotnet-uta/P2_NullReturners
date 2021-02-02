@@ -46,19 +46,22 @@ export class PlaysComponent implements OnInit {
   }
 
   getCurrentPlays(){
+    if(this.tempPlay != []){
     this.tempPlay.forEach(element => {
       if(element.playbookID == this.playbooks.teamID){
         this.play.push(element);
 
       }
-      
+  
     });
   }
+  }
 
-  deletePlay(play){
-    console.log(play);
-    this.drawService.deletePlay(play).subscribe(Response => {
-      console.log(Response);
+  deletePlay(playNot){
+    console.log(playNot);
+    this.drawService.deletePlay(playNot).subscribe(Response => {
+      this.play.splice(0, this.play.length);
+    console.log(Response);
       this.getPlays();
     }, err => {
       console.log(err)

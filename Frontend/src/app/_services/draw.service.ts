@@ -22,13 +22,13 @@ export class DrawService {
     return this.http.get(this.baseUrl + 'playbooks')
   }
 
-  getPlaybookByID(teamId){
+ getPlaybookByID(teamId){
     return this.http.get(this.baseUrl + `playbooks/${teamId}`);
   }
-
+  
   deletePlay(playId){
     return this.http.delete(this.baseUrl + `playbooks/plays/delete/${playId}`);
   }
 
-  
+ 
 }
