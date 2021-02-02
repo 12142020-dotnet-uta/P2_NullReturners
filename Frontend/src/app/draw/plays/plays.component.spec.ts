@@ -28,7 +28,6 @@ describe('PlaysComponent', () => {
   });
 
   it('should call deletePlay(play)', () => {
-   component.play = {};
    component.deletePlay(component.play);
   });
 });
