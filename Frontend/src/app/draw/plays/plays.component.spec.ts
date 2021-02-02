@@ -27,8 +27,15 @@ describe('PlaysComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should call getCurrentPlays()', () => {
+    component.tempPlay = [{}];
+    component.tempPlay[0].playbookID = 3;
+    component.playbooks.teamID = 3;
+    component.getCurrentPlays();
+  });
+  
   it('should call deletePlay(play)', () => {
-   component.play = {};
+   component.play = [];
    component.deletePlay(component.play);
   });
 });

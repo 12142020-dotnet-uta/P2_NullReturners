@@ -26,4 +26,8 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call deleteEvent(eventId)', () => {
+    component.deleteEvent("hi");
+  });
 });

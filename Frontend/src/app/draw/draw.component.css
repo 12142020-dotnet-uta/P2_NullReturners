@@ -1,12 +1,10 @@
-
-
-#createPlaysTitle {
+#drawPlayTitle {
     text-align: center;
-    margin: 100vh;
+    margin-left: 28%;
 }
 
 #backToPlaybook {
-    margin-left: 20%;
+    margin-right: 20%;
 }
 
 #resetCanvas {

@@ -24,7 +24,7 @@ export class DrawComponent implements AfterViewInit {
   // setting a width and height for the canvas
   @Input() public width = 600;
   @Input() public height = 600;
-  constructor(private drawService: DrawService, private userService: UserService, private accountService: AccountService){}
+  constructor(private drawService: DrawService, private userService: UserService, public accountService: AccountService){}
   model = new play;
   playbooks: any = {};
   playBookList: any = [];
@@ -183,6 +183,8 @@ saveCanvas() {
   }, err => {
     console.log(err)
   })
+
+  this.restetTemplate();
 }
 
 

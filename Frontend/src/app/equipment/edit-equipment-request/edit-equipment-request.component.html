@@ -21,9 +21,9 @@
         <br>
         <label id="editLabel" for="Status">Status</label>
         <select name="Status" [(ngModel)]="editedEquipmentRequest.status">
-            <option>Requested</option>
-            <option>Ordered</option>
-            <option>Complete</option>
+            <option>App. Pending</option>
+            <option>Approved</option>
+            <option>Fulfilled</option>
           </select>
         <br>
         <br>
@@ -33,7 +33,7 @@
     <ng-container *ngIf="loggedInUser.roleID != 1">
         <h2 class="text-center">Not Authorized</h2>
         <p class="text-center"><a  [routerLink]="['']">Go home.</a></p>
-      </ng-container>
+    </ng-container>
 </div>
 
 <!-- If the user is not logged in -->

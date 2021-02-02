@@ -3,9 +3,9 @@
   <br>
   <div class="parent flex-parent">
     <div class="flex-child" style="text-align: right"><a class="nav-link" routerLink="/draw">Create Play</a></div>
-    <div class="flex-child"><a class="nav-link" routerLink="/draw">Select Playbook</a></div>
   </div>
   <table class="table table-striped" style="text-align: center;">
+
   <caption></caption>
     <thead>
       <tr>
@@ -24,7 +24,7 @@
         <td>{{plays.name}}</td>
         <td>{{plays.description}}</td>
         <td><img width="400" height="400" src="{{plays.imageString}}" alt="Image not found"/></td>
-        <td style="vertical-align: middle;"><button (click)="deletePlay(plays.playID)">Delete</button></td>
+        <td style="vertical-align: middle;"><button class="btn btn-danger" (click)="deletePlay(plays.playID)">Delete</button></td>
       </tr>
     </tbody>
   </table>
