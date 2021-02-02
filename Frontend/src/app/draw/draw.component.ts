@@ -210,12 +210,7 @@ getPlayBook() {
       this.model.PlaybookId = playbook.playbookID;
     }
   });
-}
-
-
-
-
-  
+}  
 
 }
 

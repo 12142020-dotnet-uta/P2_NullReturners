@@ -52,5 +52,10 @@ namespace P2_Main.Controllers
         {
             return await _logic.GetRecipientListById(id);
         }
+        [HttpGet("Inboxes/{id}")]
+        public async Task<IEnumerable<UserInbox>> GetUserInboxes(Guid id)
+        {
+            return await _logic.GetUserInbox(id);
+        }
     }
 }
