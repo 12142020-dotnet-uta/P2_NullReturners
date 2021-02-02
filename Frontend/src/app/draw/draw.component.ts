@@ -183,6 +183,8 @@ saveCanvas() {
   }, err => {
     console.log(err)
   })
+
+  this.restetTemplate();
 }
 
 
