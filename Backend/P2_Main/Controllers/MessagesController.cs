@@ -40,8 +40,8 @@ namespace P2_Main.Controllers
             return await _logic.GetMessagesBySenderById(id);
         }
 
-        [HttpPost("Send")]
-        public async Task<ActionResult<Message>> SendMessage(NewMessageDto newMessageDto)
+        [HttpPost("SendNew")]
+        public async Task<ActionResult<Message>> SendNewMessage(NewMessageDto newMessageDto)
         {
             Message message = await _logic.CreateNewMessage(newMessageDto);
             Message sent = await _logic.SendMessage(message);
@@ -52,7 +52,17 @@ namespace P2_Main.Controllers
             }
             return sent;
         }
-
+        [HttpPost("Send")]
+        public async Task<ActionResult<Message>> SendMessage(Message message)
+        {
+            Message sent = await _logic.SendMessage(message);
+            if (sent == null)
+            {
+                _logger.LogInformation("Bad Request");
+                return BadRequest("Message was not sent");
+            }
+            return sent;
+        }
         [HttpPost("Send/Carpool")]
         public async Task<ActionResult<Message>> SendCarpool(CarpoolingDto carpoolDto)
         {

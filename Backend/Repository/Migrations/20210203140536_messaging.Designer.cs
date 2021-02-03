@@ -10,7 +10,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProgContext))]
-    [Migration("20210203001403_messaging")]
+    [Migration("20210203140536_messaging")]
     partial class messaging
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

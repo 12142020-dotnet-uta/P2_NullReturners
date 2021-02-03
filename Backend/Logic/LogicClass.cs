@@ -469,6 +469,7 @@ namespace Logic
         {
             Message newMessage = new Message()
             {
+                MessageID = Guid.NewGuid(),
                 SenderID = newMessageDto.SenderID,
                 RecipientListID = Guid.NewGuid(),
                 MessageText = newMessageDto.MessageText,
@@ -478,7 +479,7 @@ namespace Logic
             {
                 await BuildRecipientList(newMessage.RecipientListID, id);
             }
-            await _repo.messages.AddAsync(newMessage);
+            //await _repo.messages.AddAsync(newMessage);
             await _repo.CommitSave();
             return newMessage;
         }
@@ -490,13 +491,11 @@ namespace Logic
         public async Task<Message> SendCarpool(CarpoolingDto carpoolDto)
         {
             Message message = _mapper.BuildMessage(carpoolDto);
-            await _repo.messages.AddAsync(message);
             return await SendMessage(message);
         }
         public async Task<Message> SendReply(ReplyDto replyDto)
         {
             Message message = _mapper.BuildMessage(replyDto);
-            await _repo.messages.AddAsync(message);
             return await SendMessage(message);
         }
         /// <summary>
@@ -505,19 +504,18 @@ namespace Logic
         /// <param name="message">Message to be assigned</param>
         /// <returns>Boolean success</returns>
         public async Task<Message> SendMessage(Message message)
-        {            
-            List<Guid> recipientList = new List<Guid>();
-            foreach (RecipientList r in _repo.recipientLists)
+        {
+            var recList = await _repo.recipientLists.Where(x => x.RecipientListID == message.RecipientListID).ToListAsync();
+            List<Guid> listOfRecipients = new List<Guid>();
+            foreach (RecipientList r in recList)
             {
-                if (r.RecipientListID == message.RecipientListID)
-                {
-                    recipientList.Add(r.RecipientID);                    
-                }
+                listOfRecipients.Add(r.RecipientID);
             }
-            foreach (Guid r in recipientList)
+            foreach (Guid r in listOfRecipients)
             {
                 await CreateUserInbox(r, message.MessageID);
             }
+            await _repo.messages.AddAsync(message);
             await _repo.CommitSave();
             return message;
         }
