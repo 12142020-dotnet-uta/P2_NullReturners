@@ -1274,7 +1274,7 @@ namespace Logic.Tests
 
                 var sendMessage = await logic.SendMessage(message);
 
-                Assert.True(sendMessage);
+                Assert.IsType<Message>(sendMessage);
             }
         }
 

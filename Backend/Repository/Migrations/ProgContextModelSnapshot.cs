@@ -109,9 +109,6 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsCarpool")
-                        .HasColumnType("bit");
-
                     b.Property<string>("MessageText")
                         .HasColumnType("nvarchar(max)");
 
@@ -202,6 +199,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<Guid>("CarpoolID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Losses")
                         .HasColumnType("int");

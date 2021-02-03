@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Models.DataTransfer
 {
-    public class CarpoolingDto
+    public class ReplyDto
     {
         [DisplayName("Sender ID")]
         public Guid SenderID { get; set; }
-        [DisplayName("Carpool List ID")]
-        public Guid CarpoolListID { get; set; }
+        [DisplayName("Recipient List ID")]
+        public Guid RecipientListID { get; set; }
         [DisplayName("Message Text")]
         public string MessageText { get; set; }
     }

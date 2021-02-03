@@ -26,6 +26,5 @@ namespace Models
         public DateTime SentDate { get; set; }
         [DisplayName("Message Text")]
         public string MessageText { get; set; }
-        public bool IsCarpool { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProgContext))]
-    [Migration("20210202055158_init")]
-    partial class init
+    [Migration("20210203001403_messaging")]
+    partial class messaging
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -111,9 +111,6 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsCarpool")
-                        .HasColumnType("bit");
-
                     b.Property<string>("MessageText")
                         .HasColumnType("nvarchar(max)");
 
@@ -204,6 +201,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<Guid>("CarpoolID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Losses")
                         .HasColumnType("int");

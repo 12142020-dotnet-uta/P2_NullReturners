@@ -67,17 +67,22 @@ namespace Logic
         public async Task<UserLoggedInDto> RegisterUser(CreateUserDto createUser)
         {
             using var hmac = new HMACSHA512();
-                User user = new User()
-                {
-                    UserName = createUser.UserName,
-                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(createUser.Password)),
-                    PasswordSalt = hmac.Key,
-                    FullName = createUser.FullName,
-                    PhoneNumber = createUser.PhoneNumber,
-                    Email = createUser.Email,
-                    TeamID = createUser.TeamID,
-                    RoleID = createUser.RoleID
-                };
+            User user = new User()
+            {
+                UserName = createUser.UserName,
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(createUser.Password)),
+                PasswordSalt = hmac.Key,
+                FullName = createUser.FullName,
+                PhoneNumber = createUser.PhoneNumber,
+                Email = createUser.Email,
+                TeamID = createUser.TeamID,
+                RoleID = createUser.RoleID
+            };
+            if (user.RoleID == 3)
+            {
+                var team = await _repo.teams.FirstOrDefaultAsync(x => x.TeamID == user.TeamID);
+                await _repo.recipientLists.AddAsync(new RecipientList() { RecipientListID = team.CarpoolID, RecipientID = user.UserID });
+            }
             await _repo.users.AddAsync(user);
             await _repo.CommitSave();
             _logger.LogInformation("User created");            
@@ -477,34 +482,31 @@ namespace Logic
             await _repo.CommitSave();
             return newMessage;
         }
-
-        public async Task<Message> CreateCarpool(NewMessageDto newMessageDto)
+        public async Task<IEnumerable<Message>> GetMessagePool(Guid recipientListID)
         {
-            Message newMessage = new Message()
-            {
-                SenderID = newMessageDto.SenderID,
-                RecipientListID = Guid.NewGuid(),
-                MessageText = newMessageDto.MessageText,
-                SentDate = DateTime.Now,
-                IsCarpool = true
-            };
-            foreach (Guid id in newMessageDto.RecipientList)
-            {
-                await BuildRecipientList(newMessage.RecipientListID, id);
-            }
-            await _repo.messages.AddAsync(newMessage);
-            await _repo.CommitSave();
-            return newMessage;
+            List<Message> messagePool = await _repo.messages.Where(x => x.RecipientListID == recipientListID).ToListAsync();
+            return messagePool;
+        }
+        public async Task<Message> SendCarpool(CarpoolingDto carpoolDto)
+        {
+            Message message = _mapper.BuildMessage(carpoolDto);
+            await _repo.messages.AddAsync(message);
+            return await SendMessage(message);
+        }
+        public async Task<Message> SendReply(ReplyDto replyDto)
+        {
+            Message message = _mapper.BuildMessage(replyDto);
+            await _repo.messages.AddAsync(message);
+            return await SendMessage(message);
         }
         /// <summary>
         /// Assign Message to Recipients via RecipientList
         /// </summary>
         /// <param name="message">Message to be assigned</param>
         /// <returns>Boolean success</returns>
-        public async Task<bool> SendMessage(Message message)
+        public async Task<Message> SendMessage(Message message)
         {            
             List<Guid> recipientList = new List<Guid>();
-            bool success;
             foreach (RecipientList r in _repo.recipientLists)
             {
                 if (r.RecipientListID == message.RecipientListID)
@@ -516,9 +518,8 @@ namespace Logic
             {
                 await CreateUserInbox(r, message.MessageID);
             }
-            success = true;
             await _repo.CommitSave();
-            return success;
+            return message;
         }
         /// <summary>
         /// Get a UserInbox entity for given User

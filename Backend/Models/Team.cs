@@ -20,5 +20,6 @@ namespace Models
         public int Wins { get; set; }
         [DisplayName("Losses")]
         public int Losses { get; set; }
+        public Guid CarpoolID { get; set;  }
     }
 }
