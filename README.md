@@ -2,7 +2,7 @@
 
 ## Project Description
 We will be creating an application to act as a central hub for coaches, parents, and players of a youth sports team. 
-Upon successful login, users will be able to view scheduled meetings and practices, communicate with other users, organize carpooling, 
+Upon successful login, users will be able to view scheduled meetings and practices, communicate with other users, 
 view team announcements, view the playbook, view/add statistics, and request new gear. 
 
 ## Technologies Used
@@ -30,8 +30,10 @@ ToDo
 * Add Notifications
 
 ## Getting Started
+git clone https://github.com/12142020-dotnet-uta/P2_NullReturners.git
 
 ## Usage
+Coaches are given admin access and can create other users. Once other users are created, they can login and look at the team calendar, message other users, view the game schedule, view the playbook, and look at the team statistics. If the user is a parent, they can request new equipment for their child. Coaches are also able to approve equipment requests, edit the calendar, edit the game schedule, and edit the playbook.
 
 ## Contributors
 Joshua Raneri - Backend / DevOps
